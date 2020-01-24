@@ -35,6 +35,14 @@ def test_enforce_constant_hook():
     assert module_a.const == 1, "Cannot indirectly change value of final constant"
     assert module_a.XX == 36, "Cannot change value of uppercase constant"
 
+    del module_a.XX
+    assert module_a.XX == 36, "Cannot delete constant from module"
+
+    # The following should not raise any error
+    module_a.new = 1
+    module_a.new = 3
+    del module_a.new
+
     enforce_constants.remove_hook(hook)
     assert len(sys.meta_path) == nb_hooks, "Import hook properly removed"
 

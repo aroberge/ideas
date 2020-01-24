@@ -18,11 +18,6 @@ class ModuleWithConstants(types.ModuleType):
        This example only prints a message when an attempt is made to change
        the value of a constant. Alternatively, this could be logged or an
        exception could be raised.
-
-       This example assumes two different ways to declare constants:
-
-           - By giving a True value a parameter named "final";
-           - By using ALL_CAPS to identify constants.
     """
     def __setattr__(self, attr, value, final=False):
         if self.__file__ not in CONSTANTS:
@@ -42,6 +37,19 @@ class ModuleWithConstants(types.ModuleType):
             CONSTANTS[self.__file__][attr] = value
 
         super().__setattr__(attr, value)
+
+    def __delattr__(self, attr):
+        if self.__file__ not in CONSTANTS:
+            CONSTANTS[self.__file__] = {}
+
+        if attr in CONSTANTS[self.__file__]:
+            print(
+                "You cannot delete the constant %s of module %s"
+                % (attr, self.__name__)
+            )
+            return
+
+        super().__delattr__(attr)
 
 
 # For this example, we use simple regular expressions to identify
