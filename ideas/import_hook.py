@@ -6,8 +6,6 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
-from .transformer import transform_assignment
-
 Main_Module_Name = None
 stdlib_dir = os.path.dirname(os.__file__)
 
@@ -17,8 +15,9 @@ class MyMetaFinder(MetaPathFinder):
        is to ensure that our custom loader, which does the code transformations,
        is used."""
 
-    def __init__(self, module_class=None):
+    def __init__(self, module_class=None, source_transformer=None):
         self.module_class = module_class
+        self.source_transformer = source_transformer
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -45,7 +44,11 @@ class MyMetaFinder(MetaPathFinder):
             return spec_from_file_location(
                 fullname,
                 filename,
-                loader=MyLoader(filename, module_class=self.module_class),
+                loader=MyLoader(
+                    filename,
+                    module_class=self.module_class,
+                    source_transformer=self.source_transformer,
+                ),
                 submodule_search_locations=submodule_locations,
             )
         return None  # we don't know how to import this
@@ -54,9 +57,10 @@ class MyMetaFinder(MetaPathFinder):
 class MyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
-    def __init__(self, filename, module_class=None):
+    def __init__(self, filename, module_class=None, source_transformer=None):
         self.filename = filename
         self.module_class = module_class
+        self.source_transformer = source_transformer
 
     def create_module(self, spec):
         return None  # use default module creation semantics
@@ -65,23 +69,27 @@ class MyLoader(Loader):
         """Import the source code, transform it before executing it so that
            it is known to Python."""
         global Main_Module_Name
-        if self.module_class is not None:
-            module.__class__ = self.module_class
 
         with open(self.filename) as f:
             source = f.read()
+
+        if self.module_class is not None:
+            module.__class__ = self.module_class
 
         if Main_Module_Name is not None:
             sys.modules["__main__"] = sys.modules[module.__name__]
             module.__name__ = "__main__"
             Main_Module_Name = None
 
-        source = transform_assignment(source)
+        if self.source_transformer is not None:
+            source = self.source_transformer(source)
         exec(source, sys.modules[module.__name__].__dict__)
 
 
-def create_hook(module_class=None):
-    return MyMetaFinder(module_class=module_class)
+def create_hook(module_class=None, source_transformer=None):
+    return MyMetaFinder(
+        module_class=module_class, source_transformer=source_transformer
+    )
 
 
 def remove_hook(hook):
