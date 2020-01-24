@@ -1,20 +1,14 @@
-import os
 import sys
 
-
-current_dir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
-example_dir = os.path.abspath(
-    os.path.join(current_dir, "..", "..", "examples", "enforce_constants")
-)
-if example_dir not in sys.path:
-    sys.path.insert(0, example_dir)
 
 nb_hooks = len(sys.meta_path)  # pytest adds its own hooks
 
 
 def test_enforce_constant_hook():
-    import enforce_constants
+    from ideas import _change_path_for_testing
+    _change_path_for_testing("enforce_constants")
 
+    import enforce_constants
     hook = enforce_constants.add_hook()
 
     try:
@@ -22,22 +16,29 @@ def test_enforce_constant_hook():
     except ImportError:
         from . import module_a
 
-    assert module_a.const == 1
-    assert module_a.a_b == 4
-    assert module_a.XX == 36
-    assert module_a.YY == (1, 2, 4)
+    # Inside our test modules, we had constants defined, which we
+    # attempted to reassign.
+    # We confirm that the initial value was not changed.
 
-    # Attempt to change values from here
+    assert module_a.const == 1, "Cannot change value of final constant"
+    assert module_a.a_b == 4, "Cannot change value of final constant"
+    assert module_a.XX == 36, "Cannot change value of uppercase constant"
+    assert module_a.YY == (1, 2, 4), "Cannot change value of uppercase tuple constant"
+
+    # Next, we show that we cannot change the values of the constants
+    # by attempting to change their attribute.
 
     module_a.const = 2
-    module_a.const += 1
+    # module_a.const += 1, "Cannot do indirect augmented assignment"
     module_a.XX = "something else"
 
-    assert module_a.const == 1
-    assert module_a.XX == 36
+    assert module_a.const == 1, "Cannot indirectly change value of final constant"
+    assert module_a.XX == 36, "Cannot change value of uppercase constant"
 
     enforce_constants.remove_hook(hook)
     assert len(sys.meta_path) == nb_hooks, "Import hook properly removed"
+
+    _change_path_for_testing("enforce_constants", remove=True)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,6 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
-from .constant_module_type import ModuleWithConstants
 from .transformer import transform_assignment
 
 Main_Module_Name = None
@@ -17,6 +16,9 @@ class MyMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
        is used."""
+
+    def __init__(self, module_class=None):
+        self.module_class = module_class
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -43,7 +45,7 @@ class MyMetaFinder(MetaPathFinder):
             return spec_from_file_location(
                 fullname,
                 filename,
-                loader=MyLoader(filename),
+                loader=MyLoader(filename, module_class=self.module_class),
                 submodule_search_locations=submodule_locations,
             )
         return None  # we don't know how to import this
@@ -52,8 +54,9 @@ class MyMetaFinder(MetaPathFinder):
 class MyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
-    def __init__(self, filename):
+    def __init__(self, filename, module_class=None):
         self.filename = filename
+        self.module_class = module_class
 
     def create_module(self, spec):
         return None  # use default module creation semantics
@@ -62,7 +65,8 @@ class MyLoader(Loader):
         """Import the source code, transform it before executing it so that
            it is known to Python."""
         global Main_Module_Name
-        module.__class__ = ModuleWithConstants
+        if self.module_class is not None:
+            module.__class__ = self.module_class
 
         with open(self.filename) as f:
             source = f.read()
@@ -76,8 +80,8 @@ class MyLoader(Loader):
         exec(source, sys.modules[module.__name__].__dict__)
 
 
-def create_hook():
-    return MyMetaFinder()
+def create_hook(module_class=None):
+    return MyMetaFinder(module_class=module_class)
 
 
 def remove_hook(hook):
