@@ -49,9 +49,6 @@ class MyMetaFinder(MetaPathFinder):
         return None  # we don't know how to import this
 
 
-sys.meta_path.insert(0, MyMetaFinder())
-
-
 class MyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
@@ -77,6 +74,20 @@ class MyLoader(Loader):
 
         source = transform_assignment(source)
         exec(source, sys.modules[module.__name__].__dict__)
+
+
+def create_hook():
+    return MyMetaFinder()
+
+
+def remove_hook(hook):
+    for index, h in enumerate(sys.meta_path):
+        if h == hook:
+            break
+    else:
+        print("Import hook not found in remove_hook.")
+        return
+    del sys.meta_path[index]
 
 
 if __name__ == "__main__":
