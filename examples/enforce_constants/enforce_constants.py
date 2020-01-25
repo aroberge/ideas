@@ -4,6 +4,7 @@ import types
 
 from ideas import import_hook
 
+shorten_path = import_hook.shorten_path
 CONSTANTS = {}
 
 
@@ -27,7 +28,7 @@ class ModuleWithConstants(types.ModuleType):
         if attr in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s to %s"
-                % (self.__file__, attr, value)
+                % (shorten_path(self.__file__), attr, value)
             )
             return
         if attr == attr.upper():
@@ -41,7 +42,8 @@ class ModuleWithConstants(types.ModuleType):
 
         if attr in CONSTANTS[self.__file__]:
             print(
-                "You cannot delete the constant %s of module %s" % (attr, self.__name__)
+                "You cannot delete the constant %s of module %s"
+                % (attr, shorten_path(self.__file__))
             )
             return
 
@@ -62,7 +64,7 @@ class FinalDict(dict):
         if key in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s to %s."
-                % (self.__file__, key, value)
+                % (shorten_path(self.__file__), key, value)
             )
             return
         try:
@@ -77,7 +79,10 @@ class FinalDict(dict):
 
     def __delitem__(self, key):
         if key in CONSTANTS[self.__file__]:
-            print("You cannot delete %s in module %s." % (key, self.__file__))
+            print(
+                "You cannot delete %s in module %s."
+                % (key, shorten_path(self.__file__))
+            )
             return
         return super().__delitem__(key)
 
@@ -86,7 +91,10 @@ class FinalDict(dict):
 
     def setdefault(self, key, default=None):
         if key in CONSTANTS[self.__file__]:
-            print("You cannot change the value of %s.%s." % (self.__name__, key))
+            print(
+                "You cannot change the value of %s.%s."
+                % (shorten_path(self.__file__), key)
+            )
             return
         if key == key.upper():  # Python convention for constants
             CONSTANTS[self.__file__][key] = default
@@ -94,7 +102,10 @@ class FinalDict(dict):
 
     def pop(self, key):
         if key in CONSTANTS[self.__file__]:
-            print("You cannot delete %s in module %s." % (key, self.__file__))
+            print(
+                "You cannot delete %s in module %s."
+                % (key, shorten_path(self.__file__))
+            )
             return CONSTANTS[self.__file__][key]
         return super().pop(key)
 

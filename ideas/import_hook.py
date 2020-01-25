@@ -9,6 +9,29 @@ from importlib.util import spec_from_file_location
 Main_Module_Name = None
 stdlib_dir = os.path.dirname(os.__file__)
 
+PYTHON = os.path.dirname(os.__file__).lower()
+this_dir = os.path.dirname(__file__)
+IDEAS = os.path.abspath(os.path.join(this_dir, "..")).lower()
+TESTS = os.path.join(IDEAS, "tests").lower()
+HOME = os.path.expanduser("~").lower()
+
+
+def shorten_path(path):
+    # On windows, the filenames are not case sensitive
+    # and the way Python displays filenames may vary.
+    # To properly compare, we convert everything to lowercase
+    # However, we ensure that the shortened path retains its cases
+    path_lower = path.lower()
+    if path_lower.startswith(TESTS):
+        path = "TESTS:" + path[len(TESTS) :]
+    elif path_lower.startswith(IDEAS):
+        path = "IDEAS:" + path[len(IDEAS) :]
+    elif path_lower.startswith(PYTHON):
+        path = "PYTHON:" + path[len(PYTHON) :]
+    elif path_lower.startswith(HOME):
+        path = "~" + path[len(HOME) :]
+    return path
+
 
 class MyMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
