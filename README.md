@@ -47,10 +47,8 @@ and flake8 for linting.
 ## To Do
 
 - Add requirements-dev.txt file
-- Add setup.py file and upload to pypi
 - List cases/recipes to be included
 - Add console
-- Add docs
 - Add support for `__main__`
 - Add test to ensure desired paths (e.g. Python standard library) are excluded.
 - show excluded path
