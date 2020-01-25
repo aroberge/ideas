@@ -51,14 +51,22 @@ class ModuleWithConstants(types.ModuleType):
 
 
 class FinalDict(dict):
+    """dict subclass which ensures that constants are not over-written.
+
+        Constants are identified in two ways:
+           1. names in all UPPERCASE_LETTERS, which is a common convention
+           2. variables that were declared to be constant by the inclusion
+              of a "Final" type hint.
+
+        We only override methods which could result in changing the value
+        of a constant.
+    """
+
     def __init__(self, module_filename):
         self.__file__ = module_filename
         if self.__file__ not in CONSTANTS:
             CONSTANTS[self.__file__] = {}
         super().__init__()
-
-    def __getitem__(self, key):
-        return super().__getitem__(key)
 
     def __setitem__(self, key, value):
         if key in CONSTANTS[self.__file__]:
@@ -85,9 +93,6 @@ class FinalDict(dict):
             )
             return
         return super().__delitem__(key)
-
-    def get(self, key, default=None):
-        return super().get(key, default)
 
     def setdefault(self, key, default=None):
         if key in CONSTANTS[self.__file__]:
@@ -128,24 +133,24 @@ class FinalDict(dict):
 # and does not capture all the possible cases for variable assignments.
 # It is simply used as a quick demonstration.
 
-
-# We include something like
+# We scan for lines that include something like
 #     python_identifier : Final = whatever
 # but assume that it would not be indented.
 final_declaration_pattern = re.compile(r"^([\w][\w\d]*)\s*:\s*Final\s*=\s*(.+)")
 
 
 def transform_source(source):
-    """Identifies simple assignments, including those with a Final type
-       hint, and replace them by a special function call.
+    """Identifies simple assignmentswith a Final type
+       hint, adding a line of code which allows to keep track of them.
 
        So, something like
 
-           name = value
+           name: Final = value
 
        gets replaced by something like
 
-           sys.modules[__name__].__setattr__(name, value)
+           __declared_final__.add('name')
+           name = value
     """
 
     # We are going to add an import to Python's sys module and want to make
@@ -185,5 +190,5 @@ def add_hook():
     return hook
 
 
-def remove_hook(hook):
+def remove_hook(hook):  # for testing
     import_hook.remove_hook(hook)
