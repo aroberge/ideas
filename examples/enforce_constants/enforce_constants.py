@@ -19,23 +19,20 @@ class ModuleWithConstants(types.ModuleType):
        the value of a constant. Alternatively, this could be logged or an
        exception could be raised.
     """
-    def __setattr__(self, attr, value, final=False):
+
+    def __setattr__(self, attr, value):
         if self.__file__ not in CONSTANTS:
             CONSTANTS[self.__file__] = {}
 
         if attr in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s to %s"
-                % (self.__name__, attr, value)
+                % (self.__file__, attr, value)
             )
             return
-
-        if (
-            final  # from optional type declaration
-            or attr == attr.upper()  # Python convention for constant names
-        ):
-            CONSTANTS[self.__file__][attr] = value
-
+        if attr == attr.upper():
+            print("You cannot add constants to another module.")
+            return
         super().__setattr__(attr, value)
 
     def __delattr__(self, attr):
@@ -44,12 +41,73 @@ class ModuleWithConstants(types.ModuleType):
 
         if attr in CONSTANTS[self.__file__]:
             print(
-                "You cannot delete the constant %s of module %s"
-                % (attr, self.__name__)
+                "You cannot delete the constant %s of module %s" % (attr, self.__name__)
             )
             return
 
         super().__delattr__(attr)
+
+
+class FinalDict(dict):
+    def __init__(self, module_filename):
+        self.__file__ = module_filename
+        if self.__file__ not in CONSTANTS:
+            CONSTANTS[self.__file__] = {}
+        super().__init__()
+
+    def __getitem__(self, key):
+        return super().__getitem__(key)
+
+    def __setitem__(self, key, value):
+        if key in CONSTANTS[self.__file__]:
+            print(
+                "You cannot change the value of %s.%s to %s."
+                % (self.__file__, key, value)
+            )
+            return
+        try:
+            declared_final = self.__getitem__("__declared_final__")
+        except Exception:
+            declared_final = []
+        if (
+            key == key.upper() or key in declared_final
+        ):  # Python convention for constants
+            CONSTANTS[self.__file__][key] = value
+        return super().__setitem__(key, value)
+
+    def __delitem__(self, key):
+        if key in CONSTANTS[self.__file__]:
+            print("You cannot delete %s in module %s." % (key, self.__file__))
+            return
+        return super().__delitem__(key)
+
+    def get(self, key, default=None):
+        return super().get(key, default)
+
+    def setdefault(self, key, default=None):
+        if key in CONSTANTS[self.__file__]:
+            print("You cannot change the value of %s.%s." % (self.__name__, key))
+            return
+        if key == key.upper():  # Python convention for constants
+            CONSTANTS[self.__file__][key] = default
+        return super().setdefault(key, default)
+
+    def pop(self, key):
+        if key in CONSTANTS[self.__file__]:
+            print("You cannot delete %s in module %s." % (key, self.__file__))
+            return CONSTANTS[self.__file__][key]
+        return super().pop(key)
+
+    def update(self, mapping_or_iterable=(), **kwargs):
+        if hasattr(mapping_or_iterable, "keys"):
+            for key in mapping_or_iterable:
+                self.__setitem__(key, mapping_or_iterable[key])
+        else:
+            for key, value in mapping_or_iterable:
+                self.__setitem__(key, value)
+
+        for key in kwargs:
+            self.__setitem__(key, kwargs[key])
 
 
 # For this example, we use simple regular expressions to identify
@@ -60,14 +118,7 @@ class ModuleWithConstants(types.ModuleType):
 # It is simply used as a quick demonstration.
 
 
-# A basic assignement pattern we look for is something like
-#     python_identifier = whatever
-# which can be an indented statement.
-assignment_pattern = re.compile(r"^\s*([\w][\w\d]*)\s*=\s*(.+)")
-# Note that the regex used for Python identifiers might not cover all
-# possible valid identifiers with non-ascii characters.
-
-# We also include something like
+# We include something like
 #     python_identifier : Final = whatever
 # but assume that it would not be indented.
 final_declaration_pattern = re.compile(r"^([\w][\w\d]*)\s*:\s*Final\s*=\s*(.+)")
@@ -99,26 +150,14 @@ def transform_source(source):
             i += 1
 
     lines = source.split("\n")
-    new_lines = ["import sys as %s" % sys_name]
+    new_lines = ["__declared_final__ = set([])"]
     for line in lines:
-        match = re.search(assignment_pattern, line)
         match_final = re.search(final_declaration_pattern, line)
-        if match:
-            name = match.group(1)
-            indent = len(line) - len(line.lstrip())
-            value = match.group(2)
-            new_lines.append(
-                " " * indent
-                + "%s.modules[__name__].__setattr__(" % sys_name
-                + "'%s', (%s))" % (name, value)
-            )
-        elif match_final:
+        if match_final:
             name = match_final.group(1)
             value = match_final.group(2)
-            new_lines.append(
-                "%s.modules[__name__].__setattr__(" % sys_name
-                + "'%s', (%s), final=True)" % (name, value)
-            )
+            new_lines.append("__declared_final__.add('%s')" % name)
+            new_lines.append("%s = %s" % (name, value))
         else:
             new_lines.append(line)
 
@@ -126,8 +165,11 @@ def transform_source(source):
 
 
 def add_hook():
-    hook = import_hook.create_hook(module_class=ModuleWithConstants,
-                                   source_transformer=transform_source)
+    hook = import_hook.create_hook(
+        module_class=ModuleWithConstants,
+        source_transformer=transform_source,
+        globals_=FinalDict,
+    )
     sys.meta_path.insert(0, hook)
     return hook
 

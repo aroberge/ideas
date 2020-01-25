@@ -15,9 +15,10 @@ class MyMetaFinder(MetaPathFinder):
        is to ensure that our custom loader, which does the code transformations,
        is used."""
 
-    def __init__(self, module_class=None, source_transformer=None):
+    def __init__(self, module_class=None, source_transformer=None, globals_=None):
         self.module_class = module_class
         self.source_transformer = source_transformer
+        self.globals_ = globals_
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -48,6 +49,7 @@ class MyMetaFinder(MetaPathFinder):
                     filename,
                     module_class=self.module_class,
                     source_transformer=self.source_transformer,
+                    globals_=self.globals_,
                 ),
                 submodule_search_locations=submodule_locations,
             )
@@ -57,10 +59,13 @@ class MyMetaFinder(MetaPathFinder):
 class MyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
-    def __init__(self, filename, module_class=None, source_transformer=None):
+    def __init__(
+        self, filename, module_class=None, source_transformer=None, globals_=None
+    ):
         self.filename = filename
         self.module_class = module_class
         self.source_transformer = source_transformer
+        self.globals_ = globals_
 
     def create_module(self, spec):
         return None  # use default module creation semantics
@@ -83,12 +88,23 @@ class MyLoader(Loader):
 
         if self.source_transformer is not None:
             source = self.source_transformer(source)
-        exec(source, sys.modules[module.__name__].__dict__)
+            # print(source)
+
+        mod_dict = sys.modules[module.__name__].__dict__
+        if self.globals_ is not None:
+            self.globals_ = self.globals_(self.filename)
+            self.globals_.update(mod_dict)
+            exec(source, self.globals_)
+            mod_dict.update(self.globals_)
+        else:
+            exec(source, sys.modules[module.__name__].__dict__)
 
 
-def create_hook(module_class=None, source_transformer=None):
+def create_hook(module_class=None, source_transformer=None, globals_=None):
     return MyMetaFinder(
-        module_class=module_class, source_transformer=source_transformer
+        module_class=module_class,
+        source_transformer=source_transformer,
+        globals_=globals_,
     )
 
 

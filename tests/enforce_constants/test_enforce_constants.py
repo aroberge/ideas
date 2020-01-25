@@ -21,7 +21,6 @@ def test_enforce_constant_hook():
     # We confirm that the initial value was not changed.
 
     assert module_a.const == 1, "Cannot change value of final constant"
-    assert module_a.a_b == 4, "Cannot change value of final constant"
     assert module_a.XX == 36, "Cannot change value of uppercase constant"
     assert module_a.YY == (1, 2, 4), "Cannot change value of uppercase tuple constant"
 
