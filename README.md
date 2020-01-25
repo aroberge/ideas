@@ -53,6 +53,9 @@ and flake8 for linting.
 - Add docs
 - Add support for `__main__`
 - Add test to ensure desired paths (e.g. Python standard library) are excluded.
+- show excluded path
+- show abbreviations used for paths
+- always exclude ideas itself
 
 
 More to come ...
