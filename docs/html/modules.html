@@ -36,7 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Motivation for pyextensions" href="motivation.html" /> 
+    <link rel="next" title="True constants" href="constants.html" />
+    <link rel="prev" title="Motivation for ideas" href="motivation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,10 +87,11 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Contents of various modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas">ideas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Contents of various modules</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 </ul>
 
             
@@ -111,7 +113,7 @@
 
       <div class="wy-nav-content">
         
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
         
           
 
@@ -149,6 +151,15 @@
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for ideas" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -156,10 +167,73 @@
             
   <div class="section" id="modules">
 <h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
-<p>ideas consists of a single module.</p>
-<div class="section" id="module-ideas">
-<span id="ideas"></span><h2>ideas<a class="headerlink" href="#module-ideas" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> currently consists of a single module.</p>
+<span class="target" id="module-ideas.import_hook"></span><p>This is a simple proof of concept. It is not meant to be taken seriously.</p>
+<dl class="class">
+<dt id="ideas.import_hook.MyLoader">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">MyLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">source_transformer=None</em>, <em class="sig-param">module_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom loader which will transform the source prior to its execution</p>
+<dl class="method">
+<dt id="ideas.import_hook.MyLoader.create_module">
+<code class="sig-name descname">create_module</code><span class="sig-paren">(</span><em class="sig-param">spec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyLoader.create_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyLoader.create_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a module to initialize and into which to load.</p>
+<p>This method should raise ImportError if anything prevents it
+from creating a new module.  It may return None to indicate
+that the spec should create the new module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ideas.import_hook.MyLoader.exec_module">
+<code class="sig-name descname">exec_module</code><span class="sig-paren">(</span><em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import the source code, transform it before executing it so that
+it is known to Python.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ideas.import_hook.MyMetaFinder">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">MyMetaFinder</code><span class="sig-paren">(</span><em class="sig-param">module_class=None</em>, <em class="sig-param">source_transformer=None</em>, <em class="sig-param">module_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyMetaFinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom finder to locate modules.  The main reason for this code
+is to ensure that our custom loader, which does the code transformations,
+is used.</p>
+<dl class="method">
+<dt id="ideas.import_hook.MyMetaFinder.find_spec">
+<code class="sig-name descname">find_spec</code><span class="sig-paren">(</span><em class="sig-param">fullname</em>, <em class="sig-param">path</em>, <em class="sig-param">target=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyMetaFinder.find_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyMetaFinder.find_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>finds the appropriate properties (spec) of a module, and sets
+its loader.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.import_hook.create_hook">
+<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">create_hook</code><span class="sig-paren">(</span><em class="sig-param">module_class=None</em>, <em class="sig-param">source_transformer=None</em>, <em class="sig-param">module_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to facilitate the creation of an import hook</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.import_hook.remove_hook">
+<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">remove_hook</code><span class="sig-paren">(</span><em class="sig-param">hook</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#remove_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.remove_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to remove a previously import hook inserted in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.import_hook.shorten_path">
+<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">shorten_path</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#shorten_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.shorten_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function used to reduce the length of the path shown
+to a user. For example, a path for a module in the Python
+standard library might be shown as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHON</span><span class="p">:</span><span class="o">/</span><span class="n">module</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
 </div>
+<p>whereas a file found in the user’s root directory might be shown
+as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="nb">dir</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
@@ -170,8 +244,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for pyextensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for ideas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

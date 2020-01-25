@@ -17,6 +17,17 @@ HOME = os.path.expanduser("~").lower()
 
 
 def shorten_path(path):
+    """Utility function used to reduce the length of the path shown
+       to a user. For example, a path for a module in the Python
+       standard library might be shown as::
+
+           PYTHON:/module.py
+
+       whereas a file found in the user's root directory might be shown
+       as::
+
+            ~/dir/file.py
+    """
     # On windows, the filenames are not case sensitive
     # and the way Python displays filenames may vary.
     # To properly compare, we convert everything to lowercase
@@ -38,10 +49,10 @@ class MyMetaFinder(MetaPathFinder):
        is to ensure that our custom loader, which does the code transformations,
        is used."""
 
-    def __init__(self, module_class=None, source_transformer=None, globals_=None):
+    def __init__(self, module_class=None, source_transformer=None, module_dict=None):
         self.module_class = module_class
         self.source_transformer = source_transformer
-        self.globals_ = globals_
+        self.module_dict = module_dict
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -72,7 +83,7 @@ class MyMetaFinder(MetaPathFinder):
                     filename,
                     module_class=self.module_class,
                     source_transformer=self.source_transformer,
-                    globals_=self.globals_,
+                    module_dict=self.module_dict,
                 ),
                 submodule_search_locations=submodule_locations,
             )
@@ -83,12 +94,12 @@ class MyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(
-        self, filename, module_class=None, source_transformer=None, globals_=None
+        self, filename, module_class=None, source_transformer=None, module_dict=None
     ):
         self.filename = filename
         self.module_class = module_class
         self.source_transformer = source_transformer
-        self.globals_ = globals_
+        self.module_dict = module_dict
 
     def create_module(self, spec):
         return None  # use default module creation semantics
@@ -114,24 +125,26 @@ class MyLoader(Loader):
             # print(source)
 
         mod_dict = sys.modules[module.__name__].__dict__
-        if self.globals_ is not None:
-            self.globals_ = self.globals_(self.filename)
-            self.globals_.update(mod_dict)
-            exec(source, self.globals_)
-            mod_dict.update(self.globals_)
+        if self.module_dict is not None:
+            self.module_dict = self.module_dict(self.filename)
+            self.module_dict.update(mod_dict)
+            exec(source, self.module_dict)
+            mod_dict.update(self.module_dict)
         else:
             exec(source, sys.modules[module.__name__].__dict__)
 
 
-def create_hook(module_class=None, source_transformer=None, globals_=None):
+def create_hook(module_class=None, source_transformer=None, module_dict=None):
+    """Function to facilitate the creation of an import hook"""
     return MyMetaFinder(
         module_class=module_class,
         source_transformer=source_transformer,
-        globals_=globals_,
+        module_dict=module_dict,
     )
 
 
 def remove_hook(hook):
+    """Function used to remove a previously import hook inserted in sys.meta_path"""
     for index, h in enumerate(sys.meta_path):
         if h == hook:
             break

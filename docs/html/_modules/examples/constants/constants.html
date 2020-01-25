@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>examples.constants.constants &mdash; ideas 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html"> Contents of various modules</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>examples.constants.constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for examples.constants.constants</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">types</span>
+
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+
+<span class="n">shorten_path</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">shorten_path</span>
+<span class="n">CONSTANTS</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="ModuleWithConstants"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.ModuleWithConstants">[docs]</a><span class="k">class</span> <span class="nc">ModuleWithConstants</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Special module type that prevents variables identified as constants</span>
+<span class="sd">       to have their value changed.</span>
+
+<span class="sd">       This is used to replace a module __class__ from the default as follows:</span>
+
+<span class="sd">           module.__class__ = ModuleWithConstants</span>
+
+<span class="sd">       This example only prints a message when an attempt is made to change</span>
+<span class="sd">       the value of a constant. Alternatively, this could be logged or an</span>
+<span class="sd">       exception could be raised.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+            <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You cannot add constants to another module.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+            <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot delete the constant </span><span class="si">%s</span><span class="s2"> of module </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FinalDict"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.FinalDict">[docs]</a><span class="k">class</span> <span class="nc">FinalDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;dict subclass which ensures that constants are not over-written.</span>
+
+<span class="sd">        Constants are identified in two ways:</span>
+<span class="sd">           1. names in all UPPERCASE_LETTERS, which is a common convention</span>
+<span class="sd">           2. variables that were declared to be constant by the inclusion</span>
+<span class="sd">              of a &quot;Final&quot; type hint.</span>
+
+<span class="sd">        Note: We only override methods which could result in changing the value</span>
+<span class="sd">        of a constant.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialises the instance&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span> <span class="o">=</span> <span class="n">module_filename</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+            <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets self[key] to value.</span>
+
+<span class="sd">           If key is identified as a constant, it prevents changing</span>
+<span class="sd">           its value after initial assignment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">declared_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="s2">&quot;__declared_final__&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">declared_final</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">declared_final</span>
+        <span class="p">):</span>  <span class="c1"># Python convention for constants</span>
+            <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes self[key] unless key is identified as a constant&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FinalDict.setdefault"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.FinalDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert key with a value of default if key is not in the dictionary.</span>
+
+<span class="sd">           Prevents changes if the key is identified as a constant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span>  <span class="c1"># Python convention for constants</span>
+            <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FinalDict.pop"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.FinalDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;D.pop(key) -&gt; value, remove specified key and return the corresponding value,</span>
+<span class="sd">        unless the key is identifed as a constant.</span>
+
+<span class="sd"> |      If key is not found, d is returned if given, otherwise KeyError is raised</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FinalDict.update"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.FinalDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping_or_iterable</span><span class="o">=</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates the content of the dict from a mapping or an iterable,</span>
+<span class="sd">           or from a list of keywords arguments.</span>
+
+<span class="sd">           Keys identified as constants are prevented from changing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mapping_or_iterable</span><span class="p">,</span> <span class="s2">&quot;keys&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mapping_or_iterable</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">mapping_or_iterable</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">mapping_or_iterable</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># For this example, we use simple regular expressions to identify</span>
+<span class="c1"># lines of code that correspond to variable assignments. It is assumed</span>
+<span class="c1"># that each assignment is done on a single line of code.</span>
+<span class="c1"># This approach can change values within triple-quoted strings</span>
+<span class="c1"># and does not capture all the possible cases for variable assignments.</span>
+<span class="c1"># It is simply used as a quick demonstration.</span>
+
+<span class="c1"># We scan for lines that include something like</span>
+<span class="c1">#     python_identifier : Final = whatever</span>
+<span class="c1"># but assume that it would not be indented.</span>
+<span class="n">final_declaration_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^([\w][\w\d]*)\s*:\s*Final\s*=\s*(.+)&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Identifies simple assignmentswith a Final type</span>
+<span class="sd">       hint, adding a line of code which allows to keep track of them.</span>
+
+<span class="sd">       So, something like</span>
+
+<span class="sd">           name: Final = value</span>
+
+<span class="sd">       gets replaced by something like</span>
+
+<span class="sd">           __declared_final__.add(&#39;name&#39;)</span>
+<span class="sd">           name = value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># We are going to add an import to Python&#39;s sys module and want to make</span>
+    <span class="c1"># sure that it won&#39;t conflict with any variable in the source</span>
+    <span class="k">if</span> <span class="s2">&quot;sys&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+        <span class="n">sys_name</span> <span class="o">=</span> <span class="s2">&quot;sys&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">sys_name</span> <span class="o">=</span> <span class="s2">&quot;sys&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sys_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">new_lines</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;__declared_final__ = set([])&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">match_final</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">final_declaration_pattern</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match_final</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">match_final</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">match_final</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;__declared_final__.add(&#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_lines</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">module_class</span><span class="o">=</span><span class="n">ModuleWithConstants</span><span class="p">,</span>
+        <span class="n">source_transformer</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">globals_</span><span class="o">=</span><span class="n">FinalDict</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span></div>
+
+
+<div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../../constants.html#examples.constants.constants.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>  <span class="c1"># for testing</span>
+    <span class="sd">&quot;&quot;&quot;Useful for testing and isolating import hooks&quot;&quot;&quot;</span>
+    <span class="n">import_hook</span><span class="o">.</span><span class="n">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

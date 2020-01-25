@@ -45,11 +45,22 @@ Quick links to topics
 ---------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
     Motivation <motivation>
     Contents of various modules <modules>
-    Example: constants <constants>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Examples
+
+    True constants <constants>
+
+
+To do
+-----
+
+.. todolist::
 
 
 .. _Pyxl project: https://github.com/dropbox/pyxl

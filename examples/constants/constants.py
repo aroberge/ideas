@@ -58,17 +58,23 @@ class FinalDict(dict):
            2. variables that were declared to be constant by the inclusion
               of a "Final" type hint.
 
-        We only override methods which could result in changing the value
+        Note: We only override methods which could result in changing the value
         of a constant.
     """
 
     def __init__(self, module_filename):
+        """Initialises the instance"""
         self.__file__ = module_filename
         if self.__file__ not in CONSTANTS:
             CONSTANTS[self.__file__] = {}
         super().__init__()
 
     def __setitem__(self, key, value):
+        """Sets self[key] to value.
+
+           If key is identified as a constant, it prevents changing
+           its value after initial assignment.
+        """
         if key in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s to %s."
@@ -86,6 +92,7 @@ class FinalDict(dict):
         return super().__setitem__(key, value)
 
     def __delitem__(self, key):
+        """Deletes self[key] unless key is identified as a constant"""
         if key in CONSTANTS[self.__file__]:
             print(
                 "You cannot delete %s in module %s."
@@ -95,6 +102,10 @@ class FinalDict(dict):
         return super().__delitem__(key)
 
     def setdefault(self, key, default=None):
+        """Insert key with a value of default if key is not in the dictionary.
+
+           Prevents changes if the key is identified as a constant.
+        """
         if key in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s."
@@ -106,6 +117,11 @@ class FinalDict(dict):
         return super().setdefault(key, default)
 
     def pop(self, key):
+        """D.pop(key) -> value, remove specified key and return the corresponding value,
+        unless the key is identifed as a constant.
+
+ |      If key is not found, d is returned if given, otherwise KeyError is raised
+        """
         if key in CONSTANTS[self.__file__]:
             print(
                 "You cannot delete %s in module %s."
@@ -115,6 +131,11 @@ class FinalDict(dict):
         return super().pop(key)
 
     def update(self, mapping_or_iterable=(), **kwargs):
+        """Updates the content of the dict from a mapping or an iterable,
+           or from a list of keywords arguments.
+
+           Keys identified as constants are prevented from changing.
+        """
         if hasattr(mapping_or_iterable, "keys"):
             for key in mapping_or_iterable:
                 self.__setitem__(key, mapping_or_iterable[key])
@@ -181,6 +202,7 @@ def transform_source(source):
 
 
 def add_hook():
+    """Creates and adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         module_class=ModuleWithConstants,
         source_transformer=transform_source,
@@ -191,4 +213,5 @@ def add_hook():
 
 
 def remove_hook(hook):  # for testing
+    """Useful for testing and isolating import hooks"""
     import_hook.remove_hook(hook)

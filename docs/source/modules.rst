@@ -1,11 +1,9 @@
 Modules
 ========
 
-ideas consists of a single module.
+``ideas`` currently consists of a single module.
 
-ideas
-------------
 
-.. automodule:: ideas
+.. automodule:: ideas.import_hook
    :members:
 
