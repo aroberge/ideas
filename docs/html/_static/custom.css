@@ -1,0 +1,51 @@
+
+/* see https://yeun.github.io/open-color/#blue for color palette*/
+
+.wy-side-nav-search {background-color: #1864ab;}
+
+.wy-nav-side {background-color: #d0ebff;
+    color:black;
+}
+.wy-nav-side a:hover {background-color: #1c7ed6; color:white;}
+.wy-menu-vertical a {color: black;}
+.wy-menu-vertical p.caption {color: #1864ab;}
+
+.wy-menu-vertical li.toctree-l2 a,
+    .wy-menu-vertical li.toctree-l3 a,
+    .wy-menu-vertical li.toctree-l4 a {background-color: #e7f5ff;}
+
+.wy-menu-vertical li.toctree-l2 a:hover,
+    .wy-menu-vertical li.toctree-l3 a:hover,
+    .wy-menu-vertical li.toctree-l4 a:hover {background-color: #a5d8ff;}
+
+
+.wy-menu-vertical li.current a {border-right: none;}
+
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+    background-color: #f0f8ff;}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a:hover {
+    background-color: #a5d8ff;}
+
+.highlight {background-color: #fffff8;}
+
+.highlight .hll {background-color: #e7f5ff;}
+
+.friendly-small-pre {
+    font-size: 80%;
+    margin:0;
+}
+.filename-header {
+    margin: 6px 0;
+    padding: 6px 0;
+    background-color: #e8f0f8;
+    border-top: solid 3px #3080c0;
+    color:black;
+}
+
+.rst-content tt.literal, 
+.rst-content tt.literal, 
+.rst-content code.literal {
+    color: purple;
+}

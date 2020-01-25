@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Motivation for ideas" href="motivation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html"> Contents of various modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html#readme-for-constants">Readme for constants</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Ideas: making it easier to extend Python’s syntax</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ideas-making-it-easier-to-extend-python-s-syntax">
+<h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline">¶</a></h1>
+<p>To modify Python’s syntax, normally all you need to do is:</p>
+<ol class="arabic simple">
+<li><p>Get a copy of the CPython’s code repository and all the required compilers
+for your platform.</p></li>
+<li><p>Modify the grammar file to add rules for the new syntax.</p></li>
+<li><p>Modify the AST generation code; this requires a knowledge of C</p></li>
+<li><p>Compile the AST into bytecode</p></li>
+<li><p>Recompile the modified Python interpreter</p></li>
+</ol>
+<p>However, there is a simpler way: it is possible to run code with a
+modified syntax using import hooks.</p>
+<blockquote>
+<div><p><em>I think that the majority of Python programmers have no idea that you
+can even write an import hook at all, let alone how to do it.</em></p>
+<blockquote>
+<div><p>Steve d’Aprano
+<a class="reference external" href="https://mail.python.org/pipermail/python-ideas/2015-May/033633.html">https://mail.python.org/pipermail/python-ideas/2015-May/033633.html</a></p>
+</div></blockquote>
+</div></blockquote>
+<p>That being said, not everyone might want to figure out how to write an import hook:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">[page 420] <em>…it should be emphasized that Python’s module, package and import
+mechanism is one of the most complicated parts of the entire language –
+often poorly understood by even the most seasoned Python programmers
+unless they’ve devoted effort to peeling back the covers.</em></div>
+<div class="line-block">
+<div class="line">… long discussion …</div>
+</div>
+<div class="line">[page 428] <em>Assuming that your head hasn’t completely exploded at this point, …
+Last, but not least, spending some time sleeping with PEP 302 and the
+documentation for</em> importlib <em>under your pillow may be advisable.</em></div>
+</div>
+<blockquote>
+<div><p>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</p>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="another-possibility">
+<h2>Another possibility<a class="headerlink" href="#another-possibility" title="Permalink to this headline">¶</a></h2>
+<p>In addition to using import hooks, it is possible to run code with a modified
+syntax by using a specially crafted codec. See for example the <a class="reference external" href="https://github.com/dropbox/pyxl">Pyxl project</a>.
+This is likely not as flexible as the approach we suggest using import hooks.</p>
+</div>
+<div class="section" id="quick-links-to-topics">
+<h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="motivation.html#original-motivation">Original motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motivation.html#additional-motivation">Additional motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motivation.html#about-the-name">About the name</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html"> Contents of various modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-ideas">ideas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">Constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html#readme-for-constants">Readme for constants</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Motivation for ideas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

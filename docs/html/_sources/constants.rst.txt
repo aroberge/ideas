@@ -1,0 +1,4 @@
+Constants
+=========
+
+.. include:: ../../examples/constants/readme.rst
