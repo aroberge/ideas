@@ -4,14 +4,14 @@ import sys
 nb_hooks = len(sys.meta_path)  # pytest adds its own hooks
 
 
-def test_enforce_constant_hook():
+def test_constants_hook():
     from ideas import _change_path_for_testing
 
-    _change_path_for_testing("enforce_constants")
+    _change_path_for_testing("constants")
 
-    import enforce_constants
+    import constants
 
-    hook = enforce_constants.add_hook()
+    hook = constants.add_hook()
 
     try:
         import module_a
@@ -34,13 +34,13 @@ def test_enforce_constant_hook():
     assert module_a.new == 3, "Non constant values can be changed"
     del module_a.new
 
-    enforce_constants.remove_hook(hook)
+    constants.remove_hook(hook)
     assert len(sys.meta_path) == nb_hooks, "Import hook properly removed"
 
-    _change_path_for_testing("enforce_constants", remove=True)
+    _change_path_for_testing("constants", remove=True)
 
 
 if __name__ == "__main__":
-    test_enforce_constant_hook()
+    test_constants_hook()
     print("- " * 30)
-    print("Success: test_enforce_constants.py ran as expected.")
+    print("Success: test_constants.py ran as expected.")

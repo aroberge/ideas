@@ -146,5 +146,5 @@ if __name__ == "__main__":
         Main_Module_Name = sys.argv[-1]
         print("__main__ is", Main_Module_Name)
         __import__(Main_Module_Name)
-        sys.modules["enforce_constants"] = sys.modules["__main__"]
-        __name__ = "enforce_constants"
+        sys.modules["constants"] = sys.modules["__main__"]
+        __name__ = "constants"
