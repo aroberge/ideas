@@ -1,6 +1,7 @@
 # ideas
 Easy creation of custom import hooks to try out new ideas for Python.
 
+[Documentation](https://aroberge.github.io/ideas/docs/html/)
 
 ## Original motivation
 
