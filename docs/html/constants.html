@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>True constants &mdash; ideas 0.0.1 documentation</title>
+  <title>True constants &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -36,7 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Modules" href="modules.html" /> 
+    <link rel="next" title="import_hook.py" href="import_hook.html" />
+    <link rel="prev" title="Motivation for this project" href="motivation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +61,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -86,14 +87,21 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html"> Contents of various modules</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> True constants</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-examples.constants.constants">From the source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#consenting-adults">Consenting adults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to">How to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#suggestion-for-you">Suggestion for you</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.constants.constants">Use the source, Luke</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 </ul>
 
             
@@ -155,8 +163,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
+        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="modules.html" class="btn btn-neutral float-left" title="Modules" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for this project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -167,12 +177,72 @@
             
   <div class="section" id="true-constants">
 <h1>True constants<a class="headerlink" href="#true-constants" title="Permalink to this headline">¶</a></h1>
-<p>More to come</p>
-<div class="section" id="module-examples.constants.constants">
-<span id="from-the-source"></span><h2>From the source<a class="headerlink" href="#module-examples.constants.constants" title="Permalink to this headline">¶</a></h2>
+<p><strong>Summary:</strong> How to ensure that variables defined as constants by some notational
+convention are guaranteed not to change, without requiring them
+to be attribute of an object.</p>
+<p>This example demonstrates the use of:</p>
+<ul class="simple">
+<li><p>Source transformation to extract information from the source without changing its content.</p></li>
+<li><p>Custom module class</p></li>
+<li><p>Specialized dict to temporarily replace the read-only module dict.</p></li>
+</ul>
+<div class="section" id="consenting-adults">
+<h2>Consenting adults<a class="headerlink" href="#consenting-adults" title="Permalink to this headline">¶</a></h2>
+<p>Unlike some other programming languages that force their users to do things in a very strict fashion,
+Python gives a lot of flexibility and assume that they are responsible adults,
+capable of using common sense in their use of the language.
+Thus, certain features considered to be absolutely essential in other languages,
+such as keeping some variables hidden,
+or forcing other variables to never have their type and sometimes not even their value changed once assigned, are not present in Python.
+Instead, Pythonistas rely on conventions to indicate their intent.</p>
+<ul>
+<li><p>You want to indicate that a variable should be considered “private”? Just use a name starting with an underscore to communicate this to another programmer.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If that is not strong enough, use a double underscore to start its name. Other Python programmers will know what you mean.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>You want to indicate that a variable should be constant? Just write its name in UPPERCASE_LETTERS.</p>
+<ul class="simple">
+<li><p>For Python 3.8, use a <code class="docutils literal notranslate"><span class="pre">Final</span></code> qualifier type hint as per <a class="reference external" href="https://www.python.org/dev/peps/pep-0591/">PEP 591</a></p></li>
+</ul>
+</li>
+</ul>
+<p>Still, this does not prevent people from asking <em>“How do I create a constant in Python?”</em>
+such as <a class="reference external" href="https://stackoverflow.com/questions/2682745/how-do-i-create-a-constant-in-python">was asked on StackOverflow</a>
+some 9 years ago, which resulted in 34 different answers, almost all of which indicate that you cannot enforce this convention in Python at a module level.
+Answers that were provided are still actively edited as new features get added to Python,
+including recent comments about using the <code class="docutils literal notranslate"><span class="pre">Final</span></code> qualifier.</p>
+<p>While it is noted that you can use tools such as <a class="reference external" href="http://mypy-lang.org/">mypy</a>
+<strong>only to check</strong> without running the program
+that a variable meant to be used as a constant is not expected to change,
+all the other answers rely, in one way or another, on creating an object,
+which can be <strong>another</strong> module,
+and have the would-be constants defined as attribute to that object.
+Such objects are carefully designed with properties that prevent
+changes to the values of attributes intended to be constants.</p>
+<p>However, this type of solution is more cumbersome to use than being able to simply
+use an agred convention.
+As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-)</p>
+</div>
+<div class="section" id="how-to">
+<h2>How to<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h2>
+<p>Explain here.</p>
+</div>
+<div class="section" id="suggestion-for-you">
+<h2>Suggestion for you<a class="headerlink" href="#suggestion-for-you" title="Permalink to this headline">¶</a></h2>
+<p>Try to implement your own variation, perhaps by introducing <code class="docutils literal notranslate"><span class="pre">let</span></code>
+as a new keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">this_variable</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># this_variable is thus declared as constant</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-ideas.examples.constants.constants">
+<span id="use-the-source-luke"></span><h2>Use the source, Luke<a class="headerlink" href="#module-ideas.examples.constants.constants" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="examples.constants.constants.FinalDict">
-<em class="property">class </em><code class="sig-prename descclassname">examples.constants.constants.</code><code class="sig-name descname">FinalDict</code><span class="sig-paren">(</span><em class="sig-param">module_filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#FinalDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.FinalDict" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.FinalDict">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">FinalDict</code><span class="sig-paren">(</span><em class="sig-param">module_filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>dict subclass which ensures that constants are not over-written.</p>
 <dl class="simple">
 <dt>Constants are identified in two ways:</dt><dd><ol class="arabic simple">
@@ -185,24 +255,22 @@ of a “Final” type hint.</p></li>
 <p>Note: We only override methods which could result in changing the value
 of a constant.</p>
 <dl class="method">
-<dt id="examples.constants.constants.FinalDict.pop">
-<code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span> &#x2192; value, remove specified key and return the corresponding value,<a class="reference internal" href="_modules/examples/constants/constants.html#FinalDict.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.FinalDict.pop" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.FinalDict.pop">
+<code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span> &#x2192; value, remove specified key and return the corresponding value,<a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.pop" title="Permalink to this definition">¶</a></dt>
 <dd><p>unless the key is identifed as a constant.</p>
-<div class="line-block">
-<div class="line">If key is not found, d is returned if given, otherwise KeyError is raised</div>
-</div>
+<p>If key is not found, d is returned if given, otherwise KeyError is raised</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="examples.constants.constants.FinalDict.setdefault">
-<code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#FinalDict.setdefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.FinalDict.setdefault" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.FinalDict.setdefault">
+<code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.setdefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.setdefault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert key with a value of default if key is not in the dictionary.</p>
 <p>Prevents changes if the key is identified as a constant.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="examples.constants.constants.FinalDict.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">mapping_or_iterable=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#FinalDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.FinalDict.update" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.FinalDict.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">mapping_or_iterable=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the content of the dict from a mapping or an iterable,
 or from a list of keywords arguments.</p>
 <p>Keys identified as constants are prevented from changing.</p>
@@ -211,8 +279,8 @@ or from a list of keywords arguments.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="examples.constants.constants.ModuleWithConstants">
-<em class="property">class </em><code class="sig-prename descclassname">examples.constants.constants.</code><code class="sig-name descname">ModuleWithConstants</code><a class="reference internal" href="_modules/examples/constants/constants.html#ModuleWithConstants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.ModuleWithConstants" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.ModuleWithConstants">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">ModuleWithConstants</code><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#ModuleWithConstants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.ModuleWithConstants" title="Permalink to this definition">¶</a></dt>
 <dd><p>Special module type that prevents variables identified as constants
 to have their value changed.</p>
 <p>This is used to replace a module __class__ from the default as follows:</p>
@@ -225,31 +293,26 @@ exception could be raised.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="examples.constants.constants.add_hook">
-<code class="sig-prename descclassname">examples.constants.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.add_hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.add_hook">
+<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="examples.constants.constants.remove_hook">
-<code class="sig-prename descclassname">examples.constants.constants.</code><code class="sig-name descname">remove_hook</code><span class="sig-paren">(</span><em class="sig-param">hook</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#remove_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.remove_hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.constants.remove_hook">
+<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">remove_hook</code><span class="sig-paren">(</span><em class="sig-param">hook</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#remove_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.remove_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Useful for testing and isolating import hooks</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="examples.constants.constants.transform_source">
-<code class="sig-prename descclassname">examples.constants.constants.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/examples/constants/constants.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#examples.constants.constants.transform_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identifies simple assignmentswith a Final type
-hint, adding a line of code which allows to keep track of them.</p>
-<p>So, something like</p>
-<blockquote>
-<div><p>name: Final = value</p>
-</div></blockquote>
-<p>gets replaced by something like</p>
-<blockquote>
-<div><p>__declared_final__.add(‘name’)
-name = value</p>
-</div></blockquote>
+<dt id="ideas.examples.constants.constants.transform_source">
+<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifies simple assignments with a Final type hint, returning
+the source unchanged.</p>
+<dl class="simple">
+<dt>Pattern we are looking for::</dt><dd><p>python_identifier : Final …</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -263,8 +326,10 @@ name = value</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="modules.html" class="btn btn-neutral float-left" title="Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

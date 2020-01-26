@@ -24,13 +24,20 @@ Quick links to topics
    :maxdepth: 1
 
     Motivation <motivation>
-    Contents of various modules <modules>
 
 .. toctree::
    :maxdepth: 1
    :caption: Examples
 
     True constants <constants>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: API
+
+    import_hook.py <import_hook>
+    utils.py <utils>
+
 
 
 To do

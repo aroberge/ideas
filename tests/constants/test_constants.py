@@ -1,5 +1,5 @@
 import sys
-from ideas import _change_path_for_testing
+from ideas.utils import change_path_for_testing
 
 NAME = "constants"
 MODULE = None
@@ -13,7 +13,7 @@ NB_HOOKS = len(sys.meta_path)  # Note: pytest adds its own hooks
 
 def set_up():
     global MODULE, HOOK
-    _change_path_for_testing(NAME)
+    change_path_for_testing(NAME)
     MODULE = __import__(NAME)
     HOOK = MODULE.add_hook()
 
@@ -21,7 +21,7 @@ def set_up():
 def tear_down():
     MODULE.remove_hook(HOOK)
     assert len(sys.meta_path) == NB_HOOKS, "Import hook properly removed"
-    _change_path_for_testing(NAME, remove=True)
+    change_path_for_testing(NAME, remove=True)
 
 
 def test_uppercase():

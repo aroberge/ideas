@@ -6,15 +6,23 @@ import keyword
 import token as token_module
 import tokenize
 import os.path
+import sys
 
 from io import StringIO
 
-_token_format = "{type:<10}{string:<25} {start:^12} {end:^12} {line:^12}"
+_token_format = "{type:<10}{string:<20} {start:<10} {end:<10} {line:<10}"
 
 
 class Token:
     """Token as generated from tokenize.generate_tokens written here in
-       a more convenient form for our purpose.
+       a more convenient form for our purpose. The various
+       paramters are::
+
+           type: token type
+           string: the token written as a string
+           start = (start_line, start_col)
+           end = (end_line, end_col)
+           line: entire line of code where the token is found.
     """
 
     def __init__(self, token):
@@ -139,3 +147,15 @@ def print_token_table(source):
     tokens = tokenize_source(source)
     for token in tokens:
         print(token)
+
+
+def change_path_for_testing(name, remove=False):
+    """This function is useful for testing.
+    """
+    this_dir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    example_dir = os.path.abspath(os.path.join(this_dir, "examples", name))
+    if remove:
+        if example_dir in sys.path:
+            sys.path.remove(example_dir)
+    elif os.path.exists(example_dir) and example_dir not in sys.path:
+        sys.path.insert(0, example_dir)

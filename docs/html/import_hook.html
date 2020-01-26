@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Modules &mdash; ideas 0.0.1 documentation</title>
+  <title>import_hook.py &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="True constants" href="constants.html" />
-    <link rel="prev" title="Motivation for ideas" href="motivation.html" /> 
+    <link rel="next" title="utils.py" href="utils.html" />
+    <link rel="prev" title="True constants" href="constants.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -85,13 +85,17 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Contents of various modules</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 </ul>
 
             
@@ -137,13 +141,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Modules</li>
+      <li>import_hook.py</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/import_hook.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -153,10 +157,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for ideas" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-left" title="True constants" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -165,10 +169,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="modules">
-<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> currently consists of a single module.</p>
-<span class="target" id="module-ideas.import_hook"></span><p>This is a simple proof of concept. It is not meant to be taken seriously.</p>
+  <div class="section" id="module-ideas.import_hook">
+<span id="import-hook-py"></span><h1>import_hook.py<a class="headerlink" href="#module-ideas.import_hook" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple proof of concept. It is not meant to be taken seriously.</p>
 <dl class="class">
 <dt id="ideas.import_hook.MyLoader">
 <em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">MyLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">source_transformer=None</em>, <em class="sig-param">module_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#MyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.MyLoader" title="Permalink to this definition">¶</a></dt>
@@ -218,22 +221,6 @@ its loader.</p>
 <dd><p>Function used to remove a previously import hook inserted in sys.meta_path</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="ideas.import_hook.shorten_path">
-<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">shorten_path</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#shorten_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.shorten_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Utility function used to reduce the length of the path shown
-to a user. For example, a path for a module in the Python
-standard library might be shown as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHON</span><span class="p">:</span><span class="o">/</span><span class="n">module</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>whereas a file found in the user’s root directory might be shown
-as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="nb">dir</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </div>
 
 
@@ -244,10 +231,10 @@ as:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for ideas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-left" title="True constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

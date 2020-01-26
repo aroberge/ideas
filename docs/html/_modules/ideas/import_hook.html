@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.import_hook &mdash; ideas 0.0.1 documentation</title>
+  <title>ideas.import_hook &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2
               </div>
             
           
@@ -85,11 +85,15 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html"> Contents of various modules</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html"> utils.py</a></li>
 </ul>
 
             
@@ -164,42 +168,8 @@
 <span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">stdlib_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
 
-<span class="n">PYTHON</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="n">IDEAS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">TESTS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-
-<div class="viewcode-block" id="shorten_path"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.shorten_path">[docs]</a><span class="k">def</span> <span class="nf">shorten_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Utility function used to reduce the length of the path shown</span>
-<span class="sd">       to a user. For example, a path for a module in the Python</span>
-<span class="sd">       standard library might be shown as::</span>
-
-<span class="sd">           PYTHON:/module.py</span>
-
-<span class="sd">       whereas a file found in the user&#39;s root directory might be shown</span>
-<span class="sd">       as::</span>
-
-<span class="sd">            ~/dir/file.py</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># On windows, the filenames are not case sensitive</span>
-    <span class="c1"># and the way Python displays filenames may vary.</span>
-    <span class="c1"># To properly compare, we convert everything to lowercase</span>
-    <span class="c1"># However, we ensure that the shortened path retains its cases</span>
-    <span class="n">path_lower</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;TESTS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">TESTS</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;IDEAS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;PYTHON:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOME</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">HOME</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">return</span> <span class="n">path</span></div>
-
-
-<div class="viewcode-block" id="MyMetaFinder"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.MyMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">MyMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
+<div class="viewcode-block" id="MyMetaFinder"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.MyMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">MyMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A custom finder to locate modules.  The main reason for this code</span>
 <span class="sd">       is to ensure that our custom loader, which does the code transformations,</span>
 <span class="sd">       is used.&quot;&quot;&quot;</span>
@@ -209,7 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source_transformer</span> <span class="o">=</span> <span class="n">source_transformer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span> <span class="o">=</span> <span class="n">module_dict</span>
 
-<div class="viewcode-block" id="MyMetaFinder.find_spec"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.MyMetaFinder.find_spec">[docs]</a>    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MyMetaFinder.find_spec"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.MyMetaFinder.find_spec">[docs]</a>    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;finds the appropriate properties (spec) of a module, and sets</span>
 <span class="sd">           its loader.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
@@ -245,7 +215,7 @@
         <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># we don&#39;t know how to import this</span></div></div>
 
 
-<div class="viewcode-block" id="MyLoader"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.MyLoader">[docs]</a><span class="k">class</span> <span class="nc">MyLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLoader"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.MyLoader">[docs]</a><span class="k">class</span> <span class="nc">MyLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A custom loader which will transform the source prior to its execution&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
@@ -256,10 +226,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source_transformer</span> <span class="o">=</span> <span class="n">source_transformer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span> <span class="o">=</span> <span class="n">module_dict</span>
 
-<div class="viewcode-block" id="MyLoader.create_module"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.MyLoader.create_module">[docs]</a>    <span class="k">def</span> <span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLoader.create_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.MyLoader.create_module">[docs]</a>    <span class="k">def</span> <span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># use default module creation semantics</span></div>
 
-<div class="viewcode-block" id="MyLoader.exec_module"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.MyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
+<div class="viewcode-block" id="MyLoader.exec_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.MyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Import the source code, transform it before executing it so that</span>
 <span class="sd">           it is known to Python.&quot;&quot;&quot;</span>
         <span class="k">global</span> <span class="n">Main_Module_Name</span>
@@ -276,20 +246,19 @@
             <span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_transformer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_transformer</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-            <span class="c1"># print(source)</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_transformer</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
 
         <span class="n">mod_dict</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">mod_dict</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mod_dict</span><span class="p">)</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span><span class="p">)</span>
-            <span class="n">mod_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span></div></div>
+            <span class="n">mod_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module_dict</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span><span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_transformer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span><span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_transformer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to facilitate the creation of an import hook&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">MyMetaFinder</span><span class="p">(</span>
         <span class="n">module_class</span><span class="o">=</span><span class="n">module_class</span><span class="p">,</span>
@@ -298,7 +267,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../modules.html#ideas.import_hook.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>
+<div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function used to remove a previously import hook inserted in sys.meta_path&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="n">hook</span><span class="p">:</span>

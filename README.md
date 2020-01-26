@@ -50,10 +50,16 @@ and flake8 for linting.
 - List cases/recipes to be included
 - Add console
 - Add support for `__main__`
+  - something like `import_as_main(module, name_to_use=__subordinate__)`
 - Add test to ensure desired paths (e.g. Python standard library) are excluded.
 - show excluded path
 - show abbreviations used for paths
 - always exclude ideas itself
+- add line tokenizer
+- add space preserving tokenizer
+- add utils.Token with many methods including `is_identifier`, `is_keyword`,
+  `is_operator(optional_string)`
+- have a tokenizing option to remove all string contents and strip comments.
 
 
 More to come ...
