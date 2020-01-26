@@ -1,10 +1,9 @@
-import re
 import sys
 import types
 
-from ideas import import_hook
+from ideas import import_hook, utils
 
-shorten_path = import_hook.shorten_path
+shorten_path = utils.shorten_path
 CONSTANTS = {}
 DECLARED_FINAL = {}
 
@@ -37,8 +36,8 @@ class ModuleWithConstants(types.ModuleType):
     def __delattr__(self, attr):
         if attr in CONSTANTS[self.__file__]:
             print(
-                "You cannot delete the constant %s of module %s"
-                % (attr, shorten_path(self.__file__))
+                "You cannot delete the constant %s.%s"
+                % (shorten_path(self.__file__), attr)
             )
             return
 
@@ -134,32 +133,46 @@ class FinalDict(dict):
             self.__setitem__(key, kwargs[key])
 
 
-# For this example, we use simple regular expressions to identify
-# lines of code that correspond to variable assignments. It is assumed
-# that each assignment is done on a single line of code.
-# This approach can change values within triple-quoted strings
-# and does not capture all the possible cases for variable assignments.
-# It is simply used as a quick demonstration.
-
-# We scan for lines that include something like
-#     python_identifier : Final = whatever
-# but assume that it would not be indented.
-final_declaration_pattern = re.compile(r"^([\w][\w\d]*)\s*:\s*Final\s*=\s*(.+)")
-
-
 def transform_source(source, filename=None, **kwargs):
-    """Identifies simple assignments with a Final type
-       hint, adding a line of code which allows to keep track of them.
+    """Identifies simple assignments with a Final type hint, returning
+       the source unchanged.
+
+       Pattern we are looking for::
+           python_identifier : Final ...
     """
     CONSTANTS[filename] = {}
     DECLARED_FINAL[filename] = set([])
 
-    lines = source.split("\n")
-    for line in lines:
-        match_final = re.search(final_declaration_pattern, line)
-        if match_final:
-            name = match_final.group(1)
-            DECLARED_FINAL[filename].add(name)
+    first_is_identifier = False
+    second_is_colon = False
+
+    for token in utils.tokenize_source(source):
+
+        if first_is_identifier and second_is_colon:
+            if token.string == "Final":
+                DECLARED_FINAL[filename].add(first_is_identifier.string)
+            first_is_identifier = False
+            second_is_colon = False
+            continue
+
+        elif first_is_identifier:
+            if token.is_operator(":"):
+                second_is_colon = True
+            else:
+                first_is_identifier = False
+            continue
+
+        elif token.start_col == 0:
+            second_is_colon = False
+            if token.is_identifier():
+                first_is_identifier = token
+            else:
+                first_is_identifier = False
+            continue
+
+        else:
+            first_is_identifier = False
+            second_is_colon = False
 
     return source
 

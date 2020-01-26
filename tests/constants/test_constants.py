@@ -29,11 +29,13 @@ def test_uppercase():
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
+    print("Importing uppercase.py")
     try:
         import uppercase
     except ImportError:
         from . import uppercase
 
+    print("\nAttempting to change values of uppercase attributes.")
     # The following confirm that attempts to modify it indirectly will fail
     assert uppercase.XX == 36, "Cannot change value of uppercase constant"
     del uppercase.XX
@@ -54,11 +56,13 @@ def test_final():
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
+    print("Importing final.py")
     try:
         import final
     except ImportError:
         from . import final
 
+    print("\nAttempting to change values of final attributes.")
     # The following confirm that attempts to modify constants indirectly will fail
     assert final.const == 1, "In test: confirm initial value of final constant"
     final.const = 2
@@ -75,10 +79,8 @@ def test_final():
 
 
 if __name__ == "__main__":
-    print("Testing uppercase:")
     test_uppercase()
     print("- " * 30)
-    print("Testing final:")
     test_final()
     print("- " * 30)
     print("--> Success: test_constants.py ran as expected.")
