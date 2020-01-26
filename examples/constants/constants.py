@@ -6,6 +6,7 @@ from ideas import import_hook
 
 shorten_path = import_hook.shorten_path
 CONSTANTS = {}
+DECLARED_FINAL = {}
 
 
 class ModuleWithConstants(types.ModuleType):
@@ -22,24 +23,18 @@ class ModuleWithConstants(types.ModuleType):
     """
 
     def __setattr__(self, attr, value):
-        if self.__file__ not in CONSTANTS:
-            CONSTANTS[self.__file__] = {}
-
         if attr in CONSTANTS[self.__file__]:
             print(
                 "You cannot change the value of %s.%s to %s"
                 % (shorten_path(self.__file__), attr, value)
             )
             return
-        if attr == attr.upper():
+        if attr == attr.upper() or attr in DECLARED_FINAL[self.__file__]:
             print("You cannot add constants to another module.")
             return
         super().__setattr__(attr, value)
 
     def __delattr__(self, attr):
-        if self.__file__ not in CONSTANTS:
-            CONSTANTS[self.__file__] = {}
-
         if attr in CONSTANTS[self.__file__]:
             print(
                 "You cannot delete the constant %s of module %s"
@@ -65,8 +60,6 @@ class FinalDict(dict):
     def __init__(self, module_filename):
         """Initialises the instance"""
         self.__file__ = module_filename
-        if self.__file__ not in CONSTANTS:
-            CONSTANTS[self.__file__] = {}
         super().__init__()
 
     def __setitem__(self, key, value):
@@ -81,13 +74,7 @@ class FinalDict(dict):
                 % (shorten_path(self.__file__), key, value)
             )
             return
-        try:
-            declared_final = self.__getitem__("__declared_final__")
-        except Exception:
-            declared_final = []
-        if (
-            key == key.upper() or key in declared_final
-        ):  # Python convention for constants
+        if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
             CONSTANTS[self.__file__][key] = value
         return super().__setitem__(key, value)
 
@@ -112,15 +99,15 @@ class FinalDict(dict):
                 % (shorten_path(self.__file__), key)
             )
             return
-        if key == key.upper():  # Python convention for constants
+        if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
             CONSTANTS[self.__file__][key] = default
         return super().setdefault(key, default)
 
     def pop(self, key):
         """D.pop(key) -> value, remove specified key and return the corresponding value,
-        unless the key is identifed as a constant.
+            unless the key is identifed as a constant.
 
- |      If key is not found, d is returned if given, otherwise KeyError is raised
+            If key is not found, d is returned if given, otherwise KeyError is raised
         """
         if key in CONSTANTS[self.__file__]:
             print(
@@ -132,9 +119,9 @@ class FinalDict(dict):
 
     def update(self, mapping_or_iterable=(), **kwargs):
         """Updates the content of the dict from a mapping or an iterable,
-           or from a list of keywords arguments.
+            or from a list of keywords arguments.
 
-           Keys identified as constants are prevented from changing.
+            Keys identified as constants are prevented from changing.
         """
         if hasattr(mapping_or_iterable, "keys"):
             for key in mapping_or_iterable:
@@ -160,45 +147,21 @@ class FinalDict(dict):
 final_declaration_pattern = re.compile(r"^([\w][\w\d]*)\s*:\s*Final\s*=\s*(.+)")
 
 
-def transform_source(source):
-    """Identifies simple assignmentswith a Final type
+def transform_source(source, filename=None, **kwargs):
+    """Identifies simple assignments with a Final type
        hint, adding a line of code which allows to keep track of them.
-
-       So, something like
-
-           name: Final = value
-
-       gets replaced by something like
-
-           __declared_final__.add('name')
-           name = value
     """
-
-    # We are going to add an import to Python's sys module and want to make
-    # sure that it won't conflict with any variable in the source
-    if "sys" not in source:
-        sys_name = "sys"
-    else:
-        i = 0
-        while True:
-            sys_name = "sys" + str(i)
-            if sys_name not in source:
-                break
-            i += 1
+    CONSTANTS[filename] = {}
+    DECLARED_FINAL[filename] = set([])
 
     lines = source.split("\n")
-    new_lines = ["__declared_final__ = set([])"]
     for line in lines:
         match_final = re.search(final_declaration_pattern, line)
         if match_final:
             name = match_final.group(1)
-            value = match_final.group(2)
-            new_lines.append("__declared_final__.add('%s')" % name)
-            new_lines.append("%s = %s" % (name, value))
-        else:
-            new_lines.append(line)
+            DECLARED_FINAL[filename].add(name)
 
-    return "\n".join(new_lines)
+    return source
 
 
 def add_hook():
@@ -206,7 +169,7 @@ def add_hook():
     hook = import_hook.create_hook(
         module_class=ModuleWithConstants,
         source_transformer=transform_source,
-        globals_=FinalDict,
+        module_dict=FinalDict,
     )
     sys.meta_path.insert(0, hook)
     return hook

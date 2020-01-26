@@ -121,17 +121,16 @@ class MyLoader(Loader):
             Main_Module_Name = None
 
         if self.source_transformer is not None:
-            source = self.source_transformer(source)
-            # print(source)
+            source = self.source_transformer(source, filename=self.filename)
 
         mod_dict = sys.modules[module.__name__].__dict__
-        if self.module_dict is not None:
+        if self.module_dict is None:
+            exec(source, mod_dict)
+        else:
             self.module_dict = self.module_dict(self.filename)
             self.module_dict.update(mod_dict)
             exec(source, self.module_dict)
             mod_dict.update(self.module_dict)
-        else:
-            exec(source, sys.modules[module.__name__].__dict__)
 
 
 def create_hook(module_class=None, source_transformer=None, module_dict=None):
