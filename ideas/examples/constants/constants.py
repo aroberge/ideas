@@ -143,37 +143,14 @@ def transform_source(source, filename=None, **kwargs):
     CONSTANTS[filename] = {}
     DECLARED_FINAL[filename] = set([])
 
-    first_is_identifier = False
-    second_is_colon = False
-
-    for token in utils.tokenize_source(source):
-
-        if first_is_identifier and second_is_colon:
-            if token.string == "Final":
-                DECLARED_FINAL[filename].add(first_is_identifier.string)
-            first_is_identifier = False
-            second_is_colon = False
-            continue
-
-        elif first_is_identifier:
-            if token.is_operator(":"):
-                second_is_colon = True
-            else:
-                first_is_identifier = False
-            continue
-
-        elif token.start_col == 0:
-            second_is_colon = False
-            if token.is_identifier():
-                first_is_identifier = token
-            else:
-                first_is_identifier = False
-            continue
-
-        else:
-            first_is_identifier = False
-            second_is_colon = False
-
+    for line in utils.get_lines_of_tokens(source):
+        if (
+            len(line) >= 4
+            and line[0].is_identifier()
+            and line[1].is_operator(":")
+            and line[2].string == "Final"
+        ):
+            DECLARED_FINAL[filename].add(line[0].string)
     return source
 
 

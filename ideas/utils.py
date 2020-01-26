@@ -71,31 +71,54 @@ def tokenize_source(source):
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
+            if token.type == tokenize.COMMENT:
+                continue
             if not token.string.strip():  # ignore spaces
                 continue
-            if token.type == tokenize.COMMENT:
-                break
             tokens.append(token)
     except tokenize.TokenError as exc:
         print("#" * 50)
         print("WARNING: the following tokenize error was raised\n", exc)
         print("#" * 50)
-        return tokens
     except Exception as exc:
         print("#" * 50)
         print("WARNING: the following exception was raised\n", exc)
         print("#" * 50)
-        return tokens
 
     return tokens
 
 
-def tokenize_source_lines(source_lines):
-    """Makes a list of tokens from a source (list of lines),
-       ignoring spaces and comments.
-    """
-    source = "\n".join(source_lines)
-    return tokenize_source(source)
+def get_lines_of_tokens(source):
+    """Makes a list of lists of tokens, with each (inner) list including
+       all tokens that start on the same line"""
+    lines = []
+    current_line = -1
+    new_line = []
+    try:
+        for tok in tokenize.generate_tokens(StringIO(source).readline):
+            token = Token(tok)
+            if token.type == tokenize.COMMENT:
+                continue
+            if not token.string.strip():  # ignore spaces
+                continue
+            if token.start_line != current_line:
+                current_line = token.start_line
+                if new_line:
+                    lines.append(new_line)
+                new_line = []
+            new_line.append(token)
+    except tokenize.TokenError as exc:
+        print("#" * 50)
+        print("WARNING: the following tokenize error was raised\n", exc)
+        print("#" * 50)
+    except Exception as exc:
+        print("#" * 50)
+        print("WARNING: the following exception was raised\n", exc)
+        print("#" * 50)
+
+    if new_line:
+        lines.append(new_line)
+    return lines
 
 
 PYTHON = os.path.dirname(os.__file__).lower()
