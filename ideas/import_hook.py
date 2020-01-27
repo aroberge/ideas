@@ -10,7 +10,7 @@ Main_Module_Name = None
 stdlib_dir = os.path.dirname(os.__file__)
 
 
-class MyMetaFinder(MetaPathFinder):
+class IdeasMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
        is used."""
@@ -45,7 +45,7 @@ class MyMetaFinder(MetaPathFinder):
             return spec_from_file_location(
                 fullname,
                 filename,
-                loader=MyLoader(
+                loader=IdeasLoader(
                     filename,
                     module_class=self.module_class,
                     source_transformer=self.source_transformer,
@@ -56,7 +56,7 @@ class MyMetaFinder(MetaPathFinder):
         return None  # we don't know how to import this
 
 
-class MyLoader(Loader):
+class IdeasLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(
@@ -75,7 +75,7 @@ class MyLoader(Loader):
            it is known to Python."""
         global Main_Module_Name
 
-        with open(self.filename) as f:
+        with open(self.filename) as f:  # to do: use decode_source instead
             source = f.read()
 
         if self.module_class is not None:
@@ -101,7 +101,7 @@ class MyLoader(Loader):
 
 def create_hook(module_class=None, source_transformer=None, module_dict=None):
     """Function to facilitate the creation of an import hook"""
-    return MyMetaFinder(
+    return IdeasMetaFinder(
         module_class=module_class,
         source_transformer=source_transformer,
         module_dict=module_dict,

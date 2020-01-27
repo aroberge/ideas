@@ -1,34 +1,9 @@
-import sys
-from ideas.utils import change_path_for_testing
+from ideas.import_hook import remove_hook
 from ideas.examples import constants
-
-NAME = "constants"
-MODULE = None
-HOOK = None
-NB_HOOKS = len(sys.meta_path)  # Note: pytest adds its own hooks
-
-# I want to be able to test this by itself, independent of pytest
-# I cannot use the names "setup" and "teardown" otherwise pytest will raise
-# an error
-
-
-def set_up():
-    global MODULE, HOOK
-    # from ideas.examples import constants
-    HOOK = constants.add_hook()
-    # change_path_for_testing(NAME)
-    # MODULE = __import__(NAME)
-    # HOOK = MODULE.add_hook()
-
-
-def tear_down():
-    constants.remove_hook(HOOK)
-    assert len(sys.meta_path) == NB_HOOKS, "Import hook properly removed"
-    #change_path_for_testing(NAME, remove=True)
 
 
 def test_uppercase():
-    set_up()
+    hook = constants.add_hook()
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
@@ -51,11 +26,11 @@ def test_uppercase():
     assert uppercase.new == 3, "Non constant values can be changed"
     del uppercase.new
 
-    tear_down()
+    remove_hook(hook)
 
 
 def test_final():
-    set_up()
+    hook = constants.add_hook()
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
@@ -78,7 +53,7 @@ def test_final():
     assert final.new == 3, "Non constant values can be changed"
     del final.new
 
-    tear_down()
+    remove_hook(hook)
 
 
 if __name__ == "__main__":

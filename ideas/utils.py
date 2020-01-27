@@ -65,15 +65,16 @@ class Token:
         )
 
 
-def tokenize_source(source):
-    """Makes a list of tokens from a source (str), ignoring spaces and comments."""
+def tokenize_source(source, ignore_spaces=True, ignore_comments=True):
+    """Makes a list of tokens from a source (str), ignoring spaces and comments
+       by default."""
     tokens = []
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
-            if token.type == tokenize.COMMENT:
+            if ignore_comments and token.type == tokenize.COMMENT:
                 continue
-            if not token.string.strip():  # ignore spaces
+            if ignore_spaces and not token.string.strip():
                 continue
             tokens.append(token)
     except tokenize.TokenError as exc:
