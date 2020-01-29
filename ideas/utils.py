@@ -20,23 +20,34 @@ class Token:
 
            type: token type
            string: the token written as a string
-           start = (start_line, start_col)
-           end = (end_line, end_col)
+           start = (start_row, start_col)
+           end = (end_row, end_col)
            line: entire line of code where the token is found.
     """
 
     def __init__(self, token):
         self.type = token[0]
         self.string = token[1]
-        self.start = self.start_line, self.start_col = token[2]
-        self.end = self.end_line, self.end_col = token[3]
+        self.start = self.start_row, self.start_col = token[2]
+        self.end = self.end_row, self.end_col = token[3]
         self.line = token[4]
         if self.line and self.line[-1] == "\n":
             self.line = self.line[:-1]
 
-    def is_keyword(self):
-        """Returns True if the token represents a Python keyword"""
-        return self.type == tokenize.NAME and keyword.iskeyword(self.string)
+    def is_keyword(self, name=None):
+        """Returns True if the token represents a Python keyword.
+
+           If ``name`` is specified, then it returns True only if
+           the keyword is the one specified.
+        """
+        if name is not None:
+            return (
+                self.type == tokenize.NAME
+                and keyword.iskeyword(self.string)
+                and name == self.string
+            )
+        else:
+            return self.type == tokenize.NAME and keyword.iskeyword(self.string)
 
     def is_identifier(self):
         """Returns True if the token is a Python identifier"""
@@ -106,8 +117,8 @@ def get_lines_of_tokens(source):
                 continue
             if not token.string.strip():  # ignore spaces
                 continue
-            if token.start_line != current_line:
-                current_line = token.start_line
+            if token.start_row != current_line:
+                current_line = token.start_row
                 if new_line:
                     lines.append(new_line)
                 new_line = []
@@ -181,3 +192,61 @@ def change_path_for_testing(name, remove=False):
             sys.path.remove(example_dir)
     elif os.path.exists(example_dir) and example_dir not in sys.path:
         sys.path.insert(0, example_dir)
+
+
+# untokenize adapted from https://github.com/myint/untokenize
+#
+# TODO: acknowledge it properly
+# add tests for it.
+#
+
+
+TOKENIZE_HAS_ENCODING = hasattr(tokenize, "ENCODING")
+
+WHITESPACE_TOKENS = frozenset([tokenize.INDENT, tokenize.NEWLINE, tokenize.NL])
+
+
+def untokenize(tokens):
+    """Return source code based on tokens.
+
+    This is like tokenize.untokenize(), but it preserves spacing between
+    tokens. So if the original soure code had multiple spaces between
+    some tokens or if escaped newlines were used, those things will be
+    reflected by untokenize().
+
+    """
+    words = []
+    previous_line = ""
+    last_row = 0
+    last_column = -1
+    last_non_whitespace_tokey_type = None
+
+    for token in tokens:
+        if TOKENIZE_HAS_ENCODING and token.type == tokenize.ENCODING:
+            continue
+
+        # Preserve escaped newlines.
+        if (
+            last_non_whitespace_tokey_type != tokenize.COMMENT
+            and token.start_row > last_row
+            and previous_line.endswith(("\\\n", "\\\r\n", "\\\r"))
+        ):
+            words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
+
+        # Preserve spacing.
+        if token.start_row > last_row:
+            last_column = 0
+        if token.start_col > last_column:
+            words.append(token.line[last_column:token.start_col])
+
+        words.append(token.string)
+
+        previous_line = token.line
+
+        last_row = token.end_row
+        last_column = token.end_col
+
+        if token.type not in WHITESPACE_TOKENS:
+            last_non_whitespace_tokey_type = token.type
+
+    return "".join(words)
