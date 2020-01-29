@@ -10,7 +10,7 @@ import sys
 
 from io import StringIO
 
-_token_format = "{type:<10}{string:<20} {start:<10} {end:<10} {line:<10}"
+_token_format = "type={type}  string={string}  start={start}  end={end}  line='{line}'"
 
 
 class Token:
@@ -57,18 +57,19 @@ class Token:
     def __repr__(self):
         """Nicely formatted token"""
         return _token_format.format(
-            type=token_module.tok_name[self.type],
-            string=self.string,
+            type="%s (%s)" % (self.type, token_module.tok_name[self.type]),
+            string=repr(self.string),
             start=str(self.start),
             end=str(self.end),
-            line=str(self.line),
+            line=str(self.line).replace("\t", "\\t"),
         )
 
 
-def tokenize_source(source, ignore_spaces=True, ignore_comments=True):
-    """Makes a list of tokens from a source (str), ignoring spaces and comments
-       by default."""
+def tokenize_source(source, ignore_spaces=False, ignore_comments=False):
+    """Makes a list of tokens from a source (str), with the option of
+       ignoring comments and/or spaces."""
     tokens = []
+    # empty_NL_token = False
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
@@ -76,7 +77,10 @@ def tokenize_source(source, ignore_spaces=True, ignore_comments=True):
                 continue
             if ignore_spaces and not token.string.strip():
                 continue
+
+            # Todo: see if https://bugs.python.org/issue35107#msg328884 is ok
             tokens.append(token)
+
     except tokenize.TokenError as exc:
         print("#" * 50)
         print("WARNING: the following tokenize error was raised\n", exc)
@@ -162,12 +166,6 @@ def print_token_table(source):
 
        This is occasionally useful to use at the console during development.
     """
-    print(
-        _token_format.format(
-            type="Type", string="String", start="Start", end="End", line="last"
-        )
-    )
-    print("-" * 73)
     tokens = tokenize_source(source)
     for token in tokens:
         print(token)

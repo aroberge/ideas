@@ -1,4 +1,3 @@
-from ideas.import_hook import remove_hook
 from ideas.examples import constants
 
 
@@ -26,21 +25,23 @@ def test_uppercase():
     assert uppercase.new == 3, "Non constant values can be changed"
     del uppercase.new
 
-    remove_hook(hook)
+    constants.tear_down(hook, uppercase)
 
 
-def test_final():
-    hook = constants.add_hook()
+def test_final(on_prevent_change=None):
+    hook = constants.add_hook(on_prevent_change=on_prevent_change)
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
-    print("Importing final.py")
+    if on_prevent_change is None:
+        print("Importing final.py")
     try:
         import final
     except ImportError:
         from . import final
 
-    print("\nAttempting to change values of final attributes.")
+    if on_prevent_change is None:
+        print("\nAttempting to change values of final attributes.")
     # The following confirm that attempts to modify constants indirectly will fail
     assert final.const == 1, "In test: confirm initial value of final constant"
     final.const = 2
@@ -53,7 +54,7 @@ def test_final():
     assert final.new == 3, "Non constant values can be changed"
     del final.new
 
-    remove_hook(hook)
+    constants.tear_down(hook, final)
 
 
 if __name__ == "__main__":
@@ -61,4 +62,7 @@ if __name__ == "__main__":
     print("- " * 30)
     test_final()
     print("- " * 30)
+    print("About to redo test_final with on_prevent_change set to True")
+    test_final(on_prevent_change=True)
+    print("Test completed: Nothing should have been printed.")
     print("--> Success: test_constants.py ran as expected.")

@@ -8,40 +8,46 @@ CONSTANTS = {}
 DECLARED_FINAL = {}
 
 
-class ModuleWithConstants(types.ModuleType):
-    """Special module type that prevents variables identified as constants
-       to have their value changed.
+def make_class(on_prevent_change=True):
 
-       This is used to replace a module __class__ from the default as follows:
+    class ModuleWithConstants(types.ModuleType):
+        """Special module type that prevents variables identified as constants
+           to have their value changed.
 
-           module.__class__ = ModuleWithConstants
+           This is used to replace a module __class__ from the default as follows:
 
-       This example only prints a message when an attempt is made to change
-       the value of a constant. Alternatively, this could be logged or an
-       exception could be raised.
-    """
+               module.__class__ = ModuleWithConstants
 
-    def __setattr__(self, attr, value):
-        if attr in CONSTANTS[self.__file__]:
-            print(
-                "You cannot change the value of %s.%s to %s"
-                % (shorten_path(self.__file__), attr, value)
-            )
-            return
-        if attr == attr.upper() or attr in DECLARED_FINAL[self.__file__]:
-            print("You cannot add constants to another module.")
-            return
-        super().__setattr__(attr, value)
+           This example only prints a message when an attempt is made to change
+           the value of a constant. Alternatively, this could be logged or an
+           exception could be raised.
+        """
 
-    def __delattr__(self, attr):
-        if attr in CONSTANTS[self.__file__]:
-            print(
-                "You cannot delete the constant %s.%s"
-                % (shorten_path(self.__file__), attr)
-            )
-            return
+        def __setattr__(self, key, value):
+            if (
+                key in CONSTANTS[self.__file__]
+                or key == key.upper()
+                or key in DECLARED_FINAL[self.__file__]
+            ):
+                if on_prevent_change:
+                    if callable(on_prevent_change):
+                        on_prevent_change(
+                            filename=self.__file__, key=key, value=value, kind="set"
+                        )
+                    return
+            super().__setattr__(key, value)
 
-        super().__delattr__(attr)
+        def __delattr__(self, key):
+            if key in CONSTANTS[self.__file__]:
+                if on_prevent_change:
+                    if callable(on_prevent_change):
+                        on_prevent_change(
+                            filename=self.__file__, key=key, kind="delete"
+                        )
+                    return
+            super().__delattr__(key)
+
+    return ModuleWithConstants
 
 
 class FinalDict(dict):
@@ -56,9 +62,10 @@ class FinalDict(dict):
         of a constant.
     """
 
-    def __init__(self, module_filename):
+    def __init__(self, module_filename, on_prevent_change=True):
         """Initialises the instance"""
         self.__file__ = module_filename
+        self.on_prevent_change = on_prevent_change
         super().__init__()
 
     def __setitem__(self, key, value):
@@ -68,11 +75,12 @@ class FinalDict(dict):
            its value after initial assignment.
         """
         if key in CONSTANTS[self.__file__]:
-            print(
-                "You cannot change the value of %s.%s to %s."
-                % (shorten_path(self.__file__), key, value)
-            )
-            return
+            if self.on_prevent_change:
+                if callable(self.on_prevent_change):
+                    self.on_prevent_change(
+                        filename=self.__file__, key=key, value=value, kind="set"
+                    )
+                return
         if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
             CONSTANTS[self.__file__][key] = value
         return super().__setitem__(key, value)
@@ -80,10 +88,12 @@ class FinalDict(dict):
     def __delitem__(self, key):
         """Deletes self[key] unless key is identified as a constant"""
         if key in CONSTANTS[self.__file__]:
-            print(
-                "You cannot delete %s in module %s."
-                % (key, shorten_path(self.__file__))
-            )
+            if self.on_prevent_change:
+                if callable(self.on_prevent_change):
+                    self.on_prevent_change(
+                        filename=self.__file__, key=key, kind="delete"
+                    )
+                return
             return
         return super().__delitem__(key)
 
@@ -93,11 +103,12 @@ class FinalDict(dict):
            Prevents changes if the key is identified as a constant.
         """
         if key in CONSTANTS[self.__file__]:
-            print(
-                "You cannot change the value of %s.%s."
-                % (shorten_path(self.__file__), key)
-            )
-            return
+            if self.on_prevent_change:
+                if callable(self.on_prevent_change):
+                    self.on_prevent_change(
+                        filename=self.__file__, key=key, value=default, kind="set"
+                    )
+                return
         if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
             CONSTANTS[self.__file__][key] = default
         return super().setdefault(key, default)
@@ -109,11 +120,12 @@ class FinalDict(dict):
             If key is not found, d is returned if given, otherwise KeyError is raised
         """
         if key in CONSTANTS[self.__file__]:
-            print(
-                "You cannot delete %s in module %s."
-                % (key, shorten_path(self.__file__))
-            )
-            return CONSTANTS[self.__file__][key]
+            if self.on_prevent_change:
+                if callable(self.on_prevent_change):
+                    self.on_prevent_change(
+                        filename=self.__file__, key=key, kind="delete"
+                    )
+                return CONSTANTS[self.__file__][key]
         return super().pop(key)
 
     def update(self, mapping_or_iterable=(), **kwargs):
@@ -133,13 +145,14 @@ class FinalDict(dict):
             self.__setitem__(key, kwargs[key])
 
 
-def transform_source(source, filename=None, **kwargs):
+def transform_source(source, module=None, **kwargs):
     """Identifies simple assignments with a Final type hint, returning
        the source unchanged.
 
        Pattern we are looking for::
            python_identifier : Final ...
     """
+    filename = module.__file__
     CONSTANTS[filename] = {}
     DECLARED_FINAL[filename] = set([])
 
@@ -154,17 +167,47 @@ def transform_source(source, filename=None, **kwargs):
     return source
 
 
-def add_hook():
+def exec_(source, module=None, callback_params=None):
+    globals_ = FinalDict(
+        module.__file__, on_prevent_change=callback_params["on_prevent_change"]
+    )
+    globals_.update(module.__dict__)
+    exec(source, globals_)
+    module.__dict__.update(globals_)
+
+
+def on_change_print(filename=None, key=None, value=None, kind=None):
+    if kind == "set":
+        print(
+            "You cannot change the value of %s.%s to %s"
+            % (shorten_path(filename), key, value)
+        )
+    elif kind == "delete":
+        print("You cannot delete %s in module %s." % (key, shorten_path(filename)))
+    else:
+        raise NotImplementedError
+
+
+def add_hook(on_prevent_change=None):
     """Creates and adds the import hook in sys.meta_path"""
+    if on_prevent_change is None:
+        callback_params = {"on_prevent_change": on_change_print}
+    else:
+        callback_params = {"on_prevent_change": on_prevent_change}
+    module_class = make_class(**callback_params)
     hook = import_hook.create_hook(
-        module_class=ModuleWithConstants,
+        module_class=module_class,
         source_transformer=transform_source,
-        module_dict=FinalDict,
+        exec_=exec_,
+        callback_params=callback_params,
     )
     sys.meta_path.insert(0, hook)
     return hook
 
 
-def remove_hook(hook):  # for testing
+def tear_down(hook, module):  # for testing
     """Useful for testing and isolating import hooks"""
     import_hook.remove_hook(hook)
+    del CONSTANTS[module.__file__]
+    del DECLARED_FINAL[module.__file__]
+    del sys.modules[module.__name__]

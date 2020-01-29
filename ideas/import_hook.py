@@ -15,10 +15,17 @@ class IdeasMetaFinder(MetaPathFinder):
        is to ensure that our custom loader, which does the code transformations,
        is used."""
 
-    def __init__(self, module_class=None, source_transformer=None, module_dict=None):
+    def __init__(
+        self,
+        module_class=None,
+        source_transformer=None,
+        exec_=None,
+        callback_params=None,
+    ):
         self.module_class = module_class
         self.source_transformer = source_transformer
-        self.module_dict = module_dict
+        self.exec_ = exec_
+        self.callback_params = callback_params
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -49,7 +56,8 @@ class IdeasMetaFinder(MetaPathFinder):
                     filename,
                     module_class=self.module_class,
                     source_transformer=self.source_transformer,
-                    module_dict=self.module_dict,
+                    exec_=self.exec_,
+                    callback_params=self.callback_params,
                 ),
                 submodule_search_locations=submodule_locations,
             )
@@ -60,12 +68,18 @@ class IdeasLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(
-        self, filename, module_class=None, source_transformer=None, module_dict=None
+        self,
+        filename,
+        module_class=None,
+        source_transformer=None,
+        exec_=None,
+        callback_params=None,
     ):
         self.filename = filename
         self.module_class = module_class
         self.source_transformer = source_transformer
-        self.module_dict = module_dict
+        self.exec_ = exec_
+        self.callback_params = callback_params
 
     def create_module(self, spec):
         return None  # use default module creation semantics
@@ -75,11 +89,11 @@ class IdeasLoader(Loader):
            it is known to Python."""
         global Main_Module_Name
 
-        with open(self.filename) as f:  # to do: use decode_source instead
-            source = f.read()
-
         if self.module_class is not None:
             module.__class__ = self.module_class
+
+        with open(self.filename) as f:  # to do: use decode_source instead
+            source = f.read()
 
         if Main_Module_Name is not None:
             sys.modules["__main__"] = sys.modules[module.__name__]
@@ -87,24 +101,25 @@ class IdeasLoader(Loader):
             Main_Module_Name = None
 
         if self.source_transformer is not None:
-            source = self.source_transformer(source, filename=self.filename)
+            source = self.source_transformer(
+                source, module=module, callback_params=self.callback_params
+            )
 
-        mod_dict = sys.modules[module.__name__].__dict__
-        if self.module_dict is None:
-            exec(source, mod_dict)
+        if self.exec_ is not None:
+            self.exec_(source, module=module, callback_params=self.callback_params)
         else:
-            self.module_dict = self.module_dict(self.filename)
-            self.module_dict.update(mod_dict)
-            exec(source, self.module_dict)
-            mod_dict.update(self.module_dict)
+            exec(source, module.__dict__)
 
 
-def create_hook(module_class=None, source_transformer=None, module_dict=None):
+def create_hook(
+    module_class=None, source_transformer=None, exec_=None, callback_params=None
+):
     """Function to facilitate the creation of an import hook"""
     return IdeasMetaFinder(
         module_class=module_class,
         source_transformer=source_transformer,
-        module_dict=module_dict,
+        exec_=exec_,
+        callback_params=callback_params,
     )
 
 

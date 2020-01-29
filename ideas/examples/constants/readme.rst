@@ -52,7 +52,16 @@ As Raymond Hettinger often says: **there must be a better way**. ;-)
 How to
 ------
 
-Explain here.
+.. todo::
+
+   Explain how to use this module
+
+How does it work
+----------------
+
+.. todo::
+
+    Explain how it works
 
 Suggestion for you
 ------------------
