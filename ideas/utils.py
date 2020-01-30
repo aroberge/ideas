@@ -92,14 +92,8 @@ def tokenize_source(source, ignore_spaces=False, ignore_comments=False):
             # Todo: see if https://bugs.python.org/issue35107#msg328884 is ok
             tokens.append(token)
 
-    except tokenize.TokenError as exc:
-        print("#" * 50)
-        print("WARNING: the following tokenize error was raised\n", exc)
-        print("#" * 50)
-    except Exception as exc:
-        print("#" * 50)
-        print("WARNING: the following exception was raised\n", exc)
-        print("#" * 50)
+    except (tokenize.TokenError, Exception) as exc:
+        print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
 
     return tokens
 
@@ -123,14 +117,8 @@ def get_lines_of_tokens(source):
                     lines.append(new_line)
                 new_line = []
             new_line.append(token)
-    except tokenize.TokenError as exc:
-        print("#" * 50)
-        print("WARNING: the following tokenize error was raised\n", exc)
-        print("#" * 50)
-    except Exception as exc:
-        print("#" * 50)
-        print("WARNING: the following exception was raised\n", exc)
-        print("#" * 50)
+    except (tokenize.TokenError, Exception) as exc:
+        print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
 
     if new_line:
         lines.append(new_line)
@@ -229,15 +217,18 @@ def untokenize(tokens):
         if (
             last_non_whitespace_tokey_type != tokenize.COMMENT
             and token.start_row > last_row
-            and previous_line.endswith(("\\\n", "\\\r\n", "\\\r"))
         ):
-            words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
+            if previous_line.endswith(("\\\n", "\\\r\n", "\\\r")):  # original
+                words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
+            elif previous_line.endswith("\\"):  # my fix
+                words.append(previous_line[len(previous_line.rstrip(" \t\\")) :])
+                words.append("\n")
 
         # Preserve spacing.
         if token.start_row > last_row:
             last_column = 0
         if token.start_col > last_column:
-            words.append(token.line[last_column:token.start_col])
+            words.append(token.line[last_column : token.start_col])
 
         words.append(token.string)
 
