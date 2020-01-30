@@ -4,10 +4,10 @@ from ideas.utils import tokenize_source, untokenize
 # been adapted from https://github.com/myint/untokenize
 
 
-def check(source, message):
+def check(source):
     tokens = tokenize_source(source)
     new_source = untokenize(tokens)
-    assert source == new_source, message
+    assert source == new_source
 
 
 def test_untokenize():
@@ -24,8 +24,7 @@ def zap():
     x \t= \t\t  \t 1
 
 
-''',
-        "From test_untokenize",
+'''
     )
 
 
@@ -35,28 +34,37 @@ def test_untokenize_with_tab_indentation():
 if True:
 \tdef zap():
 \t\tx \t= \t\t  \t 1
-""",
-        "From test_untokenize_with_tab_indentation",
+"""
     )
 
 
 def test_untokenize_with_backslash_in_comment():
-    check(r'''
+    check(
+        r'''
 def foo():
     """Hello foo."""
     def zap(): bar(1) # \
-''', "From test_untokenize_with_backslash_in_comment")
+'''
+    )
 
 
 def test_untokenize_with_escaped_newline():
-    check(r'''def foo():
+    check(
+        r'''def foo():
     """Hello foo."""
     x = \
             1
-''', "From test_untokenize_with_escaped_newline")
+'''
+    )
 
 
 def test_cpython_bug_35107():
     # Checking https://bugs.python.org/issue35107#msg328884
-    check("#", "cpython bug - 1")
-    check("#\n", "cpython bug - 2")
+    check("#")
+    check("#\n")
+
+
+def test_self():
+    with open(__file__, "r") as f:
+        source = f.read()
+    check(source)

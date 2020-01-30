@@ -6,6 +6,8 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
+from . import console
+
 Main_Module_Name = None
 stdlib_dir = os.path.dirname(os.__file__)
 
@@ -114,7 +116,20 @@ class IdeasLoader(Loader):
 def create_hook(
     module_class=None, source_transformer=None, exec_=None, callback_params=None
 ):
-    """Function to facilitate the creation of an import hook"""
+    """Function to facilitate the creation of an import hook.
+
+       It sets the parameters to be used by the import hook, and also
+       does so for the interactive console.
+    """
+
+    # We do not include module_class in the console configuration as
+    # it has no module to be instantiated.
+    console.configure(
+        source_transformer=source_transformer,
+        exec_=exec_,
+        callback_params=callback_params,
+    )
+
     return IdeasMetaFinder(
         module_class=module_class,
         source_transformer=source_transformer,
@@ -132,12 +147,4 @@ def remove_hook(hook):
         print("Import hook not found in remove_hook.")
         return
     del sys.meta_path[index]
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        Main_Module_Name = sys.argv[-1]
-        print("__main__ is", Main_Module_Name)
-        __import__(Main_Module_Name)
-        sys.modules["constants"] = sys.modules["__main__"]
-        __name__ = "constants"
+    console.configure()

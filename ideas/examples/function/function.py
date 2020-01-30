@@ -3,24 +3,31 @@ import sys
 from ideas import import_hook, utils
 
 
+def print_info(kind, source):
+    print(f"==========={kind}============")
+    print(source)
+    print("-----------------------------")
+
+
 def transform_source(source, show_original=False, show_transformed=False, **kwargs):
     if show_original:
-        print("===== Original ====")
-        print(source)
-        print("-" * 50)
+        print_info("Original", source)
 
     source = function_as_a_keyword(source)
 
     if show_transformed:
-        print("===== transformed ====")
-        print(source)
-        print("-" * 50)
-
+        print_info("Transformed", source)
     return source
 
 
 def function_as_a_keyword(source):
-    """We simply replace 'function' by 'lambda'.
+    """A simple replacement of ``function`` by ``lambda``.
+
+    Note that, while the string ``lambda`` is shorter than ``function``, we
+    do not adjust the information (start_col, end_col) about the position
+    of the token. ``untokenize`` uses that information together with the
+    information about each original line, to properly keep track of the
+    spacing between tokens.
     """
     new_tokens = []
     for token in utils.tokenize_source(source):
