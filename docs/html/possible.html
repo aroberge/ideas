@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Possibilities &mdash; ideas 0.0.2 documentation</title>
+  <title>Overview of all possibilities &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="True constants" href="constants.html" />
-    <link rel="prev" title="Usage" href="usage.html" /> 
+    <link rel="next" title="Examples never included" href="excluded.html" />
+    <link rel="prev" title="Importing a module as main" href="as_main.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,16 +88,31 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
             
@@ -143,7 +158,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Possibilities</li>
+      <li>Overview of all possibilities</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -159,10 +174,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples never included" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -171,8 +186,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="possibilities">
-<h1>Possibilities<a class="headerlink" href="#possibilities" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="overview-of-all-possibilities">
+<h1>Overview of all possibilities<a class="headerlink" href="#overview-of-all-possibilities" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Add a diagram to support this textual description.
+Note that this is just a very rough first draft.</p>
+</div>
 <p>When a user-written Python module gets executed, here’s an overview of
 what normally happens behind the scene.  Let’s call this module <code class="docutils literal notranslate"><span class="pre">script</span></code></p>
 <ol class="arabic simple">
@@ -212,10 +232,10 @@ about the file name, location, etc.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples never included" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

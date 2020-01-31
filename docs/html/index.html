@@ -87,16 +87,31 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
             
@@ -171,9 +186,9 @@
   <div class="section" id="ideas-making-it-easier-to-extend-python-s-syntax">
 <h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline">¶</a></h1>
 <a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" /></a>
-<p>You have an <strong>excellent</strong> ® idea to change the Python syntax and want
+<p>You have an <strong>Excellent</strong> ® idea to change the Python syntax and want
 to find a way to include your
-<strong>excellent</strong> ® idea in your Python programs.
+<strong>Excellent</strong> ® idea in your Python programs.
 According to <a class="reference external" href="https://devguide.python.org/langchanges/">Python Developers Guide</a>,
 this might be doable if you are willing to follow “a few steps” including:</p>
 <ol class="arabic simple">
@@ -184,7 +199,7 @@ for your platform.</p></li>
 <li><p>Compile the AST into bytecode</p></li>
 <li><p>Recompile the modified Python interpreter</p></li>
 </ol>
-<p>This … is rather a daunting task.</p>
+<p>This … can be a rather daunting task.</p>
 <p>However, there is a simpler way: it is possible to run code with a
 modified syntax using import hooks. <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is designed to facilitate
 the creation of such import hooks, and be a repository for
@@ -197,17 +212,36 @@ is not recommended for production code.</p>
 </div>
 <div class="section" id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most of the links below lead to mostly empty pages.
+Much more content will be added … ” <em>soon</em> “.</p>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -215,6 +249,7 @@ is not recommended for production code.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 </div>
 </div>
@@ -224,12 +259,18 @@ is not recommended for production code.</p>
 <p class="admonition-title">Todo</p>
 <p>Explain how to use this module</p>
 </div>
-<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in ../ideas/examples/constants/readme.rst, line 55.)</p>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in ../ideas/examples/constants_readme.rst, line 55.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p>Explain how it works</p>
 </div>
-<p class="todo-source">(The <a class="reference internal" href="constants.html#id2"><em>original entry</em></a> is located in ../ideas/examples/constants/readme.rst, line 62.)</p>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id2"><em>original entry</em></a> is located in ../ideas/examples/constants_readme.rst, line 62.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Add a diagram to support this textual description.
+Note that this is just a very rough first draft.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\andre\github\ideas\docs\source\possible.rst, line 4.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p>Explain how to use the existing examples</p>

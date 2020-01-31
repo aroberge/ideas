@@ -17,7 +17,6 @@ based on a type hint qualifier.
 
 And here's what happens if we run an example.
 
-.. runblock:: pycon
 
     >>> from ideas.examples import function
     >>> hook = function.add_hook()
@@ -25,3 +24,4 @@ And here's what happens if we run an example.
     >>> start()
     ~>> sq = function x: x**2
     ~>> sq(3)
+    9

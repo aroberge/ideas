@@ -87,16 +87,31 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
             
@@ -179,8 +194,12 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.add_hook">add_hook() (in module ideas.examples.constants.constants)</a>
+      <li><a href="constants.html#ideas.examples.constants.add_hook">add_hook() (in module ideas.examples.constants)</a>
+
+      <ul>
+        <li><a href="function.html#ideas.examples.function.add_hook">(in module ideas.examples.function)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -207,11 +226,13 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.FinalDict">FinalDict (class in ideas.examples.constants.constants)</a>
+      <li><a href="constants.html#ideas.examples.constants.FinalDict">FinalDict (class in ideas.examples.constants)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="import_hook.html#ideas.import_hook.IdeasMetaFinder.find_spec">find_spec() (ideas.import_hook.IdeasMetaFinder method)</a>
+</li>
+      <li><a href="function.html#ideas.examples.function.function_as_a_keyword">function_as_a_keyword() (in module ideas.examples.function)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -227,7 +248,9 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#module-ideas.examples.constants.constants">ideas.examples.constants.constants (module)</a>
+      <li><a href="constants.html#module-ideas.examples.constants">ideas.examples.constants (module)</a>
+</li>
+      <li><a href="function.html#module-ideas.examples.function">ideas.examples.function (module)</a>
 </li>
       <li><a href="import_hook.html#module-ideas.import_hook">ideas.import_hook (module)</a>
 </li>
@@ -253,7 +276,7 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.FinalDict.pop">pop() (ideas.examples.constants.constants.FinalDict method)</a>
+      <li><a href="constants.html#ideas.examples.constants.FinalDict.pop">pop() (ideas.examples.constants.FinalDict method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -275,7 +298,7 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.FinalDict.setdefault">setdefault() (ideas.examples.constants.constants.FinalDict method)</a>
+      <li><a href="constants.html#ideas.examples.constants.FinalDict.setdefault">setdefault() (ideas.examples.constants.FinalDict method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -289,15 +312,19 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.tear_down">tear_down() (in module ideas.examples.constants.constants)</a>
+      <li><a href="constants.html#ideas.examples.constants.tear_down">tear_down() (in module ideas.examples.constants)</a>
+
+      <ul>
+        <li><a href="function.html#ideas.examples.function.tear_down">(in module ideas.examples.function)</a>
 </li>
-      <li><a href="utils.html#ideas.utils.Token">Token (class in ideas.utils)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#ideas.utils.Token">Token (class in ideas.utils)</a>
+</li>
       <li><a href="utils.html#ideas.utils.tokenize_source">tokenize_source() (in module ideas.utils)</a>
 </li>
-      <li><a href="constants.html#ideas.examples.constants.constants.transform_source">transform_source() (in module ideas.examples.constants.constants)</a>
+      <li><a href="constants.html#ideas.examples.constants.transform_source">transform_source() (in module ideas.examples.constants)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -309,7 +336,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.FinalDict.update">update() (ideas.examples.constants.constants.FinalDict method)</a>
+      <li><a href="constants.html#ideas.examples.constants.FinalDict.update">update() (ideas.examples.constants.FinalDict method)</a>
 </li>
   </ul></td>
 </tr></table>

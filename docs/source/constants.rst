@@ -1,7 +1,7 @@
-.. include:: ../../ideas/examples/constants/readme.rst
+.. include:: ../../ideas/examples/constants_readme.rst
 
 Use the source, Luke
 --------------------
 
-.. automodule:: ideas.examples.constants.constants
+.. automodule:: ideas.examples.constants
    :members:

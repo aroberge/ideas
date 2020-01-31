@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="import_hook.py" href="import_hook.html" />
-    <link rel="prev" title="Possibilities" href="possible.html" /> 
+    <link rel="next" title="Json module" href="json.html" />
+    <link rel="prev" title="Pythonic switch statement" href="switch.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,23 +88,38 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> True constants</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#consenting-adults">Consenting adults</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to">How to</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-does-it-work">How does it work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#suggestion-for-you">Suggestion for you</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.constants.constants">Use the source, Luke</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.constants">Use the source, Luke</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
             
@@ -166,10 +181,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="json.html" class="btn btn-neutral float-right" title="Json module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="possible.html" class="btn btn-neutral float-left" title="Possibilities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-left" title="Pythonic switch statement" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -251,11 +266,11 @@ as a new keyword:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="module-ideas.examples.constants.constants">
-<span id="use-the-source-luke"></span><h2>Use the source, Luke<a class="headerlink" href="#module-ideas.examples.constants.constants" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-ideas.examples.constants">
+<span id="use-the-source-luke"></span><h2>Use the source, Luke<a class="headerlink" href="#module-ideas.examples.constants" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="ideas.examples.constants.constants.FinalDict">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">FinalDict</code><span class="sig-paren">(</span><em class="sig-param">module_filename</em>, <em class="sig-param">on_prevent_change=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.FinalDict">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">FinalDict</code><span class="sig-paren">(</span><em class="sig-param">module_filename</em>, <em class="sig-param">on_prevent_change=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>dict subclass which ensures that constants are not over-written.</p>
 <dl class="simple">
 <dt>Constants are identified in two ways:</dt><dd><ol class="arabic simple">
@@ -268,22 +283,22 @@ of a “Final” type hint.</p></li>
 <p>Note: We only override methods which could result in changing the value
 of a constant.</p>
 <dl class="method">
-<dt id="ideas.examples.constants.constants.FinalDict.pop">
-<code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span> &#x2192; value, remove specified key and return the corresponding value,<a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.pop" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.FinalDict.pop">
+<code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span> &#x2192; value, remove specified key and return the corresponding value,<a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.pop" title="Permalink to this definition">¶</a></dt>
 <dd><p>unless the key is identifed as a constant.</p>
 <p>If key is not found, d is returned if given, otherwise KeyError is raised</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ideas.examples.constants.constants.FinalDict.setdefault">
-<code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.setdefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.setdefault" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.FinalDict.setdefault">
+<code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.setdefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.setdefault" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert key with a value of default if key is not in the dictionary.</p>
 <p>Prevents changes if the key is identified as a constant.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ideas.examples.constants.constants.FinalDict.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">mapping_or_iterable=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#FinalDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.FinalDict.update" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.FinalDict.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">mapping_or_iterable=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the content of the dict from a mapping or an iterable,
 or from a list of keywords arguments.</p>
 <p>Keys identified as constants are prevented from changing.</p>
@@ -292,20 +307,20 @@ or from a list of keywords arguments.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.constants.constants.add_hook">
-<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">on_prevent_change=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.add_hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.add_hook">
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">on_prevent_change=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.constants.constants.tear_down">
-<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">tear_down</code><span class="sig-paren">(</span><em class="sig-param">hook</em>, <em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#tear_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.tear_down" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.tear_down">
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">tear_down</code><span class="sig-paren">(</span><em class="sig-param">hook</em>, <em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#tear_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.tear_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>Useful for testing and isolating import hooks</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.constants.constants.transform_source">
-<code class="sig-prename descclassname">ideas.examples.constants.constants.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants/constants.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.constants.transform_source" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.constants.transform_source">
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identifies simple assignments with a Final type hint, returning
 the source unchanged.</p>
 <dl class="simple">
@@ -325,10 +340,10 @@ the source unchanged.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="json.html" class="btn btn-neutral float-right" title="Json module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="possible.html" class="btn btn-neutral float-left" title="Possibilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-left" title="Pythonic switch statement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
