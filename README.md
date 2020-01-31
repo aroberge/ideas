@@ -57,65 +57,65 @@ Many more examples can be found in the [documentation](https://aroberge.github.i
 The following list has been created before anyone else knew about
 this project.
 
-> Why?
+> _Why?_
 
 Because it is fun. If this is not enough of a justification for you, have a look at
 [motivation](https://aroberge.github.io/ideas/docs/html/motivation.html)
 which contains a longer, and more serious answer.
 
-> Is it safe to use in production code?
+> _Is it safe to use in production code?_
 
 No.
 
-> But your example works perfectly well in my code; can I use it in my
-> project?
+> _But your example works perfectly well in my code; can I use it in my
+> project?_
 
 I don't think you should if your project is to be used by anyone else
 but yourself.
 
-> I found a bug.
+> _I found a bug._
 
-Please, by all means, file an issue so that I can fix it. Note however
+Please, by all means, file an issue so that I can perhaps fix it. Note however
 that some examples, which are known to fail in some contexts, would
 be too complex ensure that they always work in all contexts.
 
-> I found a cool use of import hooks in another project, different from
-> all of your examples.
+> _I found a cool use of import hooks in another project, different from
+> all of your examples._
 
 Please, give me the details and I will see if I can **easily** include
 a similar example and if I think it is worthwhile to do so.
 
-> Can I contribute code for a new example?
+> _Can I contribute code for a new example?_
 
 Yes, please, by all means. But I suggest that you first create an issue that gives
 an overview of what you wish to accomplish.
 
-> I think that the explanation you have written for X could be improved upon.
+> _I think that the explanation you have written for X could be improved upon._
 
-Please do so, but file an issue first or create a pull-request.
+Please tell me more by filing an issue first and possibly creating a pull-request afterwards.
 
-> I have an idea for a new example, but do not know how to write the code for it.
+> _I have an idea for a new example, but do not know how to write the code for it._
 
 File an issue ... but please don't be offended if I don't write code for it
 and end up closing the issue: I already have too many ideas of my own
 for this project, too many other projects, and not
 enough time to do all that I want.
 
-> In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
-> in a Python project.
+> _In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
+> in a Python project._
 
-Seriously?  This project is all about looking at introducing changes
+**Seriously?**  This project is all about looking at introducing changes
 to Python's syntax, some of which are downright crazy, and you complain
 about a PEP-8 violation? ...  Ok, perhaps you can tell me and it might
 make sense to change what I wrote.
 
-> People from the Python-ideas mailing lists mentioned that I should look
-> at this project for my idea, but I don't know where to start.
+> _People from the Python-ideas mailing lists mentioned that I should look
+> at this project for my idea, but I don't know where to start._
 
 Please, have a look at the [documentation](https://aroberge.github.io/ideas/docs/html/).
 
-> Why this silly name for a project? The word "ideas" has nothing to do with
-> import hooks in Python.
+> _Why this silly name for a project? The word "ideas" has nothing to do with
+> import hooks in Python._
 
 For this project, I was thinking of using `importhook` (singular) or
 `importhooks` (plural). However, there is already a project named
