@@ -5,7 +5,10 @@
 ![ideas logo](ideas.png)
 
 
-[Documentation](https://aroberge.github.io/ideas/docs/html/)
+## Documentation
+
+[Look here](https://aroberge.github.io/ideas/docs/html/).  Note that
+this is work in progress.
 
 ## Installation
 
@@ -19,6 +22,10 @@ Suppose that you want to use `function` as a keyword in Python, to mean
 the same thing as `lambda`, enabling you to write
 
 ```python
+# my_script.py
+
+import some_other_module
+
 square = function x: x**2
 print(f"{square(4)} is the square of 4.")
 ```
@@ -40,8 +47,8 @@ and then run
 python loader.py
 ```
 
-So, `my_script.py` and any other module loaded by it would recognize that
-`function` is a valid alternative to `lambda`.
+So, `my_script.py` , `some_other_module.py`, and any other module
+loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/).
 
@@ -52,38 +59,47 @@ this project.
 
 > Why?
 
-Because it is fun.
-
-If you want a longer answer, have a look at
-[motivation](https://aroberge.github.io/ideas/docs/html/motivation.html).
+Because it is fun. If this is not enough of a justification for you, have a look at
+[motivation](https://aroberge.github.io/ideas/docs/html/motivation.html)
+which contains a longer, and more serious answer.
 
 > Is it safe to use in production code?
 
 No.
 
+> But your example works perfectly well in my code; can I use it in my
+> project?
+
+I don't think you should if your project is to be used by anyone else
+but yourself.
+
 > I found a bug.
 
-Please, by all means, file an issue so that I can fix it.
+Please, by all means, file an issue so that I can fix it. Note however
+that some examples, which are known to fail in some contexts, would
+be too complex ensure that they always work in all contexts.
 
 > I found a cool use of import hooks in another project, different from
 > all of your examples.
 
-Please, give me the details and I will see if I can include a similar example.
+Please, give me the details and I will see if I can **easily** include
+a similar example and if I think it is worthwhile to do so.
 
 > Can I contribute code for a new example?
 
-Yes, by all means. But I suggest that you first create an issue that gives
+Yes, please, by all means. But I suggest that you first create an issue that gives
 an overview of what you wish to accomplish.
 
 > I think that the explanation you have written for X could be improved upon.
 
-Please, by all means, file an issue or create a pull-request.
+Please do so, but file an issue first or create a pull-request.
 
 > I have an idea for a new example, but do not know how to write the code for it.
 
 File an issue ... but please don't be offended if I don't write code for it
-and end up closing the issue: I already have too many ideas of my own and not
-enough time to implement them.
+and end up closing the issue: I already have too many ideas of my own
+for this project, too many other projects, and not
+enough time to do all that I want.
 
 > In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
 > in a Python project.
@@ -122,7 +138,4 @@ You can either file an issue or email me at <Andre.Roberge@gmail.com>.
 
 ## License
 
-MIT
-
-
-
+MIT - see the file listed above.
