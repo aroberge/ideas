@@ -85,6 +85,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../possible.html"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -162,14 +164,12 @@
 <span class="sd">A few useful objects which do not naturally fit anywhere else.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">keyword</span>
-<span class="kn">import</span> <span class="nn">token</span> <span class="k">as</span> <span class="nn">token_module</span>
 <span class="kn">import</span> <span class="nn">tokenize</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 
-<span class="n">_token_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{type:&lt;10}{string:&lt;20}</span><span class="s2"> </span><span class="si">{start:&lt;10}</span><span class="s2"> </span><span class="si">{end:&lt;10}</span><span class="s2"> </span><span class="si">{line:&lt;10}</span><span class="s2">&quot;</span>
+<span class="n">_token_format</span> <span class="o">=</span> <span class="s2">&quot;type=</span><span class="si">{type}</span><span class="s2">  string=</span><span class="si">{string}</span><span class="s2">  start=</span><span class="si">{start}</span><span class="s2">  end=</span><span class="si">{end}</span><span class="s2">  line=&#39;</span><span class="si">{line}</span><span class="s2">&#39;&quot;</span>
 
 
 <div class="viewcode-block" id="Token"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token">[docs]</a><span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
@@ -179,23 +179,34 @@
 
 <span class="sd">           type: token type</span>
 <span class="sd">           string: the token written as a string</span>
-<span class="sd">           start = (start_line, start_col)</span>
-<span class="sd">           end = (end_line, end_col)</span>
+<span class="sd">           start = (start_row, start_col)</span>
+<span class="sd">           end = (end_row, end_col)</span>
 <span class="sd">           line: entire line of code where the token is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.</span>
+
+<span class="sd">           If ``name`` is specified, then it returns True only if</span>
+<span class="sd">           the keyword is the one specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span>
+                <span class="ow">and</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Token.is_identifier"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_identifier">[docs]</a>    <span class="k">def</span> <span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if the token is a Python identifier&quot;&quot;&quot;</span>
@@ -213,48 +224,168 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">operator</span></div>
 
+<div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
+
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Nicely formatted token&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_token_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="nb">type</span><span class="o">=</span><span class="n">token_module</span><span class="o">.</span><span class="n">tok_name</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">],</span>
-            <span class="n">string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">tok_name</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]),</span>
+            <span class="n">string</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
             <span class="n">start</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
             <span class="n">end</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">),</span>
-            <span class="n">line</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">),</span>
+            <span class="n">line</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">t&quot;</span><span class="p">),</span>
         <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="tokenize_source"><a class="viewcode-back" href="../../utils.html#ideas.utils.tokenize_source">[docs]</a><span class="k">def</span> <span class="nf">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a list of tokens from a source (str), ignoring spaces and comments.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Makes a list of tokens from a source (str).&quot;&quot;&quot;</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">):</span>
             <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># ignore spaces</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">:</span>
-                <span class="k">break</span>
             <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: the following tokenize error was raised</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tokens</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: the following exception was raised</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tokens</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: the following error was raised in tokenize_source</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">tokens</span></div>
 
 
-<div class="viewcode-block" id="tokenize_source_lines"><a class="viewcode-back" href="../../utils.html#ideas.utils.tokenize_source_lines">[docs]</a><span class="k">def</span> <span class="nf">tokenize_source_lines</span><span class="p">(</span><span class="n">source_lines</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a list of tokens from a source (list of lines),</span>
-<span class="sd">       ignoring spaces and comments.</span>
+<div class="viewcode-block" id="get_lines_of_tokens"><a class="viewcode-back" href="../../utils.html#ideas.utils.get_lines_of_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Makes a list of lists of tokens, with each (inner) list either</span>
+<span class="sd">       all the DEDENT tokens found on a single line,</span>
+<span class="sd">       or all the other tokens found on a single line.</span>
+
+<span class="sd">       The separate treatement of DEDENT tokens is to make it easier</span>
+<span class="sd">       to process the content.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_lines</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span></div>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_line</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">new_line</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">new_dedent_line</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">):</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">!=</span> <span class="n">current_line</span><span class="p">:</span>
+                <span class="n">current_line</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span>
+                <span class="k">if</span> <span class="n">new_dedent_line</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_dedent_line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">new_line</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
+                <span class="n">new_dedent_line</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">new_line</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">:</span>
+                <span class="n">new_dedent_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;###</span><span class="se">\n</span><span class="s2">WARNING: the following tokenize error was raised</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">###&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">new_line</span><span class="p">:</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lines</span></div>
+
+
+<span class="c1"># untokenize adapted from https://github.com/myint/untokenize</span>
+<span class="c1">#</span>
+<span class="c1"># TODO: acknowledge it properly in documentation with license added</span>
+<span class="c1">#</span>
+
+<span class="n">WHITESPACE_TOKENS</span> <span class="o">=</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="untokenize"><a class="viewcode-back" href="../../utils.html#ideas.utils.untokenize">[docs]</a><span class="k">def</span> <span class="nf">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return source code based on tokens.</span>
+
+<span class="sd">    This is similar to Python&#39;s tokenize.untokenize(), except that it</span>
+<span class="sd">    preserves spacing between tokens, by using the ``line``</span>
+<span class="sd">    information recorded by Python&#39;s ``tokenize.generate_tokens``.</span>
+<span class="sd">    As a result, if the original soure code had multiple spaces between</span>
+<span class="sd">    some tokens or if escaped newlines were used, those things will be</span>
+<span class="sd">    reflected by ``untokenize``.</span>
+
+<span class="sd">    However, if some tokens are changed, the ``line`` information will</span>
+<span class="sd">    no longer reflect the content and the reconstructed content may</span>
+<span class="sd">    no longer be valid, unless some special procedures have been followed</span>
+<span class="sd">    when replacing original tokens by new ones. See the documentation</span>
+<span class="sd">    for examples.</span>
+
+<span class="sd">    Adapted from https://github.com/myint/untokenize</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">previous_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">last_row</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">last_column</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">last_non_whitespace_tokey_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Preserve escaped newlines.</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">last_non_whitespace_tokey_type</span> <span class="o">!=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span>
+            <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&gt;</span> <span class="n">last_row</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\\\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r</span><span class="s2">&quot;</span><span class="p">)):</span>  <span class="c1"># original</span>
+                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t\n\r\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="p">:])</span>
+            <span class="k">elif</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">):</span>  <span class="c1"># my fix</span>
+                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="p">:])</span>
+                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Preserve spacing.</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&gt;</span> <span class="n">last_row</span><span class="p">:</span>
+            <span class="n">last_column</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">&gt;</span> <span class="n">last_column</span><span class="p">:</span>
+            <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="n">last_column</span> <span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">])</span>
+
+        <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+
+        <span class="n">previous_line</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">line</span>
+
+        <span class="n">last_row</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_row</span>
+        <span class="n">last_column</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span>
+
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">WHITESPACE_TOKENS</span><span class="p">:</span>
+            <span class="n">last_non_whitespace_tokey_type</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span>
+
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></div>
+
+
+<span class="n">INVALID_TOKEN_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Invalid token in simple_untokenize.</span>
+
+<span class="s2">A valid token can be either an object having both a &#39;type&#39; and a &#39;string&#39;</span>
+<span class="s2">attribute, or a an iterable with of length 2 like</span>
+<span class="s2">(type, string).</span>
+
+<span class="s2">The token that raised this error was:</span>
+<span class="si">%s</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="simple_untokenize"><a class="viewcode-back" href="../../utils.html#ideas.utils.simple_untokenize">[docs]</a><span class="k">def</span> <span class="nf">simple_untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>  <span class="c1"># untested</span>
+    <span class="sd">&quot;&quot;&quot;Reconstructs a source from a list of tokens. Each token can be</span>
+<span class="sd">    either an instance of the Token class, or a tuple consisting</span>
+<span class="sd">    of two values: the token type and the token string.</span>
+
+<span class="sd">    Generates a string correspondings to a list of tokens based only</span>
+<span class="sd">    on the token type and string information. This does not preserve</span>
+<span class="sd">    the spacing between tokens which was present in the original source.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">simple_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">):</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">INVALID_TOKEN_MESSAGE</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+        <span class="n">simple_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">simple_tokens</span><span class="p">)</span></div>
 
 
 <span class="n">PYTHON</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -281,43 +412,44 @@
     <span class="c1"># To properly compare, we convert everything to lowercase</span>
     <span class="c1"># However, we ensure that the shortened path retains its cases</span>
     <span class="n">path_lower</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;TESTS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">TESTS</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;PYTHON:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">)</span> <span class="p">:]</span>
     <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;IDEAS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;PYTHON:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">current</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;CURRENT:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;TESTS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">TESTS</span><span class="p">)</span> <span class="p">:]</span>
     <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOME</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">HOME</span><span class="p">)</span> <span class="p">:]</span>
     <span class="k">return</span> <span class="n">path</span></div>
 
 
-<div class="viewcode-block" id="print_token_table"><a class="viewcode-back" href="../../utils.html#ideas.utils.print_token_table">[docs]</a><span class="k">def</span> <span class="nf">print_token_table</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="print_paths"><a class="viewcode-back" href="../../utils.html#ideas.utils.print_paths">[docs]</a><span class="k">def</span> <span class="nf">print_paths</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints the values of the path abbreviations used in shorten_path().&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;~: </span><span class="si">{HOME}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;CURRENT: {os.getcwd()}&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;PYTHON: </span><span class="si">{PYTHON}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;IDEAS: </span><span class="si">{IDEAS}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;TESTS: </span><span class="si">{TESTS}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="print_tokens"><a class="viewcode-back" href="../../utils.html#ideas.utils.print_tokens">[docs]</a><span class="k">def</span> <span class="nf">print_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints tokens found in source, excluding spaces and comments.</span>
 
-<span class="sd">       This is occasionally useful to use at the console during development.</span>
+<span class="sd">       Source is either a string to be tokenized, or a list of tokens.</span>
+
+<span class="sd">       This is occasionally useful as a debugging tool.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="n">_token_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;String&quot;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s2">&quot;last&quot;</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">73</span><span class="p">)</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Token</span><span class="p">):</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">source</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="change_path_for_testing"><a class="viewcode-back" href="../../utils.html#ideas.utils.change_path_for_testing">[docs]</a><span class="k">def</span> <span class="nf">change_path_for_testing</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is useful for testing.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
-    <span class="n">example_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">remove</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">example_dir</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">example_dir</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">example_dir</span><span class="p">)</span> <span class="ow">and</span> <span class="n">example_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">example_dir</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

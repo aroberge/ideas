@@ -25,10 +25,66 @@ def configure(**kwargs):
     _CONFIG.update(kwargs)
 
 
+class _Tee:
+    """Utility class that makes a copy of what's written to
+    a stream, such as stdout or stderr, to a file.
+    """
+
+    def __init__(self, file, stream):
+        self.file = file
+        self.stream = stream
+
+    def write(self, data):
+        self.file.write(data)
+        self.stream.write(data)
+
+    def flush(self):
+        self.file.flush()
+        self.stream.flush()
+
+
+class _Logger:
+    """Utility class; used to save a copy of everything written
+    to either stdout or stderr to a file.
+
+    This is something that I find more efficient than doing copy/paste
+    from the terminal when working on potential examples to include
+    in the documentation.
+    """
+
+    def __init__(self, filename=None):
+        """``filename`` is an optional name for the file in which the
+        log will be written; the default to be used is ``console``.
+        No check is performed to see if the file exists. To prevent
+        overwriting an important file, the extension ``.log`` will
+        be added to ``filename``. Thus, the true default filename
+        is ``console.log``.
+        """
+        if filename is None:
+            filename = "console"
+        self.file = open(f"{filename}.log", "w")
+        self.old_stdout = sys.stdout
+        self.old_stderr = sys.stderr
+
+        self.stdout = _Tee(self.file, self.old_stdout)
+        self.stderr = _Tee(self.file, self.old_stderr)
+
+        sys.stderr = self.stderr
+        sys.stdout = self.stdout
+
+    def write_log(self, data):
+        self.file.write(data)
+
+    def close(self):
+        sys.stdout = self.old_stdout
+        sys.stderr = self.old_stderr
+        self.file.close
+
+
 class IdeasConsole(InteractiveConsole):
     def __init__(
         self,
-        locals=None,
+        logger=None,
         transform_source=None,
         callback_params=None,
         console_dict=None,
@@ -36,15 +92,12 @@ class IdeasConsole(InteractiveConsole):
         """This class builds upon Python's code.InteractiveConsole
         so as to work with import hooks.
         """
+        self.logger = logger
         self.transform_source = transform_source
         self.callback_params = callback_params
 
-        print(console_dict)
-
         if console_dict is None:
             console_dict = {}
-        if locals is not None:
-            console_dict.update(locals)
 
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
@@ -63,6 +116,8 @@ class IdeasConsole(InteractiveConsole):
         with in some way (this is the same as runsource()).
         """
         self.buffer.append(line)
+        if self.logger is not None:
+            self.logger.write_log(line + "\n")
         source = "\n".join(self.buffer)
 
         if self.transform_source is not None:
@@ -129,24 +184,18 @@ class IdeasConsole(InteractiveConsole):
         try:
             exec(code, self.locals)
         except SystemExit:
+            if self.logger is not None:
+                self.logger.close()
             os._exit(1)
         except Exception:
             self.showtraceback()
 
 
-def start(local_vars=None):
+def start(log=None, filename="console"):
     """Starts a console; modified from code.interact"""
-    console_defaults = {}
-
     sys.ps1 = "~>> "
-
-    if local_vars is None:
-        local_vars = {}
-    else:
-        local_vars.update(console_defaults)
-
-    console = IdeasConsole(locals=local_vars, **_CONFIG)
-
+    if log:
+        log = _Logger(filename=filename)
     if _CONFIG:
         print("Configuration values for the console:")
         for key in _CONFIG:
@@ -154,4 +203,5 @@ def start(local_vars=None):
                 print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)
 
+    console = IdeasConsole(logger=log, **_CONFIG)
     console.interact(banner=BANNER)

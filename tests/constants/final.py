@@ -8,7 +8,7 @@ except ImportError:
 const: Final = 1
 const = 2
 const -= 2
-assert const == 1, "Constant declared final did not change value."
+assert const == 1, "Constant declared final changed value."
 
 a_b = 1
 a_b = 4

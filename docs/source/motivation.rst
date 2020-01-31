@@ -8,7 +8,8 @@ Programming in Python is my main hobby.
 As an amateur, I like to explore various ideas, learning along the way.
 As I find myself doing a lot of copy-paste-modify on the various import
 hooks experiments, including on some published projects such as
-`AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_,
+`AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_
+as well as `various experiments I wrote about <https://duckduckgo.com/?q=experimental+site%3Aaroberge.blogspot.com>`_,
 I thought it would make sense to create a versatile projects which I could
 use as the basis of other projects.  An obvious benefit is that I will
 need to fix bugs in a single project.
@@ -16,7 +17,7 @@ need to fix bugs in a single project.
 Additional motivation
 ---------------------
 
-Often, on python-ideas, a suggestion is made to someone that proposes something
+Often, on Python-ideas, a suggestion is made to someone that proposes something
 new to try it by modifying Python using an import hook. For example:
 
     *You can pretty easily write an import hook to intercept module loading
@@ -52,18 +53,24 @@ do not know how to do this.
 
 So, by creating this project, I'm hoping that enough examples will
 be created that could be **easily** adapted for exploring proposals
-submitted to python-ideas. If that is the case, I will likely benefit
-too as advanced Python programmers may make suggestions as to how
-to improve this project.
+submitted to Python-ideas. If that is the case, I will likely benefit
+as well as advanced Python programmers might be interested enough to
+make suggestions as to how to improve this project.
 
 About the name
 --------------
 
 For this project, I was thinking of using ``importhook`` (singular) or
-``importhooks`` (plural). However, there is already a project named
+``importhooks`` (plural). However, there is already a package named
 ``importhook`` on Pypi and I thought that using the plural form would
 likely be just too confusing.
 
 I settled on ``ideas`` as I am guessing that the main application would be
-for people to try out suggestions from or for python-ideas.
+for people to try out suggestions from or for Python-ideas.
 
+As I was looking at including other examples than the ones
+I mentioned previously, I came accross Andrew Barnert's
+`Stupid Python Ideas <http://stupidpythonideas.blogspot.com/>`_ blog,
+which includes an older post about `Hacking Python with import hooks <http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html>`_.
+I've decided to adapt many of his examples, which I would not describe
+as **stupid** but rather as **entertaining** ``ideas``.

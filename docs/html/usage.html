@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; ideas 0.0.2 documentation</title>
+  <title>Usage &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -36,9 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <link rel="next" title="Possibilities" href="possible.html" />
+    <link rel="prev" title="Motivation for this project" href="motivation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,9 +85,9 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
@@ -144,60 +143,87 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Python Module Index</li>
+      <li>Usage</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="possible.html" class="btn btn-neutral float-right" title="Possibilities" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for this project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Explain how to use the existing examples</p>
+</div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Brief explanation as to how to build your own import hook</p>
+</div>
+<p>Here’s the content of a file where the programmer has indicated their
+intent that the constant <code class="docutils literal notranslate"><span class="pre">const</span></code> should not change its value,
+based on a type hint qualifier.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Constants defined by the Final type hint&quot;&quot;&quot;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Final</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">Final</span><span class="p">:</span>
+        <span class="k">pass</span>
 
-   <h1>Python Module Index</h1>
+<span class="n">const</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">const</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">const</span> <span class="o">-=</span> <span class="mi">2</span>
+<span class="k">assert</span> <span class="n">const</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Constant declared final changed value.&quot;</span>
 
-   <div class="modindex-jumpbox">
-   <a href="#cap-i"><strong>i</strong></a>
-   </div>
+<span class="n">a_b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">a_b</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">assert</span> <span class="n">a_b</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Regular variable can change its value.&quot;</span>
+</pre></div>
+</div>
+<p>And here’s what happens if we run an example.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go">Ideas Console version 0.0.2. [Python version: 3.7.3]</span>
 
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-i"><td></td><td>
-       <strong>i</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">ideas</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="constants.html#module-ideas.examples.constants.constants"><code class="xref">ideas.examples.constants.constants</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="import_hook.html#module-ideas.import_hook"><code class="xref">ideas.import_hook</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="utils.html#module-ideas.utils"><code class="xref">ideas.utils</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+
+<span class="go">now exiting IdeasConsole...</span>
+</pre></div>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="possible.html" class="btn btn-neutral float-right" title="Possibilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="motivation.html" class="btn btn-neutral float-left" title="Motivation for this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

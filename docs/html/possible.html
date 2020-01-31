@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; ideas 0.0.2 documentation</title>
+  <title>Possibilities &mdash; ideas 0.0.2 documentation</title>
   
 
   
@@ -36,9 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <link rel="next" title="True constants" href="constants.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,10 +85,10 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -144,60 +143,81 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Python Module Index</li>
+      <li>Possibilities</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/possible.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
   </ul>
 
   
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-i"><strong>i</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-i"><td></td><td>
-       <strong>i</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">ideas</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="constants.html#module-ideas.examples.constants.constants"><code class="xref">ideas.examples.constants.constants</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="import_hook.html#module-ideas.import_hook"><code class="xref">ideas.import_hook</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="utils.html#module-ideas.utils"><code class="xref">ideas.utils</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="possibilities">
+<h1>Possibilities<a class="headerlink" href="#possibilities" title="Permalink to this headline">¶</a></h1>
+<p>When a user-written Python module gets executed, here’s an overview of
+what normally happens behind the scene.  Let’s call this module <code class="docutils literal notranslate"><span class="pre">script</span></code></p>
+<ol class="arabic simple">
+<li><p>A search is done on <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> for Python file (extension .py or .pyw)
+matching the known extensions.</p></li>
+<li><p>The information about the file is used to create a module that is
+essentially empty saved for a read-only dict containing information
+about the file name, location, etc.</p></li>
+<li><p>The file is then is read as a series of bytes.</p></li>
+<li><p>The content of the file is decoded to obtain the source as a string.</p></li>
+<li><p>That source is converted into a series of tokens.</p></li>
+<li><p>These tokens are transformed into a (concrete?) parse tree.</p></li>
+<li><p>The result is further converted into an abstract syntax tree (AST).</p></li>
+<li><p>The AST is converted into a control flow graph.</p></li>
+<li><p>The control flow graph is used to obtain a bytecode representation.</p></li>
+<li><p>That bytecode representation is executed in the module’s dict.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> can be used to make the following changes.</p>
+<p>1a. Where the file can be located - it does not have to be in a location included in <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>.  (Example from Python cookbook)</p>
+<p>1b. What file extension to look for. (many examples of my own)</p>
+<p>2a. Give the possibility of using a different module creation method - need to find an example</p>
+<p>2b. Use a different <code class="docutils literal notranslate"><span class="pre">module.__class__</span></code> (see example constants)</p>
+<p>4a. Show an example with essentially a custom encoding</p>
+<p>4b. Convert the source using <code class="docutils literal notranslate"><span class="pre">re</span></code> or <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> (preferable)</p>
+<p>5 and 6: impossible to replace individually</p>
+<p>7a: can modify the AST</p>
+<p>8: no access to this step</p>
+<p>9a: can modify the bytecode representation</p>
+<p>10a: can temporarily use a different dict than the read-only one defined for the module (see constants).</p>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

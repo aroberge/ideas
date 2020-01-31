@@ -86,6 +86,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -168,7 +170,12 @@
             
   <div class="section" id="ideas-making-it-easier-to-extend-python-s-syntax">
 <h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline">¶</a></h1>
-<p>To modify Python’s syntax, normally all you need to do is:</p>
+<a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" /></a>
+<p>You have an <strong>excellent</strong> ® idea to change the Python syntax and want
+to find a way to include your
+<strong>excellent</strong> ® idea in your Python programs.
+According to <a class="reference external" href="https://devguide.python.org/langchanges/">Python Developers Guide</a>,
+this might be doable if you are willing to follow “a few steps” including:</p>
 <ol class="arabic simple">
 <li><p>Get a copy of the CPython’s code repository and all the required compilers
 for your platform.</p></li>
@@ -177,15 +184,24 @@ for your platform.</p></li>
 <li><p>Compile the AST into bytecode</p></li>
 <li><p>Recompile the modified Python interpreter</p></li>
 </ol>
+<p>This … is rather a daunting task.</p>
 <p>However, there is a simpler way: it is possible to run code with a
 modified syntax using import hooks. <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Doing something like what is described in this documentation
+is not recommended for production code.</p>
+<p>But it can be fun! ;-)</p>
+</div>
 <div class="section" id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -204,6 +220,26 @@ examples that can be used as starting points for new ideas.</p>
 </div>
 <div class="section" id="to-do">
 <h2>To do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Explain how to use this module</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in ../ideas/examples/constants/readme.rst, line 55.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Explain how it works</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id2"><em>original entry</em></a> is located in ../ideas/examples/constants/readme.rst, line 62.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Explain how to use the existing examples</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="usage.html#id1"><em>original entry</em></a> is located in C:\Users\andre\github\ideas\docs\source\usage.rst, line 4.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Brief explanation as to how to build your own import hook</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="usage.html#id2"><em>original entry</em></a> is located in C:\Users\andre\github\ideas\docs\source\usage.rst, line 8.)</p>
 </div>
 </div>
 

@@ -85,6 +85,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../possible.html"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -161,46 +163,52 @@
 <span class="kn">import</span> <span class="nn">types</span>
 
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">ideas.console</span> <span class="k">import</span> <span class="n">CONSOLE_NAME</span>
 
 <span class="n">shorten_path</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span>
 <span class="n">CONSTANTS</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">DECLARED_FINAL</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="ModuleWithConstants"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.ModuleWithConstants">[docs]</a><span class="k">class</span> <span class="nc">ModuleWithConstants</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Special module type that prevents variables identified as constants</span>
-<span class="sd">       to have their value changed.</span>
+<span class="k">def</span> <span class="nf">make_class</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">ModuleWithConstants</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Special module type that prevents variables identified as constants</span>
+<span class="sd">           to have their value changed.</span>
 
-<span class="sd">       This is used to replace a module __class__ from the default as follows:</span>
+<span class="sd">           This is used to replace a module __class__ from the default as follows:</span>
 
-<span class="sd">           module.__class__ = ModuleWithConstants</span>
+<span class="sd">               module.__class__ = ModuleWithConstants</span>
 
-<span class="sd">       This example only prints a message when an attempt is made to change</span>
-<span class="sd">       the value of a constant. Alternatively, this could be logged or an</span>
-<span class="sd">       exception could be raised.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">           This example only prints a message when an attempt is made to change</span>
+<span class="sd">           the value of a constant. Alternatively, this could be logged or an</span>
+<span class="sd">           exception could be raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">or</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You cannot add constants to another module.&quot;</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span>
+                <span class="ow">or</span> <span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+                <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">on_prevent_change</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                        <span class="n">on_prevent_change</span><span class="p">(</span>
+                            <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">return</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot delete the constant </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">attr</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="k">return</span>
+        <span class="k">def</span> <span class="nf">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">on_prevent_change</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                        <span class="n">on_prevent_change</span><span class="p">(</span>
+                            <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">return</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">ModuleWithConstants</span>
 
 
 <div class="viewcode-block" id="FinalDict"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.FinalDict">[docs]</a><span class="k">class</span> <span class="nc">FinalDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -215,9 +223,10 @@
 <span class="sd">        of a constant.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_filename</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_filename</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialises the instance&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span> <span class="o">=</span> <span class="n">module_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span> <span class="o">=</span> <span class="n">on_prevent_change</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -227,11 +236,12 @@
 <span class="sd">           its value after initial assignment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">.&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="k">return</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">return</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
             <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -239,10 +249,12 @@
     <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Deletes self[key] unless key is identified as a constant&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">return</span>
             <span class="k">return</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
@@ -252,11 +264,12 @@
 <span class="sd">           Prevents changes if the key is identified as a constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">.&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="k">return</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">return</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
             <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
@@ -268,11 +281,12 @@
 <span class="sd">            If key is not found, d is returned if given, otherwise KeyError is raised</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FinalDict.update"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.FinalDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping_or_iterable</span><span class="o">=</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -299,57 +313,70 @@
 <span class="sd">       Pattern we are looking for::</span>
 <span class="sd">           python_identifier : Final ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+        <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">:</span>
+        <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
 
-    <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">second_is_colon</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-
-        <span class="k">if</span> <span class="n">first_is_identifier</span> <span class="ow">and</span> <span class="n">second_is_colon</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span><span class="p">:</span>
-                <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first_is_identifier</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-            <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">second_is_colon</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">continue</span>
-
-        <span class="k">elif</span> <span class="n">first_is_identifier</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_operator</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">):</span>
-                <span class="n">second_is_colon</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">continue</span>
-
-        <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">second_is_colon</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">():</span>
-                <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="n">token</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">continue</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">first_is_identifier</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">second_is_colon</span> <span class="o">=</span> <span class="kc">False</span>
-
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span>
+            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_operator</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span>
+        <span class="p">):</span>
+            <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">globals_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">locals_</span> <span class="o">=</span> <span class="n">FinalDict</span><span class="p">(</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;on_prevent_change&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">locals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">globals_</span><span class="p">)</span>
+    <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">locals_</span><span class="p">)</span>
+    <span class="n">globals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locals_</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_change_print</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">on_prevent_change</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">on_prevent_change</span> <span class="o">=</span> <span class="n">on_change_print</span>
+    <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;on_prevent_change&quot;</span><span class="p">:</span> <span class="n">on_prevent_change</span><span class="p">}</span>
+
+    <span class="n">module_class</span> <span class="o">=</span> <span class="n">make_class</span><span class="p">(</span><span class="o">**</span><span class="n">callback_params</span><span class="p">)</span>
+    <span class="n">console_dict</span> <span class="o">=</span> <span class="n">FinalDict</span><span class="p">(</span><span class="n">CONSOLE_NAME</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="n">on_prevent_change</span><span class="p">)</span>
+    <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">CONSOLE_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
-        <span class="n">module_class</span><span class="o">=</span><span class="n">ModuleWithConstants</span><span class="p">,</span>
-        <span class="n">source_transformer</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
-        <span class="n">module_dict</span><span class="o">=</span><span class="n">FinalDict</span><span class="p">,</span>
+        <span class="n">module_class</span><span class="o">=</span><span class="n">module_class</span><span class="p">,</span>
+        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">exec_</span><span class="o">=</span><span class="n">exec_</span><span class="p">,</span>
+        <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
+        <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 
 
-<div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>  <span class="c1"># for testing</span>
+<div class="viewcode-block" id="tear_down"><a class="viewcode-back" href="../../../../constants.html#ideas.examples.constants.constants.tear_down">[docs]</a><span class="k">def</span> <span class="nf">tear_down</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>  <span class="c1"># for testing</span>
     <span class="sd">&quot;&quot;&quot;Useful for testing and isolating import hooks&quot;&quot;&quot;</span>
-    <span class="n">import_hook</span><span class="o">.</span><span class="n">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span></div>
+    <span class="n">import_hook</span><span class="o">.</span><span class="n">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

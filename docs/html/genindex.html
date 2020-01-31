@@ -86,6 +86,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Possibilities</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -165,8 +167,8 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -185,13 +187,11 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.change_path_for_testing">change_path_for_testing() (in module ideas.utils)</a>
+      <li><a href="import_hook.html#ideas.import_hook.create_hook">create_hook() (in module ideas.import_hook)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="import_hook.html#ideas.import_hook.create_hook">create_hook() (in module ideas.import_hook)</a>
-</li>
-      <li><a href="import_hook.html#ideas.import_hook.MyLoader.create_module">create_module() (ideas.import_hook.MyLoader method)</a>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasLoader.create_module">create_module() (ideas.import_hook.IdeasLoader method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -199,7 +199,7 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="import_hook.html#ideas.import_hook.MyLoader.exec_module">exec_module() (ideas.import_hook.MyLoader method)</a>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasLoader.exec_module">exec_module() (ideas.import_hook.IdeasLoader method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -211,7 +211,15 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="import_hook.html#ideas.import_hook.MyMetaFinder.find_spec">find_spec() (ideas.import_hook.MyMetaFinder method)</a>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasMetaFinder.find_spec">find_spec() (ideas.import_hook.IdeasMetaFinder method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#ideas.utils.get_lines_of_tokens">get_lines_of_tokens() (in module ideas.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -225,27 +233,19 @@
 </li>
       <li><a href="utils.html#module-ideas.utils">ideas.utils (module)</a>
 </li>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasLoader">IdeasLoader (class in ideas.import_hook)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasMetaFinder">IdeasMetaFinder (class in ideas.import_hook)</a>
+</li>
+      <li><a href="utils.html#ideas.utils.Token.is_comment">is_comment() (ideas.utils.Token method)</a>
+</li>
       <li><a href="utils.html#ideas.utils.Token.is_identifier">is_identifier() (ideas.utils.Token method)</a>
 </li>
       <li><a href="utils.html#ideas.utils.Token.is_keyword">is_keyword() (ideas.utils.Token method)</a>
 </li>
       <li><a href="utils.html#ideas.utils.Token.is_operator">is_operator() (ideas.utils.Token method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.ModuleWithConstants">ModuleWithConstants (class in ideas.examples.constants.constants)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="import_hook.html#ideas.import_hook.MyLoader">MyLoader (class in ideas.import_hook)</a>
-</li>
-      <li><a href="import_hook.html#ideas.import_hook.MyMetaFinder">MyMetaFinder (class in ideas.import_hook)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -257,7 +257,9 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.print_token_table">print_token_table() (in module ideas.utils)</a>
+      <li><a href="utils.html#ideas.utils.print_paths">print_paths() (in module ideas.utils)</a>
+</li>
+      <li><a href="utils.html#ideas.utils.print_tokens">print_tokens() (in module ideas.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -265,12 +267,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.constants.remove_hook">remove_hook() (in module ideas.examples.constants.constants)</a>
-
-      <ul>
-        <li><a href="import_hook.html#ideas.import_hook.remove_hook">(in module ideas.import_hook)</a>
+      <li><a href="import_hook.html#ideas.import_hook.remove_hook">remove_hook() (in module ideas.import_hook)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -283,19 +281,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.shorten_path">shorten_path() (in module ideas.utils)</a>
 </li>
+      <li><a href="utils.html#ideas.utils.simple_untokenize">simple_untokenize() (in module ideas.utils)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.Token">Token (class in ideas.utils)</a>
+      <li><a href="constants.html#ideas.examples.constants.constants.tear_down">tear_down() (in module ideas.examples.constants.constants)</a>
 </li>
-      <li><a href="utils.html#ideas.utils.tokenize_source">tokenize_source() (in module ideas.utils)</a>
+      <li><a href="utils.html#ideas.utils.Token">Token (class in ideas.utils)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.tokenize_source_lines">tokenize_source_lines() (in module ideas.utils)</a>
+      <li><a href="utils.html#ideas.utils.tokenize_source">tokenize_source() (in module ideas.utils)</a>
 </li>
       <li><a href="constants.html#ideas.examples.constants.constants.transform_source">transform_source() (in module ideas.examples.constants.constants)</a>
 </li>
@@ -304,6 +304,10 @@
 
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="utils.html#ideas.utils.untokenize">untokenize() (in module ideas.utils)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.constants.FinalDict.update">update() (ideas.examples.constants.constants.FinalDict method)</a>
 </li>
