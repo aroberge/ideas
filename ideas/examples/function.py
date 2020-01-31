@@ -1,15 +1,33 @@
+"""This module enables someone to use ``function`` as a keyword
+   equivalent to ``lambda``.
+
+   It is slightly more complicated than ``function_simplest.py`` as it
+   demonstrates how we can pass parameters when adding an import hook;
+   these parameters will be passed back to our function
+   ``transform_source``.
+"""
 import sys
 
 from ideas import import_hook, utils
 
 
 def print_info(kind, source):
+    """prints information about the source - either original or transformed"""
     print(f"==========={kind}============")
     print(source)
     print("-----------------------------")
 
 
 def transform_source(source, show_original=False, show_transformed=False, **kwargs):
+    """This function is called by the import hook loader with the named keyword
+       that we specified when we created the import hook.
+
+       It gives us the option to compare the original source and the transformed
+       one. This type of additional option can be useful when debugging
+       a source transformer. Once such options are added, there are essentially
+       no advantage in removing them as the next programmer who wishes to
+       build upon this example will likely find this useful.
+    """
     if show_original:
         print_info("Original", source)
 
@@ -50,9 +68,3 @@ def add_hook(show_original=False, show_transformed=False):
     )
     sys.meta_path.insert(0, hook)
     return hook
-
-
-def tear_down(hook, module):  # for testing
-    """Useful for testing and isolating import hooks"""
-    import_hook.remove_hook(hook)
-    del sys.modules[module.__name__]

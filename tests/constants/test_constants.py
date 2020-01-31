@@ -1,4 +1,5 @@
 from ideas.examples import constants
+from ideas.import_hook import remove_hook
 
 
 def test_uppercase():
@@ -25,7 +26,7 @@ def test_uppercase():
     assert uppercase.new == 3, "Non constant values can be changed"
     del uppercase.new
 
-    constants.tear_down(hook, uppercase)
+    remove_hook(hook)
 
 
 def test_final(on_prevent_change=None):
@@ -54,7 +55,7 @@ def test_final(on_prevent_change=None):
     assert final.new == 3, "Non constant values can be changed"
     del final.new
 
-    constants.tear_down(hook, final)
+    remove_hook(hook)
 
 
 if __name__ == "__main__":

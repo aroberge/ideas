@@ -1,8 +1,8 @@
 # ideas
 
-**Easy creation of custom import hooks to try out new ideas for Python.**
+## *Easy creation of custom import hooks to try out new ideas for Python.*
 
-![ideas logo](ideas.png)
+![ideas logo](https://raw.githubusercontent.com/aroberge/ideas/master/ideas.png)
 
 
 ## Documentation
@@ -23,8 +23,6 @@ the same thing as `lambda`, enabling you to write
 
 ```python
 # my_script.py
-
-import some_other_module
 
 square = function x: x**2
 print(f"{square(4)} is the square of 4.")
@@ -47,14 +45,14 @@ and then run
 python loader.py
 ```
 
-So, `my_script.py` , `some_other_module.py`, and any other module
+So, `my_script.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/).
 
 ## Infrequently asked questions ... and comments
 
-The following list has been created before anyone else knew about
+The following imaginary dialogue has been created before anyone else knew about
 this project.
 
 > _Why?_

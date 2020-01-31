@@ -208,11 +208,3 @@ def add_hook(on_prevent_change=None):
     )
     sys.meta_path.insert(0, hook)
     return hook
-
-
-def tear_down(hook, module):  # for testing
-    """Useful for testing and isolating import hooks"""
-    import_hook.remove_hook(hook)
-    del CONSTANTS[module.__file__]
-    del DECLARED_FINAL[module.__file__]
-    del sys.modules[module.__name__]
