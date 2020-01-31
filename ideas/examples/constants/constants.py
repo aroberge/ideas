@@ -2,6 +2,7 @@ import sys
 import types
 
 from ideas import import_hook, utils
+from ideas.console import CONSOLE_NAME
 
 shorten_path = utils.shorten_path
 CONSTANTS = {}
@@ -9,7 +10,6 @@ DECLARED_FINAL = {}
 
 
 def make_class(on_prevent_change=True):
-
     class ModuleWithConstants(types.ModuleType):
         """Special module type that prevents variables identified as constants
            to have their value changed.
@@ -145,16 +145,17 @@ class FinalDict(dict):
             self.__setitem__(key, kwargs[key])
 
 
-def transform_source(source, module=None, **kwargs):
+def transform_source(source, filename=None, **kwargs):
     """Identifies simple assignments with a Final type hint, returning
        the source unchanged.
 
        Pattern we are looking for::
            python_identifier : Final ...
     """
-    filename = module.__file__
-    CONSTANTS[filename] = {}
-    DECLARED_FINAL[filename] = set([])
+    if filename not in CONSTANTS:
+        CONSTANTS[filename] = {}
+    if filename not in DECLARED_FINAL:
+        DECLARED_FINAL[filename] = set([])
 
     for line in utils.get_lines_of_tokens(source):
         if (
@@ -167,13 +168,13 @@ def transform_source(source, module=None, **kwargs):
     return source
 
 
-def exec_(source, module=None, callback_params=None):
-    globals_ = FinalDict(
-        module.__file__, on_prevent_change=callback_params["on_prevent_change"]
+def exec_(source, filename=None, globals_=None, callback_params=None, **kwargs):
+    locals_ = FinalDict(
+        filename, on_prevent_change=callback_params["on_prevent_change"]
     )
-    globals_.update(module.__dict__)
-    exec(source, globals_)
-    module.__dict__.update(globals_)
+    locals_.update(globals_)
+    exec(source, locals_)
+    globals_.update(locals_)
 
 
 def on_change_print(filename=None, key=None, value=None, kind=None):
@@ -191,15 +192,19 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
 def add_hook(on_prevent_change=None):
     """Creates and adds the import hook in sys.meta_path"""
     if on_prevent_change is None:
-        callback_params = {"on_prevent_change": on_change_print}
-    else:
-        callback_params = {"on_prevent_change": on_prevent_change}
+        on_prevent_change = on_change_print
+    callback_params = {"on_prevent_change": on_prevent_change}
+
     module_class = make_class(**callback_params)
+    console_dict = FinalDict(CONSOLE_NAME, on_prevent_change=on_prevent_change)
+    CONSTANTS[CONSOLE_NAME] = {}
+
     hook = import_hook.create_hook(
         module_class=module_class,
-        source_transformer=transform_source,
+        transform_source=transform_source,
         exec_=exec_,
         callback_params=callback_params,
+        console_dict=console_dict,
     )
     sys.meta_path.insert(0, hook)
     return hook

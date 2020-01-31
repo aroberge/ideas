@@ -20,12 +20,12 @@ class IdeasMetaFinder(MetaPathFinder):
     def __init__(
         self,
         module_class=None,
-        source_transformer=None,
+        transform_source=None,
         exec_=None,
         callback_params=None,
     ):
         self.module_class = module_class
-        self.source_transformer = source_transformer
+        self.transform_source = transform_source
         self.exec_ = exec_
         self.callback_params = callback_params
 
@@ -57,7 +57,7 @@ class IdeasMetaFinder(MetaPathFinder):
                 loader=IdeasLoader(
                     filename,
                     module_class=self.module_class,
-                    source_transformer=self.source_transformer,
+                    transform_source=self.transform_source,
                     exec_=self.exec_,
                     callback_params=self.callback_params,
                 ),
@@ -73,13 +73,13 @@ class IdeasLoader(Loader):
         self,
         filename,
         module_class=None,
-        source_transformer=None,
+        transform_source=None,
         exec_=None,
         callback_params=None,
     ):
         self.filename = filename
         self.module_class = module_class
-        self.source_transformer = source_transformer
+        self.transform_source = transform_source
         self.exec_ = exec_
         self.callback_params = callback_params
 
@@ -102,19 +102,33 @@ class IdeasLoader(Loader):
             module.__name__ = "__main__"
             Main_Module_Name = None
 
-        if self.source_transformer is not None:
-            source = self.source_transformer(
-                source, module=module, callback_params=self.callback_params
+        if self.transform_source is not None:
+            source = self.transform_source(
+                source,
+                filename=self.filename,
+                globals_=module.__dict__,
+                module=module,
+                callback_params=self.callback_params,
             )
 
         if self.exec_ is not None:
-            self.exec_(source, module=module, callback_params=self.callback_params)
+            self.exec_(
+                source,
+                filename=self.filename,
+                globals_=module.__dict__,
+                module=module,
+                callback_params=self.callback_params,
+            )
         else:
             exec(source, module.__dict__)
 
 
 def create_hook(
-    module_class=None, source_transformer=None, exec_=None, callback_params=None
+    module_class=None,
+    transform_source=None,
+    exec_=None,
+    console_dict=None,
+    callback_params=None,
 ):
     """Function to facilitate the creation of an import hook.
 
@@ -125,14 +139,14 @@ def create_hook(
     # We do not include module_class in the console configuration as
     # it has no module to be instantiated.
     console.configure(
-        source_transformer=source_transformer,
-        exec_=exec_,
+        transform_source=transform_source,
+        console_dict=console_dict,
         callback_params=callback_params,
     )
 
     return IdeasMetaFinder(
         module_class=module_class,
-        source_transformer=source_transformer,
+        transform_source=transform_source,
         exec_=exec_,
         callback_params=callback_params,
     )

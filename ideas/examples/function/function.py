@@ -46,7 +46,7 @@ def add_hook(show_original=False, show_transformed=False):
         "show_transformed": show_transformed,
     }
     hook = import_hook.create_hook(
-        source_transformer=transform_source, callback_params=callback_params
+        transform_source=transform_source, callback_params=callback_params
     )
     sys.meta_path.insert(0, hook)
     return hook

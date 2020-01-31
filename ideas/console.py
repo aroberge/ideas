@@ -17,26 +17,37 @@ BANNER = "Ideas Console version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 _CONFIG = {}
+CONSOLE_NAME = "IdeasConsole"
 
 
 def configure(**kwargs):
     """Configures various defaults to be used by the console"""
-    _CONFIG.clear()
     _CONFIG.update(kwargs)
 
 
 class IdeasConsole(InteractiveConsole):
     def __init__(
-        self, locals=None, source_transformer=None, exec_=None, callback_params=None,
+        self,
+        locals=None,
+        transform_source=None,
+        callback_params=None,
+        console_dict=None,
     ):
         """This class builds upon Python's code.InteractiveConsole
         so as to work with import hooks.
         """
-        self.source_transformer = source_transformer
-        self.exec_ = exec_
+        self.transform_source = transform_source
         self.callback_params = callback_params
 
-        super().__init__(locals=locals)
+        print(console_dict)
+
+        if console_dict is None:
+            console_dict = {}
+        if locals is not None:
+            console_dict.update(locals)
+
+        super().__init__(locals=console_dict)
+        self.filename = CONSOLE_NAME
 
     def push(self, line):
         """Push a line to the interpreter.
@@ -54,14 +65,16 @@ class IdeasConsole(InteractiveConsole):
         self.buffer.append(line)
         source = "\n".join(self.buffer)
 
-        if self.source_transformer is not None:
-            source = self.source_transformer(source, **self.callback_params)
-        more = self.runsource(source, self.filename)
+        if self.transform_source is not None:
+            source = self.transform_source(
+                source, filename=CONSOLE_NAME, callback_params=self.callback_params
+            )
+        more = self.runsource(source, CONSOLE_NAME)
         if not more:
             self.resetbuffer()
         return more
 
-    def runsource(self, source, filename="<input>", symbol="single"):
+    def runsource(self, source, filename=CONSOLE_NAME, symbol="single"):
         """Compile and run some source in the interpreter.
 
         Arguments are as for compile_command().
@@ -120,12 +133,8 @@ class IdeasConsole(InteractiveConsole):
         except Exception:
             self.showtraceback()
 
-    def write(self, data):
-        """Unlike Python's version, we write to stdout"""
-        sys.stdout.write(data)
 
-
-def start_console(local_vars=None):
+def start(local_vars=None):
     """Starts a console; modified from code.interact"""
     console_defaults = {}
 
@@ -138,9 +147,11 @@ def start_console(local_vars=None):
 
     console = IdeasConsole(locals=local_vars, **_CONFIG)
 
-    print("Configuration values for the console:")
-    for key in _CONFIG:
-        print(f"    {key}: {_CONFIG[key]}")
-    print("-" * 50)
+    if _CONFIG:
+        print("Configuration values for the console:")
+        for key in _CONFIG:
+            if _CONFIG[key] is not None:
+                print(f"    {key}: {_CONFIG[key]}")
+        print("-" * 50)
 
     console.interact(banner=BANNER)
