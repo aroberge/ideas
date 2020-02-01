@@ -60,7 +60,7 @@ Still, writing import hooks can be rather difficult.
       Last, but not least, spending some time sleeping with PEP 302 and the
       documentation for* importlib *under your pillow may be advisable.*
 
-        Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones
+        **Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones**
 
 ``ideas`` is designed to facilitate
 the creation of such import hooks, and be a repository for
@@ -91,30 +91,29 @@ Quick links to topics
 .. toctree::
    :maxdepth: 1
 
-    Additional motivation <motivation>
-    Usage <usage>
-    Special console <repl>
-    Importing a module as main <as_main>
-    Overview of all possibilities <possible>
-    Examples never included <excluded>
+    Additional motivation -first draft <motivation>
+    Usage - first draft <usage>
+    Importing a module as main - todo <as_main>
+    Overview of all possibilities - todo <possible>
+    Examples never included - first draft<excluded>
 
 .. toctree::
    :maxdepth: 1
    :caption: Examples
 
-    function as a keyword - part 1 <function_simplest>
-    function as a keyword - part 2 <function>
-    nobreak as a keyword <nobreak>
-    French Python <french>
-    λ encoding <lambda>
-    repeat as a keyword <repeat>
-    Simple AST transformation <ast>
-    Simple bytecode transformation <bytecode>
-    Pythonic switch statement <switch>
-    True constants <constants>
-    Json module <json>
-    PEP 505: None-aware operators <pep_505>
-    Import from non-standard locations <non_files>
+    function as a keyword - part 1 - first draft <function_simplest>
+    function as a keyword - part 2 - todo <function>
+    nobreak as a keyword - todo <nobreak>
+    French Python - todo <french>
+    λ encoding - todo <lambda>
+    repeat as a keyword - todo <repeat>
+    Simple AST transformation - todo <ast>
+    Simple bytecode transformation - todo <bytecode>
+    Pythonic switch statement - todo  <switch>
+    True constants - introduction done <constants>
+    Json module - todo  <json>
+    PEP 505: None-aware operators - todo  <pep_505>
+    Import from non-standard locations - todo  <non_files>
 
 .. toctree::
    :maxdepth: 1
@@ -131,7 +130,5 @@ To do
 
 .. todolist::
 
-
-.. _Pyxl project: https://github.com/dropbox/pyxl
 
 .. |tm| unicode:: U+000AE .. REGISTERED SIGN

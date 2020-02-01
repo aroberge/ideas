@@ -84,28 +84,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Additional motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../repl.html"> Special console</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../possible.html"> Overview of all possibilities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Additional motivation -first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../function.html"> function as a keyword - part 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> function as a keyword - part 1 - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../function.html"> function as a keyword - part 2 - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants - introduction done</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - todo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -175,7 +174,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.import_hook</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This is a simple proof of concept. It is not meant to be taken seriously.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains the core functions required to create an import hook.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -187,6 +186,13 @@
 
 <span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">stdlib_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="c1"># N.B. While I was able to play with import hooks using the deprecated</span>
+<span class="c1"># imp module (which still exists), I couldn&#39;t quite figure out how to</span>
+<span class="c1"># do it using the recommended importlib package. I got the required</span>
+<span class="c1"># information after asking a question on StackOverflow which lead</span>
+<span class="c1"># to this answer https://stackoverflow.com/a/43573798/558799</span>
+<span class="c1"># which was my starting point for the code written below.</span>
 
 
 <div class="viewcode-block" id="IdeasMetaFinder"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">IdeasMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
@@ -339,6 +345,10 @@
         <span class="k">return</span>
     <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">import_as_main</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </pre></div>
 
            </div>

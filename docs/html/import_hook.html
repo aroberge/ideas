@@ -86,28 +86,27 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1 - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2 - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul class="current">
@@ -189,7 +188,7 @@
             
   <div class="section" id="module-ideas.import_hook">
 <span id="import-hook-py"></span><h1>import_hook.py<a class="headerlink" href="#module-ideas.import_hook" title="Permalink to this headline">¶</a></h1>
-<p>This is a simple proof of concept. It is not meant to be taken seriously.</p>
+<p>This module contains the core functions required to create an import hook.</p>
 <dl class="class">
 <dt id="ideas.import_hook.IdeasLoader">
 <em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">callback_params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader" title="Permalink to this definition">¶</a></dt>
