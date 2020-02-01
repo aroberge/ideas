@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.2 documentation</title>
+  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Motivation for this project" href="motivation.html" /> 
+    <link rel="next" title="Additional motivation for this project" href="motivation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -85,7 +85,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
@@ -94,11 +94,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
@@ -173,7 +174,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="motivation.html" class="btn btn-neutral float-right" title="Motivation for this project" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Additional motivation for this project" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
   </div>
@@ -186,12 +187,13 @@
   <div class="section" id="ideas-making-it-easier-to-extend-python-s-syntax">
 <h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline">¶</a></h1>
 <a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" /></a>
-<p>You have an <strong>Excellent</strong> ® idea to change the Python syntax and want
+<p>You have an <strong>Excellent Idea</strong> ® to change the Python syntax and want
 to find a way to include your
-<strong>Excellent</strong> ® idea in your Python programs.
+<strong>Excellent Idea</strong> ®  in your Python programs.
 According to <a class="reference external" href="https://devguide.python.org/langchanges/">Python Developers Guide</a>,
 this might be doable if you are willing to follow “a few steps” including:</p>
-<ol class="arabic simple">
+<blockquote>
+<div><ol class="arabic simple">
 <li><p>Get a copy of the CPython’s code repository and all the required compilers
 for your platform.</p></li>
 <li><p>Modify the grammar file to add rules for the new syntax.</p></li>
@@ -199,27 +201,74 @@ for your platform.</p></li>
 <li><p>Compile the AST into bytecode</p></li>
 <li><p>Recompile the modified Python interpreter</p></li>
 </ol>
+</div></blockquote>
 <p>This … can be a rather daunting task.</p>
-<p>However, there is a simpler way: it is possible to run code with a
-modified syntax using import hooks. <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is designed to facilitate
+<p>But, there is a simpler way: it is possible to run code with a
+modified syntax using import hooks.</p>
+<div class="section" id="what-is-an-import-hook">
+<h2>What is an import hook<a class="headerlink" href="#what-is-an-import-hook" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">Skipping over details.</p>
+<p>This is a simplified description. A more detailed explanation will
+be given later.</p>
+</div>
+<p>When you write something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">my_module</span>
+</pre></div>
+</div>
+<p>Python’s import machinery has to do the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Try to use various tools to find the module requested</p></li>
+<li><p>Get the source code of that module</p></li>
+<li><p>Execute that source code, subject to some information reported in step 1.</p></li>
+</ol>
+</div></blockquote>
+<p>An import hook is an additional tool that you create to do this.
+Once written, you add it to <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code> so that Python’s import
+machinery can make use of it.</p>
+<p>Still, writing import hooks can be rather difficult.</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">[page 420] <em>…it should be emphasized that Python’s module, package and import
+mechanism is one of the most complicated parts of the entire language –
+often poorly understood by even the most seasoned Python programmers
+unless they’ve devoted effort to peeling back the covers.</em></div>
+<div class="line-block">
+<div class="line">… long discussion …</div>
+</div>
+<div class="line">[page 428] <em>Assuming that your head hasn’t completely exploded at this point, …
+Last, but not least, spending some time sleeping with PEP 302 and the
+documentation for</em> importlib <em>under your pillow may be advisable.</em></div>
+</div>
+<blockquote>
+<div><p>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</p>
+</div></blockquote>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
+<p>Instead of figuring out how to write an import hook, using <code class="docutils literal notranslate"><span class="pre">ideas</span></code> you
+can focus exclusively on what what might be needed to convert your proposed new
+syntax into something that Python can understand – <code class="docutils literal notranslate"><span class="pre">ideas</span></code> will
+take care of the rest.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Doing something like what is described in this documentation
 is not recommended for production code.</p>
 <p>But it can be fun! ;-)</p>
 </div>
+</div>
 <div class="section" id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Most of the links below lead to mostly empty pages.
-Much more content will be added … ” <em>soon</em> “.</p>
+Much more content will be added … <em>soon</em>.</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
@@ -230,11 +279,12 @@ Much more content will be added … ” <em>soon</em> “.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
@@ -292,7 +342,7 @@ Note that this is just a very rough first draft.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="motivation.html" class="btn btn-neutral float-right" title="Motivation for this project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Additional motivation for this project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

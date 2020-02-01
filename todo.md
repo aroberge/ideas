@@ -22,4 +22,5 @@ Infrequently updated list ...
   - perhaps use a custom encoding (lambda?) as an example
 - use two different keywords for match: match_in and match_equal ?
 - use instaviz for the docs
-
+- using emojis as identifiers
+- have a look at https://github.com/alexmojaki/nameof ... although I still don't understand the possible benefit.

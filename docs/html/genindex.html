@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; ideas 0.0.2 documentation</title>
+  <title>Index &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -85,7 +85,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
@@ -94,11 +94,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
@@ -206,10 +207,12 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="import_hook.html#ideas.import_hook.create_hook">create_hook() (in module ideas.import_hook)</a>
+      <li><a href="console.html#ideas.console.configure">configure() (in module ideas.console)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_hook.html#ideas.import_hook.create_hook">create_hook() (in module ideas.import_hook)</a>
+</li>
       <li><a href="import_hook.html#ideas.import_hook.IdeasLoader.create_module">create_module() (ideas.import_hook.IdeasLoader method)</a>
 </li>
   </ul></td>
@@ -248,6 +251,8 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="console.html#module-ideas.console">ideas.console (module)</a>
+</li>
       <li><a href="constants.html#module-ideas.examples.constants">ideas.examples.constants (module)</a>
 </li>
       <li><a href="function.html#module-ideas.examples.function">ideas.examples.function (module)</a>
@@ -256,10 +261,12 @@
 </li>
       <li><a href="utils.html#module-ideas.utils">ideas.utils (module)</a>
 </li>
-      <li><a href="import_hook.html#ideas.import_hook.IdeasLoader">IdeasLoader (class in ideas.import_hook)</a>
+      <li><a href="console.html#ideas.console.IdeasConsole">IdeasConsole (class in ideas.console)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_hook.html#ideas.import_hook.IdeasLoader">IdeasLoader (class in ideas.import_hook)</a>
+</li>
       <li><a href="import_hook.html#ideas.import_hook.IdeasMetaFinder">IdeasMetaFinder (class in ideas.import_hook)</a>
 </li>
       <li><a href="utils.html#ideas.utils.Token.is_comment">is_comment() (ideas.utils.Token method)</a>
@@ -278,11 +285,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.FinalDict.pop">pop() (ideas.examples.constants.FinalDict method)</a>
 </li>
+      <li><a href="function.html#ideas.examples.function.print_info">print_info() (in module ideas.examples.function)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.print_paths">print_paths() (in module ideas.utils)</a>
 </li>
       <li><a href="utils.html#ideas.utils.print_tokens">print_tokens() (in module ideas.utils)</a>
+</li>
+      <li><a href="console.html#ideas.console.IdeasConsole.push">push() (ideas.console.IdeasConsole method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -293,6 +304,12 @@
       <li><a href="import_hook.html#ideas.import_hook.remove_hook">remove_hook() (in module ideas.import_hook)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="console.html#ideas.console.IdeasConsole.runcode">runcode() (ideas.console.IdeasConsole method)</a>
+</li>
+      <li><a href="console.html#ideas.console.IdeasConsole.runsource">runsource() (ideas.console.IdeasConsole method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="S">S</h2>
@@ -300,11 +317,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.FinalDict.setdefault">setdefault() (ideas.examples.constants.FinalDict method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.shorten_path">shorten_path() (in module ideas.utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.simple_untokenize">simple_untokenize() (in module ideas.utils)</a>
+</li>
+      <li><a href="console.html#ideas.console.start">start() (in module ideas.console)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -312,20 +331,18 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="constants.html#ideas.examples.constants.tear_down">tear_down() (in module ideas.examples.constants)</a>
-
-      <ul>
-        <li><a href="function.html#ideas.examples.function.tear_down">(in module ideas.examples.function)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.Token">Token (class in ideas.utils)</a>
 </li>
       <li><a href="utils.html#ideas.utils.tokenize_source">tokenize_source() (in module ideas.utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.transform_source">transform_source() (in module ideas.examples.constants)</a>
+
+      <ul>
+        <li><a href="function.html#ideas.examples.function.transform_source">(in module ideas.examples.function)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 

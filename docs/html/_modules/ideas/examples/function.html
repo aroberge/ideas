@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function &mdash; ideas 0.0.2 documentation</title>
+  <title>ideas.examples.function &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -84,7 +84,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main</a></li>
@@ -93,11 +93,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement</a></li>
@@ -174,18 +175,36 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.examples.function</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+<span class="sd">   equivalent to ``lambda``.</span>
+
+<span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
+<span class="sd">   demonstrates how we can pass parameters when adding an import hook;</span>
+<span class="sd">   these parameters will be passed back to our function</span>
+<span class="sd">   ``transform_source``.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
 
 
-<span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;prints information about the source - either original or transformed&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
+<span class="sd">       that we specified when we created the import hook.</span>
+
+<span class="sd">       It gives us the option to compare the original source and the transformed</span>
+<span class="sd">       one. This type of additional option can be useful when debugging</span>
+<span class="sd">       a source transformer. Once such options are added, there are essentially</span>
+<span class="sd">       no advantage in removing them as the next programmer who wishes to</span>
+<span class="sd">       build upon this example will likely find this useful.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">show_original</span><span class="p">:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
 
@@ -193,7 +212,7 @@
 
     <span class="k">if</span> <span class="n">show_transformed</span><span class="p">:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">source</span>
+    <span class="k">return</span> <span class="n">source</span></div>
 
 
 <div class="viewcode-block" id="function_as_a_keyword"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.function_as_a_keyword">[docs]</a><span class="k">def</span> <span class="nf">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
@@ -226,12 +245,6 @@
     <span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
-
-
-<div class="viewcode-block" id="tear_down"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.tear_down">[docs]</a><span class="k">def</span> <span class="nf">tear_down</span><span class="p">(</span><span class="n">hook</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>  <span class="c1"># for testing</span>
-    <span class="sd">&quot;&quot;&quot;Useful for testing and isolating import hooks&quot;&quot;&quot;</span>
-    <span class="n">import_hook</span><span class="o">.</span><span class="n">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
-    <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

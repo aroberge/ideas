@@ -1,0 +1,151 @@
+.. To avoid duplication, this is used both as a readme file for the
+   function_simplest.py module and as contents of the documentation.
+
+Function - part 1
+==================
+
+**Summary:** How to introduce a single new keyword in Python that is
+completely equivalent to another keyword. The example we chose is
+``function`` as being equivalent to ``lambda``.
+
+This example demonstrates the use of:
+
+- Function definitions required to create and activate an import hook
+- How to transform the source using a tokenizer
+
+Reminder: what is an import hook
+---------------------------------
+
+In case you skipped over the introduction, here's a brief reminder
+of what is an import hook.
+
+.. sidebar:: Skipping over details.
+
+    This is a simplified description. A more detailed explanation will
+    be given later.
+
+When you write something like::
+
+    import my_module
+
+Python's import machinery has to do the following:
+
+    1. Try to use various tools to find the module requested
+    2. Get the source code of that module
+    3. Execute that source code, subject to some information reported in step 1.
+
+An import hook is an additional tool that you create to do this.
+Once written, you add it to ``sys.meta_path`` so that Python's import
+machinery can make use of it.
+
+How to do this
+---------------
+
+Suppose we want to create an import hook that enables us to use
+``function`` as a keyword equivalent to ``lambda``. Using ``ideas``,
+we simply have to do the following::
+
+    import sys
+    from ideas import import_hook
+
+
+    def some_name(source, **kwargs):
+
+         return source.replace("function", "lambda")
+
+
+    hook = import_hook.create_hook(transform_source=some_name)
+    sys.meta_path.insert(0, hook)
+
+That's it! Prior to having Python execute the source code, we made sure
+to replace any occurrence of the name ``function`` by ``lambda``
+so that the source code would contain only valid syntax.
+
+By inserting our ``hook`` as the first item in ``sys.meta_path``,
+we ensured that it would be the first one that would be used by Python.
+
+While the code above would work, it is less than ideal as it would
+replace the word ``function`` by ``lambda`` everywhere it occurs
+in the source. Thus, given something like::
+
+    """function.py
+
+    This is a test demonstrating the use of our hook to replace
+    function by lambda."""
+
+    square = function x: x**2
+    print(square(3))
+
+If we attempted to do the following::
+
+    >>> import function
+    >>> help(function)
+
+we would see this::
+
+    lambda.py
+
+    This is a test demonstrating the use of our hook to replace
+    lambda by lambda.
+
+This is far from ideal. There has to be a better way.
+
+Actual code
+------------
+
+Here's the content of our real simplest example.
+
+.. literalinclude:: ../../ideas/examples/function_simplest.py
+
+
+.. sidebar:: Tokens?
+
+    Your Python code is a sequence of various operators
+    (``+``, ``-``, ``:``, etc.), keywords, strings, etc.
+    Each of these is an individual **token**.
+
+    The rest of this documentation assumes that you are
+    fairly familiar with the concept of breaking up source
+    code into a series of tokens. If that is not the case,
+    you might want to do a quick Internet search to
+    learn more about this topic.
+
+
+Rather than inserting our import hook immediately upon execution
+of this module, we put the code to do so in the function
+``add_hook``, and return the hook that was created.
+This has at least three benefits:
+
+    1. We can control when we the hook is created.
+    2. We can use the return value to remove the hook when it is no longer
+       needed. This is useful for testing.
+    3. We can add arguments to ``add_hook`` so as to modify what happens
+       when our import hook is used. We will see some examples of
+       this shortly.
+
+To replace ``function`` by ``lambda`` only when it is meant to be
+used as a keyword, we break up the code in a series of tokens
+and only replace ``function`` by ``lambda`` when it occurs as
+an individual token. Rather than using directly the tokenizer
+from Python's standard library, we use our own version which has
+added features that we will make use of in later examples.
+
+Note that, just like::
+
+    def lambda():
+        pass
+
+would raise a ``SyntaxError``, the same would occur with::
+
+    def function():
+        pass
+
+using our import hook.
+
+Once we're done with replacing all ``function`` tokens by ``lambda``,
+we convert the tokens back into a string by calling ``untokenize``.
+
+Finally, to make our code easier to understand, we use the
+same name, ``transform_source`` that is used as a keyword
+argument for ``import_hook.create_hook`` for our own
+code.  All of our examples follow this convention.

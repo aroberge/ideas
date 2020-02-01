@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Special console &mdash; ideas 0.0.2 documentation</title>
+  <title>console.py &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -85,7 +85,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
@@ -94,11 +94,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
@@ -157,7 +158,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Special console</li>
+      <li>console.py</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -183,9 +184,78 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="special-console">
-<h1>Special console<a class="headerlink" href="#special-console" title="Permalink to this headline">¶</a></h1>
-<p>Demonstrates how to use it.</p>
+  <div class="section" id="module-ideas.console">
+<span id="console-py"></span><h1>console.py<a class="headerlink" href="#module-ideas.console" title="Permalink to this headline">¶</a></h1>
+<p>console.py</p>
+<p>Adaptation of Python’s console found in code.py so that it can be
+used with import hooks.</p>
+<dl class="class">
+<dt id="ideas.console.IdeasConsole">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">IdeasConsole</code><span class="sig-paren">(</span><em class="sig-param">logger=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">console_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="ideas.console.IdeasConsole.push">
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a line to the interpreter.</p>
+<p>The line should not have a trailing newline; it may have
+internal newlines.  The line is appended to a buffer and the
+interpreter’s runsource() method is called with the
+concatenated contents of the buffer as source.  If this
+indicates that the command was executed or invalid, the buffer
+is reset; otherwise, the command is incomplete, and the buffer
+is left as it was after the line was appended.  The return
+value is True if more input is required, False if the line was dealt
+with in some way (this is the same as runsource()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ideas.console.IdeasConsole.runcode">
+<code class="sig-name descname">runcode</code><span class="sig-paren">(</span><em class="sig-param">code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.runcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.runcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a code object.</p>
+<p>When an exception occurs, friendly_traceback.explain() is called to
+display a traceback.  All exceptions are caught except
+SystemExit, which, unlike the case for the original version in the
+standard library, cleanly exists the program. This is done
+so as to avoid our Friendly-traceback’s exception hook to intercept
+it and confuse the users.</p>
+<p>A note about KeyboardInterrupt: this exception may occur
+elsewhere in this code, and may not always be caught.  The
+caller should be prepared to deal with it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ideas.console.IdeasConsole.runsource">
+<code class="sig-name descname">runsource</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename='IdeasConsole'</em>, <em class="sig-param">symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.runsource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.runsource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile and run some source in the interpreter.</p>
+<p>Arguments are as for compile_command().</p>
+<p>One several things can happen:</p>
+<p>1) The input is incorrect; compile_command() raised an
+exception (SyntaxError or OverflowError).  A syntax traceback
+will be printed .</p>
+<p>2) The input is incomplete, and more input is required;
+compile_command() returned None.  Nothing happens.</p>
+<p>3) The input is complete; compile_command() returned a code
+object.  The code is executed by calling self.runcode() (which
+also handles run-time exceptions, except for SystemExit).</p>
+<p>The return value is True in case 2, False in the other cases (unless
+an exception is raised).  The return value can be used to
+decide whether to use sys.ps1 or sys.ps2 to prompt the next
+line.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.console.configure">
+<code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures various defaults to be used by the console</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.console.start">
+<code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">log=None</em>, <em class="sig-param">filename='console'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a console; modified from code.interact</p>
+</dd></dl>
+
 </div>
 
 

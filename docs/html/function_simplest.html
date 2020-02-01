@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Function - part 1 &mdash; ideas 0.0.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="function as a keyword" href="function.html" />
+    <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> function as a keyword - part 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reminder-what-is-an-import-hook">Reminder: what is an import hook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-do-this">How to do this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actual-code">Actual code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Function - part 1</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/function_simplest.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="function.html" class="btn btn-neutral float-right" title="function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="function-part-1">
+<h1>Function - part 1<a class="headerlink" href="#function-part-1" title="Permalink to this headline">¶</a></h1>
+<p><strong>Summary:</strong> How to introduce a single new keyword in Python that is
+completely equivalent to another keyword. The example we chose is
+<code class="docutils literal notranslate"><span class="pre">function</span></code> as being equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
+<p>This example demonstrates the use of:</p>
+<ul class="simple">
+<li><p>Function definitions required to create and activate an import hook</p></li>
+<li><p>How to transform the source using a tokenizer</p></li>
+</ul>
+<div class="section" id="reminder-what-is-an-import-hook">
+<h2>Reminder: what is an import hook<a class="headerlink" href="#reminder-what-is-an-import-hook" title="Permalink to this headline">¶</a></h2>
+<p>In case you skipped over the introduction, here’s a brief reminder
+of what is an import hook.</p>
+<div class="sidebar">
+<p class="sidebar-title">Skipping over details.</p>
+<p>This is a simplified description. A more detailed explanation will
+be given later.</p>
+</div>
+<p>When you write something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">my_module</span>
+</pre></div>
+</div>
+<p>Python’s import machinery has to do the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Try to use various tools to find the module requested</p></li>
+<li><p>Get the source code of that module</p></li>
+<li><p>Execute that source code, subject to some information reported in step 1.</p></li>
+</ol>
+</div></blockquote>
+<p>An import hook is an additional tool that you create to do this.
+Once written, you add it to <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code> so that Python’s import
+machinery can make use of it.</p>
+</div>
+<div class="section" id="how-to-do-this">
+<h2>How to do this<a class="headerlink" href="#how-to-do-this" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to create an import hook that enables us to use
+<code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>. Using <code class="docutils literal notranslate"><span class="pre">ideas</span></code>,
+we simply have to do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+
+
+<span class="k">def</span> <span class="nf">some_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+     <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda&quot;</span><span class="p">)</span>
+
+
+<span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_name</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That’s it! Prior to having Python execute the source code, we made sure
+to replace any occurrence of the name <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>
+so that the source code would contain only valid syntax.</p>
+<p>By inserting our <code class="docutils literal notranslate"><span class="pre">hook</span></code> as the first item in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>,
+we ensured that it would be the first one that would be used by Python.</p>
+<p>While the code above would work, it is less than ideal as it would
+replace the word <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> everywhere it occurs
+in the source. Thus, given something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;function.py</span>
+
+<span class="sd">This is a test demonstrating the use of our hook to replace</span>
+<span class="sd">function by lambda.&quot;&quot;&quot;</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If we attempted to do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>we would see this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">lambda</span><span class="o">.</span><span class="n">py</span>
+
+<span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">test</span> <span class="n">demonstrating</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">our</span> <span class="n">hook</span> <span class="n">to</span> <span class="n">replace</span>
+<span class="k">lambda</span> <span class="n">by</span> <span class="k">lambda</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Far from ideal. There has to be a better way.</p>
+</div>
+<div class="section" id="actual-code">
+<h2>Actual code<a class="headerlink" href="#actual-code" title="Permalink to this headline">¶</a></h2>
+<p>Here’s the content of our real simplest example.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+<span class="sd">   equivalent to ``lambda``.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+
+
+<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span>
+</pre></div>
+</div>
+<div class="sidebar">
+<p class="sidebar-title">Tokens?</p>
+<p>Your Python code is a sequence of various operators
+(<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, etc.), keywords, strings, etc.
+Each of these is an individual <strong>token</strong>.</p>
+<p>The rest of this documentation assumes that you are
+fairly familiar with the concept of breaking up source
+code into a series of tokens. If that is not the case,
+you might want to do a quick Internet search to
+learn more about this topic.</p>
+</div>
+<p>Rather than inserting our import hook immediately upon execution
+of this module, we put the code to do so in the function
+<code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, and return the hook that was created.
+This has at least three benefits:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>We can control when we the hook is created.</p></li>
+<li><p>We can use the return value to remove the hook when it is no longer
+needed. This is useful for testing.</p></li>
+<li><p>We can add arguments to <code class="docutils literal notranslate"><span class="pre">add_hook</span></code> so as to modify what happens
+when our import hook is used. We will see some examples of
+this shortly.</p></li>
+</ol>
+</div></blockquote>
+<p>To replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> only when it is meant to be
+used as a keyword, we break up the code in a series of tokens
+and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
+an individual token. Rather than using directly the tokenizer
+from Python’s standard library, we use our own version which has
+added features that we will make use of in later examples.</p>
+<p>Note that, just like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>would raise a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>, the same would occur with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>using our import hook.</p>
+<p>Once we’re done with replacing all <code class="docutils literal notranslate"><span class="pre">function</span></code> tokens by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>,
+we convert the tokens back into a string by calling <code class="docutils literal notranslate"><span class="pre">untokenize</span></code>.</p>
+<p>Finally, to make our code easier to understand, we use the
+same name, <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> that is used as a keyword
+argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> for our own
+code.  All of our examples follow this convention.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="function.html" class="btn btn-neutral float-right" title="function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

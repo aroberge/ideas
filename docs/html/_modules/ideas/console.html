@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.console &mdash; ideas 0.0.2 documentation</title>
+  <title>ideas.console &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -84,7 +84,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main</a></li>
@@ -93,11 +93,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../function.html"> ``function`` as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement</a></li>
@@ -196,7 +197,7 @@
 <span class="n">CONSOLE_NAME</span> <span class="o">=</span> <span class="s2">&quot;IdeasConsole&quot;</span>
 
 
-<div class="viewcode-block" id="configure"><a class="viewcode-back" href="../../console_code.html#ideas.console.configure">[docs]</a><span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="configure"><a class="viewcode-back" href="../../console.html#ideas.console.configure">[docs]</a><span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Configures various defaults to be used by the console&quot;&quot;&quot;</span>
     <span class="n">_CONFIG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div>
 
@@ -257,7 +258,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span>
 
 
-<div class="viewcode-block" id="IdeasConsole"><a class="viewcode-back" href="../../console_code.html#ideas.console.IdeasConsole">[docs]</a><span class="k">class</span> <span class="nc">IdeasConsole</span><span class="p">(</span><span class="n">InteractiveConsole</span><span class="p">):</span>
+<div class="viewcode-block" id="IdeasConsole"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole">[docs]</a><span class="k">class</span> <span class="nc">IdeasConsole</span><span class="p">(</span><span class="n">InteractiveConsole</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -278,7 +279,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="n">console_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">CONSOLE_NAME</span>
 
-<div class="viewcode-block" id="IdeasConsole.push"><a class="viewcode-back" href="../../console_code.html#ideas.console.IdeasConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<div class="viewcode-block" id="IdeasConsole.push"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Push a line to the interpreter.</span>
 
 <span class="sd">        The line should not have a trailing newline; it may have</span>
@@ -305,7 +306,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">resetbuffer</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">more</span></div>
 
-<div class="viewcode-block" id="IdeasConsole.runsource"><a class="viewcode-back" href="../../console_code.html#ideas.console.IdeasConsole.runsource">[docs]</a>    <span class="k">def</span> <span class="nf">runsource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">CONSOLE_NAME</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="IdeasConsole.runsource"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.runsource">[docs]</a>    <span class="k">def</span> <span class="nf">runsource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">CONSOLE_NAME</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compile and run some source in the interpreter.</span>
 
 <span class="sd">        Arguments are as for compile_command().</span>
@@ -343,7 +344,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="IdeasConsole.runcode"><a class="viewcode-back" href="../../console_code.html#ideas.console.IdeasConsole.runcode">[docs]</a>    <span class="k">def</span> <span class="nf">runcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+<div class="viewcode-block" id="IdeasConsole.runcode"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.runcode">[docs]</a>    <span class="k">def</span> <span class="nf">runcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Execute a code object.</span>
 
 <span class="sd">        When an exception occurs, friendly_traceback.explain() is called to</span>
@@ -367,7 +368,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console_code.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;console&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;console&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s2">&quot;~&gt;&gt; &quot;</span>
     <span class="k">if</span> <span class="n">log</span><span class="p">:</span>

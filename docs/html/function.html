@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>function as a keyword &mdash; ideas 0.0.2 documentation</title>
+  <title>function as a keyword &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="nobreak as a keyword" href="nobreak.html" />
-    <link rel="prev" title="Examples never included" href="excluded.html" /> 
+    <link rel="prev" title="Function - part 1" href="function_simplest.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -86,7 +86,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repl.html"> Special console</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main</a></li>
@@ -95,14 +95,15 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> ``function`` as a keyword</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> function as a keyword - part 2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.function">Use the source, Luke</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> ``nobreak`` as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> ``repeat`` as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement</a></li>
@@ -180,7 +181,7 @@
         <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples never included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Function - part 1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -195,6 +196,12 @@
 <p>The code is written and works: all that remains is to document it.</p>
 <div class="section" id="module-ideas.examples.function">
 <span id="use-the-source-luke"></span><h2>Use the source, Luke<a class="headerlink" href="#module-ideas.examples.function" title="Permalink to this headline">¶</a></h2>
+<p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
+equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
+<p>It is slightly more complicated than <code class="docutils literal notranslate"><span class="pre">function_simplest.py</span></code> as it
+demonstrates how we can pass parameters when adding an import hook;
+these parameters will be passed back to our function
+<code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 <dl class="function">
 <dt id="ideas.examples.function.add_hook">
 <code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.add_hook" title="Permalink to this definition">¶</a></dt>
@@ -213,9 +220,21 @@ spacing between tokens.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.function.tear_down">
-<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">tear_down</code><span class="sig-paren">(</span><em class="sig-param">hook</em>, <em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#tear_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.tear_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Useful for testing and isolating import hooks</p>
+<dt id="ideas.examples.function.print_info">
+<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.print_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints information about the source - either original or transformed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.function.transform_source">
+<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader with the named keyword
+that we specified when we created the import hook.</p>
+<p>It gives us the option to compare the original source and the transformed
+one. This type of additional option can be useful when debugging
+a source transformer. Once such options are added, there are essentially
+no advantage in removing them as the next programmer who wishes to
+build upon this example will likely find this useful.</p>
 </dd></dl>
 
 </div>
@@ -232,7 +251,7 @@ spacing between tokens.</p>
         <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples never included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Function - part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
