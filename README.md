@@ -50,7 +50,23 @@ loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/).
 
-## Infrequently asked questions ... and comments
+
+## Tools
+
+This project uses black for formatting, pytest for running tests,
+and flake8 for linting.
+
+## Contact:
+
+You can either file an issue or email me at <Andre.Roberge@gmail.com>.
+
+
+## License
+
+MIT - see the file listed above.
+
+
+## Infrequently asked questions and comments
 
 The following imaginary dialogue has been created before anyone else knew about
 this project.
@@ -73,7 +89,7 @@ but yourself.
 
 > _I found a bug._
 
-Please, by all means, file an issue so that I can perhaps fix it. Note however
+Wonderful, please file an issue so that I can perhaps fix it. Note however
 that some examples, which are known to fail in some contexts, would
 be too complex ensure that they always work in all contexts.
 
@@ -111,9 +127,15 @@ make sense to change what I wrote.
 > at this project for my idea, but I don't know where to start._
 
 Please, have a look at the [documentation](https://aroberge.github.io/ideas/docs/html/).
+If you go through all the examples in the order that they are presented, you
+might learn how to implement your idea.
 
-> _Why this silly name for a project? The word "ideas" has nothing to do with
-> import hooks in Python._
+> What about something like `from __future__ import braces`?
+
+**No.** See [Examples that will never be included](https://aroberge.github.io/ideas/docs/html/excluded.html).
+
+> _You're no fun. Anyway, why this silly name for a project?
+> The word "ideas" has nothing to do with import hooks in Python._
 
 For this project, I was thinking of using `importhook` (singular) or
 `importhooks` (plural). However, there is already a project named
@@ -121,19 +143,10 @@ For this project, I was thinking of using `importhook` (singular) or
 likely be just too confusing.
 
 I settled on `ideas` as I am guessing that the main application would be
-for people to try out suggestions from or for python-ideas.
+for people to try out suggestions from or for
+[python-ideas](https://mail.python.org/archives/list/python-ideas@python.org/).
+A few days later, I came up with the above logo and this cemented my opinion that this
+choice of name is not such a bad idea.
 
-
-## Tools
-
-This project uses black for formatting, pytest for running tests,
-and flake8 for linting.
-
-## Contact:
-
-You can either file an issue or email me at <Andre.Roberge@gmail.com>.
-
-
-## License
-
-MIT - see the file listed above.
+Anyway, enough of this banter. If you want to know more about this project,
+please consult the [documentation](https://aroberge.github.io/ideas/docs/html/).
