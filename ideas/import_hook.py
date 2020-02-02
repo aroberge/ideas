@@ -127,7 +127,10 @@ class IdeasLoader(Loader):
                 callback_params=self.callback_params,
             )
         else:
-            exec(source, module.__dict__)
+            try:
+                exec(source, module.__dict__)
+            except Exception as e:
+                print(e)
 
 
 def create_hook(

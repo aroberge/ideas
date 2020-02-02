@@ -47,7 +47,7 @@ class Token:
         """Compares a Token with another object; returns true if
            self.string != other.string or if self.string != other.
         """
-        return not self.__eq__(self, other)
+        return not self.__eq__(other)
 
     def is_keyword(self):
         """Returns True if the token represents a Python keyword.
@@ -73,6 +73,9 @@ class Token:
             tokenize.DEDENT,
             tokenize.ENDMARKER,
         )
+
+    def is_newline(self):
+        return self.type in (tokenize.NEWLINE, tokenize.NL)
 
     def __repr__(self):
         """Nicely formatted token"""
@@ -121,37 +124,6 @@ def get_lines_of_tokens(source):
     if new_line:
         lines.append(new_line)
     return lines
-
-
-# def get_lines_of_tokens(source):
-#     """Makes a list of lists of tokens, with each (inner) list containing
-#        all the tokens found on a given line.
-#     """
-#     lines = []
-#     current_line = -1
-#     new_line = []
-#     new_dedent_line = []
-#     try:
-#         for tok in tokenize.generate_tokens(StringIO(source).readline):
-#             token = Token(tok)
-#             if token.start_row != current_line:
-#                 current_line = token.start_row
-#                 if new_dedent_line:
-#                     lines.append(new_dedent_line)
-#                 if new_line:
-#                     lines.append(new_line)
-#                 new_dedent_line = []
-#                 new_line = []
-#             if token.type == tokenize.DEDENT:
-#                 new_dedent_line.append(token)
-#             else:
-#                 new_line.append(token)
-#     except (tokenize.TokenError, Exception) as exc:
-#         print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
-
-#     if new_line:
-#         lines.append(new_line)
-#     return lines
 
 
 def get_number_nonspace_tokens(tokens):

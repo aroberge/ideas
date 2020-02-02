@@ -24,9 +24,10 @@ def transform_source(source, show_original=False, show_transformed=False, **kwar
 
        It gives us the option to compare the original source and the transformed
        one. This type of additional option can be useful when debugging
-       a source transformer. Once such options are added, there are essentially
-       no advantage in removing them as the next programmer who wishes to
-       build upon this example will likely find this useful.
+       a source transformer. Furthermore, if we wish to define a source
+       transformation that combines the effect of multiple existing
+       transformations, we can combine the existing "inner" functions to
+       create our new transformation.
     """
     if show_original:
         print_info("Original", source)
