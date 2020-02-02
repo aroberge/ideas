@@ -60,6 +60,22 @@ def test_predictable():
     ), "Testing predicted conversion."
 
 
+def test_predictable2():
+    hook = repeat.add_hook(predictable_names=True)
+
+    try:
+        import my_program  # for testing only this file
+    except ImportError:
+        from . import my_program  # for testing as part of a suite with pytest
+    assert my_program.one_loop == 4, "one_loop should equal 4"
+    assert my_program.two_loops == 16, "two_loops should equal 16"
+
+    remove_hook(hook)
+
+
 if __name__ == "__main__":
     test_repeat()
     no_pytest_repeat_error()
+    test_predictable()
+    test_predictable2()
+    print("Tests completed.")

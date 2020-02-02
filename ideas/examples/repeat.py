@@ -34,6 +34,7 @@ def generate_variable_names():
 
 
 def generate_predictable_names():
+    """Generator that yields predictable variable names - useful for testing"""
     n = 0
     while True:
         n += 1
