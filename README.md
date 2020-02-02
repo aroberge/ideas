@@ -22,7 +22,7 @@ Suppose that you want to use `function` as a keyword in Python, to mean
 the same thing as `lambda`, enabling you to write
 
 ```python
-# my_script.py
+# my_program.py
 
 square = function x: x**2
 print(f"{square(4)} is the square of 4.")
@@ -36,7 +36,7 @@ You could do this by creating the following program
 from ideas.examples import function
 function.add_hook()
 
-import my_script
+import my_program
 ```
 
 and then run
@@ -45,7 +45,7 @@ and then run
 python loader.py
 ```
 
-So, `my_script.py` , and any other module that could be
+So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/).

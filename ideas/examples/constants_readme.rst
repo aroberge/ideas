@@ -11,10 +11,16 @@ This example demonstrates the use of:
 - Custom module class
 - Specialized dict to temporarily replace the read-only module dict.
 
+It took me quite a while to come up with the solution described below,
+and I learned a fair bit along the way.  Given the relative complexity of
+the final solution, I thought it would be appropriate to start slowly,
+explaining what is usually done by Pythonistas.
+
 Consenting adults
 -----------------
 
-Unlike some other programming languages that force their users to do things in a very strict fashion,
+Unlike some other programming languages that force their users
+to do things in a very strict fashion,
 Python gives a lot of flexibility and assume that they are responsible adults,
 capable of using common sense in their use of the language.
 Thus, certain features considered to be absolutely essential in other languages,
@@ -32,7 +38,8 @@ Instead, Pythonistas rely on conventions to indicate their intent.
 
 Still, this does not prevent people from asking *"How do I create a constant in Python?"*
 such as `was asked on StackOverflow <https://stackoverflow.com/questions/2682745/how-do-i-create-a-constant-in-python>`_
-some 9 years ago, which resulted in 34 different answers, almost all of which indicate that you cannot enforce this convention in Python at a module level.
+some 9 years ago, which has resulted in 34 different answers so far,
+all of which indicate that you cannot enforce this convention in Python at a module level.
 Answers that were provided are still actively edited as new features get added to Python,
 including recent comments about using the ``Final`` qualifier.
 
@@ -46,7 +53,7 @@ Such objects are carefully designed with properties that prevent
 changes to the values of attributes intended to be constants.
 
 However, this type of solution is more cumbersome to use than being able to simply
-use an agred convention.
+use an agreed-upon convention.
 As Raymond Hettinger often says: **there must be a better way**. ;-)
 
 How to

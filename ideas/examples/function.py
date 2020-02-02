@@ -49,7 +49,7 @@ def function_as_a_keyword(source):
     """
     new_tokens = []
     for token in utils.tokenize_source(source):
-        if token.string == "function":
+        if token == "function":  # equivalent to token.string == "function"
             token.string = "lambda"
         new_tokens.append(token)
 

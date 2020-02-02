@@ -147,24 +147,32 @@ class FinalDict(dict):
 
 def transform_source(source, filename=None, **kwargs):
     """Identifies simple assignments with a Final type hint, returning
-       the source unchanged.
+    the source unchanged.
 
-       Pattern we are looking for::
-           python_identifier : Final ...
+    The pattern we are looking for is::
+
+        |python_identifier : Final ...
+
+    where ``|`` indicates the beginning of a line.
     """
     if filename not in CONSTANTS:
         CONSTANTS[filename] = {}
     if filename not in DECLARED_FINAL:
         DECLARED_FINAL[filename] = set([])
 
-    for line in utils.get_lines_of_tokens(source):
-        if (
-            len(line) >= 4
-            and line[0].is_identifier()
-            and line[1].is_operator(":")
-            and line[2].string == "Final"
-        ):
-            DECLARED_FINAL[filename].add(line[0].string)
+    for tokens in utils.get_lines_of_tokens(source):
+        # a line of tokens can start with DEDENT tokens ...
+        if utils.get_number_nonspace_tokens(tokens) > 3:
+            index = utils.get_first_nonspace_token_index(tokens)
+            first_token = tokens[index]
+            if (
+                first_token.start_col == 0
+                and first_token.is_identifier()
+                and tokens[index + 1] == ":"
+                and tokens[index + 2] == "Final"
+            ):
+
+                DECLARED_FINAL[filename].add(first_token.string)
     return source
 
 

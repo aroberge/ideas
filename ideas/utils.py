@@ -32,40 +32,47 @@ class Token:
         if self.line and self.line[-1] == "\n":
             self.line = self.line[:-1]
 
-    def is_keyword(self, name=None):
-        """Returns True if the token represents a Python keyword.
-
-           If ``name`` is specified, then it returns True only if
-           the keyword is the one specified.
+    def __eq__(self, other):
+        """Compares a Token with another object; returns true if
+           self.string == other.string or if self.string == other.
         """
-        if name is not None:
-            return (
-                self.type == tokenize.NAME
-                and keyword.iskeyword(self.string)
-                and name == self.string
-            )
+        if hasattr(other, "string"):
+            return self.string == other.string
+        elif isinstance(other, str):
+            return self.string == other
         else:
-            return self.type == tokenize.NAME and keyword.iskeyword(self.string)
+            raise TypeError("A token can only be compared to a token or to a string.")
+
+    def __ne__(self, other):
+        """Compares a Token with another object; returns true if
+           self.string != other.string or if self.string != other.
+        """
+        return not self.__eq__(self, other)
+
+    def is_keyword(self):
+        """Returns True if the token represents a Python keyword.
+        """
+        return keyword.iskeyword(self.string)
 
     def is_identifier(self):
-        """Returns True if the token is a Python identifier"""
-        return self.type == tokenize.NAME and self.string.isidentifier()
-
-    def is_operator(self, operator=None):
-        """Returns True if the token is a Python operator and if operator is
-            equal to the default value (None).
-
-            If a string representing the operator is specified, this function
-            will return True only if the token is this specific operator.
-        """
-        if operator is None:
-            return self.type == tokenize.OP
-        else:
-            return self.type == tokenize.OP and self.string == operator
+        """Returns True if the token is a Python identifier and not a Python keyword"""
+        return self.string.isidentifier() and not self.is_keyword()
 
     def is_comment(self):
         """Returns True if the token is a comment"""
         return self.type == tokenize.COMMENT
+
+    def is_space(self):
+        """Returns True if the token indicates a change in indentation,
+           the end of a line, or the end of the source.
+        """
+        return self.type in (
+            tokenize.INDENT,
+            tokenize.NEWLINE,
+            tokenize.NL,
+            tokenize.DEDENT,
+            tokenize.ENDMARKER,
+        )
 
     def __repr__(self):
         """Nicely formatted token"""
@@ -93,32 +100,21 @@ def tokenize_source(source):
 
 
 def get_lines_of_tokens(source):
-    """Makes a list of lists of tokens, with each (inner) list either
-       all the DEDENT tokens found on a single line,
-       or all the other tokens found on a single line.
-
-       The separate treatement of DEDENT tokens is to make it easier
-       to process the content.
+    """Makes a list of lists of tokens, with each (inner) list containing
+       all the tokens found on a given line.
     """
     lines = []
-    current_line = -1
+    current_row = -1
     new_line = []
-    new_dedent_line = []
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
-            if token.start_row != current_line:
-                current_line = token.start_row
-                if new_dedent_line:
-                    lines.append(new_dedent_line)
+            if token.start_row != current_row:
+                current_row = token.start_row
                 if new_line:
                     lines.append(new_line)
-                new_dedent_line = []
                 new_line = []
-            if token.type == tokenize.DEDENT:
-                new_dedent_line.append(token)
-            else:
-                new_line.append(token)
+            new_line.append(token)
     except (tokenize.TokenError, Exception) as exc:
         print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
 
@@ -127,12 +123,64 @@ def get_lines_of_tokens(source):
     return lines
 
 
+# def get_lines_of_tokens(source):
+#     """Makes a list of lists of tokens, with each (inner) list containing
+#        all the tokens found on a given line.
+#     """
+#     lines = []
+#     current_line = -1
+#     new_line = []
+#     new_dedent_line = []
+#     try:
+#         for tok in tokenize.generate_tokens(StringIO(source).readline):
+#             token = Token(tok)
+#             if token.start_row != current_line:
+#                 current_line = token.start_row
+#                 if new_dedent_line:
+#                     lines.append(new_dedent_line)
+#                 if new_line:
+#                     lines.append(new_line)
+#                 new_dedent_line = []
+#                 new_line = []
+#             if token.type == tokenize.DEDENT:
+#                 new_dedent_line.append(token)
+#             else:
+#                 new_line.append(token)
+#     except (tokenize.TokenError, Exception) as exc:
+#         print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
+
+#     if new_line:
+#         lines.append(new_line)
+#     return lines
+
+
+def get_number_nonspace_tokens(tokens):
+    """Given a list of tokens, gives a count of the number of
+       tokens which are NOT space tokens (such as newline, indent, dedent, etc.)
+    """
+    nb = 0
+    for token in tokens:
+        if not token.is_space():
+            nb += 1
+    return nb
+
+
+def get_first_nonspace_token_index(tokens):
+    """Given a list of tokens, find the index of the first one which is
+       not a space token (such as a newline, indent, dedent, etc.)
+
+       return -1 if none is found.
+    """
+    for index, token in enumerate(tokens):
+        if not token.is_space():
+            return index
+    return -1
+
+
 # untokenize adapted from https://github.com/myint/untokenize
 #
 # TODO: acknowledge it properly in documentation with license added
 #
-
-WHITESPACE_TOKENS = (tokenize.INDENT, tokenize.NEWLINE, tokenize.NL)
 
 
 def untokenize(tokens):
@@ -145,7 +193,14 @@ def untokenize(tokens):
     some tokens or if escaped newlines were used, those things will be
     reflected by ``untokenize``.
 
-    However, if some tokens are changed, the ``line`` information will
+    If a given item is a string instead of a Token object, it is simply
+    added as is.
+
+    IMPORTANT: do not remove a token from the original list of
+    tokens prior to calling untokenize; instead, set its string attribute
+    to an empty string.
+
+    Note that if some tokens are changed, the ``line`` information will
     no longer reflect the content and the reconstructed content may
     no longer be valid, unless some special procedures have been followed
     when replacing original tokens by new ones. See the documentation
@@ -157,20 +212,23 @@ def untokenize(tokens):
     previous_line = ""
     last_row = 0
     last_column = -1
-    last_non_whitespace_tokey_type = None
+    last_non_whitespace_token_type = None
 
     for token in tokens:
+        if isinstance(token, str):
+            words.append(token)
+            continue
         if token.type == tokenize.ENCODING:
             continue
 
         # Preserve escaped newlines.
         if (
-            last_non_whitespace_tokey_type != tokenize.COMMENT
+            last_non_whitespace_token_type != tokenize.COMMENT
             and token.start_row > last_row
         ):
-            if previous_line.endswith(("\\\n", "\\\r\n", "\\\r")):  # original
+            if previous_line.endswith(("\\\n", "\\\r\n", "\\\r")):
                 words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
-            elif previous_line.endswith("\\"):  # my fix
+            elif previous_line.endswith("\\"):
                 words.append(previous_line[len(previous_line.rstrip(" \t\\")) :])
                 words.append("\n")
 
@@ -183,12 +241,10 @@ def untokenize(tokens):
         words.append(token.string)
 
         previous_line = token.line
-
         last_row = token.end_row
         last_column = token.end_col
-
-        if token.type not in WHITESPACE_TOKENS:
-            last_non_whitespace_tokey_type = token.type
+        if not token.is_space():
+            last_non_whitespace_token_type = token.type
 
     return "".join(words)
 
@@ -202,30 +258,6 @@ attribute, or a an iterable with of length 2 like
 The token that raised this error was:
 %s
 """
-
-
-def simple_untokenize(tokens):  # untested
-    """Reconstructs a source from a list of tokens. Each token can be
-    either an instance of the Token class, or a tuple consisting
-    of two values: the token type and the token string.
-
-    Generates a string correspondings to a list of tokens based only
-    on the token type and string information. This does not preserve
-    the spacing between tokens which was present in the original source.
-    """
-    simple_tokens = []
-    for token in tokens:
-        if hasattr(token, "type"):
-            if token.type == tokenize.ENCODING:
-                continue
-        if hasattr(token, "type") and hasattr(token, "string"):
-            token = (token.type, token.string)
-        elif len(token) != 2:
-            raise TypeError(INVALID_TOKEN_MESSAGE % str(token))
-        simple_tokens.append(token)
-
-    return tokenize.untokenize(simple_tokens)
-
 
 PYTHON = os.path.dirname(os.__file__).lower()
 this_dir = os.path.dirname(__file__)

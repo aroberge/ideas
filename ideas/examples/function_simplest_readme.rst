@@ -128,7 +128,9 @@ used as a keyword, we break up the code in a series of tokens
 and only replace ``function`` by ``lambda`` when it occurs as
 an individual token. Rather than using directly the tokenizer
 from Python's standard library, we use our own version which has
-added features that we will make use of in later examples.
+added features. For examples, to see if two tokens are equal,
+we only compare their string values. We can compare a token directly
+to a string like we did in the code above.
 
 Note that, just like::
 

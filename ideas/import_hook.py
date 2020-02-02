@@ -1,4 +1,4 @@
-"""This is a simple proof of concept. It is not meant to be taken seriously."""
+"""This module contains the core functions required to create an import hook."""
 
 import os
 import sys
@@ -10,6 +10,13 @@ from . import console
 
 Main_Module_Name = None
 stdlib_dir = os.path.dirname(os.__file__)
+
+# N.B. While I was able to play with import hooks using the deprecated
+# imp module (which still exists), I couldn't quite figure out how to
+# do it using the recommended importlib package. I got the required
+# information after asking a question on StackOverflow which lead
+# to this answer https://stackoverflow.com/a/43573798/558799
+# which was my starting point for the code written below.
 
 
 class IdeasMetaFinder(MetaPathFinder):
@@ -162,3 +169,7 @@ def remove_hook(hook):
         return
     del sys.meta_path[index]
     console.configure()
+
+
+def import_as_main(module):
+    raise NotImplementedError
