@@ -94,16 +94,19 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1 - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2 - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> repeat as a keyword - todo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> repeat as a keyword - code implemented</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.repeat">repeat.py API</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -158,7 +161,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li><code class="docutils literal notranslate"><span class="pre">repeat</span></code> as a keyword</li>
+      <li>repeat as a keyword</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -187,9 +190,80 @@
            <div itemprop="articleBody">
             
   <div class="section" id="repeat-as-a-keyword">
-<h1><code class="docutils literal notranslate"><span class="pre">repeat</span></code> as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline">¶</a></h1>
+<h1>repeat as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline">¶</a></h1>
 <p>Show how to do this, explain the motivation behind, copying most
 of the stuff from AvantPy.</p>
+<div class="section" id="module-ideas.examples.repeat">
+<span id="repeat-py-api"></span><h2>repeat.py API<a class="headerlink" href="#module-ideas.examples.repeat" title="Permalink to this headline">¶</a></h2>
+<p>Adds <code class="docutils literal notranslate"><span class="pre">repeat</span></code> as a keyword to write simple loops that repeat
+a set number of times.  That is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">repeat</span> <span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">random_variable_name_1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">for</span> <span class="n">random_variable_name_2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="exception">
+<dt id="ideas.examples.repeat.RepeatSyntaxError">
+<em class="property">exception </em><code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">RepeatSyntaxError</code><a class="reference internal" href="_modules/ideas/examples/repeat.html#RepeatSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.RepeatSyntaxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently, only raised when a repeat statement has a missing colon</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.add_hook">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">predictable_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.convert_repeat">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">convert_repeat</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">predictable_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#convert_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.convert_repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces instances of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="o">...</span> <span class="p">:</span> <span class="c1"># optional comment</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">random_variable_name</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="o">...</span> <span class="p">):</span> <span class="c1"># optional comment</span>
+</pre></div>
+</div>
+<p>A complete repeat statement is restricted to be on a single line</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.generate_predictable_names">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">generate_predictable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#generate_predictable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.generate_predictable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator that yields predictable variable names - useful for testing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.generate_variable_names">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">generate_variable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#generate_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.generate_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator that yields random variable names</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.print_info">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.print_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints information about the source - either original or transformed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.repeat.transform_source">
+<code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">predictable_names=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader with the named keyword
+that we specified when we created the import hook.</p>
+<p>It gives us the option to compare the original source and the transformed
+one.</p>
+</dd></dl>
+
+</div>
 </div>
 
 

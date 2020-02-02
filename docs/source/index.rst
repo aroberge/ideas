@@ -101,12 +101,12 @@ Quick links to topics
    :maxdepth: 1
    :caption: Examples
 
-    function as a keyword - part 1 - first draft <function_simplest>
-    function as a keyword - part 2 - todo <function>
+    function as a keyword - part 1 <function_simplest>
+    function as a keyword - part 2 <function>
     nobreak as a keyword - todo <nobreak>
     French Python - todo <french>
     λ encoding - todo <lambda>
-    repeat as a keyword - todo <repeat>
+    repeat as a keyword - code implemented <repeat>
     Simple AST transformation - todo <ast>
     Simple bytecode transformation - todo <bytecode>
     Pythonic switch statement - todo  <switch>

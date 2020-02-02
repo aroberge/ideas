@@ -1,11 +1,6 @@
-``function`` as a keyword
-=========================
+.. include:: ../../ideas/examples/function_readme.rst
 
-The starting example.  Have two versions: ``function_simple`` and ``function``.
-
-The code is written and works: all that remains is to document it.
-
-Use the source, Luke
+function.py API
 --------------------
 
 .. automodule:: ideas.examples.function

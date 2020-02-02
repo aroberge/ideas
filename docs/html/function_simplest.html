@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="function as a keyword" href="function.html" />
+    <link rel="next" title="Function - part 2" href="function.html" />
     <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
 </head>
 
@@ -94,17 +94,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> function as a keyword - part 1 - first draft</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> function as a keyword - part 1</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reminder-what-is-an-import-hook">Reminder: what is an import hook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-do-this">How to do this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#actual-code">Actual code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-simplest-py-api">function_simplest.py API</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2 - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - code implemented</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
@@ -179,7 +180,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="function.html" class="btn btn-neutral float-right" title="function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -199,7 +200,7 @@ completely equivalent to another keyword. The example we chose is
 <p>This example demonstrates the use of:</p>
 <ul class="simple">
 <li><p>Function definitions required to create and activate an import hook</p></li>
-<li><p>How to transform the source using a tokenizer</p></li>
+<li><p>How to transform the source using a custom tokenizer</p></li>
 </ul>
 <div class="section" id="reminder-what-is-an-import-hook">
 <h2>Reminder: what is an import hook<a class="headerlink" href="#reminder-what-is-an-import-hook" title="Permalink to this headline">¶</a></h2>
@@ -275,34 +276,59 @@ in the source. Thus, given something like:</p>
 <div class="section" id="actual-code">
 <h2>Actual code<a class="headerlink" href="#actual-code" title="Permalink to this headline">¶</a></h2>
 <p>Here’s the content of our real simplest example.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
-<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
+<span class="hll"><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span>    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="hll">        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
+</span>            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+<span class="hll">    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+</span>
 
-
-<span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">hook</span>
-</pre></div>
-</div>
+<span class="hll"><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+</span>    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+<span class="hll">    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+</span>    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+<span class="hll">    <span class="k">return</span> <span class="n">hook</span>
+</span></pre></div>
+</td></tr></table></div>
 <div class="sidebar">
 <p class="sidebar-title">Tokens?</p>
 <p>Your Python code is a sequence of various operators
@@ -316,7 +342,7 @@ learn more about this topic.</p>
 </div>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-<code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, and return the hook that was created.
+<code class="docutils literal notranslate"><span class="pre">add_hook</span></code> (line 22), and return the hook that was created (line 26).
 This has at least three benefits:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -332,10 +358,10 @@ this shortly.</p></li>
 used as a keyword, we break up the code in a series of tokens
 and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
 an individual token. Rather than using directly the tokenizer
-from Python’s standard library, we use our own version which has
+from Python’s standard library, we use our own version which has some useful
 added features. For examples, to see if two tokens are equal,
 we only compare their string values. We can compare a token directly
-to a string like we did in the code above.</p>
+to a string like we did in the code above on line 15.</p>
 <p>Note that, just like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>
@@ -348,11 +374,32 @@ to a string like we did in the code above.</p>
 </div>
 <p>using our import hook.</p>
 <p>Once we’re done with replacing all <code class="docutils literal notranslate"><span class="pre">function</span></code> tokens by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>,
-we convert the tokens back into a string by calling <code class="docutils literal notranslate"><span class="pre">untokenize</span></code>.</p>
-<p>Finally, to make our code easier to understand, we use the
+we convert the tokens back into a string by calling our
+utility function <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> on line 19.</p>
+<p>Finally, to make our code easier to understand, on line 10 we use the
 same name, <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> that is used as a keyword
-argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> for our own
-code.  All of our examples follow this convention.</p>
+argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> on line 24.
+All of our examples follow this convention.</p>
+</div>
+<div class="section" id="function-simplest-py-api">
+<h2>function_simplest.py API<a class="headerlink" href="#function-simplest-py-api" title="Permalink to this headline">¶</a></h2>
+<p>We will not always include the full source code for each example like
+we did above. However, we will strive to end every explanation
+with an API generated by Sphinx like the one included below.</p>
+<span class="target" id="module-ideas.examples.function_simplest"></span><p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
+equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
+<dl class="function">
+<dt id="ideas.examples.function_simplest.add_hook">
+<code class="sig-prename descclassname">ideas.examples.function_simplest.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_simplest.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_simplest.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.function_simplest.transform_source">
+<code class="sig-prename descclassname">ideas.examples.function_simplest.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_simplest.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_simplest.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple replacement of <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -364,7 +411,7 @@ code.  All of our examples follow this convention.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="function.html" class="btn btn-neutral float-right" title="function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

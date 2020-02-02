@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function &mdash; ideas 0.0.3 documentation</title>
+  <title>ideas.examples.function_simplest &mdash; ideas 0.0.3 documentation</title>
   
 
   
@@ -158,7 +158,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>ideas.examples.function</li>
+      <li>ideas.examples.function_simplest</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -173,76 +173,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ideas.examples.function</h1><div class="highlight"><pre>
+  <h1>Source code for ideas.examples.function_simplest</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
-
-<span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
-<span class="sd">   demonstrates how we can pass parameters when adding an import hook;</span>
-<span class="sd">   these parameters will be passed back to our function</span>
-<span class="sd">   ``transform_source``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
-<div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;prints information about the source - either original or transformed&quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
-<span class="sd">       that we specified when we created the import hook.</span>
-
-<span class="sd">       It gives us the option to compare the original source and the transformed</span>
-<span class="sd">       one. This type of additional option can be useful when debugging</span>
-<span class="sd">       a source transformer. Furthermore, if we wish to define a source</span>
-<span class="sd">       transformation that combines the effect of multiple existing</span>
-<span class="sd">       transformations, we can combine the existing &quot;inner&quot; functions to</span>
-<span class="sd">       create our new transformation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">show_original</span><span class="p">:</span>
-        <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-
-    <span class="n">source</span> <span class="o">=</span> <span class="n">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">show_transformed</span><span class="p">:</span>
-        <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">source</span></div>
-
-
-<div class="viewcode-block" id="function_as_a_keyword"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.function_as_a_keyword">[docs]</a><span class="k">def</span> <span class="nf">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.</span>
-
-<span class="sd">    Note that, while the string ``lambda`` is shorter than ``function``, we</span>
-<span class="sd">    do not adjust the information (start_col, end_col) about the position</span>
-<span class="sd">    of the token. ``untokenize`` uses that information together with the</span>
-<span class="sd">    information about each original line, to properly keep track of the</span>
-<span class="sd">    spacing between tokens.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
-    <span class="n">new_source</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">new_source</span></div>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function.html#ideas.examples.function.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
-        <span class="s2">&quot;show_transformed&quot;</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
-        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span>
-    <span class="p">)</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>

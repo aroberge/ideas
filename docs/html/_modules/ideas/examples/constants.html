@@ -92,12 +92,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> function as a keyword - part 1 - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> function as a keyword - part 2 - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> function as a keyword - part 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword - code implemented</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - todo</a></li>
@@ -177,7 +177,7 @@
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">types</span>
 
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span><span class="p">,</span> <span class="n">token_utils</span>
 <span class="kn">from</span> <span class="nn">ideas.console</span> <span class="k">import</span> <span class="n">CONSOLE_NAME</span>
 
 <span class="n">shorten_path</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span>
@@ -336,10 +336,10 @@
     <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">:</span>
         <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
 
-    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="c1"># a line of tokens can start with DEDENT tokens ...</span>
-        <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
             <span class="n">first_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">==</span> <span class="mi">0</span>
