@@ -41,6 +41,25 @@ def test_repeat_error():
     remove_hook(hook)
 
 
-if __name__ == '__main__':
+source = """
+repeat 3:
+    repeat n * 22 : # comment
+        pass
+"""
+
+converted = """
+for _1 in range( 3):
+    for _2 in range( n * 22 ): # comment
+        pass
+"""
+
+
+def test_predictable():
+    assert converted == repeat.convert_repeat(
+        source, predictable_names=True
+    ), "Testing predicted conversion."
+
+
+if __name__ == "__main__":
     test_repeat()
     no_pytest_repeat_error()

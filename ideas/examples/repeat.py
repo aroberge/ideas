@@ -21,14 +21,23 @@ from ideas import import_hook, utils
 
 
 class RepeatSyntaxError(Exception):
+    """Currently, only raised when a repeat statement has a missing colon"""
+
     pass
 
 
 def generate_variable_names():
-    """Generator that yield random variable names"""
+    """Generator that yields random variable names"""
     while True:
         name = uuid.uuid4()
         yield "_%s" % name.hex
+
+
+def generate_predictable_names():
+    n = 0
+    while True:
+        n += 1
+        yield "_%s" % n
 
 
 def print_info(kind, source):
@@ -38,7 +47,13 @@ def print_info(kind, source):
     print("-----------------------------")
 
 
-def transform_source(source, show_original=False, show_transformed=False, **kwargs):
+def transform_source(
+    source,
+    show_original=False,
+    show_transformed=False,
+    predictable_names=False,
+    **kwargs,
+):
     """This function is called by the import hook loader with the named keyword
        that we specified when we created the import hook.
 
@@ -51,14 +66,14 @@ def transform_source(source, show_original=False, show_transformed=False, **kwar
     if show_original:
         print_info("Original", source)
 
-    source = convert_repeat(source)
+    source = convert_repeat(source, predictable_names=predictable_names)
 
     if show_transformed:
         print_info("Transformed", source)
     return source
 
 
-def convert_repeat(source):
+def convert_repeat(source, predictable_names=False):
     """Replaces instances of
 
         repeat ... : # optional comment
@@ -71,7 +86,10 @@ def convert_repeat(source):
     """
 
     new_tokens = []
-    variable_name = generate_variable_names()
+    if predictable_names:
+        variable_name = generate_predictable_names()
+    else:
+        variable_name = generate_variable_names()
 
     for tokens in utils.get_lines_of_tokens(source):
         # a line of tokens can start with DEDENT tokens ...
@@ -79,7 +97,7 @@ def convert_repeat(source):
         first_token = tokens[index]
         if first_token == "repeat":
             colon_position = -1
-            # Note: a newline token might have an empty string.
+            # Note: a newline token string could be either "" or "\n"
             if tokens[colon_position].is_newline():
                 colon_position -= 1
             if tokens[colon_position].is_comment():
@@ -99,11 +117,12 @@ def convert_repeat(source):
     return utils.untokenize(new_tokens)
 
 
-def add_hook(show_original=False, show_transformed=False):
+def add_hook(show_original=False, show_transformed=False, predictable_names=False):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
         "show_transformed": show_transformed,
+        "predictable_names": predictable_names,
     }
     hook = import_hook.create_hook(
         transform_source=transform_source, callback_params=callback_params
