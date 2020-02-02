@@ -8,7 +8,7 @@
 """
 import sys
 
-from ideas import import_hook, utils
+from ideas import import_hook, token_utils
 
 
 def print_info(kind, source):
@@ -49,12 +49,12 @@ def function_as_a_keyword(source):
     spacing between tokens.
     """
     new_tokens = []
-    for token in utils.tokenize_source(source):
+    for token in token_utils.tokenize_source(source):
         if token == "function":  # equivalent to token.string == "function"
             token.string = "lambda"
         new_tokens.append(token)
 
-    new_source = utils.untokenize(new_tokens)
+    new_source = token_utils.untokenize(new_tokens)
     return new_source
 
 

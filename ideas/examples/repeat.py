@@ -17,7 +17,7 @@ is equivalent to
 import sys
 import uuid
 
-from ideas import import_hook, utils
+from ideas import import_hook, token_utils
 
 
 class RepeatSyntaxError(Exception):
@@ -92,9 +92,9 @@ def convert_repeat(source, predictable_names=False):
     else:
         variable_name = generate_variable_names()
 
-    for tokens in utils.get_lines_of_tokens(source):
+    for tokens in token_utils.get_lines_of_tokens(source):
         # a line of tokens can start with DEDENT tokens ...
-        index = utils.get_first_nonspace_token_index(tokens)
+        index = token_utils.get_first_nonspace_token_index(tokens)
         first_token = tokens[index]
         if first_token == "repeat":
             colon_position = -1
@@ -115,7 +115,7 @@ def convert_repeat(source, predictable_names=False):
 
         new_tokens.extend(tokens)
 
-    return utils.untokenize(new_tokens)
+    return token_utils.untokenize(new_tokens)
 
 
 def add_hook(show_original=False, show_transformed=False, predictable_names=False):

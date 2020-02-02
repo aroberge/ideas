@@ -108,7 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -222,7 +222,7 @@ be given later.</p>
 <li><p>Execute that source code, subject to some information reported in step 1.</p></li>
 </ol>
 </div></blockquote>
-<p>An import hook is an additional tool that you create to do this.
+<p>An import hook is an additional tool that you create to do these three steps.
 Once written, you add it to <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code> so that Python’s import
 machinery can make use of it.</p>
 </div>
@@ -234,11 +234,8 @@ we simply have to do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
 
-
 <span class="k">def</span> <span class="nf">some_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
      <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda&quot;</span><span class="p">)</span>
-
 
 <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_name</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
@@ -292,7 +289,7 @@ in the source. Thus, given something like:</p>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
@@ -336,7 +333,9 @@ used as a keyword, we break up the code in a series of tokens
 and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
 an individual token. Rather than using directly the tokenizer
 from Python’s standard library, we use our own version which has
-added features that we will make use of in later examples.</p>
+added features. For examples, to see if two tokens are equal,
+we only compare their string values. We can compare a token directly
+to a string like we did in the code above.</p>
 <p>Note that, just like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>

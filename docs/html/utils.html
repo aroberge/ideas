@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -212,36 +212,44 @@ paramters are:</p>
 <dl class="method">
 <dt id="ideas.utils.Token.is_identifier">
 <code class="sig-name descname">is_identifier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#Token.is_identifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.Token.is_identifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if the token is a Python identifier</p>
+<dd><p>Returns True if the token is a Python identifier and not a Python keyword</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="ideas.utils.Token.is_keyword">
-<code class="sig-name descname">is_keyword</code><span class="sig-paren">(</span><em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#Token.is_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.Token.is_keyword" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_keyword</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#Token.is_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.Token.is_keyword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the token represents a Python keyword.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">name</span></code> is specified, then it returns True only if
-the keyword is the one specified.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ideas.utils.Token.is_operator">
-<code class="sig-name descname">is_operator</code><span class="sig-paren">(</span><em class="sig-param">operator=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#Token.is_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.Token.is_operator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if the token is a Python operator and if operator is
-equal to the default value (None).</p>
-<p>If a string representing the operator is specified, this function
-will return True only if the token is this specific operator.</p>
+<dt id="ideas.utils.Token.is_space">
+<code class="sig-name descname">is_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#Token.is_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.Token.is_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token indicates a change in indentation,
+the end of a line, or the end of the source.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
+<dt id="ideas.utils.get_first_nonspace_token_index">
+<code class="sig-prename descclassname">ideas.utils.</code><code class="sig-name descname">get_first_nonspace_token_index</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#get_first_nonspace_token_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.get_first_nonspace_token_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the index of the first one which is
+not a space token (such as a newline, indent, dedent, etc.)</p>
+<p>return -1 if none is found.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="ideas.utils.get_lines_of_tokens">
 <code class="sig-prename descclassname">ideas.utils.</code><code class="sig-name descname">get_lines_of_tokens</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#get_lines_of_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.get_lines_of_tokens" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes a list of lists of tokens, with each (inner) list either
-all the DEDENT tokens found on a single line,
-or all the other tokens found on a single line.</p>
-<p>The separate treatement of DEDENT tokens is to make it easier
-to process the content.</p>
+<dd><p>Makes a list of lists of tokens, with each (inner) list containing
+all the tokens found on a given line.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.utils.get_number_nonspace_tokens">
+<code class="sig-prename descclassname">ideas.utils.</code><code class="sig-name descname">get_number_nonspace_tokens</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#get_number_nonspace_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.get_number_nonspace_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, gives a count of the number of
+tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</p>
 </dd></dl>
 
 <dl class="function">
@@ -275,17 +283,6 @@ as:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.utils.simple_untokenize">
-<code class="sig-prename descclassname">ideas.utils.</code><code class="sig-name descname">simple_untokenize</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#simple_untokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.simple_untokenize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reconstructs a source from a list of tokens. Each token can be
-either an instance of the Token class, or a tuple consisting
-of two values: the token type and the token string.</p>
-<p>Generates a string correspondings to a list of tokens based only
-on the token type and string information. This does not preserve
-the spacing between tokens which was present in the original source.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="ideas.utils.tokenize_source">
 <code class="sig-prename descclassname">ideas.utils.</code><code class="sig-name descname">tokenize_source</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/utils.html#tokenize_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.utils.tokenize_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a list of tokens from a source (str).</p>
@@ -301,7 +298,12 @@ information recorded by Python’s <code class="docutils literal notranslate"><s
 As a result, if the original soure code had multiple spaces between
 some tokens or if escaped newlines were used, those things will be
 reflected by <code class="docutils literal notranslate"><span class="pre">untokenize</span></code>.</p>
-<p>However, if some tokens are changed, the <code class="docutils literal notranslate"><span class="pre">line</span></code> information will
+<p>If a given item is a string instead of a Token object, it is simply
+added as is.</p>
+<p>IMPORTANT: do not remove a token from the original list of
+tokens prior to calling untokenize; instead, set its string attribute
+to an empty string.</p>
+<p>Note that if some tokens are changed, the <code class="docutils literal notranslate"><span class="pre">line</span></code> information will
 no longer reflect the content and the reconstructed content may
 no longer be valid, unless some special procedures have been followed
 when replacing original tokens by new ones. See the documentation

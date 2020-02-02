@@ -323,24 +323,32 @@
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Identifies simple assignments with a Final type hint, returning</span>
-<span class="sd">       the source unchanged.</span>
+<span class="sd">    the source unchanged.</span>
 
-<span class="sd">       Pattern we are looking for::</span>
-<span class="sd">           python_identifier : Final ...</span>
+<span class="sd">    The pattern we are looking for is::</span>
+
+<span class="sd">        |python_identifier : Final ...</span>
+
+<span class="sd">    where ``|`` indicates the beginning of a line.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
         <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DECLARED_FINAL</span><span class="p">:</span>
         <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span>
-            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span>
-            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_operator</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span>
-        <span class="p">):</span>
-            <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="c1"># a line of tokens can start with DEDENT tokens ...</span>
+        <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="n">first_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="ow">and</span> <span class="n">first_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span>
+            <span class="p">):</span>
+
+                <span class="n">DECLARED_FINAL</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first_token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">source</span></div>
 
 

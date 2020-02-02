@@ -1,20 +1,23 @@
 # ideas
 
-## *Easy creation of custom import hooks to try out new ideas for Python.*
+## *Easy creation of custom import hooks to try out new ideas for Python's syntax.*
 
 ![ideas logo](https://raw.githubusercontent.com/aroberge/ideas/master/ideas.png)
 
 
 ## Documentation
 
-[Look here](https://aroberge.github.io/ideas/docs/html/).  Note that
-this is work in progress.
+[Everything you need (will eventually) be found here](https://aroberge.github.io/ideas/docs/html/).
 
 ## Installation
 
 ```
-pip install ideas
+python -m pip install ideas
 ```
+
+## Third party libraries needed
+
+None.
 
 ## Usage
 
@@ -56,7 +59,7 @@ Many more examples can be found in the [documentation](https://aroberge.github.i
 This project uses black for formatting, pytest for running tests,
 and flake8 for linting.
 
-## Contact:
+## Contact
 
 You can either file an issue or email me at <Andre.Roberge@gmail.com>.
 
@@ -75,7 +78,7 @@ this project.
 
 Because it is fun. If this is not enough of a justification for you, have a look at
 [motivation](https://aroberge.github.io/ideas/docs/html/motivation.html)
-which contains a longer, and more serious answer.
+which contains a longer, and possibly more serious answer.
 
 > _Is it safe to use in production code?_
 
@@ -118,7 +121,7 @@ enough time to do all that I want.
 > _In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
 > in a Python project._
 
-**Seriously?**  This project is all about looking at introducing changes
+**Seriously?**  This project is all about exploring potential changes
 to Python's syntax, some of which are downright crazy, and you complain
 about a PEP-8 violation? ...  Ok, perhaps you can tell me and it might
 make sense to change what I wrote.
@@ -146,7 +149,7 @@ I settled on `ideas` as I am guessing that the main application would be
 for people to try out suggestions from or for
 [python-ideas](https://mail.python.org/archives/list/python-ideas@python.org/).
 A few days later, I came up with the above logo and this cemented my opinion that this
-choice of name is not such a bad idea.
+choice of name might not such a bad idea.
 
 Anyway, enough of this banter. If you want to know more about this project,
 please consult the [documentation](https://aroberge.github.io/ideas/docs/html/).

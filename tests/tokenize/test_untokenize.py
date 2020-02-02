@@ -1,4 +1,4 @@
-from ideas.utils import tokenize_source, untokenize
+from ideas.token_utils import tokenize_source, untokenize
 
 # Note: most of the tests involving untokenize have
 # been adapted from https://github.com/myint/untokenize

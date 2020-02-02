@@ -1,7 +1,7 @@
 import sys
 import types
 
-from ideas import import_hook, utils
+from ideas import import_hook, utils, token_utils
 from ideas.console import CONSOLE_NAME
 
 shorten_path = utils.shorten_path
@@ -160,10 +160,10 @@ def transform_source(source, filename=None, **kwargs):
     if filename not in DECLARED_FINAL:
         DECLARED_FINAL[filename] = set([])
 
-    for tokens in utils.get_lines_of_tokens(source):
+    for tokens in token_utils.get_lines_of_tokens(source):
         # a line of tokens can start with DEDENT tokens ...
-        if utils.get_number_nonspace_tokens(tokens) > 3:
-            index = utils.get_first_nonspace_token_index(tokens)
+        if token_utils.get_number_nonspace_tokens(tokens) > 3:
+            index = token_utils.get_first_nonspace_token_index(tokens)
             first_token = tokens[index]
             if (
                 first_token.start_col == 0

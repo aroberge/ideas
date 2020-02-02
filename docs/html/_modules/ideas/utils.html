@@ -208,40 +208,47 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.</span>
-
-<span class="sd">           If ``name`` is specified, then it returns True only if</span>
-<span class="sd">           the keyword is the one specified.</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compares a Token with another object; returns true if</span>
+<span class="sd">           self.string == other.string or if self.string == other.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span>
-                <span class="ow">and</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
-            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">string</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">other</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;A token can only be compared to a token or to a string.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compares a Token with another object; returns true if</span>
+<span class="sd">           self.string != other.string or if self.string != other.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Token.is_identifier"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_identifier">[docs]</a>    <span class="k">def</span> <span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a Python identifier&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NAME</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isidentifier</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="Token.is_operator"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_operator">[docs]</a>    <span class="k">def</span> <span class="nf">is_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a Python operator and if operator is</span>
-<span class="sd">            equal to the default value (None).</span>
-
-<span class="sd">            If a string representing the operator is specified, this function</span>
-<span class="sd">            will return True only if the token is this specific operator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">operator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">OP</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">operator</span></div>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token is a Python identifier and not a Python keyword&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isidentifier</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_keyword</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
+
+<div class="viewcode-block" id="Token.is_space"><a class="viewcode-back" href="../../utils.html#ideas.utils.Token.is_space">[docs]</a>    <span class="k">def</span> <span class="nf">is_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token indicates a change in indentation,</span>
+<span class="sd">           the end of a line, or the end of the source.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span>
+            <span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span>
+            <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">,</span>
+            <span class="n">tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">,</span>
+            <span class="n">tokenize</span><span class="o">.</span><span class="n">ENDMARKER</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Nicely formatted token&quot;&quot;&quot;</span>
@@ -269,32 +276,21 @@
 
 
 <div class="viewcode-block" id="get_lines_of_tokens"><a class="viewcode-back" href="../../utils.html#ideas.utils.get_lines_of_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a list of lists of tokens, with each (inner) list either</span>
-<span class="sd">       all the DEDENT tokens found on a single line,</span>
-<span class="sd">       or all the other tokens found on a single line.</span>
-
-<span class="sd">       The separate treatement of DEDENT tokens is to make it easier</span>
-<span class="sd">       to process the content.</span>
+    <span class="sd">&quot;&quot;&quot;Makes a list of lists of tokens, with each (inner) list containing</span>
+<span class="sd">       all the tokens found on a given line.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">current_line</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">current_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">new_line</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">new_dedent_line</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">):</span>
             <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">!=</span> <span class="n">current_line</span><span class="p">:</span>
-                <span class="n">current_line</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span>
-                <span class="k">if</span> <span class="n">new_dedent_line</span><span class="p">:</span>
-                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_dedent_line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">!=</span> <span class="n">current_row</span><span class="p">:</span>
+                <span class="n">current_row</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span>
                 <span class="k">if</span> <span class="n">new_line</span><span class="p">:</span>
                     <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
-                <span class="n">new_dedent_line</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">new_line</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">:</span>
-                <span class="n">new_dedent_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">new_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="n">new_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;###</span><span class="se">\n</span><span class="s2">WARNING: the following tokenize error was raised</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">###&quot;</span><span class="p">)</span>
 
@@ -303,12 +299,33 @@
     <span class="k">return</span> <span class="n">lines</span></div>
 
 
+<div class="viewcode-block" id="get_number_nonspace_tokens"><a class="viewcode-back" href="../../utils.html#ideas.utils.get_number_nonspace_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens, gives a count of the number of</span>
+<span class="sd">       tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+            <span class="n">nb</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">nb</span></div>
+
+
+<div class="viewcode-block" id="get_first_nonspace_token_index"><a class="viewcode-back" href="../../utils.html#ideas.utils.get_first_nonspace_token_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the index of the first one which is</span>
+<span class="sd">       not a space token (such as a newline, indent, dedent, etc.)</span>
+
+<span class="sd">       return -1 if none is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">index</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
 <span class="c1"># untokenize adapted from https://github.com/myint/untokenize</span>
 <span class="c1">#</span>
 <span class="c1"># TODO: acknowledge it properly in documentation with license added</span>
 <span class="c1">#</span>
-
-<span class="n">WHITESPACE_TOKENS</span> <span class="o">=</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="untokenize"><a class="viewcode-back" href="../../utils.html#ideas.utils.untokenize">[docs]</a><span class="k">def</span> <span class="nf">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
@@ -321,7 +338,14 @@
 <span class="sd">    some tokens or if escaped newlines were used, those things will be</span>
 <span class="sd">    reflected by ``untokenize``.</span>
 
-<span class="sd">    However, if some tokens are changed, the ``line`` information will</span>
+<span class="sd">    If a given item is a string instead of a Token object, it is simply</span>
+<span class="sd">    added as is.</span>
+
+<span class="sd">    IMPORTANT: do not remove a token from the original list of</span>
+<span class="sd">    tokens prior to calling untokenize; instead, set its string attribute</span>
+<span class="sd">    to an empty string.</span>
+
+<span class="sd">    Note that if some tokens are changed, the ``line`` information will</span>
 <span class="sd">    no longer reflect the content and the reconstructed content may</span>
 <span class="sd">    no longer be valid, unless some special procedures have been followed</span>
 <span class="sd">    when replacing original tokens by new ones. See the documentation</span>
@@ -333,20 +357,23 @@
     <span class="n">previous_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">last_row</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">last_column</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="n">last_non_whitespace_tokey_type</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">last_non_whitespace_token_type</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="k">continue</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">:</span>
             <span class="k">continue</span>
 
         <span class="c1"># Preserve escaped newlines.</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="n">last_non_whitespace_tokey_type</span> <span class="o">!=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span>
+            <span class="n">last_non_whitespace_token_type</span> <span class="o">!=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span>
             <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&gt;</span> <span class="n">last_row</span>
         <span class="p">):</span>
-            <span class="k">if</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\\\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r</span><span class="s2">&quot;</span><span class="p">)):</span>  <span class="c1"># original</span>
+            <span class="k">if</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\\\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r</span><span class="s2">&quot;</span><span class="p">)):</span>
                 <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t\n\r\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="p">:])</span>
-            <span class="k">elif</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">):</span>  <span class="c1"># my fix</span>
+            <span class="k">elif</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">):</span>
                 <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="p">:])</span>
                 <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -359,12 +386,10 @@
         <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
 
         <span class="n">previous_line</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">line</span>
-
         <span class="n">last_row</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_row</span>
         <span class="n">last_column</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span>
-
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">WHITESPACE_TOKENS</span><span class="p">:</span>
-            <span class="n">last_non_whitespace_tokey_type</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+            <span class="n">last_non_whitespace_token_type</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span>
 
     <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></div>
 
@@ -378,30 +403,6 @@
 <span class="s2">The token that raised this error was:</span>
 <span class="si">%s</span><span class="s2"></span>
 <span class="s2">&quot;&quot;&quot;</span>
-
-
-<div class="viewcode-block" id="simple_untokenize"><a class="viewcode-back" href="../../utils.html#ideas.utils.simple_untokenize">[docs]</a><span class="k">def</span> <span class="nf">simple_untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>  <span class="c1"># untested</span>
-    <span class="sd">&quot;&quot;&quot;Reconstructs a source from a list of tokens. Each token can be</span>
-<span class="sd">    either an instance of the Token class, or a tuple consisting</span>
-<span class="sd">    of two values: the token type and the token string.</span>
-
-<span class="sd">    Generates a string correspondings to a list of tokens based only</span>
-<span class="sd">    on the token type and string information. This does not preserve</span>
-<span class="sd">    the spacing between tokens which was present in the original source.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">simple_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">:</span>
-                <span class="k">continue</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">):</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">INVALID_TOKEN_MESSAGE</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
-        <span class="n">simple_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">simple_tokens</span><span class="p">)</span></div>
-
 
 <span class="n">PYTHON</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>

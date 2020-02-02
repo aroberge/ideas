@@ -4,19 +4,19 @@
 
 import sys
 
-from ideas import import_hook, utils
+from ideas import import_hook, token_utils
 
 
 def transform_source(source, **kwargs):
     """A simple replacement of ``function`` by ``lambda``."""
     new_tokens = []
 
-    for token in utils.tokenize_source(source):
+    for token in token_utils.tokenize_source(source):
         if token == "function":  # equivalent to token.string == "function"
             token.string = "lambda"
         new_tokens.append(token)
 
-    return utils.untokenize(new_tokens)
+    return token_utils.untokenize(new_tokens)
 
 
 def add_hook():

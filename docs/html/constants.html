@@ -323,10 +323,11 @@ or from a list of keywords arguments.</p>
 <code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identifies simple assignments with a Final type hint, returning
 the source unchanged.</p>
-<dl class="simple">
-<dt>Pattern we are looking for::</dt><dd><p>python_identifier : Final …</p>
-</dd>
-</dl>
+<p>The pattern we are looking for is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="n">python_identifier</span> <span class="p">:</span> <span class="n">Final</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">|</span></code> indicates the beginning of a line.</p>
 </dd></dl>
 
 </div>

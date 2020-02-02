@@ -43,7 +43,7 @@ Python's import machinery has to do the following:
     2. Get the source code of that module
     3. Execute that source code, subject to some information reported in step 1.
 
-An import hook is an additional tool that you create to do this.
+An import hook is an additional tool that you create to do these three steps.
 Once written, you add it to ``sys.meta_path`` so that Python's import
 machinery can make use of it.
 
