@@ -213,6 +213,7 @@ def add_hook(on_prevent_change=None):
         exec_=exec_,
         callback_params=callback_params,
         console_dict=console_dict,
+        name=__name__,
     )
     sys.meta_path.insert(0, hook)
     return hook

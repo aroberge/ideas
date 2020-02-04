@@ -139,6 +139,7 @@ def create_hook(
     exec_=None,
     console_dict=None,
     callback_params=None,
+    name=None,
 ):
     """Function to facilitate the creation of an import hook.
 
@@ -148,6 +149,8 @@ def create_hook(
 
     # We do not include module_class in the console configuration as
     # it has no module to be instantiated.
+    if transform_source is not None and isinstance(name, str):
+        transform_source.__name__ = name
     console.configure(
         transform_source=transform_source,
         console_dict=console_dict,

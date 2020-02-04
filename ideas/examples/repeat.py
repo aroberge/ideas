@@ -123,7 +123,9 @@ def add_hook(show_original=False, show_transformed=False, predictable_names=Fals
         "predictable_names": predictable_names,
     }
     hook = import_hook.create_hook(
-        transform_source=transform_source, callback_params=callback_params
+        transform_source=transform_source,
+        callback_params=callback_params,
+        name=__name__,
     )
     sys.meta_path.insert(0, hook)
     return hook
