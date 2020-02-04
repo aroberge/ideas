@@ -120,10 +120,14 @@ class IdeasConsole(InteractiveConsole):
             self.logger.write_log(line + "\n")
         source = "\n".join(self.buffer)
 
+        last_line = source.endswith("\n")
         if self.transform_source is not None:
             source = self.transform_source(
                 source, filename=CONSOLE_NAME, callback_params=self.callback_params
             )
+            # A transformation may add an extra "\n"
+            if source.endswith("\n") and not last_line:
+                source = source[:-1]
         more = self.runsource(source, CONSOLE_NAME)
         if not more:
             self.resetbuffer()

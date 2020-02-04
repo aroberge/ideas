@@ -105,12 +105,13 @@ Quick links to topics
     function as a keyword - part 2 <function>
     nobreak as a keyword - todo <nobreak>
     French Python - todo <french>
+    Auto-self <auto_self>
     λ encoding - todo <lambda>
-    repeat as a keyword - code implemented <repeat>
+    repeat as a keyword - working code only <repeat>
     Simple AST transformation - todo <ast>
     Simple bytecode transformation - todo <bytecode>
     Pythonic switch statement - todo  <switch>
-    True constants - introduction done <constants>
+    True constants - working code only <constants>
     Json module - todo  <json>
     PEP 505: None-aware operators - todo  <pep_505>
     Import from non-standard locations - todo  <non_files>
@@ -120,6 +121,7 @@ Quick links to topics
    :caption: API
 
     import_hook.py <import_hook>
+    token_utils.py <token_utils>
     utils.py <utils>
     console.py <console>
 

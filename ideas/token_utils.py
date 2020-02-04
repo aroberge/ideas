@@ -126,14 +126,18 @@ def get_lines_of_tokens(source):
     return lines
 
 
-def get_number_nonspace_tokens(tokens):
+def get_number_nonspace_tokens(tokens, ignore_comments=False):
     """Given a list of tokens, gives a count of the number of
     tokens which are NOT space tokens (such as newline, indent, dedent, etc.)
+
+    If ignore_comments is set to True, comments are ignored as well
     """
-    nb = 0
+    nb = len(tokens)
     for token in tokens:
-        if not token.is_space():
-            nb += 1
+        if token.is_space():
+            nb -= 1
+        elif ignore_comments and token.is_comment():
+            nb -= 1
     return nb
 
 

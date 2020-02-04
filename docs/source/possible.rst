@@ -1,10 +1,16 @@
 Overview of all possibilities
 ==============================
 
+
 .. todo::
 
     Add a diagram to support this textual description.
     Note that this is just a very rough first draft.
+
+.. image:: _static/test.png
+   :alt: test diagram
+   :align: center
+
 
 When a user-written Python module gets executed, here's an overview of
 what normally happens behind the scene.  Let's call this module ``script``

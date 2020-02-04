@@ -15,9 +15,9 @@
 python -m pip install ideas
 ```
 
-## Third party libraries needed
+## Dependencies
 
-None.
+Python 3.6+. No third-party library is installed when you install `ideas`.
 
 ## Usage
 

@@ -1,0 +1,13 @@
+
+
+@startuml
+partition Finder {
+    :Search for file;
+    :Return file spec & Loader;
+    }
+partition Loader {
+    :Create module;
+    :Decode file;
+    :Execute code in module dict;
+    }
+@enduml

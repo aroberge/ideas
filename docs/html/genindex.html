@@ -34,6 +34,7 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -97,12 +98,13 @@
 <li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - code implemented</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -110,6 +112,7 @@
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -250,9 +253,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="repeat.html#ideas.examples.repeat.generate_predictable_names">generate_predictable_names() (in module ideas.examples.repeat)</a>
 </li>
+      <li><a href="repeat.html#ideas.examples.repeat.generate_variable_names">generate_variable_names() (in module ideas.examples.repeat)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="repeat.html#ideas.examples.repeat.generate_variable_names">generate_variable_names() (in module ideas.examples.repeat)</a>
+      <li><a href="token_utils.html#ideas.token_utils.get_first_nonspace_token_index">get_first_nonspace_token_index() (in module ideas.token_utils)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.get_lines_of_tokens">get_lines_of_tokens() (in module ideas.token_utils)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.get_number_nonspace_tokens">get_number_nonspace_tokens() (in module ideas.token_utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -270,17 +279,29 @@
 </li>
       <li><a href="repeat.html#module-ideas.examples.repeat">ideas.examples.repeat (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="import_hook.html#module-ideas.import_hook">ideas.import_hook (module)</a>
+</li>
+      <li><a href="token_utils.html#module-ideas.token_utils">ideas.token_utils (module)</a>
 </li>
       <li><a href="utils.html#module-ideas.utils">ideas.utils (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="console.html#ideas.console.IdeasConsole">IdeasConsole (class in ideas.console)</a>
 </li>
       <li><a href="import_hook.html#ideas.import_hook.IdeasLoader">IdeasLoader (class in ideas.import_hook)</a>
 </li>
       <li><a href="import_hook.html#ideas.import_hook.IdeasMetaFinder">IdeasMetaFinder (class in ideas.import_hook)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.Token.is_comment">is_comment() (ideas.token_utils.Token method)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.Token.is_identifier">is_identifier() (ideas.token_utils.Token method)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.Token.is_keyword">is_keyword() (ideas.token_utils.Token method)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.Token.is_newline">is_newline() (ideas.token_utils.Token method)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.Token.is_space">is_space() (ideas.token_utils.Token method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -299,6 +320,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#ideas.utils.print_paths">print_paths() (in module ideas.utils)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.print_tokens">print_tokens() (in module ideas.token_utils)</a>
 </li>
       <li><a href="console.html#ideas.console.IdeasConsole.push">push() (ideas.console.IdeasConsole method)</a>
 </li>
@@ -338,6 +361,10 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="token_utils.html#ideas.token_utils.Token">Token (class in ideas.token_utils)</a>
+</li>
+      <li><a href="token_utils.html#ideas.token_utils.tokenize_source">tokenize_source() (in module ideas.token_utils)</a>
+</li>
       <li><a href="constants.html#ideas.examples.constants.transform_source">transform_source() (in module ideas.examples.constants)</a>
 
       <ul>
@@ -353,6 +380,10 @@
 
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="token_utils.html#ideas.token_utils.untokenize">untokenize() (in module ideas.token_utils)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.FinalDict.update">update() (ideas.examples.constants.FinalDict method)</a>
 </li>

@@ -1,12 +1,12 @@
 """Adds ``repeat`` as a keyword to write simple loops that repeat
-a set number of times.  That is:
+a set number of times.  That is::
 
     repeat 3:
         a = 2
         repeat a*a:
             pass
 
-is equivalent to
+is equivalent to::
 
     for random_variable_name_1 in range(3):
         a = 2
@@ -56,13 +56,10 @@ def transform_source(
     **kwargs,
 ):
     """This function is called by the import hook loader with the named keyword
-       that we specified when we created the import hook.
+    that we specified when we created the import hook.
 
-       It gives us the option to compare the original source and the transformed
-       one. This type of additional option can be useful when debugging
-       a source transformer. Once such options are added, there are essentially
-       no advantage in removing them as the next programmer who wishes to
-       build upon this example will likely find this useful.
+    It gives us the option to compare the original source and the transformed
+    one.
     """
     if show_original:
         print_info("Original", source)
@@ -75,13 +72,13 @@ def transform_source(
 
 
 def convert_repeat(source, predictable_names=False):
-    """Replaces instances of
+    """Replaces instances of::
 
         repeat ... : # optional comment
-    by
+
+    by::
 
         for random_variable_name in range( ... ): # optional comment
-
 
     A complete repeat statement is restricted to be on a single line
     """

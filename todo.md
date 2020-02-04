@@ -24,3 +24,15 @@ Infrequently updated list ...
 - use instaviz for the docs
 - using emojis as identifiers
 - have a look at https://github.com/alexmojaki/nameof ... although I still don't understand the possible benefit.
+- preventing automatic string concatenation.
+- pattern matching with pampy https://news.ycombinator.com/item?id=22220434
+- combine codec  (ideas-encoding) and import hook in usercustomize
+- multiline lambda; idea:
+
+    command = function (x, y, z):
+
+        some code indented more than command
+    extract the code and insert into a def at the top.
+    convert into a regular lambda calling that function.
+
+

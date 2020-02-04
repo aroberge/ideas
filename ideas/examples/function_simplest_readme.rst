@@ -11,7 +11,7 @@ completely equivalent to another keyword. The example we chose is
 This example demonstrates the use of:
 
 - Function definitions required to create and activate an import hook
-- How to transform the source using a tokenizer
+- How to transform the source using a custom tokenizer
 
 Reminder: what is an import hook
 ---------------------------------
@@ -93,7 +93,8 @@ Actual code
 Here's the content of our real simplest example.
 
 .. literalinclude:: ../../ideas/examples/function_simplest.py
-
+   :emphasize-lines: 10,15,19,22,24,26
+   :linenos:
 
 .. sidebar:: Tokens?
 
@@ -110,7 +111,7 @@ Here's the content of our real simplest example.
 
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-``add_hook``, and return the hook that was created.
+``add_hook`` (line 22), and return the hook that was created (line 26).
 This has at least three benefits:
 
     1. We can control when we the hook is created.
@@ -124,10 +125,10 @@ To replace ``function`` by ``lambda`` only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
 and only replace ``function`` by ``lambda`` when it occurs as
 an individual token. Rather than using directly the tokenizer
-from Python's standard library, we use our own version which has
+from Python's standard library, we use our own version which has some useful
 added features. For examples, to see if two tokens are equal,
 we only compare their string values. We can compare a token directly
-to a string like we did in the code above.
+to a string like we did in the code above on line 15.
 
 Note that, just like::
 
@@ -142,9 +143,10 @@ would raise a ``SyntaxError``, the same would occur with::
 using our import hook.
 
 Once we're done with replacing all ``function`` tokens by ``lambda``,
-we convert the tokens back into a string by calling ``untokenize``.
+we convert the tokens back into a string by calling our
+utility function ``untokenize`` on line 19.
 
-Finally, to make our code easier to understand, we use the
+Finally, to make our code easier to understand, on line 10 we use the
 same name, ``transform_source`` that is used as a keyword
-argument for ``import_hook.create_hook`` for our own
-code.  All of our examples follow this convention.
+argument for ``import_hook.create_hook`` on line 24.
+All of our examples follow this convention.

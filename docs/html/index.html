@@ -33,6 +33,7 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -97,12 +98,13 @@
 <li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - code implemented</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -110,6 +112,7 @@
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -281,12 +284,13 @@ Much more content will be added … <em>soon</em>.</p>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - code implemented</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - introduction done</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
@@ -296,6 +300,7 @@ Much more content will be added … <em>soon</em>.</p>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -303,17 +308,6 @@ Much more content will be added … <em>soon</em>.</p>
 </div>
 <div class="section" id="to-do">
 <h2>To do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
-<p>Add a diagram to support this textual description.
-Note that this is just a very rough first draft.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\andre\github\ideas\docs\source\possible.rst, line 4.)</p>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
-<p>Add name of the hook as part of the configuration values.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="usage.html#id1"><em>original entry</em></a> is located in ../usage_demo/readme_demo.rst, line 146.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p>Explain how to use this module</p>
@@ -324,6 +318,17 @@ Note that this is just a very rough first draft.</p>
 <p>Explain how it works</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="constants.html#id2"><em>original entry</em></a> is located in ../ideas/examples/constants_readme.rst, line 69.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Add name of the hook as part of the configuration values.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="usage.html#id1"><em>original entry</em></a> is located in ../usage_demo/readme_demo.rst, line 146.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Add a diagram to support this textual description.
+Note that this is just a very rough first draft.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\andre\github\ideas\docs\source\possible.rst, line 5.)</p>
 </div>
 </div>
 

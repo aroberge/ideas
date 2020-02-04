@@ -15,8 +15,8 @@ stdlib_dir = os.path.dirname(os.__file__)
 # imp module (which still exists), I couldn't quite figure out how to
 # do it using the recommended importlib package. I got the required
 # information after asking a question on StackOverflow which lead
-# to this answer https://stackoverflow.com/a/43573798/558799
-# which was my starting point for the code written below.
+# to this answer https://stackoverflow.com/a/43573798/558799.
+# I used the code provided as my starting point for the code written below.
 
 
 class IdeasMetaFinder(MetaPathFinder):
