@@ -305,14 +305,18 @@
     <span class="k">return</span> <span class="n">lines</span></div>
 
 
-<div class="viewcode-block" id="get_number_nonspace_tokens"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_number_nonspace_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<div class="viewcode-block" id="get_number_nonspace_tokens"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_number_nonspace_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, gives a count of the number of</span>
 <span class="sd">    tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</span>
+
+<span class="sd">    If ignore_comments is set to True, comments are ignored as well</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
-            <span class="n">nb</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+            <span class="n">nb</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">ignore_comments</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">is_comment</span><span class="p">():</span>
+            <span class="n">nb</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">nb</span></div>
 
 

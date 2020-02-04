@@ -257,9 +257,10 @@ all the tokens found on a given line of code.</p>
 
 <dl class="function">
 <dt id="ideas.token_utils.get_number_nonspace_tokens">
-<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_number_nonspace_tokens</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_number_nonspace_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_number_nonspace_tokens" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_number_nonspace_tokens</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">ignore_comments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_number_nonspace_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_number_nonspace_tokens" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, gives a count of the number of
 tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</p>
+<p>If ignore_comments is set to True, comments are ignored as well</p>
 </dd></dl>
 
 <dl class="function">

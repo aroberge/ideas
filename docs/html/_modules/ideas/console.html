@@ -204,66 +204,9 @@
     <span class="n">_CONFIG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">_Tee</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Utility class that makes a copy of what&#39;s written to</span>
-<span class="sd">    a stream, such as stdout or stderr, to a file.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">stream</span>
-
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-
-
-<span class="k">class</span> <span class="nc">_Logger</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Utility class; used to save a copy of everything written</span>
-<span class="sd">    to either stdout or stderr to a file.</span>
-
-<span class="sd">    This is something that I find more efficient than doing copy/paste</span>
-<span class="sd">    from the terminal when working on potential examples to include</span>
-<span class="sd">    in the documentation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;``filename`` is an optional name for the file in which the</span>
-<span class="sd">        log will be written; the default to be used is ``console``.</span>
-<span class="sd">        No check is performed to see if the file exists. To prevent</span>
-<span class="sd">        overwriting an important file, the extension ``.log`` will</span>
-<span class="sd">        be added to ``filename``. Thus, the true default filename</span>
-<span class="sd">        is ``console.log``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;console&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{filename}</span><span class="s2">.log&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">old_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">old_stderr</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">_Tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_stdout</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">_Tee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_stderr</span><span class="p">)</span>
-
-        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span>
-
-    <span class="k">def</span> <span class="nf">write_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_stdout</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_stderr</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span>
-
-
 <div class="viewcode-block" id="IdeasConsole"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole">[docs]</a><span class="k">class</span> <span class="nc">IdeasConsole</span><span class="p">(</span><span class="n">InteractiveConsole</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -271,7 +214,6 @@
         <span class="sd">&quot;&quot;&quot;This class builds upon Python&#39;s code.InteractiveConsole</span>
 <span class="sd">        so as to work with import hooks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
 
@@ -295,14 +237,16 @@
 <span class="sd">        with in some way (this is the same as runsource()).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">write_log</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">last_line</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># signals the end of a block</span>
             <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
                 <span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">CONSOLE_NAME</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span>
             <span class="p">)</span>
+            <span class="c1"># Some transformations may add some extra &quot;\n&quot; (usually at most one)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">last_line</span><span class="p">:</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">more</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runsource</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">CONSOLE_NAME</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">more</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resetbuffer</span><span class="p">()</span>
@@ -363,26 +307,24 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;console&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s2">&quot;~&gt;&gt; &quot;</span>
-    <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
-        <span class="n">log</span> <span class="o">=</span> <span class="n">_Logger</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration values for the console:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_CONFIG</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2">: </span><span class="si">{_CONFIG[key]}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;__name__&#39;</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2"> from </span><span class="si">{_CONFIG[key].__name__}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2">: </span><span class="si">{_CONFIG[key]}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-
-    <span class="n">console</span> <span class="o">=</span> <span class="n">IdeasConsole</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">log</span><span class="p">,</span> <span class="o">**</span><span class="n">_CONFIG</span><span class="p">)</span>
+    <span class="n">console</span> <span class="o">=</span> <span class="n">IdeasConsole</span><span class="p">(</span><span class="o">**</span><span class="n">_CONFIG</span><span class="p">)</span>
     <span class="n">console</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">BANNER</span><span class="p">)</span></div>
 </pre></div>
 

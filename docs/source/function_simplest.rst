@@ -1,4 +1,4 @@
-.. include:: ../../ideas/examples/function_simplest_readme.rst
+.. include:: ../../ideas/examples/function_simplest_README.rst
 
 function_simplest.py API
 ------------------------

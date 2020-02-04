@@ -19,6 +19,8 @@ python -m pip install ideas
 
 Python 3.6+. No third-party library is installed when you install `ideas`.
 
+Some examples include might require to intall some third-party modules from Pypi.
+
 ## Usage
 
 Suppose that you want to use `function` as a keyword in Python, to mean
@@ -31,7 +33,8 @@ square = function x: x**2
 print(f"{square(4)} is the square of 4.")
 ```
 
-You could do this by creating the following program
+There is already an example import hook that allows you to do so.
+To use it, you could start by creating the following program
 
 ```python
 # Lets's call this 'loader.py'
@@ -51,7 +54,8 @@ python loader.py
 So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
-Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/).
+Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/). To actually find out how you can create your own custom import hooks,
+you also need to refer to the documentation.
 
 
 ## Tools

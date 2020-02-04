@@ -1,4 +1,4 @@
-.. include:: ../../ideas/examples/function_readme.rst
+.. include:: ../../ideas/examples/function_README.rst
 
 function.py API
 --------------------

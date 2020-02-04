@@ -1,4 +1,4 @@
-.. include:: ../../ideas/examples/constants_readme.rst
+.. include:: ../../ideas/examples/constants_README.rst
 
 Use the source, Luke
 --------------------
