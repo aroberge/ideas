@@ -70,6 +70,28 @@ class Application:
         self.additional_items = []
 """
 
+pep_557_source_other = """
+class Application:
+    def __init__(
+        cls,
+        name,
+        requirements,
+        constraints=None,
+        path="",
+        executable_links=None,
+        executables_dir=(),
+    ):
+        cls .= :
+            name
+            requirements
+            constraints = {} if constraints is None else __
+            path
+            executable_links = [] if __ is None else executable_links
+            executables_dir
+
+            additional_items = []
+"""
+
 
 def test_barebone():
     hook = auto_self.add_hook()
@@ -85,6 +107,11 @@ def test_pep_557():
     result = auto_self.automatic_self(pep_557_source)
 
     assert result == pep_557_expected, "PEP 557 auto_self test"
+
+    result_other = auto_self.automatic_self(pep_557_source_other)
+    result_other = result_other.replace("cls", "self")
+
+    assert result_other == pep_557_expected, "PEP 557 auto_self test other"
 
     remove_hook(hook)
 

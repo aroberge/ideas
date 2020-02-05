@@ -99,7 +99,10 @@
 <li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Auto-self</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Auto-self</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.auto_self">Try it out!</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
@@ -191,7 +194,10 @@
             
   <div class="section" id="auto-self">
 <h1>Auto self<a class="headerlink" href="#auto-self" title="Permalink to this headline">¶</a></h1>
-<p><strong>Concise but explicit notation to replace the often verbose</strong>:</p>
+<p>Python is known for its concise and readable syntax. One exception
+about the concisiveness is the boiler plate code that has to be
+written when defining one’s own class, especially if it has
+many attributes, like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">this_variable</span> <span class="o">=</span> <span class="n">this_variable</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">that_variable</span> <span class="o">=</span> <span class="n">that_variable</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">this_other_variable</span> <span class="o">=</span> <span class="n">this_other_variable</span>
@@ -202,38 +208,27 @@
 <span class="bp">self</span><span class="o">.</span><span class="n">spam</span> <span class="o">=</span> <span class="n">bread</span> <span class="o">+</span> <span class="n">ham</span>
 </pre></div>
 </div>
-<p>At least two possibilities:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.=</span> <span class="n">this_variable</span>
-<span class="bp">self</span><span class="o">.=</span> <span class="n">that_variable</span>
-</pre></div>
-</div>
-<p>or:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$this_variable
-$that_variable
-</pre></div>
-</div>
-<p>or even:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.=</span> <span class="p">:</span>
-    <span class="n">this_variable</span>
-    <span class="n">that_variable</span>
-    <span class="n">this_other_variable</span>
-    <span class="n">foo</span>
-    <span class="n">bar</span>
-
-<span class="bp">self</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">baz</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">baz</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">spam</span> <span class="o">=</span> <span class="n">bread</span> <span class="o">+</span> <span class="n">ham</span>
-</pre></div>
-</div>
-<p>Note that one could use cls instead of self.</p>
-<p>On Python ideas, I have seen:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.=</span> <span class="n">this_variable</span><span class="p">,</span> <span class="n">that_variable</span><span class="p">,</span> <span class="o">...</span>
-</pre></div>
-</div>
-<p>which I do not find very readable.</p>
-<p><a class="reference external" href="https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a">https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a</a></p>
-<p>Dataclass may already cover most of this
-<a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">https://www.python.org/dev/peps/pep-0557/</a>  … but, they essentially require type hints.
-From that PEP (but formatted with Black):</p>
+<p>This leads people to ask on various forums, such as
+on <a class="reference external" href="https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a">StackOverflow</a>,
+how to do automatic assignment of attributes.  The answers most often given
+are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Don’t do it</p></li>
+<li><p>Use a decorator, with various examples provided</p></li>
+</ul>
+</div></blockquote>
+<p>As programmers create more classes, they find the need to add their own
+dunder methods, such as <code class="docutils literal notranslate"><span class="pre">__eq__(self,</span> <span class="pre">other)</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__(self)</span></code>, etc.
+Eventually, they might get annoyed enough at having to re-create these methods
+too often, with the occasionnal typo causing bugs that they jump with
+joy when discovering <a class="reference external" href="https://www.attrs.org/en/stable/">attrs: Classes Without Boilerplate</a>.</p>
+<p>Starting with Python 3.7, the standard library includes
+<a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a> which shares some
+similarity with <code class="docutils literal notranslate"><span class="pre">attrs</span></code>. However, it does require to use type hints which,
+in my opinion, reduces readability.</p>
+<p>As a concrete example of using traditional Python notation and
+dataclasses, let’s consider the code given in <a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -250,34 +245,14 @@ From that PEP (but formatted with Black):</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">executable_links</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">executable_links</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executables_dir</span> <span class="o">=</span> <span class="n">executables_dir</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
-<p>would become:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">,</span>
-        <span class="n">requirements</span><span class="p">,</span>
-        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
-    <span class="p">):</span>
-        <span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
-            <span class="n">name</span>
-            <span class="n">requirements</span>
-            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
-            <span class="n">path</span>
-            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
-            <span class="n">executables_dir</span>
+<p>Here’s a code which gives the same initialization using the <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code>
+decorator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="k">import</span> <span class="n">dataclass</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
-</pre></div>
-</div>
-<p>compared with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">requirements</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Requirement</span><span class="p">]</span>
@@ -285,9 +260,108 @@ From that PEP (but formatted with Black):</p>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">executable_links</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="n">executable_dir</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
-
     <span class="n">additional_items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>This code does more than simply initializing the variables, but I
+do not find it particulary readable.</p>
+<p>So, I was wondering if it might be possible to imagine a simpler syntax.
+<code class="docutils literal notranslate"><span class="pre">auto_self</span></code> is what I came up with.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ship has sailed …</p>
+<p>I realize that there is zero chance that the following syntax would
+be adopted, now that the <code class="docutils literal notranslate"><span class="pre">dataclasses</span></code> module has been added to
+the Python standard library. Still, you can try it out using
+<code class="docutils literal notranslate"><span class="pre">auto_self</span></code> hook.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">requirements</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
+            <span class="n">name</span>
+            <span class="n">requirements</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">path</span>
+            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">executables_dir</span>
+            <span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Here, I am using a new operator, <code class="docutils literal notranslate"><span class="pre">.=</span></code>, which is meant to represent
+the automatic assignment of a variable to the name that precedes
+it (<code class="docutils literal notranslate"><span class="pre">self</span></code> in this example).  I have seen this idea for such an operator before on
+<strong>python-ideas</strong> but never as introducing a code-block as I do here.</p>
+<p>By design, any dunder, <code class="docutils literal notranslate"><span class="pre">__</span></code>, is taken to be equivalent to the variable
+being initialized.  I chose a dunder instead of a single underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>
+so that it could be used in a REPL.</p>
+<p>Of course, one is not restricted to using <code class="docutils literal notranslate"><span class="pre">self</span></code>, or using <code class="docutils literal notranslate"><span class="pre">__</span></code>
+everywhere. The following is completely equivalent - although slightly less
+readable in my opinion, with fewer <code class="docutils literal notranslate"><span class="pre">__</span></code> used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">requirements</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span> <span class="o">.=</span> <span class="p">:</span>
+            <span class="n">name</span>
+            <span class="n">requirements</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">constraints</span>
+            <span class="n">path</span>
+            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">executable_links</span>
+            <span class="n">executables_dir</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Note that, unlike <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code> or <code class="docutils literal notranslate"><span class="pre">attrs</span></code>, no additional method is
+created by <code class="docutils literal notranslate"><span class="pre">auto_self</span></code>.</p>
+<div class="section" id="module-ideas.examples.auto_self">
+<span id="try-it-out"></span><h2>Try it out!<a class="headerlink" href="#module-ideas.examples.auto_self" title="Permalink to this headline">¶</a></h2>
+<p>Description here</p>
+<dl class="function">
+<dt id="ideas.examples.auto_self.add_hook">
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.auto_self.automatic_self">
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">automatic_self</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#automatic_self"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.automatic_self" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description here.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.auto_self.print_info">
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.print_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints information about the source - either original or transformed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.auto_self.transform_source">
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader with the named keyword
+that we specified when we created the import hook.</p>
+<p>It gives us the option to compare the original source and the transformed
+one. This type of additional option can be useful when debugging
+a source transformer. Furthermore, if we wish to define a source
+transformation that combines the effect of multiple existing
+transformations, we can combine the existing “inner” functions to
+create our new transformation.</p>
+</dd></dl>
+
 </div>
 </div>
 

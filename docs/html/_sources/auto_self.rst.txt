@@ -1,7 +1,10 @@
 Auto self
 ==========
 
-**Concise but explicit notation to replace the often verbose**::
+Python is known for its concise and readable syntax. One exception
+about the concisiveness is the boiler plate code that has to be
+written when defining one's own class, especially if it has
+many attributes, like::
 
     self.this_variable = this_variable
     self.that_variable = that_variable
@@ -13,44 +16,28 @@ Auto self
     self.spam = bread + ham
 
 
+This leads people to ask on various forums, such as
+on `StackOverflow <https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a>`_,
+how to do automatic assignment of attributes.  The answers most often given
+are:
+
+  - Don't do it
+  - Use a decorator, with various examples provided
 
 
-At least two possibilities::
+As programmers create more classes, they find the need to add their own
+dunder methods, such as ``__eq__(self, other)``, ``__repr__(self)``, etc.
+Eventually, they might get annoyed enough at having to re-create these methods
+too often, with the occasionnal typo causing bugs that they jump with
+joy when discovering `attrs: Classes Without Boilerplate <https://www.attrs.org/en/stable/>`_.
 
-    self.= this_variable
-    self.= that_variable
+Starting with Python 3.7, the standard library includes
+`dataclasses <https://docs.python.org/3/library/dataclasses.html>`_ which shares some
+similarity with ``attrs``. However, it does require to use type hints which,
+in my opinion, reduces readability.
 
-or::
-
-    $this_variable
-    $that_variable
-
-or even::
-
-    self.= :
-        this_variable
-        that_variable
-        this_other_variable
-        foo
-        bar
-
-    self.baz = [] if baz is None else baz
-    self.spam = bread + ham
-
-
-Note that one could use cls instead of self.
-
-On Python ideas, I have seen::
-
-    self.= this_variable, that_variable, ...
-
-which I do not find very readable.
-
-https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a
-
-Dataclass may already cover most of this
-https://www.python.org/dev/peps/pep-0557/  ... but, they essentially require type hints.
-From that PEP (but formatted with Black)::
+As a concrete example of using traditional Python notation and
+dataclasses, let's consider the code given in `PEP 557  <https://www.python.org/dev/peps/pep-0557/>`_ but reformatted with Black::
 
     class Application:
         def __init__(
@@ -68,10 +55,40 @@ From that PEP (but formatted with Black)::
             self.path = path
             self.executable_links = [] if executable_links is None else executable_links
             self.executables_dir = executables_dir
-
             self.additional_items = []
 
-would become::
+Here's a code which gives the same initialization using the ``@dataclass``
+decorator::
+
+
+    from dataclasses import dataclass
+
+    @dataclass
+    class Application:
+        name: str
+        requirements: List[Requirement]
+        constraints: Dict[str, str] = field(default_factory=dict)
+        path: str = ''
+        executable_links: List[str] = field(default_factory=list)
+        executable_dir: Tuple[str] = ()
+        additional_items: List[str] = field(init=False, default_factory=list)
+
+
+This code does more than simply initializing the variables, but I
+do not find it particulary readable.
+
+
+So, I was wondering if it might be possible to imagine a simpler syntax.
+``auto_self`` is what I came up with.
+
+.. note:: The ship has sailed ...
+
+    I realize that there is zero chance that the following syntax would
+    be adopted, now that the ``dataclasses`` module has been added to
+    the Python standard library. Still, you can try it out using
+    ``auto_self`` hook.
+
+.. code-block:: python
 
     class Application:
         def __init__(
@@ -90,18 +107,48 @@ would become::
                 path
                 executable_links = [] if __ is None else __
                 executables_dir
+                additional_items = []
 
-            self.additional_items = []
+Here, I am using a new operator, ``.=``, which is meant to represent
+the automatic assignment of a variable to the name that precedes
+it (``self`` in this example).  I have seen this idea for such an operator before on
+**python-ideas** but never as introducing a code-block as I do here.
 
-compared with::
+By design, any dunder, ``__``, is taken to be equivalent to the variable
+being initialized.  I chose a dunder instead of a single underscore ``_``
+so that it could be used in a REPL.
 
-    @dataclass
+Of course, one is not restricted to using ``self``, or using ``__``
+everywhere. The following is completely equivalent - although slightly less
+readable in my opinion, with fewer ``__`` used::
+
+
     class Application:
-        name: str
-        requirements: List[Requirement]
-        constraints: Dict[str, str] = field(default_factory=dict)
-        path: str = ''
-        executable_links: List[str] = field(default_factory=list)
-        executable_dir: Tuple[str] = ()
+        def __init__(
+            cls,
+            name,
+            requirements,
+            constraints=None,
+            path="",
+            executable_links=None,
+            executables_dir=(),
+        ):
+            cls .= :
+                name
+                requirements
+                constraints = {} if constraints is None else constraints
+                path
+                executable_links = [] if __ is None else executable_links
+                executables_dir
 
-        additional_items: List[str] = field(init=False, default_factory=list)
+            cls.additional_items = []
+
+Note that, unlike ``@dataclass`` or ``attrs``, no additional method is
+created by ``auto_self``.
+
+
+Try it out!
+--------------------
+
+.. automodule:: ideas.examples.auto_self
+   :members:
