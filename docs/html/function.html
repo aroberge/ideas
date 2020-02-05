@@ -273,10 +273,7 @@
 67
 68
 69
-70
-71
-72
-73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+70</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
 
 <span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
@@ -284,8 +281,6 @@
 <span class="sd">   these parameters will be passed back to our function</span>
 <span class="sd">   ``transform_source``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
@@ -347,22 +342,21 @@
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span>
 </pre></div>
 </td></tr></table></div>
-<p>On lines 14 to 18, we defined a function that can be used to print
+<p>On lines 12 to 16, we defined a function that can be used to print
 either the original code or the transformed one.
 This can be useful in debugging sessions. Once it has been written,
 there is essential no advantage in removing the code: we leave it
 in so that other programmers wishing to build upon this example
 do not have to rewrite such code.</p>
 <p>Whether or not we invoke the diagnostic code is determined
-on lines 32-33, and 37-38.  The values of the relevant parameters
+on lines 30-31, and 35-36.  The values of the relevant parameters
 are actually set when we call the function to add a hook on
-line 61.</p>
+line 59.</p>
 <p>In addition to these callback parameters, you might have noticed
-on line 21 the extra function argument <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>.
+on line 19 the extra function argument <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>.
 In addition to some parameters unique to each import hook,
 our import hook machinery returns some other parameters, such
 as the file name and others, which can be of use to some

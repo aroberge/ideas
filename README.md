@@ -117,7 +117,10 @@ Please tell me more by filing an issue first and possibly creating a pull-reques
 
 > _I have an idea for a new example, but do not know how to write the code for it._
 
-File an issue ... but please don't be offended if I don't write code for it
+First, make sure you go through all of the existing examples to confirm that
+none can easily be adapted to do what you want.
+If that is the case, file an issue ...
+but please don't be offended if I don't write code for it
 and end up closing the issue: I already have too many ideas of my own
 for this project, too many other projects, and not
 enough time to do all that I want.
@@ -127,8 +130,9 @@ enough time to do all that I want.
 
 **Seriously?**  This project is all about exploring potential changes
 to Python's syntax, some of which are downright crazy, and you complain
-about a PEP-8 violation? ...  Ok, perhaps you can tell me and it might
-make sense to change what I wrote.
+about a PEP-8 violation? ...
+
+Ok, perhaps you can tell me and it might make sense to change what I wrote.
 
 > _People from the Python-ideas mailing lists mentioned that I should look
 > at this project for my idea, but I don't know where to start._

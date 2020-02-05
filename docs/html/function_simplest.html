@@ -235,21 +235,17 @@ machinery can make use of it.</p>
 <p>Suppose we want to create an import hook that enables us to use
 <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>. Using <code class="docutils literal notranslate"><span class="pre">ideas</span></code>,
 we simply have to do the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
 
-<span class="k">def</span> <span class="nf">some_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">some_arbitrary_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
      <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda&quot;</span><span class="p">)</span>
 
-<span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_name</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+<span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_arbitrary_name</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>That’s it! Prior to having Python execute the source code, we made sure
 to replace any occurrence of the name <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>
 so that the source code would contain only valid syntax.</p>
-<p>By inserting our <code class="docutils literal notranslate"><span class="pre">hook</span></code> as the first item in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>,
-we ensured that it would be the first one that would be used by Python.</p>
 <p>While the code above would work, it is less than ideal as it would
 replace the word <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> everywhere it occurs
 in the source. Thus, given something like:</p>
@@ -300,16 +296,9 @@ in the source. Thus, given something like:</p>
 19
 20
 21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
@@ -328,8 +317,7 @@ in the source. Thus, given something like:</p>
 <span class="hll"><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
 </span>    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
 <span class="hll">    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
-</span>    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
-<span class="hll">    <span class="k">return</span> <span class="n">hook</span>
+</span><span class="hll">    <span class="k">return</span> <span class="n">hook</span>
 </span></pre></div>
 </td></tr></table></div>
 <div class="sidebar">
@@ -345,11 +333,11 @@ learn more about this topic.</p>
 </div>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-<code class="docutils literal notranslate"><span class="pre">add_hook</span></code> (line 22), and return the hook that was created (line 26).
+<code class="docutils literal notranslate"><span class="pre">add_hook</span></code> (line 19), and return the hook that was created (line 22).
 This has at least three benefits:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>We can control when we the hook is created.</p></li>
+<li><p>We can control when the hook is created.</p></li>
 <li><p>We can use the return value to remove the hook when it is no longer
 needed. This is useful for testing.</p></li>
 <li><p>We can add arguments to <code class="docutils literal notranslate"><span class="pre">add_hook</span></code> so as to modify what happens
@@ -364,7 +352,7 @@ an individual token. Rather than using directly the tokenizer
 from Python’s standard library, we use our own version which has some useful
 added features. For examples, to see if two tokens are equal,
 we only compare their string values. We can compare a token directly
-to a string like we did in the code above on line 15.</p>
+to a string like we did in the code above on line 12.</p>
 <p>Note that, just like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>
@@ -378,10 +366,10 @@ to a string like we did in the code above on line 15.</p>
 <p>using our import hook.</p>
 <p>Once we’re done with replacing all <code class="docutils literal notranslate"><span class="pre">function</span></code> tokens by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>,
 we convert the tokens back into a string by calling our
-utility function <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> on line 19.</p>
-<p>Finally, to make our code easier to understand, on line 10 we use the
+utility function <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> on line 16.</p>
+<p>Finally, to make our code easier to understand, on line 7 we use the
 same name, <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> that is used as a keyword
-argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> on line 24.
+argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> on line 21.
 All of our examples follow this convention.</p>
 </div>
 <div class="section" id="function-simplest-py-api">

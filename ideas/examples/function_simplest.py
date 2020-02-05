@@ -1,9 +1,6 @@
 """This module enables someone to use ``function`` as a keyword
    equivalent to ``lambda``.
 """
-
-import sys
-
 from ideas import import_hook, token_utils
 
 
@@ -22,5 +19,4 @@ def transform_source(source, **kwargs):
 def add_hook():
     """Creates and adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(transform_source=transform_source)
-    sys.meta_path.insert(0, hook)
     return hook

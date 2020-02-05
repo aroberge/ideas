@@ -45,21 +45,16 @@ Suppose we want to create an import hook that enables us to use
 ``function`` as a keyword equivalent to ``lambda``. Using ``ideas``,
 we simply have to do the following::
 
-    import sys
     from ideas import import_hook
 
-    def some_name(source, **kwargs):
+    def some_arbitrary_name(source, **kwargs):
          return source.replace("function", "lambda")
 
-    hook = import_hook.create_hook(transform_source=some_name)
-    sys.meta_path.insert(0, hook)
+    import_hook.create_hook(transform_source=some_arbitrary_name)
 
 That's it! Prior to having Python execute the source code, we made sure
 to replace any occurrence of the name ``function`` by ``lambda``
 so that the source code would contain only valid syntax.
-
-By inserting our ``hook`` as the first item in ``sys.meta_path``,
-we ensured that it would be the first one that would be used by Python.
 
 While the code above would work, it is less than ideal as it would
 replace the word ``function`` by ``lambda`` everywhere it occurs
@@ -93,7 +88,7 @@ Actual code
 Here's the content of our real simplest example.
 
 .. literalinclude:: ../../ideas/examples/function_simplest.py
-   :emphasize-lines: 10,15,19,22,24,26
+   :emphasize-lines: 7,12,16,19,21,22
    :linenos:
 
 .. sidebar:: Tokens?
@@ -111,10 +106,10 @@ Here's the content of our real simplest example.
 
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-``add_hook`` (line 22), and return the hook that was created (line 26).
+``add_hook`` (line 19), and return the hook that was created (line 22).
 This has at least three benefits:
 
-    1. We can control when we the hook is created.
+    1. We can control when the hook is created.
     2. We can use the return value to remove the hook when it is no longer
        needed. This is useful for testing.
     3. We can add arguments to ``add_hook`` so as to modify what happens
@@ -128,7 +123,7 @@ an individual token. Rather than using directly the tokenizer
 from Python's standard library, we use our own version which has some useful
 added features. For examples, to see if two tokens are equal,
 we only compare their string values. We can compare a token directly
-to a string like we did in the code above on line 15.
+to a string like we did in the code above on line 12.
 
 Note that, just like::
 
@@ -144,9 +139,9 @@ using our import hook.
 
 Once we're done with replacing all ``function`` tokens by ``lambda``,
 we convert the tokens back into a string by calling our
-utility function ``untokenize`` on line 19.
+utility function ``untokenize`` on line 16.
 
-Finally, to make our code easier to understand, on line 10 we use the
+Finally, to make our code easier to understand, on line 7 we use the
 same name, ``transform_source`` that is used as a keyword
-argument for ``import_hook.create_hook`` on line 24.
+argument for ``import_hook.create_hook`` on line 21.
 All of our examples follow this convention.

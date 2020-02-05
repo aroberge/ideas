@@ -180,9 +180,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
@@ -201,7 +198,6 @@
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>
 

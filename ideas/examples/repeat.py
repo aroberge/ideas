@@ -13,8 +13,6 @@ is equivalent to::
         for random_variable_name_2 in range(a*a):
             pass
 """
-
-import sys
 import uuid
 
 from ideas import import_hook, token_utils
@@ -49,11 +47,7 @@ def print_info(kind, source):
 
 
 def transform_source(
-    source,
-    show_original=False,
-    show_transformed=False,
-    predictable_names=False,
-    **kwargs,
+    source, callback_params=None, **kwargs,
 ):
     """This function is called by the import hook loader with the named keyword
     that we specified when we created the import hook.
@@ -61,12 +55,12 @@ def transform_source(
     It gives us the option to compare the original source and the transformed
     one.
     """
-    if show_original:
+    if callback_params["show_original"]:
         print_info("Original", source)
 
-    source = convert_repeat(source, predictable_names=predictable_names)
+    source = convert_repeat(source, predictable_names=callback_params["predictable_names"])
 
-    if show_transformed:
+    if callback_params["show_transformed"]:
         print_info("Transformed", source)
     return source
 
@@ -127,5 +121,4 @@ def add_hook(show_original=False, show_transformed=False, predictable_names=Fals
         callback_params=callback_params,
         name=__name__,
     )
-    sys.meta_path.insert(0, hook)
     return hook

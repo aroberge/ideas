@@ -1,4 +1,3 @@
-import sys
 import types
 
 from ideas import import_hook, utils, token_utils
@@ -215,5 +214,4 @@ def add_hook(on_prevent_change=None):
         console_dict=console_dict,
         name=__name__,
     )
-    sys.meta_path.insert(0, hook)
     return hook

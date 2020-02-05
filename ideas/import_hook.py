@@ -26,15 +26,20 @@ class IdeasMetaFinder(MetaPathFinder):
 
     def __init__(
         self,
+        callback_params=None,
+        exec_=None,
+        extensions=None,
         module_class=None,
         transform_source=None,
-        exec_=None,
-        callback_params=None,
     ):
+        self.callback_params = callback_params
+        self.exec_ = exec_
+        if extensions is None:
+            self.extensions = [".py", ".pyw"]
+        else:
+            self.extensions = extensions
         self.module_class = module_class
         self.transform_source = transform_source
-        self.exec_ = exec_
-        self.callback_params = callback_params
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -52,11 +57,19 @@ class IdeasMetaFinder(MetaPathFinder):
                 # this module has child modules
                 filename = os.path.join(entry, name, "__init__.py")
                 submodule_locations = [os.path.join(entry, name)]
+                if not os.path.exists(filename):
+                    continue
             else:
-                filename = os.path.join(entry, name + ".py")
-                submodule_locations = None
-            if not os.path.exists(filename):
-                continue
+                for extension in self.extensions:
+                    if not extension.startswith("."):  # be forgiving ...
+                        extension = "." + extension
+                    filename = os.path.join(entry, name + extension)
+
+                    submodule_locations = None
+                    if os.path.exists(filename):
+                        break
+                else:
+                    continue
 
             return spec_from_file_location(
                 fullname,
@@ -101,7 +114,7 @@ class IdeasLoader(Loader):
         if self.module_class is not None:
             module.__class__ = self.module_class
 
-        with open(self.filename) as f:  # to do: use decode_source instead
+        with open(self.filename, encoding="utf8") as f:  # to do: use decode_source instead
             source = f.read()
 
         if Main_Module_Name is not None:
@@ -134,12 +147,14 @@ class IdeasLoader(Loader):
 
 
 def create_hook(
-    module_class=None,
-    transform_source=None,
-    exec_=None,
-    console_dict=None,
     callback_params=None,
+    console_dict=None,
+    exec_=None,
+    extensions=None,
+    first=True,
+    module_class=None,
     name=None,
+    transform_source=None,
 ):
     """Function to facilitate the creation of an import hook.
 
@@ -152,17 +167,25 @@ def create_hook(
     if transform_source is not None and isinstance(name, str):
         transform_source.__name__ = name
     console.configure(
-        transform_source=transform_source,
-        console_dict=console_dict,
         callback_params=callback_params,
+        console_dict=console_dict,
+        transform_source=transform_source,
     )
 
-    return IdeasMetaFinder(
+    hook = IdeasMetaFinder(
+        callback_params=callback_params,
+        exec_=exec_,
+        extensions=extensions,
         module_class=module_class,
         transform_source=transform_source,
-        exec_=exec_,
-        callback_params=callback_params,
     )
+
+    if first:
+        sys.meta_path.insert(0, hook)
+    else:
+        sys.meta_path.append(hook)
+
+    return hook
 
 
 def remove_hook(hook):

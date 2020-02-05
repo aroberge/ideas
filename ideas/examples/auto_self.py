@@ -1,7 +1,6 @@
 """Description here
 """
 from functools import partial
-import sys
 
 from ideas import import_hook, token_utils
 
@@ -82,5 +81,4 @@ def add_hook(show_original=False, show_transformed=False):
         callback_params=callback_params,
         name=__name__,
     )
-    sys.meta_path.insert(0, hook)
     return hook

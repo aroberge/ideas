@@ -6,8 +6,6 @@
    these parameters will be passed back to our function
    ``transform_source``.
 """
-import sys
-
 from ideas import import_hook, token_utils
 
 
@@ -18,7 +16,7 @@ def print_info(kind, source):
     print("-----------------------------")
 
 
-def transform_source(source, show_original=False, show_transformed=False, **kwargs):
+def transform_source(source, callback_params=None, **kwargs):
     """This function is called by the import hook loader with the named keyword
        that we specified when we created the import hook.
 
@@ -29,13 +27,15 @@ def transform_source(source, show_original=False, show_transformed=False, **kwar
        transformations, we can combine the existing "inner" functions to
        create our new transformation.
     """
-    if show_original:
-        print_info("Original", source)
+    if callback_params is not None:
+        if callback_params["show_original"]:
+            print_info("Original", source)
 
     source = function_as_a_keyword(source)
 
-    if show_transformed:
-        print_info("Transformed", source)
+    if callback_params is not None:
+        if callback_params["show_transformed"]:
+            print_info("Transformed", source)
     return source
 
 
@@ -69,5 +69,4 @@ def add_hook(show_original=False, show_transformed=False):
         callback_params=callback_params,
         name=__name__,
     )
-    sys.meta_path.insert(0, hook)
     return hook
