@@ -84,12 +84,13 @@ def convert_repeat(source, predictable_names=False):
         variable_name = generate_variable_names()
 
     for tokens in token_utils.get_lines_of_tokens(source):
-        # a line of tokens can start with DEDENT tokens ...
-        index = token_utils.get_first_nonspace_token_index(tokens)
-        first_token = tokens[index]
+        # a line of tokens can start with INDENT or DEDENT tokens ...
+        first_token = token_utils.get_first_nonspace_token(tokens)
         if first_token == "repeat":
             colon_position = -1
-            # Note: a newline token string could be either "" or "\n"
+            # Note: a newline token (NL or NEWLINE) string could be
+            # either "" or "\n"; so we use our existing method instead of
+            # comparing the string content
             if tokens[colon_position].is_newline():
                 colon_position -= 1
             if tokens[colon_position].is_comment():

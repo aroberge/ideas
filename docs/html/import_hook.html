@@ -216,7 +216,7 @@ it is known to Python.</p>
 
 <dl class="class">
 <dt id="ideas.import_hook.IdeasMetaFinder">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasMetaFinder</code><span class="sig-paren">(</span><em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">callback_params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasMetaFinder</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder" title="Permalink to this definition">¶</a></dt>
 <dd><p>A custom finder to locate modules.  The main reason for this code
 is to ensure that our custom loader, which does the code transformations,
 is used.</p>
@@ -231,7 +231,7 @@ its loader.</p>
 
 <dl class="function">
 <dt id="ideas.import_hook.create_hook">
-<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">create_hook</code><span class="sig-paren">(</span><em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">console_dict=None</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">first=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">create_hook</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">console_dict=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">first=True</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">transform_source=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to facilitate the creation of an import hook.</p>
 <p>It sets the parameters to be used by the import hook, and also
 does so for the interactive console.</p>

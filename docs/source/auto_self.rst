@@ -68,6 +68,7 @@ From that PEP (but formatted with Black)::
             self.path = path
             self.executable_links = [] if executable_links is None else executable_links
             self.executables_dir = executables_dir
+
             self.additional_items = []
 
 would become::
@@ -82,14 +83,14 @@ would become::
             executable_links=None,
             executables_dir=(),
         ):
-            self.=:
+            self .= :
                 name
                 requirements
+                constraints = {} if __ is None else __
                 path
-                executable_dir
+                executable_links = [] if __ is None else __
+                executables_dir
 
-            self.constraints = {} if constraints is None else constraints
-            self.executable_links = [] if executable_links is None else executable_links
             self.additional_items = []
 
 compared with::
@@ -102,4 +103,5 @@ compared with::
         path: str = ''
         executable_links: List[str] = field(default_factory=list)
         executable_dir: Tuple[str] = ()
+
         additional_items: List[str] = field(init=False, default_factory=list)

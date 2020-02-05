@@ -40,13 +40,9 @@ class Token:
         elif isinstance(other, str):
             return self.string == other
         else:
-            raise TypeError("A token can only be compared to a token or to a string.")
-
-    def __ne__(self, other):
-        """Compares a Token with another object; returns true if
-           self.string != other.string or if self.string != other.
-        """
-        return not self.__eq__(other)
+            raise TypeError(
+                "A token can only be compared to another token or to a string."
+            )
 
     def is_keyword(self):
         """Returns True if the token represents a Python keyword.
@@ -84,7 +80,7 @@ class Token:
             string=repr(self.string),
             start=str(self.start),
             end=str(self.end),
-            line=str(self.line).replace("\t", "\\t"),
+            line=repr(self.line),
         )
 
 
@@ -97,7 +93,11 @@ def tokenize_source(source):
             token = Token(tok)
             tokens.append(token)
     except (tokenize.TokenError, Exception) as exc:
-        print("WARNING: the following error was raised in tokenize_source\n", exc)
+        print(
+            "WARNING: the following error was raised in",
+            f"{__name__}.tokenize_source\n",
+            exc,
+        )
 
     return tokens
 
@@ -139,6 +139,18 @@ def get_number_nonspace_tokens(tokens, ignore_comments=False):
         elif ignore_comments and token.is_comment():
             nb -= 1
     return nb
+
+
+def get_first_nonspace_token(tokens):
+    """Given a list of tokens, find the first token which is not a space token
+    (such as a newline, indent, dedent, etc.)
+
+    Returns None if none is found.
+    """
+    for token in tokens:
+        if not token.is_space():
+            return token
+    return None
 
 
 def get_first_nonspace_token_index(tokens):

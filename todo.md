@@ -2,6 +2,8 @@
 
 Infrequently updated list ...
 
+- Mention https://www.python.org/dev/peps/pep-0511/
+- Mention that files are open using utf-8 by default.
 - Add requirements-dev.txt file
 - List cases/recipes to be included
 - Add console
@@ -24,7 +26,9 @@ Infrequently updated list ...
 - use instaviz for the docs
 - using emojis as identifiers
 - have a look at https://github.com/alexmojaki/nameof ... although I still don't understand the possible benefit.
-- preventing automatic string concatenation.
+- preventing automatic string concatenation; see recent discussion on python-ideas
+  - tokenize, removing all space tokens and comments
+  - rescan tokens, looking for two consecutive string tokens.
 - pattern matching with pampy https://news.ycombinator.com/item?id=22220434
 - combine codec  (ideas-encoding) and import hook in usercustomize
 - multiline lambda; idea:

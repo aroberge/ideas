@@ -42,19 +42,30 @@ def automatic_self(source):
     indentation = 0
 
     get_nb = partial(token_utils.get_number_nonspace_tokens, ignore_comments=True)
-    get_index = token_utils.get_first_nonspace_token_index
+    get_first = token_utils.get_first_nonspace_token
+    get_first_index = token_utils.get_first_nonspace_token_index
 
     for tokens in token_utils.get_lines_of_tokens(source):
         if auto_self_block:
-            if get_nb(tokens) == 1:
-                variable = tokens[get_index(tokens)]
-                new_string = f"{self_name}.{variable.string} = {variable.string}\n"
-                line = " " * indentation + new_string
-                tokens = [line]
-            else:
-                auto_self_block = False
+            variable = get_first(tokens)
+            if variable is not None:  # empty line
+                var_name = variable.string
+                block_indent = variable.start_col
+                if block_indent > indentation:
+                    if get_nb(tokens) == 1:
+                        new_string = f"{self_name}.{var_name} = {var_name}\n"
+                        new_line = " " * indentation + new_string
+                        tokens = [new_line]
+                    else:
+                        new_line = token_utils.untokenize(tokens)
+                        rest = new_line[variable.end_col:]
+                        new_line = " " * indentation + f"{self_name}.{var_name}" + rest
+                        new_line = new_line.replace("__", var_name)
+                        tokens = [new_line]
+                else:
+                    auto_self_block = False
         elif get_nb(tokens) == 4:
-            index = get_index(tokens)
+            index = get_first_index(tokens)
             if (
                 tokens[index].is_identifier()
                 and tokens[index + 1] == "."

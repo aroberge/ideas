@@ -219,13 +219,9 @@
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">other</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;A token can only be compared to a token or to a string.&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compares a Token with another object; returns true if</span>
-<span class="sd">           self.string != other.string or if self.string != other.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;A token can only be compared to another token or to a string.&quot;</span>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.</span>
@@ -263,7 +259,7 @@
             <span class="n">string</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
             <span class="n">start</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
             <span class="n">end</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">),</span>
-            <span class="n">line</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">t&quot;</span><span class="p">),</span>
+            <span class="n">line</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">),</span>
         <span class="p">)</span></div>
 
 
@@ -276,7 +272,11 @@
             <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
             <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: the following error was raised in tokenize_source</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING: the following error was raised in&quot;</span><span class="p">,</span>
+            <span class="n">f</span><span class="s2">&quot;</span><span class="si">{__name__}</span><span class="s2">.tokenize_source</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">exc</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">tokens</span></div>
 
@@ -318,6 +318,18 @@
         <span class="k">elif</span> <span class="n">ignore_comments</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">is_comment</span><span class="p">():</span>
             <span class="n">nb</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">nb</span></div>
+
+
+<div class="viewcode-block" id="get_first_nonspace_token"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_nonspace_token">[docs]</a><span class="k">def</span> <span class="nf">get_first_nonspace_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the first token which is not a space token</span>
+<span class="sd">    (such as a newline, indent, dedent, etc.)</span>
+
+<span class="sd">    Returns None if none is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">token</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="get_first_nonspace_token_index"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_nonspace_token_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>

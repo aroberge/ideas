@@ -226,11 +226,7 @@
 
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span>
-    <span class="n">source</span><span class="p">,</span>
-    <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
 <span class="sd">    that we specified when we created the import hook.</span>
@@ -238,12 +234,12 @@
 <span class="sd">    It gives us the option to compare the original source and the transformed</span>
 <span class="sd">    one.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">show_original</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">predictable_names</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">])</span>
 
-    <span class="k">if</span> <span class="n">show_transformed</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">source</span></div>
 
@@ -267,12 +263,13 @@
         <span class="n">variable_name</span> <span class="o">=</span> <span class="n">generate_variable_names</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="c1"># a line of tokens can start with DEDENT tokens ...</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="n">first_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="c1"># a line of tokens can start with INDENT or DEDENT tokens ...</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;repeat&quot;</span><span class="p">:</span>
             <span class="n">colon_position</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="c1"># Note: a newline token string could be either &quot;&quot; or &quot;\n&quot;</span>
+            <span class="c1"># Note: a newline token (NL or NEWLINE) string could be</span>
+            <span class="c1"># either &quot;&quot; or &quot;\n&quot;; so we use our existing method instead of</span>
+            <span class="c1"># comparing the string content</span>
             <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="n">colon_position</span><span class="p">]</span><span class="o">.</span><span class="n">is_newline</span><span class="p">():</span>
                 <span class="n">colon_position</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="n">colon_position</span><span class="p">]</span><span class="o">.</span><span class="n">is_comment</span><span class="p">():</span>

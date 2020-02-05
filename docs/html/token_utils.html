@@ -241,6 +241,14 @@ the end of a line, or the end of the source.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="ideas.token_utils.get_first_nonspace_token">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first_nonspace_token</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first_nonspace_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first_nonspace_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the first token which is not a space token
+(such as a newline, indent, dedent, etc.)</p>
+<p>Returns None if none is found.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="ideas.token_utils.get_first_nonspace_token_index">
 <code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first_nonspace_token_index</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first_nonspace_token_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first_nonspace_token_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, find the index of the first one which is

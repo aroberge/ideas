@@ -4,7 +4,7 @@ import os
 import sys
 
 from importlib.abc import Loader, MetaPathFinder
-from importlib.util import spec_from_file_location
+from importlib.util import spec_from_file_location, decode_source
 
 from . import console
 
@@ -108,14 +108,15 @@ class IdeasLoader(Loader):
 
     def exec_module(self, module):
         """Import the source code, transform it before executing it so that
-           it is known to Python."""
+           it is known to Python.
+        """
         global Main_Module_Name
 
         if self.module_class is not None:
             module.__class__ = self.module_class
 
-        with open(self.filename, encoding="utf8") as f:  # to do: use decode_source instead
-            source = f.read()
+        with open(self.filename, mode="r+b") as f:
+            source = decode_source(f.read())
 
         if Main_Module_Name is not None:
             sys.modules["__main__"] = sys.modules[module.__name__]
