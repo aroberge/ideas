@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>token_utils.py &mdash; ideas 0.0.3 documentation</title>
+  <title>token_utils.py &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,20 +87,20 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -200,11 +200,11 @@ source code.</p>
 <dd><p>Token as generated from tokenize.generate_tokens written here in
 a more convenient form, and with some custom methods.</p>
 <p>The various parameters are:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``type``: token type
-``string``: the token written as a string
-``start`` = ``(start_row, start_col)``
-``end`` = ``(end_row, end_col)``
-``line``: entire line of code where the token is found.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">:</span> <span class="n">token</span> <span class="nb">type</span>
+<span class="n">string</span><span class="p">:</span> <span class="n">the</span> <span class="n">token</span> <span class="n">written</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span>
+<span class="n">start</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_row</span><span class="p">,</span> <span class="n">end_col</span><span class="p">)</span>
+<span class="n">line</span><span class="p">:</span> <span class="n">entire</span> <span class="n">line</span> <span class="n">of</span> <span class="n">code</span> <span class="n">where</span> <span class="n">the</span> <span class="n">token</span> <span class="ow">is</span> <span class="n">found</span><span class="o">.</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -290,17 +290,17 @@ tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</p>
 <code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">untokenize</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#untokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.untokenize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return source code based on tokens.</p>
 <p>This is similar to Python’s tokenize.untokenize(), except that it
-preserves spacing between tokens, by using the <code class="docutils literal notranslate"><span class="pre">line</span></code>
-information recorded by Python’s <code class="docutils literal notranslate"><span class="pre">tokenize.generate_tokens</span></code>.
+preserves spacing between tokens, by using the line
+information recorded by Python’s tokenize.generate_tokens.
 As a result, if the original soure code had multiple spaces between
 some tokens or if escaped newlines were used, those things will be
-reflected by <code class="docutils literal notranslate"><span class="pre">untokenize</span></code>.</p>
+reflected by untokenize.</p>
 <p>If a given item is a string instead of a Token object, it is simply
 added as is.</p>
 <p>IMPORTANT: do not remove a token from the original list of
 tokens prior to calling untokenize; instead, set its string attribute
 to an empty string.</p>
-<p>Note that if some tokens are changed, the <code class="docutils literal notranslate"><span class="pre">line</span></code> information will
+<p>Note that if some tokens are changed, the line information will
 no longer reflect the content and the reconstructed content may
 no longer be valid, unless some special procedures have been followed
 when replacing original tokens by new ones. See the documentation

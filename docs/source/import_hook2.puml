@@ -1,0 +1,23 @@
+@startuml
+partition Finder #LightSkyBlue  {
+    :Search for file;
+    :Return file spec & Loader;
+    }
+partition Loader #LightSkyBlue  {
+    :Create a module object;
+    partition Decode {
+        :Read file content as bytes;
+        :Convert bytes into string;
+        note right: This is the source.
+    }
+    partition Execute {
+        :Convert the source into a series of tokens;
+        note right: Lexer.
+        :Transform into a Concrete Parse Tree (CPT);
+        :Transform CPT into an Abstract Syntax Tree (AST);
+        :Transform AST into a Control Flow Graph (CFG) #Black;
+        :Transform CFG into bytecodes;
+        :Execute bytecode into module's dict;
+    }
+}
+@enduml

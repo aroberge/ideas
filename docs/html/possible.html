@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview of all possibilities &mdash; ideas 0.0.3 documentation</title>
+  <title>A deep dive &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples that will never be included" href="excluded.html" />
-    <link rel="prev" title="Importing a module as main" href="as_main.html" /> 
+    <link rel="next" title="Importing a module as main" href="as_main.html" />
+    <link rel="prev" title="Create your own import hook" href="function_simplest.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,20 +87,23 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> A deep dive</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-ideas">Using Ideas</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Overview of all possibilities - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -161,7 +164,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Overview of all possibilities</li>
+      <li>A deep dive</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,10 +180,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples that will never be included" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="as_main.html" class="btn btn-neutral float-right" title="Importing a module as main" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Create your own import hook" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -189,43 +192,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="overview-of-all-possibilities">
-<h1>Overview of all possibilities<a class="headerlink" href="#overview-of-all-possibilities" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add a diagram to support this textual description.
-Note that this is just a very rough first draft.</p>
+  <div class="section" id="a-deep-dive">
+<h1>A deep dive<a class="headerlink" href="#a-deep-dive" title="Permalink to this headline">¶</a></h1>
+<p>In Python, an import hook has two main components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A <strong>Finder</strong> which looks for the code (usually a .py file) that
+is requested by an <code class="docutils literal notranslate"><span class="pre">import</span></code> statement</p></li>
+<li><p>A <strong>Loader</strong> which retrieves the source code, executes it,
+an returns a module object.</p></li>
+</ul>
+</div></blockquote>
+<p>The order of execution is the following</p>
+<img alt="Import hook overview" class="align-center" src="_images/import_hook.png" />
+<p>The diagram above illustrates only the main steps.
+These can be broken down further as follows.</p>
+<img alt="Import hook details" class="align-center" src="_images/import_hook2.png" />
+<div class="section" id="using-ideas">
+<h2>Using Ideas<a class="headerlink" href="#using-ideas" title="Permalink to this headline">¶</a></h2>
+<p>Normally, for creating import hooks, it is important to distinguish
+the two main phases, that is creating a <code class="docutils literal notranslate"><span class="pre">Finder</span></code> and a <code class="docutils literal notranslate"><span class="pre">Loader</span></code>.
+Using <code class="docutils literal notranslate"><span class="pre">ideas</span></code>, these are automatically done for us, and we can focus
+on various parts over which we can have control.</p>
+<p><strong>In the diagram below:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Inside each of the major blocks (Decode, AST, Bytecode), we don’t have
+control over the individual components;
+however, we can substitute our own version of the entire block.</p></li>
+<li><p>There exists at least one example for anything (excluding major blocks) with
+a white background.</p></li>
+<li><p>Anything with a light blue background indicates that some examples of this should
+be doable. Ideally, at least one example of each possible case
+should be added.</p></li>
+</ul>
+</div></blockquote>
+<img alt="ideas import hook possibilities" class="align-center" src="_images/import_hook3.png" />
 </div>
-<img alt="test diagram" class="align-center" src="_images/test.png" />
-<p>When a user-written Python module gets executed, here’s an overview of
-what normally happens behind the scene.  Let’s call this module <code class="docutils literal notranslate"><span class="pre">script</span></code></p>
-<ol class="arabic simple">
-<li><p>A search is done on <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> for Python file (extension .py or .pyw)
-matching the known extensions.</p></li>
-<li><p>The information about the file is used to create a module that is
-essentially empty saved for a read-only dict containing information
-about the file name, location, etc.</p></li>
-<li><p>The file is then is read as a series of bytes.</p></li>
-<li><p>The content of the file is decoded to obtain the source as a string.</p></li>
-<li><p>That source is converted into a series of tokens.</p></li>
-<li><p>These tokens are transformed into a (concrete?) parse tree.</p></li>
-<li><p>The result is further converted into an abstract syntax tree (AST).</p></li>
-<li><p>The AST is converted into a control flow graph.</p></li>
-<li><p>The control flow graph is used to obtain a bytecode representation.</p></li>
-<li><p>That bytecode representation is executed in the module’s dict.</p></li>
-</ol>
-<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> can be used to make the following changes.</p>
-<p>1a. Where the file can be located - it does not have to be in a location included in <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>.  (Example from Python cookbook)</p>
-<p>1b. What file extension to look for. (many examples of my own)</p>
-<p>2a. Give the possibility of using a different module creation method - need to find an example</p>
-<p>2b. Use a different <code class="docutils literal notranslate"><span class="pre">module.__class__</span></code> (see example constants)</p>
-<p>4a. Show an example with essentially a custom encoding</p>
-<p>4b. Convert the source using <code class="docutils literal notranslate"><span class="pre">re</span></code> or <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> (preferable)</p>
-<p>5 and 6: impossible to replace individually</p>
-<p>7a: can modify the AST</p>
-<p>8: no access to this step</p>
-<p>9a: can modify the bytecode representation</p>
-<p>10a: can temporarily use a different dict than the read-only one defined for the module (see constants).</p>
 </div>
 
 
@@ -236,10 +239,10 @@ about the file name, location, etc.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples that will never be included" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="as_main.html" class="btn btn-neutral float-right" title="Importing a module as main" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Create your own import hook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

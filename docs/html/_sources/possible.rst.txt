@@ -1,55 +1,46 @@
-Overview of all possibilities
-==============================
+A deep dive
+============
 
+In Python, an import hook has two main components:
 
-.. todo::
+    - A **Finder** which looks for the code (usually a .py file) that
+      is requested by an ``import`` statement
+    - A **Loader** which retrieves the source code, executes it,
+      an returns a module object.
 
-    Add a diagram to support this textual description.
-    Note that this is just a very rough first draft.
+The order of execution is the following
 
-.. image:: _static/test.png
-   :alt: test diagram
+.. image:: _static/import_hook.png
+   :alt: Import hook overview
    :align: center
 
+The diagram above illustrates only the main steps.
+These can be broken down further as follows.
 
-When a user-written Python module gets executed, here's an overview of
-what normally happens behind the scene.  Let's call this module ``script``
+.. image:: _static/import_hook2.png
+   :alt: Import hook details
+   :align: center
 
-1. A search is done on ``sys.path`` for Python file (extension .py or .pyw)
-   matching the known extensions.
-2. The information about the file is used to create a module that is
-   essentially empty saved for a read-only dict containing information
-   about the file name, location, etc.
-3. The file is then is read as a series of bytes.
-4. The content of the file is decoded to obtain the source as a string.
-5. That source is converted into a series of tokens.
-6. These tokens are transformed into a (concrete?) parse tree.
-7. The result is further converted into an abstract syntax tree (AST).
-8. The AST is converted into a control flow graph.
-9. The control flow graph is used to obtain a bytecode representation.
-10. That bytecode representation is executed in the module's dict.
+Using Ideas
+-----------
 
-``ideas`` can be used to make the following changes.
+Normally, for creating import hooks, it is important to distinguish
+the two main phases, that is creating a ``Finder`` and a ``Loader``.
+Using ``ideas``, these are automatically done for us, and we can focus
+on various parts over which we can have control.
 
-1a. Where the file can be located - it does not have to be in a location included in ``sys.path``.  (Example from Python cookbook)
+**In the diagram below:**
 
-1b. What file extension to look for. (many examples of my own)
+  - Inside each of the major blocks (Decode, AST, Bytecode), we don't have
+    control over the individual components;
+    however, we can substitute our own version of the entire block.
+  - There exists at least one example for anything (excluding major blocks) with
+    a white background.
+  - Anything with a light blue background indicates that some examples of this should
+    be doable. Ideally, at least one example of each possible case
+    should be added.
 
-2a. Give the possibility of using a different module creation method - need to find an example
-
-2b. Use a different ``module.__class__`` (see example constants)
-
-4a. Show an example with essentially a custom encoding
-
-4b. Convert the source using ``re`` or ``tokenize`` (preferable)
-
-5 and 6: impossible to replace individually
-
-7a: can modify the AST
-
-8: no access to this step
-
-9a: can modify the bytecode representation
-
-10a: can temporarily use a different dict than the read-only one defined for the module (see constants).
+.. image:: _static/import_hook3.png
+   :alt: ideas import hook possibilities
+   :align: center
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Examples that will never be included &mdash; ideas 0.0.3 documentation</title>
+  <title>Examples that will never be included &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Function - part 1" href="function_simplest.html" />
-    <link rel="prev" title="Overview of all possibilities" href="possible.html" /> 
+    <link rel="next" title="Function - part 2" href="function.html" />
+    <link rel="prev" title="Importing a module as main" href="as_main.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,23 +87,20 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Examples never included - first draft</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#links-to-such-examples-done-elsewhere">Links to such examples done elsewhere</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -180,10 +177,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Function - part 1" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="possible.html" class="btn btn-neutral float-left" title="Overview of all possibilities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -194,27 +191,34 @@
             
   <div class="section" id="examples-that-will-never-be-included">
 <h1>Examples that will never be included<a class="headerlink" href="#examples-that-will-never-be-included" title="Permalink to this headline">¶</a></h1>
-<p>Some examples are never going to be included in this project.
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Importing code from an external site using an import hook
+could lead to unsafe behaviour and could possibly
+cause damage on the user’s computer; I want to protect users of my
+creation from such possibility.</p>
+</div>
+<div class="sidebar">
+<p class="sidebar-title">Braces?</p>
+<p>I fear retribution in the form of excommunication
+from the Python community
+if I were to enable braces. ;-)</p>
+</div>
+<p>Some examples are (<strong>most probably</strong>) never going to be included in this project.
 These are examples such as:</p>
 <ul class="simple">
 <li><p>Importing code from an external site.</p></li>
 <li><p>Any sort of use of braces to enclose a block of Python code.</p></li>
 </ul>
-<p>The first type of examples could lead to unsafe behaviour and could possibly
-cause damage on the user’s computer; I want to protect users of my
-creation from such possibility.</p>
-<p>The second type of examples could cause <strong>me</strong> a personal risk as I do
-fear retribution in the form of excommunication from the Python community
-if I were to support such initiatives. ;-)</p>
-<div class="section" id="links-to-such-examples-done-elsewhere">
-<h2>Links to such examples done elsewhere<a class="headerlink" href="#links-to-such-examples-done-elsewhere" title="Permalink to this headline">¶</a></h2>
-<p>There are various examples of some of these (if I recall correctly)</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p><strong>Add these examples</strong></p>
+<p>I need to add some explanations and provide links to the following examples:</p>
 <ul class="simple">
 <li><p>importing “best answer” from StackOverflow</p></li>
 <li><p>installing module from pypi on request (David Beazley’s talk)</p></li>
 </ul>
-<p>etc.  I need to add some explanations and provide links to the examples
-mentioned above.</p>
+<p>etc.</p>
 </div>
 </div>
 
@@ -226,10 +230,10 @@ mentioned above.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Function - part 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="possible.html" class="btn btn-neutral float-left" title="Overview of all possibilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="as_main.html" class="btn btn-neutral float-left" title="Importing a module as main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

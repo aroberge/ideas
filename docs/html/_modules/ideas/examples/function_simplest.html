@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function_simplest &mdash; ideas 0.0.3 documentation</title>
+  <title>ideas.examples.function_simplest &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -85,20 +85,20 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> Overview of all possibilities - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -177,8 +177,10 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.examples.function_simplest</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
-<span class="sd">   equivalent to ``lambda``.</span>
+<span></span><span class="sd">&quot;&quot;&quot;function_simplest.py</span>
+
+<span class="sd">This module enables someone to use ``function`` as a keyword</span>
+<span class="sd">equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
@@ -196,7 +198,7 @@
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>

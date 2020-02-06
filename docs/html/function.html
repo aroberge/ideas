@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Function - part 2 &mdash; ideas 0.0.3 documentation</title>
+  <title>Function - part 2 &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="nobreak as a keyword" href="nobreak.html" />
-    <link rel="prev" title="Function - part 1" href="function_simplest.html" /> 
+    <link rel="next" title="λ encoding" href="lambda.html" />
+    <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,24 +87,24 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> function as a keyword - part 2</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Improving function as a keyword</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#actual-source">Actual source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.function">function.py API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-gory-details">The gory details</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -181,10 +181,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Function - part 1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -336,7 +336,7 @@
 <span class="hll">
 </span>
 <span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
         <span class="s2">&quot;show_transformed&quot;</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
@@ -367,10 +367,37 @@ as the file name and others, which can be of use to some
 transformers.  As a rule, every function that can be called
 by the import hook machinery should include such an
 unspecified argument.</p>
+<p>Here’s an example using one such parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_transformed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: True}</span>
+<span class="go">    transform_source from ideas.examples.function</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
+
+<span class="go">~&gt;&gt; square = function x: x**2</span>
+<span class="go">===========Transformed============</span>
+<span class="go">square = lambda x: x**2</span>
+<span class="go">-----------------------------</span>
+<span class="go">~&gt;&gt; square(3)</span>
+<span class="go">===========Transformed============</span>
+<span class="go">square(3)</span>
+<span class="go">-----------------------------</span>
+<span class="go">9</span>
+<span class="go">~&gt;&gt;</span>
+</pre></div>
 </div>
-<div class="section" id="module-ideas.examples.function">
-<span id="function-py-api"></span><h2>function.py API<a class="headerlink" href="#module-ideas.examples.function" title="Permalink to this headline">¶</a></h2>
-<p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
+</div>
+<div class="section" id="the-gory-details">
+<h2>The gory details<a class="headerlink" href="#the-gory-details" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">API</p>
+<p>Generated by Sphinx</p>
+</div>
+<span class="target" id="module-ideas.examples.function"></span><p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
 equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <p>It is slightly more complicated than <code class="docutils literal notranslate"><span class="pre">function_simplest.py</span></code> as it
 demonstrates how we can pass parameters when adding an import hook;
@@ -379,7 +406,7 @@ these parameters will be passed back to our function
 <dl class="function">
 <dt id="ideas.examples.function.add_hook">
 <code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.add_hook" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates and adds the import hook in sys.meta_path</p>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
@@ -423,10 +450,10 @@ create our new transformation.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Function - part 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

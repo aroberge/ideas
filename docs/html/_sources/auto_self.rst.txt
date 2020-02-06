@@ -17,12 +17,12 @@ many attributes, like::
 
 
 This leads people to ask on various forums, such as
-on `StackOverflow <https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a>`_,
+`this question on StackOverflow <https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a>`_,
 how to do automatic assignment of attributes.  The answers most often given
 are:
 
-  - Don't do it
-  - Use a decorator, with various examples provided
+  - Don't do it; learn to live with the explicit ``self``.
+  - Use a decorator, with various examples provided.
 
 
 As programmers create more classes, they find the need to add their own
@@ -57,7 +57,8 @@ dataclasses, let's consider the code given in `PEP 557  <https://www.python.org/
             self.executables_dir = executables_dir
             self.additional_items = []
 
-Here's a code which gives the same initialization using the ``@dataclass``
+From the same PEP document, this is the proposed code
+which gives the same initialization, but using the ``@dataclass``
 decorator::
 
 
@@ -81,10 +82,10 @@ do not find it particulary readable.
 So, I was wondering if it might be possible to imagine a simpler syntax.
 ``auto_self`` is what I came up with.
 
-.. note:: The ship has sailed ...
+.. admonition:: The ship has sailed ...
 
     I realize that there is zero chance that the following syntax would
-    be adopted, now that the ``dataclasses`` module has been added to
+    be adopted, especially now that the ``dataclasses`` module has been added to
     the Python standard library. Still, you can try it out using
     ``auto_self`` hook.
 
@@ -112,15 +113,18 @@ So, I was wondering if it might be possible to imagine a simpler syntax.
 Here, I am using a new operator, ``.=``, which is meant to represent
 the automatic assignment of a variable to the name that precedes
 it (``self`` in this example).  I have seen this idea for such an operator before on
-**python-ideas** but never as introducing a code-block as I do here.
+**python-ideas** but never for introducing a code-block as I do here.
 
-By design, any dunder, ``__``, is taken to be equivalent to the variable
+By design, any *dunder* (double underscore), ``__``, is taken to be equivalent to the variable
 being initialized.  I chose a dunder instead of a single underscore ``_``
-so that it could be used in a REPL.
+so that it could be used in a REPL without creating conflicts with the
+existing use of a single underscore in Python's REPL.  I also find that it
+makes it more readable.
 
-Of course, one is not restricted to using ``self``, or using ``__``
-everywhere. The following is completely equivalent - although slightly less
-readable in my opinion, with fewer ``__`` used::
+Of course, one is not restricted to using ``self``, or having to use ``__``
+everywhere. The following is completely equivalent - although I now
+find it less readable, having been used to seeing ``__`` as easy to scan
+placeholder::
 
 
     class Application:
@@ -143,8 +147,10 @@ readable in my opinion, with fewer ``__`` used::
 
             cls.additional_items = []
 
-Note that, unlike ``@dataclass`` or ``attrs``, no additional method is
-created by ``auto_self``.
+.. note::
+
+    Unlike ``@dataclass`` or ``attrs``, no additional method is
+    created by ``auto_self``.
 
 
 Try it out!

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>French Python &mdash; ideas 0.0.3 documentation</title>
+  <title>French Python &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,20 +87,23 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python - todo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python - todo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.french">En français, svp !</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -192,6 +195,38 @@
   <div class="section" id="french-python">
 <h1>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline">¶</a></h1>
 <p>Show how to do this. Already done for AvantPy.</p>
+<div class="section" id="module-ideas.examples.french">
+<span id="en-francais-svp"></span><h2>En français, svp !<a class="headerlink" href="#module-ideas.examples.french" title="Permalink to this headline">¶</a></h2>
+<p>French Python</p>
+<p>Keywords are translated from French to English by a function in this file.</p>
+<p>A “French Python” file is recognize by its pyfr extension.</p>
+<dl class="function">
+<dt id="ideas.examples.french.add_hook">
+<code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.french.french_to_english">
+<code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">french_to_english</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#french_to_english"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.french_to_english" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple replacement of ‘French Python keyword’ by their normal
+English version.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.french.print_info">
+<code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.print_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints information about the source - either original or transformed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.french.transform_source">
+<code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms “French Python” into standard Python, with the choice
+of showing/printing the original and/or the transformed code.</p>
+</dd></dl>
+
+</div>
 </div>
 
 

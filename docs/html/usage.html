@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Usage &mdash; ideas 0.0.3 documentation</title>
+  <title>Usage &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Importing a module as main" href="as_main.html" />
+    <link rel="next" title="Create your own import hook" href="function_simplest.html" />
     <link rel="prev" title="Additional motivation for this project" href="motivation.html" /> 
 </head>
 
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,24 +87,24 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation -first draft</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Usage - first draft</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-the-ideasconsole">Using the IdeasConsole</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-ideas-console">Using the Ideas Console</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -181,7 +181,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="as_main.html" class="btn btn-neutral float-right" title="Importing a module as main" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Create your own import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -200,9 +200,8 @@ it possible to use the word <code class="docutils literal notranslate"><span cla
 to the Python keyword <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <div class="section" id="basic-usage">
 <h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you don’t like typing …</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>All the programs mentioned below are found in the <code class="docutils literal notranslate"><span class="pre">usage_demo</span></code>
 directory in the code repository.</p>
 </div>
@@ -295,22 +294,24 @@ SyntaxError: invalid syntax
 when executing the main script. Perhaps I should make a suggestion
 to change this on Python-ideas. ;-)</p>
 </div>
-<div class="section" id="using-the-ideasconsole">
-<h2>Using the IdeasConsole<a class="headerlink" href="#using-the-ideasconsole" title="Permalink to this headline">¶</a></h2>
-<p>One of Python’s very useful is the interactive interpreter.
-<code class="docutils literal notranslate"><span class="pre">ideas</span></code> includes its own version.</p>
+<div class="section" id="using-the-ideas-console">
+<h2>Using the Ideas Console<a class="headerlink" href="#using-the-ideas-console" title="Permalink to this headline">¶</a></h2>
+<p>If you can’t write code in an REPL to try it out, then you are not
+using Python. So, of course <code class="docutils literal notranslate"><span class="pre">ideas</span></code> has to include its own (likely buggy)
+version of an interpreter.</p>
 <p>We can activate it as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
-Python 3.7.3 (v3.7.3....
+Python 3.7.3 ...
+
 &gt;&gt;&gt; from ideas.examples import function
 &gt;&gt;&gt; hook = function.add_hook()
 &gt;&gt;&gt; from ideas import console
 &gt;&gt;&gt; console.start()
 Configuration values for the console:
-    transform_source: &lt;function transform_source at 0x03933588&gt;
     callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: False}
+    transform_source from ideas.examples.function
 --------------------------------------------------
-Ideas Console version 0.0.3. [Python version: 3.7.3]
+Ideas Console version 0.0.4. [Python version: 3.7.3]
 
 ~&gt;&gt; cube = function x: x**3
 ~&gt;&gt; cube(3)
@@ -323,23 +324,20 @@ interpreter with one of our previous examples, we do not have
 to write code to add our hook as it is already set:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -i loader_1.py
 16 is the square of 4.
+&gt;&gt;&gt;
 &gt;&gt;&gt; from ideas import console
 &gt;&gt;&gt; console.start()
 Configuration values for the console:
-    transform_source: &lt;function transform_source at 0x03CB4588&gt;
     callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: False}
+    transform_source from ideas.examples.function
 --------------------------------------------------
-Ideas Console version 0.0.3. [Python version: 3.7.3]
+Ideas Console version 0.0.4. [Python version: 3.7.3]
 
 ~&gt;&gt; square = function x: x**2
-~&gt;&gt; square(4)
-16
+~&gt;&gt; square(-5)
+25
 ~&gt;&gt;
 </pre></div>
-</div>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add name of the hook as part of the configuration values.</p>
 </div>
 </div>
 </div>
@@ -352,7 +350,7 @@ Ideas Console version 0.0.3. [Python version: 3.7.3]
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="as_main.html" class="btn btn-neutral float-right" title="Importing a module as main" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Create your own import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

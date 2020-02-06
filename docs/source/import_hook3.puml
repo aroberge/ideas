@@ -1,0 +1,59 @@
+@startuml
+    :Search for file;
+    note right #White
+        We can specify a different file type.
+        <back:lightblue> We could specify different search locations.</back>
+    end note
+    :Return file spec & Loader;
+    :Create a module object;
+    note right #LightBlue
+        We could substitute our own.
+    end note
+    #White: We can replace the module's ~__class__;
+    note right #White: See example **constants**
+    partition Decode {
+        note right #LightBlue
+           Substitution of this entire block
+           as a single unit is possible.
+           No examples exist yet.
+        end note
+        :Read file content as bytes;
+        :Convert bytes into string;
+    }
+    #White: We can transform the source;
+    note right
+        This is the case for most of our examples.
+        Starting from syntax that would be invalid
+        in Python we need to make sure that it can
+        parsed by Python.
+        ----
+        This step could be replaced by implementing
+        our own parser to generate an AST.
+    end note
+    partition AST {
+        note right #LightBlue
+           Substitution of this entire block
+           as a single unit is possible.
+           No examples exist yet.
+        end note
+        :Convert the source into a series of tokens;
+        :Transform into a Concrete Parse Tree (CPT);
+        :Transform the CPT into an Abstract Syntax Tree (AST);
+    }
+    #LightBlue: We can modify the AST that was created;
+    partition Bytecode {
+        note right #LightBlue
+           Substitution of this entire block
+           as a single unit is possible.
+           No examples exist yet.
+        end note
+        :Transform AST into a Control Flow Graph (CFG);
+        :Transform CFG into bytecodes;
+    }
+    #LightBlue: We can modify the bytecode;
+    :Execute bytecode into module's dict;
+    note right #White
+       We can substitute our own version.
+       See example **constants**
+    end note
+@enduml

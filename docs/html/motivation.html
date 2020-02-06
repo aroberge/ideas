@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Additional motivation for this project &mdash; ideas 0.0.3 documentation</title>
+  <title>Additional motivation for this project &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4
               </div>
             
           
@@ -87,25 +87,25 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Additional motivation -first draft</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Additional motivation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#original-motivation">Original motivation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-motivation">Additional motivation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#about-the-name">About the name</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage - first draft</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> function as a keyword - part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> function as a keyword - part 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
@@ -196,8 +196,22 @@
             
   <div class="section" id="additional-motivation-for-this-project">
 <h1>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Permalink to this headline">¶</a></h1>
-<p>You can skip this section if you already know that you want to
-use an import hook and are not interested in the origin of this project.</p>
+<div class="admonition-the-f-thing-and-the-walrus admonition">
+<p class="admonition-title">The f-thing and the walrus</p>
+<p>While ideas such as the f-strings and <strong>especially</strong> the walrus operator
+were discussed on Python-ideas and similar places, many people were
+opposed to them being added to Python.</p>
+<p>However, once it became possible to write code using them, it seems that
+everyone became enthusiastic about them.</p>
+<p>If only it were possible to write short programs using currently invalid
+syntax to truly get a feel for the syntax …</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can skip the rest of this section if you already know that you want to
+use an import hook and are not interested in the origin of this project,
+nor about its intended usage.</p>
+</div>
 <div class="section" id="original-motivation">
 <h2>Original motivation<a class="headerlink" href="#original-motivation" title="Permalink to this headline">¶</a></h2>
 <p>Programming in Python is my main hobby.
@@ -208,7 +222,9 @@ hooks experiments, including on some published projects such as
 as well as <a class="reference external" href="https://duckduckgo.com/?q=experimental+site%3Aaroberge.blogspot.com">various experiments I wrote about</a>,
 I thought it would make sense to create a versatile projects which I could
 use as the basis of other projects.  An obvious benefit is that I will
-need to fix bugs in a single project.</p>
+need to fix bugs in a single project.  Furthermore, if this project gets
+enough visibility, some programmers much more qualified than I am might
+take the time to make concrete suggestions as to how to improve it.</p>
 </div>
 <div class="section" id="additional-motivation">
 <h2>Additional motivation<a class="headerlink" href="#additional-motivation" title="Permalink to this headline">¶</a></h2>
@@ -253,7 +269,7 @@ for people to try out suggestions from or for Python-ideas.</p>
 I mentioned previously, I came accross Andrew Barnert’s
 <a class="reference external" href="http://stupidpythonideas.blogspot.com/">Stupid Python Ideas</a> blog,
 which includes an older post about <a class="reference external" href="http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html">Hacking Python with import hooks</a>.
-I’ve decided to adapt many of his examples, which I would not describe
+I’ve decided to adapt some of his examples, which I would not describe
 as <strong>stupid</strong> but rather as <strong>entertaining</strong> <code class="docutils literal notranslate"><span class="pre">ideas</span></code>.</p>
 </div>
 </div>

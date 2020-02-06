@@ -1,8 +1,24 @@
 Additional motivation for this project
 =======================================
 
-You can skip this section if you already know that you want to
-use an import hook and are not interested in the origin of this project.
+.. admonition:: The f-thing and the walrus
+
+    While ideas such as the f-strings and **especially** the walrus operator
+    were discussed on Python-ideas and similar places, many people were
+    opposed to them being added to Python.
+
+    However, once it became possible to write code using them, it seems that
+    everyone became enthusiastic about them.
+
+    If only it were possible to write short programs using currently invalid
+    syntax to truly get a feel for the syntax ...
+
+
+.. tip::
+
+    You can skip the rest of this section if you already know that you want to
+    use an import hook and are not interested in the origin of this project,
+    nor about its intended usage.
 
 Original motivation
 -------------------
@@ -15,7 +31,9 @@ hooks experiments, including on some published projects such as
 as well as `various experiments I wrote about <https://duckduckgo.com/?q=experimental+site%3Aaroberge.blogspot.com>`_,
 I thought it would make sense to create a versatile projects which I could
 use as the basis of other projects.  An obvious benefit is that I will
-need to fix bugs in a single project.
+need to fix bugs in a single project.  Furthermore, if this project gets
+enough visibility, some programmers much more qualified than I am might
+take the time to make concrete suggestions as to how to improve it.
 
 Additional motivation
 ---------------------
@@ -63,5 +81,5 @@ As I was looking at including other examples than the ones
 I mentioned previously, I came accross Andrew Barnert's
 `Stupid Python Ideas <http://stupidpythonideas.blogspot.com/>`_ blog,
 which includes an older post about `Hacking Python with import hooks <http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html>`_.
-I've decided to adapt many of his examples, which I would not describe
+I've decided to adapt some of his examples, which I would not describe
 as **stupid** but rather as **entertaining** ``ideas``.

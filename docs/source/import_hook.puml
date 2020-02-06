@@ -1,12 +1,10 @@
-
-
 @startuml
-partition Finder {
+partition Finder #LightSkyBlue  {
     :Search for file;
     :Return file spec & Loader;
     }
-partition Loader {
-    :Create module;
+partition Loader #LightSkyBlue  {
+    :Create a module object;
     :Decode file;
     :Execute code in module dict;
     }
