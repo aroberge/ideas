@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview of all possibilities" href="possible.html" />
+    <link rel="next" title="A deep dive" href="possible.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
@@ -95,7 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#function-simplest-py-api">function_simplest.py API</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -182,7 +182,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="possible.html" class="btn btn-neutral float-right" title="Overview of all possibilities" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -200,7 +200,7 @@
 create your first one.</p>
 <div class="admonition-description admonition">
 <p class="admonition-title">Description</p>
-<p>You have no idea why <code class="docutils literal notranslate"><span class="pre">lambda</span></code> is used to define an anonymous
+<p>Suppose that you have no idea why <code class="docutils literal notranslate"><span class="pre">lambda</span></code> is used to define an anonymous
 function in Python and find it would be much more intuitive
 if you could use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword instead.
 So, you would like to create an import hook that would allow
@@ -321,11 +321,6 @@ in the source. Thus, given something like:</p>
 <p>Your Python code is a sequence of various operators
 (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, etc.), keywords, strings, etc.
 Each of these is an individual <strong>token</strong>.</p>
-<p>The rest of this documentation assumes that you are
-fairly familiar with the concept of breaking up source
-code into a series of tokens. If that is not the case,
-you might want to do a quick Internet search to
-learn more about this topic.</p>
 </div>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
@@ -346,9 +341,9 @@ used as a keyword, we break up the code in a series of tokens
 and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
 an individual token. Rather than using directly the tokenizer
 from Python’s standard library, we use our own version which has some useful
-added features. For examples, to see if two tokens are equal,
-we only compare their string values. We can compare a token directly
-to a string like we did in the code above on line 12.</p>
+added features. For example, in almost all cases, the relevant
+characteristic of a token is its string representation.
+We can compare a token directly to a string like we did in the code above on line 12.</p>
 <p>Note that, just like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>
@@ -402,7 +397,7 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">lambd
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="possible.html" class="btn btn-neutral float-right" title="Overview of all possibilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

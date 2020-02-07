@@ -73,9 +73,28 @@ def test_predictable2():
     remove_hook(hook)
 
 
+def test_repeat_forever():
+    source = "   repeat  forever:"
+    assert repeat.convert_repeat(source) == "   while  True:", "repeat forever test"
+
+
+def test_repeat_until():
+    source = "repeat until condition: # a comment"
+    assert repeat.convert_repeat(source) == "while not condition: # a comment"
+
+
+def test_repeat_while():
+    source = "repeat while condition:"
+    # note extra space between while and condition as we removed a keyword
+    assert repeat.convert_repeat(source) == "while  condition:"
+
+
 if __name__ == "__main__":
     test_repeat()
     no_pytest_repeat_error()
     test_predictable()
     test_predictable2()
+    test_repeat_forever()
+    test_repeat_until()
+    test_repeat_while()
     print("Tests completed.")

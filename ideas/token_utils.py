@@ -17,11 +17,11 @@ class Token:
 
     The various parameters are::
 
-        ``type``: token type
-        ``string``: the token written as a string
-        ``start`` = ``(start_row, start_col)``
-        ``end`` = ``(end_row, end_col)``
-        ``line``: entire line of code where the token is found.
+        type: token type
+        string: the token written as a string
+        start = (start_row, start_col)
+        end = (end_row, end_col)
+        line: entire line of code where the token is found.
     """
 
     def __init__(self, token):
@@ -126,11 +126,11 @@ def get_lines_of_tokens(source):
     return lines
 
 
-def get_number_nonspace_tokens(tokens, ignore_comments=False):
+def get_number(tokens, ignore_comments=False):
     """Given a list of tokens, gives a count of the number of
     tokens which are NOT space tokens (such as newline, indent, dedent, etc.)
 
-    If ignore_comments is set to True, comments are ignored as well
+    If ignore_comments is set to True, comments are ignored as well.
     """
     nb = len(tokens)
     for token in tokens:
@@ -141,7 +141,7 @@ def get_number_nonspace_tokens(tokens, ignore_comments=False):
     return nb
 
 
-def get_first_nonspace_token(tokens):
+def get_first(tokens):
     """Given a list of tokens, find the first token which is not a space token
     (such as a newline, indent, dedent, etc.)
 
@@ -153,7 +153,7 @@ def get_first_nonspace_token(tokens):
     return None
 
 
-def get_first_nonspace_token_index(tokens):
+def get_first_index(tokens):
     """Given a list of tokens, find the index of the first one which is
     not a space token (such as a newline, indent, dedent, etc.)
 
@@ -163,6 +163,24 @@ def get_first_nonspace_token_index(tokens):
         if not token.is_space():
             return index
     return -1
+
+
+def get_last(tokens, exclude_comment=True):
+    """Given a list of tokens, find the last token which is not a space token
+    (such as a newline, indent, dedent, etc.).
+
+    By default, COMMENT tokens are excluded.
+
+    Returns None if none is found.
+    """
+    for token in reversed(tokens):
+        if exclude_comment:
+            if not token.is_space() and not token.is_comment():
+                return token
+        else:
+            if not token.is_space():
+                return token
+    return None
 
 
 # untokenize adapted from https://github.com/myint/untokenize
@@ -175,11 +193,11 @@ def untokenize(tokens):
     """Return source code based on tokens.
 
     This is similar to Python's tokenize.untokenize(), except that it
-    preserves spacing between tokens, by using the ``line``
-    information recorded by Python's ``tokenize.generate_tokens``.
+    preserves spacing between tokens, by using the line
+    information recorded by Python's tokenize.generate_tokens.
     As a result, if the original soure code had multiple spaces between
     some tokens or if escaped newlines were used, those things will be
-    reflected by ``untokenize``.
+    reflected by untokenize.
 
     If a given item is a string instead of a Token object, it is simply
     added as is.
@@ -188,7 +206,7 @@ def untokenize(tokens):
     tokens prior to calling untokenize; instead, set its string attribute
     to an empty string.
 
-    Note that if some tokens are changed, the ``line`` information will
+    Note that if some tokens are changed, the line information will
     no longer reflect the content and the reconstructed content may
     no longer be valid, unless some special procedures have been followed
     when replacing original tokens by new ones. See the documentation

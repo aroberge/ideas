@@ -82,7 +82,7 @@ do not find it particulary readable.
 So, I was wondering if it might be possible to imagine a simpler syntax.
 ``auto_self`` is what I came up with.
 
-.. admonition:: The ship has sailed ...
+.. admonition:: That ship has sailed ...
 
     I realize that there is zero chance that the following syntax would
     be adopted, especially now that the ``dataclasses`` module has been added to
@@ -113,7 +113,7 @@ So, I was wondering if it might be possible to imagine a simpler syntax.
 Here, I am using a new operator, ``.=``, which is meant to represent
 the automatic assignment of a variable to the name that precedes
 it (``self`` in this example).  I have seen this idea for such an operator before on
-**python-ideas** but never for introducing a code-block as I do here.
+**python-ideas** but never for introducing a code block as I do here.
 
 By design, any *dunder* (double underscore), ``__``, is taken to be equivalent to the variable
 being initialized.  I chose a dunder instead of a single underscore ``_``
@@ -147,7 +147,7 @@ placeholder::
 
             cls.additional_items = []
 
-.. note::
+.. warning::
 
     Unlike ``@dataclass`` or ``attrs``, no additional method is
     created by ``auto_self``.

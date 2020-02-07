@@ -1,11 +1,6 @@
 Basic usage
 -----------
 
-.. note:: If you don't like typing ...
-
-    All the programs mentioned below are found in the ``usage_demo``
-    directory in the code repository.
-
 Suppose that you want to use ``function`` as a keyword in Python, to mean
 the same thing as ``lambda``, enabling you to write::
 
@@ -99,25 +94,28 @@ Python (cPython at least...) ignores the existence of any import hook
 when executing the main script. Perhaps I should make a suggestion
 to change this on Python-ideas. ;-)
 
-Using the IdeasConsole
-----------------------
+Using the Ideas Console
+-----------------------
 
-One of Python's very useful is the interactive interpreter.
-``ideas`` includes its own version.
+If you can't write code in an REPL to try it out, then you are not
+using Python. So, of course ``ideas`` has to include its own (likely buggy)
+version of an interpreter.
+
 
 We can activate it as follows::
 
     $ python
-    Python 3.7.3 (v3.7.3....
+    Python 3.7.3 ...
+
     >>> from ideas.examples import function
     >>> hook = function.add_hook()
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        transform_source: <function transform_source at 0x03933588>
         callback_params: {'show_original': False, 'show_transformed': False}
+        transform_source from ideas.examples.function
     --------------------------------------------------
-    Ideas Console version 0.0.3. [Python version: 3.7.3]
+    Ideas Console version 0.0.4. [Python version: 3.7.3]
 
     ~>> cube = function x: x**3
     ~>> cube(3)
@@ -130,19 +128,17 @@ to write code to add our hook as it is already set::
 
     $ python -i loader_1.py
     16 is the square of 4.
+    >>>
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        transform_source: <function transform_source at 0x03CB4588>
         callback_params: {'show_original': False, 'show_transformed': False}
+        transform_source from ideas.examples.function
     --------------------------------------------------
-    Ideas Console version 0.0.3. [Python version: 3.7.3]
+    Ideas Console version 0.0.4. [Python version: 3.7.3]
 
     ~>> square = function x: x**2
-    ~>> square(4)
-    16
+    ~>> square(-5)
+    25
     ~>>
 
-.. todo::
-
-    Add name of the hook as part of the configuration values.

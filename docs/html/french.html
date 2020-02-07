@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -216,14 +216,15 @@ English version.</p>
 <dl class="function">
 <dt id="ideas.examples.french.print_info">
 <code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.print_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>prints information about the source - either original or transformed</p>
+<dd><p>Prints the source code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Transformed&quot;</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ideas.examples.french.transform_source">
 <code class="sig-prename descclassname">ideas.examples.french.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french.transform_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms “French Python” into standard Python, with the choice
-of showing/printing the original and/or the transformed code.</p>
+<dd><p>This function is called by the import hook loader and is used as a
+wrapper for the function where the real transformation is performed.</p>
 </dd></dl>
 
 </div>

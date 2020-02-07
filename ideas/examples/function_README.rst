@@ -42,3 +42,26 @@ transformers.  As a rule, every function that can be called
 by the import hook machinery should include such an
 unspecified argument.
 
+
+Here's an example using one such parameter::
+
+    >>> from ideas.examples import function
+    >>> hook = function.add_hook(show_transformed=True)
+    >>> from ideas import console
+    >>> console.start()
+    Configuration values for the console:
+        callback_params: {'show_original': False, 'show_transformed': True}
+        transform_source from ideas.examples.function
+    --------------------------------------------------
+    Ideas Console version 0.0.4. [Python version: 3.7.3]
+
+    ~>> square = function x: x**2
+    ===========Transformed============
+    square = lambda x: x**2
+    -----------------------------
+    ~>> square(3)
+    ===========Transformed============
+    square(3)
+    -----------------------------
+    9
+    ~>>

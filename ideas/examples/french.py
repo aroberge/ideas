@@ -53,15 +53,18 @@ pyfr = {
 
 
 def print_info(kind, source):
-    """prints information about the source - either original or transformed"""
+    """Prints the source code.
+
+    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
+    """
     print(f"==========={kind}============")
     print(source)
     print("-----------------------------")
 
 
 def transform_source(source, callback_params=None, **kwargs):
-    """Transforms "French Python" into standard Python, with the choice
-    of showing/printing the original and/or the transformed code.
+    """This function is called by the import hook loader and is used as a
+    wrapper for the function where the real transformation is performed.
     """
     if callback_params is not None:
         if callback_params["show_original"]:

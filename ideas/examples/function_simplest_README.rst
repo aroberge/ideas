@@ -1,49 +1,46 @@
 .. To avoid duplication, this is used both as a readme file for the
    function_simplest.py module and as contents of the documentation.
 
-Function - part 1
-==================
+Create your own import hook
+===========================
 
-**Summary:** How to introduce a single new keyword in Python that is
-completely equivalent to another keyword. The example we chose is
-``function`` as being equivalent to ``lambda``.
+You've seen how to use ``ideas`` import hooks; now it is time to
+create your first one.
 
-This example demonstrates the use of:
+.. admonition:: Description
 
-- Function definitions required to create and activate an import hook
-- How to transform the source using a custom tokenizer
+    Suppose that you have no idea why ``lambda`` is used to define an anonymous
+    function in Python and find it would be much more intuitive
+    if you could use ``function`` as a keyword instead.
+    So, you would like to create an import hook that would allow
+    you to use ``function`` as a keyword in your own program and
+    convert it to ``lambda`` before Python executes your code.
 
-Reminder: what is an import hook
----------------------------------
-
-In case you skipped over the introduction, here's a brief reminder
-of what is an import hook.
-
-.. sidebar:: Skipping over details.
-
-    This is a simplified description. A more detailed explanation will
-    be given later.
-
-When you write something like::
-
-    import my_module
-
-Python's import machinery has to do the following:
-
-    1. Try to use various tools to find the module requested
-    2. Get the source code of that module
-    3. Execute that source code, subject to some information reported in step 1.
-
-An import hook is an additional tool that you create to do these three steps.
-Once written, you add it to ``sys.meta_path`` so that Python's import
-machinery can make use of it.
 
 How to do this
 ---------------
 
-Suppose we want to create an import hook that enables us to use
-``function`` as a keyword equivalent to ``lambda``. Using ``ideas``,
-we simply have to do the following::
+Suppose you had access to the source of a program using
+``function`` as a keyword instead of lambda.
+Perhaps something like the following::
+
+    # source of the program
+    greet = function name: print(f"Hello {name}!")
+
+So that you could write::
+
+    >>> greet("World")
+    Hello World!
+
+
+Given access to that source, all you'd need to do is::
+
+    modified_source = source.replace("function", "lambda")
+
+and have Python execute ``modified_source`` instead of the original ``source``.
+
+
+Here's how we can do it using ``ideas``::
 
     from ideas import import_hook
 
@@ -97,13 +94,6 @@ Here's the content of our real simplest example.
     (``+``, ``-``, ``:``, etc.), keywords, strings, etc.
     Each of these is an individual **token**.
 
-    The rest of this documentation assumes that you are
-    fairly familiar with the concept of breaking up source
-    code into a series of tokens. If that is not the case,
-    you might want to do a quick Internet search to
-    learn more about this topic.
-
-
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
 ``add_hook`` (line 19), and return the hook that was created (line 22).
@@ -121,9 +111,9 @@ used as a keyword, we break up the code in a series of tokens
 and only replace ``function`` by ``lambda`` when it occurs as
 an individual token. Rather than using directly the tokenizer
 from Python's standard library, we use our own version which has some useful
-added features. For examples, to see if two tokens are equal,
-we only compare their string values. We can compare a token directly
-to a string like we did in the code above on line 12.
+added features. For example, in almost all cases, the relevant
+characteristic of a token is its string representation.
+We can compare a token directly to a string like we did in the code above on line 12.
 
 Note that, just like::
 

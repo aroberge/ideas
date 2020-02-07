@@ -10,8 +10,9 @@ Additional motivation for this project
     However, once it became possible to write code using them, it seems that
     everyone became enthusiastic about them.
 
-    If only it were possible to write short programs using currently invalid
-    syntax to truly get a feel for the syntax ...
+    **If only it were possible to write short programs using currently invalid
+    syntax to truly get a feel for it rather than just complaining based
+    on reading a few examples ...**
 
 
 .. tip::

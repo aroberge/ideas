@@ -89,24 +89,24 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword - working code only</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -305,11 +305,11 @@
     <span class="k">return</span> <span class="n">lines</span></div>
 
 
-<div class="viewcode-block" id="get_number_nonspace_tokens"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_number_nonspace_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_number_nonspace_tokens</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_number"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_number">[docs]</a><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, gives a count of the number of</span>
 <span class="sd">    tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</span>
 
-<span class="sd">    If ignore_comments is set to True, comments are ignored as well</span>
+<span class="sd">    If ignore_comments is set to True, comments are ignored as well.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
@@ -320,7 +320,7 @@
     <span class="k">return</span> <span class="n">nb</span></div>
 
 
-<div class="viewcode-block" id="get_first_nonspace_token"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_nonspace_token">[docs]</a><span class="k">def</span> <span class="nf">get_first_nonspace_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<div class="viewcode-block" id="get_first"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first">[docs]</a><span class="k">def</span> <span class="nf">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the first token which is not a space token</span>
 <span class="sd">    (such as a newline, indent, dedent, etc.)</span>
 
@@ -332,7 +332,7 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_first_nonspace_token_index"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_nonspace_token_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_nonspace_token_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<div class="viewcode-block" id="get_first_index"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the index of the first one which is</span>
 <span class="sd">    not a space token (such as a newline, indent, dedent, etc.)</span>
 
@@ -342,6 +342,24 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">index</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="get_last"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_last">[docs]</a><span class="k">def</span> <span class="nf">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the last token which is not a space token</span>
+<span class="sd">    (such as a newline, indent, dedent, etc.).</span>
+
+<span class="sd">    By default, COMMENT tokens are excluded.</span>
+
+<span class="sd">    Returns None if none is found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">exclude_comment</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_comment</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">token</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">token</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <span class="c1"># untokenize adapted from https://github.com/myint/untokenize</span>

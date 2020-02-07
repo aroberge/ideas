@@ -12,10 +12,9 @@ partition Loader #LightSkyBlue  {
     }
     partition Execute {
         :Convert the source into a series of tokens;
-        note right: Lexer.
         :Transform into a Concrete Parse Tree (CPT);
         :Transform CPT into an Abstract Syntax Tree (AST);
-        :Transform AST into a Control Flow Graph (CFG) #Black;
+        :Transform AST into a Control Flow Graph (CFG);
         :Transform CFG into bytecodes;
         :Execute bytecode into module's dict;
     }

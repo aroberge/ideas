@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -101,8 +101,11 @@
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> repeat as a keyword - working code only</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.repeat">repeat.py API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> repeat as a keyword</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#from-blocks-to-textual-code">From blocks to textual code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-concrete-example">A concrete example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-final-word-about-the-motivation">A final word about the motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-repeat">Implementing repeat</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
@@ -194,12 +197,194 @@
             
   <div class="section" id="repeat-as-a-keyword">
 <h1>repeat as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline">¶</a></h1>
-<p>Show how to do this, explain the motivation behind, copying most
-of the stuff from AvantPy.</p>
-<div class="section" id="module-ideas.examples.repeat">
-<span id="repeat-py-api"></span><h2>repeat.py API<a class="headerlink" href="#module-ideas.examples.repeat" title="Permalink to this headline">¶</a></h2>
-<p>Adds <code class="docutils literal notranslate"><span class="pre">repeat</span></code> as a keyword to write simple loops that repeat
-a set number of times.  That is:</p>
+<div class="admonition-why-this-is-an-important-example-to-me admonition">
+<p class="admonition-title">Why this is an important example to me?</p>
+<p>Having a <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword addition is something that I have wanted
+(and included) for teaching young beginners. It was also my
+<a class="reference external" href="https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html">first attempt at writing an import hook</a>. Prior to that, I
+had already implemented <code class="docutils literal notranslate"><span class="pre">repeat</span></code> using a different method
+in <a class="reference external" href="http://reeborg.ca">Reeborg’s World</a></p>
+<p>I was not the only one: Tobias Kohn, who
+created <a class="reference external" href="http://jython.tobiaskohn.ch/">TygerJython</a>
+as part of his Ph.D. thesis, also found it useful to add such a keyword
+to Python.</p>
+<p><strong>I will first attempt to explain to you why I think Python-based
+environments for beginners can benefit from the inclusion of</strong> <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
+<strong>as a temporary additional keyword.</strong></p>
+</div>
+<div class="section" id="from-blocks-to-textual-code">
+<h2>From blocks to textual code<a class="headerlink" href="#from-blocks-to-textual-code" title="Permalink to this headline">¶</a></h2>
+<p>Repeating a series of instructions is something that is often done when
+running programs.  Block-based programming environments, such as
+<a class="reference external" href="https://scratch.mit.edu/">Scratch</a>,
+<a class="reference external" href="https://developers.google.com/blockly/">Blockly</a>,
+<a class="reference external" href="https://gpblocks.org/">GP</a>, etc,
+have different blocks that can be used for this purpose.  For example:</p>
+<a class="reference internal image-reference" href="_images/repeat10.png"><img alt="Repeat 10 block" src="_images/repeat10.png" style="width: 140.0px; height: 83.0px;" /></a>
+<a class="reference internal image-reference" href="_images/repeat_until.png"><img alt="Repeat until block" src="_images/repeat_until.png" style="width: 190.0px; height: 84.0px;" /></a>
+<p>and a “repeat forever” loop in French:</p>
+<a class="reference internal image-reference" href="_images/repeat_forever_fr.png"><img alt="French repeat forever block" src="_images/repeat_forever_fr.png" style="width: 123.20000000000002px; height: 81.4px;" /></a>
+<p>Depending on the block-based environment one uses, there are up to four
+four main such cases, which can be written as follows
+in standard Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction n times, without having to</span>
+<span class="sd">       keep track of the specific iteration number</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       while a certain condition is met.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       until a certain condition is met.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       until a something inside the loop triggers a &quot;break&quot; to end the loop.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Inspired by the choices made by creators of block-based programming environments,
+in my <a class="reference external" href="https://aroberge.github.io/avantpy/docs/html/">AvantPy project</a>,
+I included a few additional keywords to cover the 4 cases above
+in a natural way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>
+    <span class="c1"># code</span>
+</pre></div>
+</div>
+<div class="sidebar">
+<p class="sidebar-title">Learning from other experts</p>
+<p>The Quorum computing language has been designed based on evidence gathered
+from <a class="reference external" href="https://quorumlanguage.com/evidence.html">how human learn programming languages</a>.</p>
+<p>It includes <a class="reference external" href="https://quorumlanguage.com/tutorials/language/repeat.html">three of the four repeat</a> choices mentioned above, with a slightly different syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">10</span> <span class="n">times</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-concrete-example">
+<h2>A concrete example<a class="headerlink" href="#a-concrete-example" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-first-tygerjython-s-explanation admonition">
+<p class="admonition-title">First, TygerJython’s explanation</p>
+<p><strong>Why did you add a «repeat»-statement to the language?</strong></p>
+<p>One of the most difficult aspects for programming novices are
+variables and loops, especially when combined.
+With the <code class="docutils literal notranslate"><span class="pre">repeat</span></code>-statement we provide the means to create a looping
+construct without the need for variables.
+This way, you can introduce one concept after the other and make it easier for the students to understand them.
+So far, our experience with «repeat» has been very encouraging.</p>
+</div>
+<p><strong>Suppose that I am teaching programming to beginners using Python’s turtle module.</strong>
+So far, we’ve only written programs that use one instruction per line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I wish to use this to show to students how we can have computers <strong>repeat</strong>
+a given set of instructions, instead of typing them multiple times.
+Using Python, here’s the natural way to do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In doing so, I need to introduce all at once many new concepts and additional terms:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>the concept of an indented code block preceded by a colon;</p></li>
+<li><p>two keywords, <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>;</p></li>
+<li><p>the use of a <em>variable</em>, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;</p></li>
+<li><p>the introduction of a built-in function, <code class="docutils literal notranslate"><span class="pre">range()</span></code>, which, unlike <code class="docutils literal notranslate"><span class="pre">forward()</span></code> or <code class="docutils literal notranslate"><span class="pre">left()</span></code>, does not have a visual representation.</p></li>
+</ol>
+</div></blockquote>
+<p>By contrast, using the <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword, the above can be written as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="n">repeat</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and we only need to introduce fewer new topics:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>the concept of an indented code block preceded by a colon;</p></li>
+<li><p>one new keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="a-final-word-about-the-motivation">
+<h2>A final word about the motivation<a class="headerlink" href="#a-final-word-about-the-motivation" title="Permalink to this headline">¶</a></h2>
+<p>We’ve already mentioned the usage in blocks-based programming environment
+of <code class="docutils literal notranslate"><span class="pre">repeat</span></code>, or some similar alternative in other languages. <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
+was also the clearer possibility for people unfamiliar with programming jargon
+as found by Andreas Stefik and Susanna Siebert, and published
+“An Empirical Investigation into Programming Language Syntax.”
+ACM Transactions on Computing Education, 13(4), Nov. 2013.</p>
+</div>
+<div class="section" id="implementing-repeat">
+<h2>Implementing repeat<a class="headerlink" href="#implementing-repeat" title="Permalink to this headline">¶</a></h2>
+<p>From the following API generated by Sphinx, you can get access to the
+actual code which, by now, should be fairly straightforward to understand.</p>
+<span class="target" id="module-ideas.examples.repeat"></span><p>repeat.py</p>
+<p>Adds <code class="docutils literal notranslate"><span class="pre">repeat</span></code> as a keyword to write loops. The four constructs supported
+are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>
+    <span class="c1"># code</span>
+</pre></div>
+</div>
+<p>For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">3</span><span class="p">:</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">repeat</span> <span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">:</span>
@@ -229,14 +414,15 @@ a set number of times.  That is:</p>
 <dt id="ideas.examples.repeat.convert_repeat">
 <code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">convert_repeat</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">predictable_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#convert_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.convert_repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces instances of:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="o">...</span> <span class="p">:</span> <span class="c1"># optional comment</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span>  <span class="n">condition</span><span class="p">:</span>
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+<span class="n">repeat</span> <span class="n">n</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">for</span> <span class="n">_uid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 </pre></div>
 </div>
-<p>by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">random_variable_name</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="o">...</span> <span class="p">):</span> <span class="c1"># optional comment</span>
-</pre></div>
-</div>
-<p>A complete repeat statement is restricted to be on a single line</p>
+<p>A complete repeat statement is restricted to be on a single line ending
+with a colon (optionally followed by a comment). If the colon is
+missing, a <code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code> is raised.</p>
 </dd></dl>
 
 <dl class="function">
@@ -254,16 +440,15 @@ a set number of times.  That is:</p>
 <dl class="function">
 <dt id="ideas.examples.repeat.print_info">
 <code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.print_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>prints information about the source - either original or transformed</p>
+<dd><p>Prints the source code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Transformed&quot;</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ideas.examples.repeat.transform_source">
 <code class="sig-prename descclassname">ideas.examples.repeat.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.repeat.transform_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is called by the import hook loader with the named keyword
-that we specified when we created the import hook.</p>
-<p>It gives us the option to compare the original source and the transformed
-one.</p>
+<dd><p>This function is called by the import hook loader and is used as a
+wrapper for the function where the real transformation is performed.</p>
 </dd></dl>
 
 </div>

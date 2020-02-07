@@ -161,8 +161,8 @@ def transform_source(source, filename=None, **kwargs):
 
     for tokens in token_utils.get_lines_of_tokens(source):
         # a line of tokens can start with DEDENT tokens ...
-        if token_utils.get_number_nonspace_tokens(tokens) > 3:
-            index = token_utils.get_first_nonspace_token_index(tokens)
+        if token_utils.get_number(tokens) > 3:
+            index = token_utils.get_first_index(tokens)
             first_token = tokens[index]
             if (
                 first_token.start_col == 0

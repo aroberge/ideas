@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -104,7 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.auto_self">Try it out!</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
@@ -268,8 +268,8 @@ decorator:</p>
 do not find it particulary readable.</p>
 <p>So, I was wondering if it might be possible to imagine a simpler syntax.
 <code class="docutils literal notranslate"><span class="pre">auto_self</span></code> is what I came up with.</p>
-<div class="admonition-the-ship-has-sailed admonition">
-<p class="admonition-title">The ship has sailed …</p>
+<div class="admonition-that-ship-has-sailed admonition">
+<p class="admonition-title">That ship has sailed …</p>
 <p>I realize that there is zero chance that the following syntax would
 be adopted, especially now that the <code class="docutils literal notranslate"><span class="pre">dataclasses</span></code> module has been added to
 the Python standard library. Still, you can try it out using
@@ -298,7 +298,7 @@ the Python standard library. Still, you can try it out using
 <p>Here, I am using a new operator, <code class="docutils literal notranslate"><span class="pre">.=</span></code>, which is meant to represent
 the automatic assignment of a variable to the name that precedes
 it (<code class="docutils literal notranslate"><span class="pre">self</span></code> in this example).  I have seen this idea for such an operator before on
-<strong>python-ideas</strong> but never for introducing a code-block as I do here.</p>
+<strong>python-ideas</strong> but never for introducing a code block as I do here.</p>
 <p>By design, any <em>dunder</em> (double underscore), <code class="docutils literal notranslate"><span class="pre">__</span></code>, is taken to be equivalent to the variable
 being initialized.  I chose a dunder instead of a single underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>
 so that it could be used in a REPL without creating conflicts with the
@@ -329,14 +329,16 @@ placeholder:</p>
         <span class="bp">cls</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Unlike <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code> or <code class="docutils literal notranslate"><span class="pre">attrs</span></code>, no additional method is
 created by <code class="docutils literal notranslate"><span class="pre">auto_self</span></code>.</p>
 </div>
 <div class="section" id="module-ideas.examples.auto_self">
 <span id="try-it-out"></span><h2>Try it out!<a class="headerlink" href="#module-ideas.examples.auto_self" title="Permalink to this headline">¶</a></h2>
-<p>Description here</p>
+<p>auto_self.py</p>
+<p>Helps to reduce the amount of typing required and increases readability
+when assigning attributes in a class’s <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method.</p>
 <dl class="function">
 <dt id="ideas.examples.auto_self.add_hook">
 <code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Permalink to this definition">¶</a></dt>
@@ -346,26 +348,33 @@ created by <code class="docutils literal notranslate"><span class="pre">auto_sel
 <dl class="function">
 <dt id="ideas.examples.auto_self.automatic_self">
 <code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">automatic_self</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#automatic_self"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.automatic_self" title="Permalink to this definition">¶</a></dt>
-<dd><p>Description here.</p>
+<dd><p>Replaces code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
+    <span class="n">a</span>
+    <span class="n">b</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">this</span> <span class="k">if</span> <span class="n">__</span> <span class="o">==</span> <span class="n">that</span> <span class="k">else</span> <span class="n">___</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">this</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">that</span> <span class="k">else</span> <span class="n">c</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="ideas.examples.auto_self.print_info">
 <code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.print_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>prints information about the source - either original or transformed</p>
+<dd><p>Prints the source code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Transformed&quot;</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ideas.examples.auto_self.transform_source">
-<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is called by the import hook loader with the named keyword
-that we specified when we created the import hook.</p>
-<p>It gives us the option to compare the original source and the transformed
-one. This type of additional option can be useful when debugging
-a source transformer. Furthermore, if we wish to define a source
-transformation that combines the effect of multiple existing
-transformations, we can combine the existing “inner” functions to
-create our new transformation.</p>
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader and is used as a
+wrapper for the function where the real transformation is performed.</p>
 </dd></dl>
 
 </div>

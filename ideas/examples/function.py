@@ -10,7 +10,10 @@ from ideas import import_hook, token_utils
 
 
 def print_info(kind, source):
-    """prints information about the source - either original or transformed"""
+    """Prints the source code.
+
+    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
+    """
     print(f"==========={kind}============")
     print(source)
     print("-----------------------------")
@@ -59,7 +62,7 @@ def function_as_a_keyword(source):
 
 
 def add_hook(show_original=False, show_transformed=False):
-    """Creates and adds the import hook in sys.meta_path"""
+    """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
         "show_transformed": show_transformed,

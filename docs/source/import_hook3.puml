@@ -15,7 +15,7 @@
         note right #LightBlue
            Substitution of this entire block
            as a single unit is possible.
-           No examples exist yet.
+           No example exists yet.
         end note
         :Read file content as bytes;
         :Convert bytes into string;
@@ -34,7 +34,7 @@
         note right #LightBlue
            Substitution of this entire block
            as a single unit is possible.
-           No examples exist yet.
+           No example exists yet.
         end note
         :Convert the source into a series of tokens;
         :Transform into a Concrete Parse Tree (CPT);
@@ -45,7 +45,7 @@
         note right #LightBlue
            Substitution of this entire block
            as a single unit is possible.
-           No examples exist yet.
+           No example exists yet.
         end note
         :Transform AST into a Control Flow Graph (CFG);
         :Transform CFG into bytecodes;

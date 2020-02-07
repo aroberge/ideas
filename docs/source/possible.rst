@@ -24,7 +24,8 @@ These can be broken down further as follows.
 Using Ideas
 -----------
 
-Normally, for creating import hooks, it is important to distinguish
+Normally, for creating import hooks and as shown above,
+it is important to distinguish
 the two main phases, that is creating a ``Finder`` and a ``Loader``.
 Using ``ideas``, these are automatically done for us, and we can focus
 on various parts over which we can have control.

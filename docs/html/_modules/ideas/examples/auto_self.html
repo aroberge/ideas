@@ -89,24 +89,24 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword - working code only</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - to do</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -177,7 +177,10 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.examples.auto_self</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Description here</span>
+<span></span><span class="sd">&quot;&quot;&quot;auto_self.py</span>
+
+<span class="sd">Helps to reduce the amount of typing required and increases readability</span>
+<span class="sd">when assigning attributes in a class&#39;s ``__init__()`` method.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
 
@@ -185,49 +188,59 @@
 
 
 <div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;prints information about the source - either original or transformed&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Prints the source code.</span>
+
+<span class="sd">    ``kind`` is usually either ``&quot;Original&quot;`` or ``&quot;Transformed&quot;``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
-<span class="sd">       that we specified when we created the import hook.</span>
-
-<span class="sd">       It gives us the option to compare the original source and the transformed</span>
-<span class="sd">       one. This type of additional option can be useful when debugging</span>
-<span class="sd">       a source transformer. Furthermore, if we wish to define a source</span>
-<span class="sd">       transformation that combines the effect of multiple existing</span>
-<span class="sd">       transformations, we can combine the existing &quot;inner&quot; functions to</span>
-<span class="sd">       create our new transformation.</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
+<span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">show_original</span><span class="p">:</span>
-        <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
+            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="n">automatic_self</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">show_transformed</span><span class="p">:</span>
-        <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
+            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">source</span></div>
 
 
 <div class="viewcode-block" id="automatic_self"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.automatic_self">[docs]</a><span class="k">def</span> <span class="nf">automatic_self</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Description here.</span>
+    <span class="sd">&quot;&quot;&quot;Replaces code like::</span>
+
+<span class="sd">        self .= :</span>
+<span class="sd">            a</span>
+<span class="sd">            b</span>
+<span class="sd">            c = this if __ == that else ___</span>
+
+<span class="sd">    by::</span>
+
+<span class="sd">        self.a = a</span>
+<span class="sd">        self.b = b</span>
+<span class="sd">        self.c = this if c == that else c</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">auto_self_block</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">self_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">indentation</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">get_nb</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">get_number_nonspace_tokens</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">get_first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token</span>
-    <span class="n">get_first_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token_index</span>
+    <span class="n">get_nb</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">get_number</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">get_first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span>
+    <span class="n">get_first_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span>
 
     <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">auto_self_block</span><span class="p">:</span>
             <span class="n">variable</span> <span class="o">=</span> <span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># empty line</span>
+            <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># None would mean an empty line</span>
                 <span class="n">var_name</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">string</span>
                 <span class="n">block_indent</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">start_col</span>
                 <span class="k">if</span> <span class="n">block_indent</span> <span class="o">&gt;</span> <span class="n">indentation</span><span class="p">:</span>
@@ -237,7 +250,7 @@
                         <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_line</span><span class="p">]</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">new_line</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-                        <span class="n">rest</span> <span class="o">=</span> <span class="n">new_line</span><span class="p">[</span><span class="n">variable</span><span class="o">.</span><span class="n">end_col</span><span class="p">:]</span>
+                        <span class="n">rest</span> <span class="o">=</span> <span class="n">new_line</span><span class="p">[</span><span class="n">variable</span><span class="o">.</span><span class="n">end_col</span> <span class="p">:]</span>
                         <span class="n">new_line</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">indentation</span> <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self_name}</span><span class="s2">.</span><span class="si">{var_name}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">rest</span>
                         <span class="n">new_line</span> <span class="o">=</span> <span class="n">new_line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="n">var_name</span><span class="p">)</span>
                         <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_line</span><span class="p">]</span>

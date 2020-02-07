@@ -169,7 +169,7 @@ Quick links to topics
     Usage  <usage>
     Create your own <function_simplest>
     A deep dive <possible>
-    Importing a module as main - todo <as_main>
+    Importing a module as main - to do <as_main>
     Examples never included - first draft<excluded>
 
 .. toctree::
@@ -178,18 +178,18 @@ Quick links to topics
 
 
     Improving function as a keyword <function>
-    λ encoding and the main problem - todo <lambda>
-    nobreak as a keyword - todo <nobreak>
-    French Python - todo <french>
+    λ encoding and the main problem - to do <lambda>
+    nobreak as a keyword - to do <nobreak>
+    French Python - to do <french>
     Auto-self <auto_self>
-    repeat as a keyword - working code only <repeat>
-    Simple AST transformation - todo <ast>
+    repeat as a keyword <repeat>
+    Simple AST transformation - to do <ast>
     Simple bytecode transformation - todo <bytecode>
-    Pythonic switch statement - todo  <switch>
+    Pythonic switch statement - to do  <switch>
     True constants - working code only <constants>
     Json module - todo  <json>
-    PEP 505: None-aware operators - todo  <pep_505>
-    Import from non-standard locations - todo  <non_files>
+    PEP 505: None-aware operators - to do  <pep_505>
+    Import from non-standard locations - to do  <non_files>
 
 .. toctree::
    :maxdepth: 1

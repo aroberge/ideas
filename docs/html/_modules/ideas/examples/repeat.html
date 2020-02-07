@@ -89,24 +89,24 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword - working code only</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants - working code only</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - to do</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -177,8 +177,24 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.examples.repeat</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Adds ``repeat`` as a keyword to write simple loops that repeat</span>
-<span class="sd">a set number of times.  That is::</span>
+<span></span><span class="sd">&quot;&quot;&quot;repeat.py</span>
+
+<span class="sd">Adds ``repeat`` as a keyword to write loops. The four constructs supported</span>
+<span class="sd">are::</span>
+
+<span class="sd">    repeat n:</span>
+<span class="sd">        # code</span>
+
+<span class="sd">    repeat while condition:</span>
+<span class="sd">        # code</span>
+
+<span class="sd">    repeat until condition:</span>
+<span class="sd">        # code</span>
+
+<span class="sd">    repeat forever:</span>
+<span class="sd">        # code</span>
+
+<span class="sd">For example::</span>
 
 <span class="sd">    repeat 3:</span>
 <span class="sd">        a = 2</span>
@@ -219,25 +235,25 @@
 
 
 <div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;prints information about the source - either original or transformed&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Prints the source code.</span>
+
+<span class="sd">    ``kind`` is usually either ``&quot;Original&quot;`` or ``&quot;Transformed&quot;``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span>
-    <span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
-<span class="sd">    that we specified when we created the import hook.</span>
-
-<span class="sd">    It gives us the option to compare the original source and the transformed</span>
-<span class="sd">    one.</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
+<span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">])</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span>
+        <span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
         <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
@@ -247,13 +263,14 @@
 <div class="viewcode-block" id="convert_repeat"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.convert_repeat">[docs]</a><span class="k">def</span> <span class="nf">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Replaces instances of::</span>
 
-<span class="sd">        repeat ... : # optional comment</span>
+<span class="sd">        repeat forever: -&gt; while True:</span>
+<span class="sd">        repeat while condition: -&gt; while  condition:</span>
+<span class="sd">        repeat until condition: -&gt; while not condition:</span>
+<span class="sd">        repeat n: -&gt; for _uid in range(n):</span>
 
-<span class="sd">    by::</span>
-
-<span class="sd">        for random_variable_name in range( ... ): # optional comment</span>
-
-<span class="sd">    A complete repeat statement is restricted to be on a single line</span>
+<span class="sd">    A complete repeat statement is restricted to be on a single line ending</span>
+<span class="sd">    with a colon (optionally followed by a comment). If the colon is</span>
+<span class="sd">    missing, a ``RepeatSyntaxError`` is raised.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
@@ -264,25 +281,29 @@
 
     <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="c1"># a line of tokens can start with INDENT or DEDENT tokens ...</span>
-        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_nonspace_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;repeat&quot;</span><span class="p">:</span>
-            <span class="n">colon_position</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="c1"># Note: a newline token (NL or NEWLINE) string could be</span>
-            <span class="c1"># either &quot;&quot; or &quot;\n&quot;; so we use our existing method instead of</span>
-            <span class="c1"># comparing the string content</span>
-            <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="n">colon_position</span><span class="p">]</span><span class="o">.</span><span class="n">is_newline</span><span class="p">():</span>
-                <span class="n">colon_position</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="n">colon_position</span><span class="p">]</span><span class="o">.</span><span class="n">is_comment</span><span class="p">():</span>
-                <span class="n">colon_position</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="n">colon</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">colon_position</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">colon</span> <span class="o">!=</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="n">last_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">last_token</span> <span class="o">!=</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">RepeatSyntaxError</span><span class="p">(</span>
                     <span class="s2">&quot;Missing colon for repeat statement on line &quot;</span>
                     <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{first_token.start_row}</span><span class="se">\n</span><span class="s2">    </span><span class="si">{first_token.line}</span><span class="s2">.&quot;</span>
                 <span class="p">)</span>
 
-            <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> in range(&quot;</span> <span class="o">%</span> <span class="nb">next</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span>
-            <span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;):&quot;</span>
+            <span class="n">repeat_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="n">second_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">repeat_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;forever&quot;</span><span class="p">:</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
+                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+            <span class="k">elif</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;while&quot;</span><span class="p">:</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
+                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">elif</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;until&quot;</span><span class="p">:</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
+                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;not&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> in range(&quot;</span> <span class="o">%</span> <span class="nb">next</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span>
+                <span class="n">last_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;):&quot;</span>
 
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 

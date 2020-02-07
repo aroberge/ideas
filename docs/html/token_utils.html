@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Overview of all possibilities - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -101,7 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
@@ -241,19 +241,28 @@ the end of a line, or the end of the source.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.token_utils.get_first_nonspace_token">
-<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first_nonspace_token</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first_nonspace_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first_nonspace_token" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.token_utils.get_first">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, find the first token which is not a space token
 (such as a newline, indent, dedent, etc.)</p>
 <p>Returns None if none is found.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.token_utils.get_first_nonspace_token_index">
-<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first_nonspace_token_index</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first_nonspace_token_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first_nonspace_token_index" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.token_utils.get_first_index">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_first_index</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_first_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_first_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, find the index of the first one which is
 not a space token (such as a newline, indent, dedent, etc.)</p>
 <p>Returns -1 if none is found.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.token_utils.get_last">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_last</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">exclude_comment=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the last token which is not a space token
+(such as a newline, indent, dedent, etc.).</p>
+<p>By default, COMMENT tokens are excluded.</p>
+<p>Returns None if none is found.</p>
 </dd></dl>
 
 <dl class="function">
@@ -264,11 +273,11 @@ all the tokens found on a given line of code.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.token_utils.get_number_nonspace_tokens">
-<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_number_nonspace_tokens</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">ignore_comments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_number_nonspace_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_number_nonspace_tokens" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.token_utils.get_number">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_number</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">ignore_comments=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, gives a count of the number of
 tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</p>
-<p>If ignore_comments is set to True, comments are ignored as well</p>
+<p>If ignore_comments is set to True, comments are ignored as well.</p>
 </dd></dl>
 
 <dl class="function">

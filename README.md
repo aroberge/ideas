@@ -97,8 +97,7 @@ but yourself.
 > _I found a bug._
 
 Wonderful, please file an issue so that I can perhaps fix it. Note however
-that some examples, which are known to fail in some contexts, would
-be too complex ensure that they always work in all contexts.
+that some examples are just proof of concepts and are not meant to be robust.
 
 > _I found a cool use of import hooks in another project, different from
 > all of your examples._
