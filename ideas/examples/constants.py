@@ -1,3 +1,19 @@
+"""constants.py
+
+This import hook makes it possible to define constants, that is variables
+which cannot have their initial value changed.
+
+In this import hook, constants are identified in two ways:
+
+1. names in all ``UPPERCASE_LETTERS``, which is a common Python convention
+
+2. variables that were declared to be constant by the inclusion
+   of a ``Final`` type hint.
+
+
+"""
+
+
 import types
 
 from ideas import import_hook, utils, token_utils
@@ -50,15 +66,17 @@ def make_class(on_prevent_change=True):
 
 
 class FinalDict(dict):
-    """dict subclass which ensures that constants are not over-written.
+    """A ``FinalDict`` is a ``dict`` subclass which ensures that constants
+    are not over-written.
 
-        Constants are identified in two ways:
-           1. names in all UPPERCASE_LETTERS, which is a common convention
-           2. variables that were declared to be constant by the inclusion
-              of a "Final" type hint.
+    Constants are identified in two ways:
 
-        Note: We only override methods which could result in changing the value
-        of a constant.
+       1. names in all ``UPPERCASE_LETTERS``, which is a common Python convention
+       2. variables that were declared to be constant by the inclusion
+          of a ``Final`` type hint.
+
+    Note: We only override methods which could result in changing the value
+    of a constant.
     """
 
     def __init__(self, module_filename, on_prevent_change=True):
@@ -175,16 +193,31 @@ def transform_source(source, filename=None, **kwargs):
     return source
 
 
-def exec_(source, filename=None, globals_=None, callback_params=None, **kwargs):
+def exec_(code_object, filename=None, globals_=None, callback_params=None, **kwargs):
+    """Executes a code_object in a local instance of a ``FinalDict``.
+
+    The argument ``globals_`` is assumed to be the original module's ``__dict__``.
+    A module's ``__dict__`` is a read-only object; therefore, we cannot execute
+    code in it while expecting to be able to prevent changes to variables intended
+    to remain constants.  However, we can do so indirectly.
+
+    Instead of executing code using the module's ``__dict__`` directly, we start
+    by making a copy of its content into a ``FinalDict`` instance.
+    We execute the code in that instance, and use its value after execution to
+    update the module's ``__dict__``.
+    """
     locals_ = FinalDict(
         filename, on_prevent_change=callback_params["on_prevent_change"]
     )
     locals_.update(globals_)
-    exec(source, locals_)
+    exec(code_object, locals_)
     globals_.update(locals_)
 
 
 def on_change_print(filename=None, key=None, value=None, kind=None):
+    """Function called by default when an attempt is made to change the
+    value of a constant.
+    """
     if kind == "set":
         print(
             "You cannot change the value of %s.%s to %s"
@@ -197,7 +230,13 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
 
 
 def add_hook(on_prevent_change=None):
-    """Creates and adds the import hook in sys.meta_path"""
+    """Creates and adds the import hook in sys.meta_path
+
+    When an attempt is made to change the value of a constant, ``on_prevent_change``
+    is called. By default, this function just prints a warning about what
+    was done. This could be replaced by a function that logs the results or
+    one that raises an exception, etc.
+    """
     if on_prevent_change is None:
         on_prevent_change = on_change_print
     callback_params = {"on_prevent_change": on_prevent_change}

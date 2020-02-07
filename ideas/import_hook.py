@@ -1,5 +1,6 @@
 """This module contains the core functions required to create an import hook."""
 
+import ast
 import os
 import sys
 
@@ -132,9 +133,21 @@ class IdeasLoader(Loader):
                 callback_params=self.callback_params,
             )
 
+        try:
+            tree = ast.parse(source, self.filename)
+        except Exception as e:
+            print("Exception raised while parsing source.")
+            print(e)
+
+        try:
+            code_object = compile(tree, self.filename, "exec")
+        except Exception as e:
+            print("Exception raised while compiling tree.")
+            print(e)
+
         if self.exec_ is not None:
             self.exec_(
-                source,
+                code_object,
                 filename=self.filename,
                 globals_=module.__dict__,
                 module=module,
@@ -142,8 +155,9 @@ class IdeasLoader(Loader):
             )
         else:
             try:
-                exec(source, module.__dict__)
+                exec(code_object, module.__dict__)
             except Exception as e:
+                print("Exception raised while executing code object.")
                 print(e)
 
 
