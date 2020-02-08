@@ -87,6 +87,7 @@ class IdeasMetaFinder(MetaPathFinder):
         self.custom_create_module = create_module
         self.excluded_paths = [PYTHON, IDEAS]
         if VERBOSE_FINDER:
+            print("Using IdeasMetaFinder")
             for sub_path in self.excluded_paths:
                 print("  Excluding search from", shorten_path(sub_path), "==",
                       sub_path)
@@ -96,7 +97,7 @@ class IdeasMetaFinder(MetaPathFinder):
         else:
             self.extensions = extensions
             if VERBOSE_FINDER:
-                print("Looking for files with extensions: ", extensions)
+                print("  Looking for files with extensions: ", extensions)
         self.module_class = module_class
         self.transform_source = transform_source
 
@@ -104,6 +105,9 @@ class IdeasMetaFinder(MetaPathFinder):
         """finds the appropriate properties (spec) of a module, and sets
            its loader."""
         if not path:
+            if VERBOSE_FINDER:
+                print("  Path not specified in find_spec.")
+                print("    Adding current working directory.")
             path = [os.getcwd()]
         if "." in fullname:
             name = fullname.split(".")[-1]
@@ -114,7 +118,7 @@ class IdeasMetaFinder(MetaPathFinder):
 
         if VERBOSE_FINDER:
             if not path:
-                print(f"Searching for {fullname} in current directory:", os.getcwd())
+                print(f"  Searching for {fullname} in current directory:", os.getcwd())
             else:
                 search_path = [shorten_path(p) for p in path]
                 print(f"Searching for {fullname} on the following path(s)")
@@ -144,12 +148,12 @@ class IdeasMetaFinder(MetaPathFinder):
 
                     submodule_locations = None
                     if os.path.exists(filename):
-                        if VERBOSE_FINDER:
-                            print("->  Found: ", shorten_path(filename))
                         break
                 else:
                     continue
 
+            if VERBOSE_FINDER:
+                print("->  Found: ", shorten_path(filename), "\n")
             return spec_from_file_location(
                 fullname,
                 filename,
@@ -163,6 +167,8 @@ class IdeasMetaFinder(MetaPathFinder):
                 ),
                 submodule_search_locations=submodule_locations,
             )
+        if VERBOSE_FINDER:
+            print("  IdeasMetaFinder did not find the requested file.")
         return None  # we don't know how to import this
 
 
