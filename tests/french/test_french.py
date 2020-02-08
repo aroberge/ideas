@@ -3,7 +3,7 @@ from ideas.import_hook import remove_hook
 
 
 def test_french():
-    hook = french.add_hook(show_original=True, show_transformed=True)
+    hook = french.add_hook()
 
     try:
         import mon_programme  # for testing only this file

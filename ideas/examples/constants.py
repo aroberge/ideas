@@ -229,7 +229,7 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
         raise NotImplementedError
 
 
-def add_hook(on_prevent_change=None):
+def add_hook(on_prevent_change=None, verbose_finder=False):
     """Creates and adds the import hook in sys.meta_path
 
     When an attempt is made to change the value of a constant, ``on_prevent_change``
@@ -252,5 +252,6 @@ def add_hook(on_prevent_change=None):
         callback_params=callback_params,
         console_dict=console_dict,
         name=__name__,
+        verbose_finder=verbose_finder,
     )
     return hook

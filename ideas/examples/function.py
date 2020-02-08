@@ -61,7 +61,7 @@ def function_as_a_keyword(source):
     return new_source
 
 
-def add_hook(show_original=False, show_transformed=False):
+def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
@@ -71,5 +71,6 @@ def add_hook(show_original=False, show_transformed=False):
         transform_source=transform_source,
         callback_params=callback_params,
         name=__name__,
+        verbose_finder=verbose_finder,
     )
     return hook

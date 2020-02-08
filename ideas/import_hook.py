@@ -12,8 +12,7 @@ from . import console
 Main_Module_Name = None
 
 PYTHON = os.path.dirname(os.__file__).lower()
-this_dir = os.path.dirname(__file__)
-IDEAS = os.path.abspath(os.path.join(this_dir, "..")).lower()
+IDEAS = os.path.dirname(__file__).lower()
 TESTS = os.path.join(IDEAS, "tests").lower()
 HOME = os.path.expanduser("~").lower()
 
@@ -35,14 +34,11 @@ def shorten_path(path):
     # To properly compare, we convert everything to lowercase
     # However, we ensure that the shortened path retains its cases
     path_lower = path.lower()
-    current = os.getcwd()
 
     if path_lower.startswith(PYTHON):
         path = "PYTHON:" + path[len(PYTHON) :]
     elif path_lower.startswith(IDEAS):
         path = "IDEAS:" + path[len(IDEAS) :]
-    elif path_lower.startswith(current):
-        path = "CURRENT:" + path[len(current) :]
     elif path_lower.startswith(TESTS):
         path = "TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(HOME):
@@ -53,7 +49,6 @@ def shorten_path(path):
 def print_paths():
     """Prints the values of the path abbreviations used in shorten_path()."""
     print(f"~: {HOME}")
-    print(f"CURRENT: {os.getcwd()}")
     print(f"PYTHON: {PYTHON}")
     print(f"IDEAS: {IDEAS}")
     if os.path.exists(TESTS):
@@ -66,6 +61,8 @@ def print_paths():
 # information after asking a question on StackOverflow which lead
 # to this answer https://stackoverflow.com/a/43573798/558799.
 # I used the code provided as my starting point for the code written below.
+
+VERBOSE_FINDER = False
 
 
 class IdeasMetaFinder(MetaPathFinder):
@@ -81,16 +78,25 @@ class IdeasMetaFinder(MetaPathFinder):
         extensions=None,
         module_class=None,
         transform_source=None,
+        verbose_finder=False,
     ):
+        global VERBOSE_FINDER
+        if VERBOSE_FINDER or verbose_finder:
+            VERBOSE_FINDER = True
         self.callback_params = callback_params
         self.custom_create_module = create_module
+        self.excluded_paths = [PYTHON, IDEAS]
+        if VERBOSE_FINDER:
+            for sub_path in self.excluded_paths:
+                print("  Excluding search from", shorten_path(sub_path), "==",
+                      sub_path)
         self.exec_ = exec_
         if extensions is None:
             self.extensions = [".py", ".pyw"]
         else:
             self.extensions = extensions
-
-        self.excluded_paths = [PYTHON, IDEAS]
+            if VERBOSE_FINDER:
+                print("Looking for files with extensions: ", extensions)
         self.module_class = module_class
         self.transform_source = transform_source
 
@@ -106,11 +112,22 @@ class IdeasMetaFinder(MetaPathFinder):
 
         exclude_path = False
 
+        if VERBOSE_FINDER:
+            if not path:
+                print(f"Searching for {fullname} in current directory:", os.getcwd())
+            else:
+                search_path = [shorten_path(p) for p in path]
+                print(f"Searching for {fullname} on the following path(s)")
+                for p in search_path:
+                    print(f"   {p}")
+
         for entry in path:
-            for path_ in self.excluded_paths:
-                if path_ in entry:
+            for sub_path in self.excluded_paths:
+                if sub_path in entry.lower():
                     exclude_path = True
-                break
+                    if VERBOSE_FINDER:
+                        print("  Skipping over:", shorten_path(entry))
+                    break
             if exclude_path:
                 continue
             if os.path.isdir(os.path.join(entry, name)):
@@ -127,6 +144,8 @@ class IdeasMetaFinder(MetaPathFinder):
 
                     submodule_locations = None
                     if os.path.exists(filename):
+                        if VERBOSE_FINDER:
+                            print("->  Found: ", shorten_path(filename))
                         break
                 else:
                     continue
@@ -237,6 +256,7 @@ def create_hook(
     module_class=None,
     name=None,
     transform_source=None,
+    verbose_finder=False,
 ):
     """Function to facilitate the creation of an import hook.
 
@@ -261,6 +281,7 @@ def create_hook(
         extensions=extensions,
         module_class=module_class,
         transform_source=transform_source,
+        verbose_finder=verbose_finder,
     )
 
     if first:

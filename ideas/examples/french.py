@@ -93,7 +93,7 @@ def french_to_english(source):
     return new_source
 
 
-def add_hook(show_original=False, show_transformed=False):
+def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
@@ -104,5 +104,6 @@ def add_hook(show_original=False, show_transformed=False):
         callback_params=callback_params,
         name=__name__,
         extensions=[".pyfr"],
+        verbose_finder=verbose_finder,
     )
     return hook
