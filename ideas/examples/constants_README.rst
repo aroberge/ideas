@@ -1,15 +1,17 @@
 True constants
 ==============
 
-**Summary:** How to ensure that variables defined as constants by some notational
-convention are guaranteed not to change, without requiring them
-to be attribute of an object.
+.. admonition:: Summary
 
-This example demonstrates the use of:
+    How to ensure that variables defined as constants by some notational
+    convention are guaranteed not to change, without requiring them
+    to be attribute of an object.
 
-- Source transformation to extract information from the source without changing its content.
-- Custom module class
-- Specialized dict to temporarily replace the read-only module dict.
+    This example demonstrates the use of:
+
+    - Source transformation to extract information from the source without changing its content.
+    - Custom module class
+    - Specialized dict to temporarily replace the read-only module dict.
 
 It took me quite a while to come up with the solution described below,
 and I learned a fair bit along the way.  Given the relative complexity of
@@ -56,19 +58,81 @@ However, this type of solution is more cumbersome to use than being able to simp
 use an agreed-upon convention.
 As Raymond Hettinger often says: **there must be a better way**. ;-)
 
-How to
-------
+Demonstration
+--------------
 
-.. todo::
+I can think of nothing better than a quick demonstration using the console::
 
-   Explain how to use this module
+    >>> from ideas.examples import constants
+    >>> hook = constants.add_hook()
+    >>> from ideas import console
+    >>> console.start()
+    Configuration values for the console:
+        callback_params: {'on_prevent_change': <function on_change_print ...>}
+        console_dict: {}
+        transform_source from ideas.examples.constants
+    --------------------------------------------------
+    Ideas Console version 0.0.4. [Python version: 3.7.3]
+
+    ~>> NAME = 3
+    ~>> NAME = 42
+    You cannot change the value of IdeasConsole.NAME to 42
+    ~>> del NAME
+    You cannot delete NAME in module IdeasConsole.
+    ~>> NAME
+    3
+    ~>> a = 3
+    ~>> a = 4
+    ~>> try:
+    ...     from typing import Final  # Python 3.8+
+    ... except ImportError:
+    ...     class Final:
+    ...         pass
+    ...
+    ~>> greetings : Final = "Hello"
+    ~>> greetings = 3
+    You cannot change the value of IdeasConsole.greetings to 3
+    ~>>
+    ~>> NAME += 3
+    You cannot change the value of IdeasConsole.NAME to 6
+    ~>> globals()['NAME'] = 6
+    You cannot change the value of IdeasConsole.NAME to 6
+    ~>>
+    ~>> from tests.constants import uppercase
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 44
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 38
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to Sneaky
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.YY to (3, 3)
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.YY to 1
+    ~>>
+    ~>> uppercase.XX = 99
+    You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 99
+    ~>>
+    ~>> uppercase.XX
+    36
+    ~>> # Cheating ...
+    ~>> uppercase.__dict__['XX'] = 99
+    ~>> uppercase.XX
+    99
+
+I have not (yet) found a way to prevent the cheat that is done.
+I **think** it might be possible by creating a different module object.
+
+.. todo:: Try to create a different module object.
 
 How does it work
 ----------------
 
-.. todo::
+Suppose I have a variable ``X`` in module ``Y``.  Normally, there are two ways
+that we can change the value of this variable:
 
-    Explain how it works
+1. By some statement execute within module ``Y``; something like ``X = new_value``
+
+2. By importing ``Y`` in another module and doing something like ``Y.X = new_value``
+   from that module.
+
+To prevent changes to variables intended to be constants, two different strategies
+must be used, depending on whether case 1 or case 2 above is used.
 
 Suggestion for you
 ------------------

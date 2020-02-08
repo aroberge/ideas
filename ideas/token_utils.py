@@ -50,16 +50,18 @@ class Token:
         return keyword.iskeyword(self.string)
 
     def is_identifier(self):
-        """Returns True if the token is a Python identifier and not a Python keyword"""
+        """Returns True if the token is a valid Python identifier
+        and not a Python keyword.
+        """
         return self.string.isidentifier() and not self.is_keyword()
 
     def is_comment(self):
-        """Returns True if the token is a comment"""
+        """Returns True if the token is a comment."""
         return self.type == tokenize.COMMENT
 
     def is_space(self):
         """Returns True if the token indicates a change in indentation,
-           the end of a line, or the end of the source.
+        the end of a line, or the end of the source.
         """
         return self.type in (
             tokenize.INDENT,
@@ -70,11 +72,17 @@ class Token:
         )
 
     def is_newline(self):
-        """Returns True if token is NEWLINE or NL"""
+        """Returns True if token is a type of new line (NEWLINE or NL)."""
         return self.type in (tokenize.NEWLINE, tokenize.NL)
 
     def __repr__(self):
-        """Nicely formatted token"""
+        """Nicely formatted token to help with debugging session.
+
+        Note that it does **not** print a string representation that could be
+        used to create a new ``Token`` instance, which is something you should
+        never need to do other than indirectly by using the functions
+        provided in this module.
+        """
         return _token_format.format(
             type="%s (%s)" % (self.type, tokenize.tok_name[self.type]),
             string=repr(self.string),
@@ -85,7 +93,7 @@ class Token:
 
 
 def tokenize_source(source):
-    """Makes a list of tokens from a source (str)."""
+    """Transforms a source (string) into a list of Tokens."""
     tokens = []
 
     try:
@@ -103,8 +111,8 @@ def tokenize_source(source):
 
 
 def get_lines_of_tokens(source):
-    """Makes a list of lists of tokens, with each (inner) list containing
-       all the tokens found on a given line of code.
+    """Transforms a source (string) into a list of Tokens, with each
+    (inner) list containing all the tokens found on a given line of code.
     """
     lines = []
     current_row = -1
@@ -128,9 +136,9 @@ def get_lines_of_tokens(source):
 
 def get_number(tokens, ignore_comments=False):
     """Given a list of tokens, gives a count of the number of
-    tokens which are NOT space tokens (such as newline, indent, dedent, etc.)
+    tokens which are NOT space tokens (such as NEWLINE, INDENT, DEDENT, etc.)
 
-    If ignore_comments is set to True, comments are ignored as well.
+    If ``ignore_comments`` is set to ``True``, COMMENT tokens are also excluded.
     """
     nb = len(tokens)
     for token in tokens:
@@ -143,9 +151,9 @@ def get_number(tokens, ignore_comments=False):
 
 def get_first(tokens):
     """Given a list of tokens, find the first token which is not a space token
-    (such as a newline, indent, dedent, etc.)
+    (such as a NEWLINE, INDENT, DEDENT, etc.)
 
-    Returns None if none is found.
+    Returns ``None`` if none is found.
     """
     for token in tokens:
         if not token.is_space():
@@ -155,7 +163,7 @@ def get_first(tokens):
 
 def get_first_index(tokens):
     """Given a list of tokens, find the index of the first one which is
-    not a space token (such as a newline, indent, dedent, etc.)
+    not a space token (such as a NEWLINE, INDENT, DEDENT, etc.)
 
     Returns -1 if none is found.
     """
@@ -167,11 +175,11 @@ def get_first_index(tokens):
 
 def get_last(tokens, exclude_comment=True):
     """Given a list of tokens, find the last token which is not a space token
-    (such as a newline, indent, dedent, etc.).
+    (such as a NEWLINE, INDENT, DEDENT, etc.).
 
     By default, COMMENT tokens are excluded.
 
-    Returns None if none is found.
+    Returns ``None`` if none is found.
     """
     for token in reversed(tokens):
         if exclude_comment:
@@ -192,25 +200,24 @@ def get_last(tokens, exclude_comment=True):
 def untokenize(tokens):
     """Return source code based on tokens.
 
-    This is similar to Python's tokenize.untokenize(), except that it
+    This is similar to Python's own tokenize.untokenize(), except that it
     preserves spacing between tokens, by using the line
     information recorded by Python's tokenize.generate_tokens.
     As a result, if the original soure code had multiple spaces between
-    some tokens or if escaped newlines were used, those things will be
-    reflected by untokenize.
+    some tokens or if escaped newlines were used or if tab characters
+    were present in the original source, those will also be present
+    in the source code produced by untokenize.
+
+    Thus ``source == untokenize(tokenize_source(source))``.
+
+    IMPORTANT: When modifying a list of tokens, do not remove a token
+    from the original list of tokens prior to calling untokenize;
+    instead, set its string attribute to an empty string.
+    If you need to insert a token into an existing list,
+    simply insert it as a string (and not as a Token instance).
 
     If a given item is a string instead of a Token object, it is simply
-    added as is.
-
-    IMPORTANT: do not remove a token from the original list of
-    tokens prior to calling untokenize; instead, set its string attribute
-    to an empty string.
-
-    Note that if some tokens are changed, the line information will
-    no longer reflect the content and the reconstructed content may
-    no longer be valid, unless some special procedures have been followed
-    when replacing original tokens by new ones. See the documentation
-    for examples.
+    added as is by ``untokenize``.
 
     Adapted from https://github.com/myint/untokenize
     """
@@ -255,7 +262,7 @@ def untokenize(tokens):
 def print_tokens(source):
     """Prints tokens found in source, excluding spaces and comments.
 
-       Source is either a string to be tokenized, or a list of tokens.
+       Source is either a string to be tokenized, or a list of Token objects.
 
        This is occasionally useful as a debugging tool.
     """

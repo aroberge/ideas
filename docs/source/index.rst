@@ -186,7 +186,7 @@ Quick links to topics
     Simple AST transformation - to do <ast>
     Simple bytecode transformation - todo <bytecode>
     Pythonic switch statement - to do  <switch>
-    True constants - working code only <constants>
+    True constants <constants>
     Json module - todo  <json>
     PEP 505: None-aware operators - to do  <pep_505>
     Import from non-standard locations - to do  <non_files>
@@ -197,7 +197,6 @@ Quick links to topics
 
     import_hook.py <import_hook>
     token_utils.py <token_utils>
-    utils.py <utils>
     console.py <console>
 
 

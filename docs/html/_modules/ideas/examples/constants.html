@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants - working code only</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - to do</a></li>
@@ -177,7 +177,23 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ideas.examples.constants</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">types</span>
+<span></span><span class="sd">&quot;&quot;&quot;constants.py</span>
+
+<span class="sd">This import hook makes it possible to define constants, that is variables</span>
+<span class="sd">which cannot have their initial value changed.</span>
+
+<span class="sd">In this import hook, constants are identified in two ways:</span>
+
+<span class="sd">1. names in all ``UPPERCASE_LETTERS``, which is a common Python convention</span>
+
+<span class="sd">2. variables that were declared to be constant by the inclusion</span>
+<span class="sd">   of a ``Final`` type hint.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">types</span>
 
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span><span class="p">,</span> <span class="n">token_utils</span>
 <span class="kn">from</span> <span class="nn">ideas.console</span> <span class="k">import</span> <span class="n">CONSOLE_NAME</span>
@@ -229,15 +245,17 @@
 
 
 <div class="viewcode-block" id="FinalDict"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.FinalDict">[docs]</a><span class="k">class</span> <span class="nc">FinalDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;dict subclass which ensures that constants are not over-written.</span>
+    <span class="sd">&quot;&quot;&quot;A ``FinalDict`` is a ``dict`` subclass which ensures that constants</span>
+<span class="sd">    are not over-written.</span>
 
-<span class="sd">        Constants are identified in two ways:</span>
-<span class="sd">           1. names in all UPPERCASE_LETTERS, which is a common convention</span>
-<span class="sd">           2. variables that were declared to be constant by the inclusion</span>
-<span class="sd">              of a &quot;Final&quot; type hint.</span>
+<span class="sd">    Constants are identified in two ways:</span>
 
-<span class="sd">        Note: We only override methods which could result in changing the value</span>
-<span class="sd">        of a constant.</span>
+<span class="sd">       1. names in all ``UPPERCASE_LETTERS``, which is a common Python convention</span>
+<span class="sd">       2. variables that were declared to be constant by the inclusion</span>
+<span class="sd">          of a ``Final`` type hint.</span>
+
+<span class="sd">    Note: We only override methods which could result in changing the value</span>
+<span class="sd">    of a constant.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_filename</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -354,16 +372,31 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">globals_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="exec_"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.exec_">[docs]</a><span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">globals_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Executes a code_object in a local instance of a ``FinalDict``.</span>
+
+<span class="sd">    The argument ``globals_`` is assumed to be the original module&#39;s ``__dict__``.</span>
+<span class="sd">    A module&#39;s ``__dict__`` is a read-only object; therefore, we cannot execute</span>
+<span class="sd">    code in it while expecting to be able to prevent changes to variables intended</span>
+<span class="sd">    to remain constants.  However, we can do so indirectly.</span>
+
+<span class="sd">    Instead of executing code using the module&#39;s ``__dict__`` directly, we start</span>
+<span class="sd">    by making a copy of its content into a ``FinalDict`` instance.</span>
+<span class="sd">    We execute the code in that instance, and use its value after execution to</span>
+<span class="sd">    update the module&#39;s ``__dict__``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">locals_</span> <span class="o">=</span> <span class="n">FinalDict</span><span class="p">(</span>
         <span class="n">filename</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;on_prevent_change&quot;</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">locals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">globals_</span><span class="p">)</span>
-    <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">locals_</span><span class="p">)</span>
-    <span class="n">globals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locals_</span><span class="p">)</span>
+    <span class="n">exec</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">locals_</span><span class="p">)</span>
+    <span class="n">globals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locals_</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">on_change_print</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="on_change_print"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.on_change_print">[docs]</a><span class="k">def</span> <span class="nf">on_change_print</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function called by default when an attempt is made to change the</span>
+<span class="sd">    value of a constant.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="s2">&quot;You cannot change the value of </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span>
@@ -372,11 +405,17 @@
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You cannot delete </span><span class="si">%s</span><span class="s2"> in module </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path</span>
+
+<span class="sd">    When an attempt is made to change the value of a constant, ``on_prevent_change``</span>
+<span class="sd">    is called. By default, this function just prints a warning about what</span>
+<span class="sd">    was done. This could be replaced by a function that logs the results or</span>
+<span class="sd">    one that raises an exception, etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">on_prevent_change</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">on_prevent_change</span> <span class="o">=</span> <span class="n">on_change_print</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;on_prevent_change&quot;</span><span class="p">:</span> <span class="n">on_prevent_change</span><span class="p">}</span>

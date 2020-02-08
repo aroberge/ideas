@@ -16,10 +16,10 @@ In this import hook, constants are identified in two ways:
 
 import types
 
-from ideas import import_hook, utils, token_utils
+from ideas import import_hook, token_utils
 from ideas.console import CONSOLE_NAME
 
-shorten_path = utils.shorten_path
+shorten_path = import_hook.shorten_path
 CONSTANTS = {}
 DECLARED_FINAL = {}
 

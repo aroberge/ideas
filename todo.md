@@ -6,7 +6,6 @@ Infrequently updated list ...
 - Mention that files are open using utf-8 by default.
 - Add requirements-dev.txt file
 - List cases/recipes to be included
-- Add console
 - Add support for `__main__`
   - something like `import_as_main(module, name_to_use=__as_main__)` ... but
     make an entry in sys.path so that two copies of this module are found,
@@ -40,3 +39,5 @@ Infrequently updated list ...
     convert into a regular lambda calling that function.
 
 
+- Have a look at https://tomforb.es/automatically-inline-python-function-calls/
+- https://gist.github.com/dutc/0f7498451d98e3114268

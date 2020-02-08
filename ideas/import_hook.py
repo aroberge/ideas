@@ -10,7 +10,55 @@ from importlib.util import spec_from_file_location, decode_source
 from . import console
 
 Main_Module_Name = None
-stdlib_dir = os.path.dirname(os.__file__)
+
+PYTHON = os.path.dirname(os.__file__).lower()
+this_dir = os.path.dirname(__file__)
+IDEAS = os.path.abspath(os.path.join(this_dir, "..")).lower()
+TESTS = os.path.join(IDEAS, "tests").lower()
+HOME = os.path.expanduser("~").lower()
+
+
+def shorten_path(path):
+    """Utility function used to reduce the length of the path shown
+       to a user. For example, a path for a module in the Python
+       standard library might be shown as::
+
+           PYTHON:/module.py
+
+       whereas a file found in the user's root directory might be shown
+       as::
+
+            ~/dir/file.py
+    """
+    # On windows, the filenames are not case sensitive
+    # and the way Python displays filenames may vary.
+    # To properly compare, we convert everything to lowercase
+    # However, we ensure that the shortened path retains its cases
+    path_lower = path.lower()
+    current = os.getcwd()
+
+    if path_lower.startswith(PYTHON):
+        path = "PYTHON:" + path[len(PYTHON) :]
+    elif path_lower.startswith(IDEAS):
+        path = "IDEAS:" + path[len(IDEAS) :]
+    elif path_lower.startswith(current):
+        path = "CURRENT:" + path[len(current) :]
+    elif path_lower.startswith(TESTS):
+        path = "TESTS:" + path[len(TESTS) :]
+    elif path_lower.startswith(HOME):
+        path = "~" + path[len(HOME) :]
+    return path
+
+
+def print_paths():
+    """Prints the values of the path abbreviations used in shorten_path()."""
+    print(f"~: {HOME}")
+    print(f"CURRENT: {os.getcwd()}")
+    print(f"PYTHON: {PYTHON}")
+    print(f"IDEAS: {IDEAS}")
+    if os.path.exists(TESTS):
+        print(f"TESTS: {TESTS}")
+
 
 # N.B. While I was able to play with import hooks using the deprecated
 # imp module (which still exists), I couldn't quite figure out how to
@@ -28,17 +76,21 @@ class IdeasMetaFinder(MetaPathFinder):
     def __init__(
         self,
         callback_params=None,
+        create_module=None,
         exec_=None,
         extensions=None,
         module_class=None,
         transform_source=None,
     ):
         self.callback_params = callback_params
+        self.custom_create_module = create_module
         self.exec_ = exec_
         if extensions is None:
             self.extensions = [".py", ".pyw"]
         else:
             self.extensions = extensions
+
+        self.excluded_paths = [PYTHON, IDEAS]
         self.module_class = module_class
         self.transform_source = transform_source
 
@@ -51,8 +103,15 @@ class IdeasMetaFinder(MetaPathFinder):
             name = fullname.split(".")[-1]
         else:
             name = fullname
+
+        exclude_path = False
+
         for entry in path:
-            if stdlib_dir in entry:  # do not process files from standard Library
+            for path_ in self.excluded_paths:
+                if path_ in entry:
+                    exclude_path = True
+                break
+            if exclude_path:
                 continue
             if os.path.isdir(os.path.join(entry, name)):
                 # this module has child modules
@@ -77,10 +136,11 @@ class IdeasMetaFinder(MetaPathFinder):
                 filename,
                 loader=IdeasLoader(
                     filename,
+                    callback_params=self.callback_params,
+                    create_module=self.custom_create_module,
+                    exec_=self.exec_,
                     module_class=self.module_class,
                     transform_source=self.transform_source,
-                    exec_=self.exec_,
-                    callback_params=self.callback_params,
                 ),
                 submodule_search_locations=submodule_locations,
             )
@@ -93,19 +153,25 @@ class IdeasLoader(Loader):
     def __init__(
         self,
         filename,
+        callback_params=None,
+        create_module=None,
+        exec_=None,
         module_class=None,
         transform_source=None,
-        exec_=None,
-        callback_params=None,
     ):
         self.filename = filename
-        self.module_class = module_class
-        self.transform_source = transform_source
         self.exec_ = exec_
         self.callback_params = callback_params
+        self.custom_create_module = create_module
+        self.module_class = module_class
+        self.transform_source = transform_source
 
     def create_module(self, spec):
-        return None  # use default module creation semantics
+        # Note: I do not have an example of custom module creation yet.
+        if self.custom_create_module is not None:
+            return self.custom_create_module(spec, callback_params=self.callback_params)
+        else:
+            return None  # use default module creation semantics
 
     def exec_module(self, module):
         """Import the source code, transform it before executing it so that
@@ -163,6 +229,7 @@ class IdeasLoader(Loader):
 
 def create_hook(
     callback_params=None,
+    create_module=None,
     console_dict=None,
     exec_=None,
     extensions=None,
@@ -189,6 +256,7 @@ def create_hook(
 
     hook = IdeasMetaFinder(
         callback_params=callback_params,
+        create_module=create_module,
         exec_=exec_,
         extensions=extensions,
         module_class=module_class,

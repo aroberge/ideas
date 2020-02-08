@@ -91,31 +91,31 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> True constants - working code only</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> True constants</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#consenting-adults">Consenting adults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to">How to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#demonstration">Demonstration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-does-it-work">How does it work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#suggestion-for-you">Suggestion for you</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.constants">Use the source, Luke</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constants-py">constants.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -198,7 +198,9 @@
             
   <div class="section" id="true-constants">
 <h1>True constants<a class="headerlink" href="#true-constants" title="Permalink to this headline">¶</a></h1>
-<p><strong>Summary:</strong> How to ensure that variables defined as constants by some notational
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>How to ensure that variables defined as constants by some notational
 convention are guaranteed not to change, without requiring them
 to be attribute of an object.</p>
 <p>This example demonstrates the use of:</p>
@@ -207,6 +209,7 @@ to be attribute of an object.</p>
 <li><p>Custom module class</p></li>
 <li><p>Specialized dict to temporarily replace the read-only module dict.</p></li>
 </ul>
+</div>
 <p>It took me quite a while to come up with the solution described below,
 and I learned a fair bit along the way.  Given the relative complexity of
 the final solution, I thought it would be appropriate to start slowly,
@@ -253,19 +256,74 @@ changes to the values of attributes intended to be constants.</p>
 use an agreed-upon convention.
 As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-)</p>
 </div>
-<div class="section" id="how-to">
-<h2>How to<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Explain how to use this module</p>
+<div class="section" id="demonstration">
+<h2>Demonstration<a class="headerlink" href="#demonstration" title="Permalink to this headline">¶</a></h2>
+<p>I can think of nothing better than a quick demonstration using the console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">constants</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    callback_params: {&#39;on_prevent_change&#39;: &lt;function on_change_print ...&gt;}</span>
+<span class="go">    console_dict: {}</span>
+<span class="go">    transform_source from ideas.examples.constants</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
+
+<span class="go">~&gt;&gt; NAME = 3</span>
+<span class="go">~&gt;&gt; NAME = 42</span>
+<span class="go">You cannot change the value of IdeasConsole.NAME to 42</span>
+<span class="go">~&gt;&gt; del NAME</span>
+<span class="go">You cannot delete NAME in module IdeasConsole.</span>
+<span class="go">~&gt;&gt; NAME</span>
+<span class="go">3</span>
+<span class="go">~&gt;&gt; a = 3</span>
+<span class="go">~&gt;&gt; a = 4</span>
+<span class="go">~&gt;&gt; try:</span>
+<span class="gp">... </span>    <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Final</span>  <span class="c1"># Python 3.8+</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">class</span> <span class="nc">Final</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="go">~&gt;&gt; greetings : Final = &quot;Hello&quot;</span>
+<span class="go">~&gt;&gt; greetings = 3</span>
+<span class="go">You cannot change the value of IdeasConsole.greetings to 3</span>
+<span class="go">~&gt;&gt;</span>
+<span class="go">~&gt;&gt; NAME += 3</span>
+<span class="go">You cannot change the value of IdeasConsole.NAME to 6</span>
+<span class="go">~&gt;&gt; globals()[&#39;NAME&#39;] = 6</span>
+<span class="go">You cannot change the value of IdeasConsole.NAME to 6</span>
+<span class="go">~&gt;&gt;</span>
+<span class="go">~&gt;&gt; from tests.constants import uppercase</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 44</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 38</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to Sneaky</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.YY to (3, 3)</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.YY to 1</span>
+<span class="go">~&gt;&gt;</span>
+<span class="go">~&gt;&gt; uppercase.XX = 99</span>
+<span class="go">You cannot change the value of IDEAS:\tests\constants\uppercase.py.XX to 99</span>
+<span class="go">~&gt;&gt;</span>
+<span class="go">~&gt;&gt; uppercase.XX</span>
+<span class="go">36</span>
+<span class="go">~&gt;&gt; # Cheating ...</span>
+<span class="go">~&gt;&gt; uppercase.__dict__[&#39;XX&#39;] = 99</span>
+<span class="go">~&gt;&gt; uppercase.XX</span>
+<span class="go">99</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="how-does-it-work">
 <h2>How does it work<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Explain how it works</p>
-</div>
+<p>Suppose I have a variable <code class="docutils literal notranslate"><span class="pre">X</span></code> in module <code class="docutils literal notranslate"><span class="pre">Y</span></code>.  Normally, there are two ways
+that we can change the value of this variable:</p>
+<ol class="arabic simple">
+<li><p>By some statement execute within module <code class="docutils literal notranslate"><span class="pre">Y</span></code>; something like <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">new_value</span></code></p></li>
+<li><p>By importing <code class="docutils literal notranslate"><span class="pre">Y</span></code> in another module and doing something like <code class="docutils literal notranslate"><span class="pre">Y.X</span> <span class="pre">=</span> <span class="pre">new_value</span></code>
+from that module.</p></li>
+</ol>
+<p>To prevent changes to variables intended to be constants, two different strategies
+must be used, depending on whether case 1 or case 2 above is used.</p>
 </div>
 <div class="section" id="suggestion-for-you">
 <h2>Suggestion for you<a class="headerlink" href="#suggestion-for-you" title="Permalink to this headline">¶</a></h2>
@@ -275,20 +333,34 @@ as a new keyword:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="module-ideas.examples.constants">
-<span id="use-the-source-luke"></span><h2>Use the source, Luke<a class="headerlink" href="#module-ideas.examples.constants" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constants-py">
+<h2>constants.py<a class="headerlink" href="#constants-py" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">API</p>
+<p>Generated by Sphinx</p>
+</div>
+<span class="target" id="module-ideas.examples.constants"></span><p>constants.py</p>
+<p>This import hook makes it possible to define constants, that is variables
+which cannot have their initial value changed.</p>
+<p>In this import hook, constants are identified in two ways:</p>
+<ol class="arabic simple">
+<li><p>names in all <code class="docutils literal notranslate"><span class="pre">UPPERCASE_LETTERS</span></code>, which is a common Python convention</p></li>
+<li><p>variables that were declared to be constant by the inclusion
+of a <code class="docutils literal notranslate"><span class="pre">Final</span></code> type hint.</p></li>
+</ol>
 <dl class="class">
 <dt id="ideas.examples.constants.FinalDict">
 <em class="property">class </em><code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">FinalDict</code><span class="sig-paren">(</span><em class="sig-param">module_filename</em>, <em class="sig-param">on_prevent_change=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict" title="Permalink to this definition">¶</a></dt>
-<dd><p>dict subclass which ensures that constants are not over-written.</p>
-<dl class="simple">
-<dt>Constants are identified in two ways:</dt><dd><ol class="arabic simple">
-<li><p>names in all UPPERCASE_LETTERS, which is a common convention</p></li>
+<dd><p>A <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code> is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> subclass which ensures that constants
+are not over-written.</p>
+<p>Constants are identified in two ways:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>names in all <code class="docutils literal notranslate"><span class="pre">UPPERCASE_LETTERS</span></code>, which is a common Python convention</p></li>
 <li><p>variables that were declared to be constant by the inclusion
-of a “Final” type hint.</p></li>
+of a <code class="docutils literal notranslate"><span class="pre">Final</span></code> type hint.</p></li>
 </ol>
-</dd>
-</dl>
+</div></blockquote>
 <p>Note: We only override methods which could result in changing the value
 of a constant.</p>
 <dl class="method">
@@ -319,6 +391,31 @@ or from a list of keywords arguments.</p>
 <dt id="ideas.examples.constants.add_hook">
 <code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">on_prevent_change=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
+<p>When an attempt is made to change the value of a constant, <code class="docutils literal notranslate"><span class="pre">on_prevent_change</span></code>
+is called. By default, this function just prints a warning about what
+was done. This could be replaced by a function that logs the results or
+one that raises an exception, etc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.constants.exec_">
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">exec_</code><span class="sig-paren">(</span><em class="sig-param">code_object</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">globals_=None</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#exec_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.exec_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a code_object in a local instance of a <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code>.</p>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">globals_</span></code> is assumed to be the original module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>.
+A module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> is a read-only object; therefore, we cannot execute
+code in it while expecting to be able to prevent changes to variables intended
+to remain constants.  However, we can do so indirectly.</p>
+<p>Instead of executing code using the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> directly, we start
+by making a copy of its content into a <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code> instance.
+We execute the code in that instance, and use its value after execution to
+update the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.constants.on_change_print">
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">on_change_print</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">key=None</em>, <em class="sig-param">value=None</em>, <em class="sig-param">kind=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#on_change_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.on_change_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function called by default when an attempt is made to change the
+value of a constant.</p>
 </dd></dl>
 
 <dl class="function">
