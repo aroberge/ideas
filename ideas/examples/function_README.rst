@@ -17,7 +17,7 @@ Actual source
 
 Here's the content of our example.
 
-.. literalinclude:: ../../ideas/examples/function.py
+.. literalinclude:: ../../ideas/examples/function_keyword.py
    :emphasize-lines: 12-16,19,30-31,35-36,59
    :linenos:
 
@@ -45,7 +45,7 @@ unspecified argument.
 
 Here's an example using one such parameter::
 
-    >>> from ideas.examples import function
+    >>> from ideas.examples import function_keyword
     >>> hook = function.add_hook(show_transformed=True)
     >>> from ideas import console
     >>> console.start()

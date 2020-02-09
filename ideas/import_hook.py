@@ -13,7 +13,7 @@ Main_Module_Name = None
 
 PYTHON = os.path.dirname(os.__file__).lower()
 IDEAS = os.path.dirname(__file__).lower()
-TESTS = os.path.join(IDEAS, "tests").lower()
+TESTS = os.path.normpath(os.path.join(IDEAS, "..", "tests")).lower()
 HOME = os.path.expanduser("~").lower()
 
 
@@ -55,16 +55,6 @@ def print_paths():
         print(f"TESTS: {TESTS}")
 
 
-# N.B. While I was able to play with import hooks using the deprecated
-# imp module (which still exists), I couldn't quite figure out how to
-# do it using the recommended importlib package. I got the required
-# information after asking a question on StackOverflow which lead
-# to this answer https://stackoverflow.com/a/43573798/558799.
-# I used the code provided as my starting point for the code written below.
-
-VERBOSE_FINDER = False
-
-
 class IdeasMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
@@ -74,30 +64,19 @@ class IdeasMetaFinder(MetaPathFinder):
         self,
         callback_params=None,
         create_module=None,
+        excluded_paths=None,
         exec_=None,
         extensions=None,
         module_class=None,
         transform_source=None,
         verbose_finder=False,
     ):
-        global VERBOSE_FINDER
-        if VERBOSE_FINDER or verbose_finder:
-            VERBOSE_FINDER = True
+        self.verbose_finder = verbose_finder
         self.callback_params = callback_params
         self.custom_create_module = create_module
-        self.excluded_paths = [PYTHON, IDEAS]
-        if VERBOSE_FINDER:
-            print("Using IdeasMetaFinder")
-            for sub_path in self.excluded_paths:
-                print("  Excluding search from", shorten_path(sub_path), "==",
-                      sub_path)
+        self.excluded_paths = excluded_paths
         self.exec_ = exec_
-        if extensions is None:
-            self.extensions = [".py", ".pyw"]
-        else:
-            self.extensions = extensions
-            if VERBOSE_FINDER:
-                print("  Looking for files with extensions: ", extensions)
+        self.extensions = extensions
         self.module_class = module_class
         self.transform_source = transform_source
 
@@ -105,54 +84,37 @@ class IdeasMetaFinder(MetaPathFinder):
         """finds the appropriate properties (spec) of a module, and sets
            its loader."""
         if not path:
-            if VERBOSE_FINDER:
-                print("  Path not specified in find_spec.")
-                print("    Adding current working directory.")
-            path = [os.getcwd()]
+            return None
+
         if "." in fullname:
             name = fullname.split(".")[-1]
         else:
             name = fullname
 
-        exclude_path = False
-
-        if VERBOSE_FINDER:
-            if not path:
-                print(f"  Searching for {fullname} in current directory:", os.getcwd())
-            else:
-                search_path = [shorten_path(p) for p in path]
-                print(f"Searching for {fullname} on the following path(s)")
-                for p in search_path:
-                    print(f"   {p}")
-
         for entry in path:
+            skip = False
             for sub_path in self.excluded_paths:
                 if sub_path in entry.lower():
-                    exclude_path = True
-                    if VERBOSE_FINDER:
-                        print("  Skipping over:", shorten_path(entry))
+                    skip = True
+                    if self.verbose_finder:
+                        print("    Skipping over:", shorten_path(entry))
                     break
-            if exclude_path:
+            if skip:
                 continue
-            if os.path.isdir(os.path.join(entry, name)):
-                # this module has child modules
-                filename = os.path.join(entry, name, "__init__.py")
-                submodule_locations = [os.path.join(entry, name)]
-                if not os.path.exists(filename):
-                    continue
+
+            for extension in self.extensions:
+                if not extension.startswith("."):  # be forgiving ...
+                    extension = "." + extension
+                filename = os.path.join(entry, name + extension)
+
+                if self.verbose_finder:
+                    print(f"    Searching for {shorten_path(filename)}.")
+                if os.path.exists(filename):
+                    break
             else:
-                for extension in self.extensions:
-                    if not extension.startswith("."):  # be forgiving ...
-                        extension = "." + extension
-                    filename = os.path.join(entry, name + extension)
+                continue
 
-                    submodule_locations = None
-                    if os.path.exists(filename):
-                        break
-                else:
-                    continue
-
-            if VERBOSE_FINDER:
+            if self.verbose_finder:
                 print("->  Found: ", shorten_path(filename), "\n")
             return spec_from_file_location(
                 fullname,
@@ -165,10 +127,9 @@ class IdeasMetaFinder(MetaPathFinder):
                     module_class=self.module_class,
                     transform_source=self.transform_source,
                 ),
-                submodule_search_locations=submodule_locations,
             )
-        if VERBOSE_FINDER:
-            print("  IdeasMetaFinder did not find the requested file.")
+        if self.verbose_finder:
+            print(f"  IdeasMetaFinder did not find {shorten_path(fullname)}.\n")
         return None  # we don't know how to import this
 
 
@@ -228,13 +189,13 @@ class IdeasLoader(Loader):
             tree = ast.parse(source, self.filename)
         except Exception as e:
             print("Exception raised while parsing source.")
-            print(e)
+            raise e
 
         try:
             code_object = compile(tree, self.filename, "exec")
         except Exception as e:
             print("Exception raised while compiling tree.")
-            print(e)
+            raise e
 
         if self.exec_ is not None:
             self.exec_(
@@ -249,7 +210,7 @@ class IdeasLoader(Loader):
                 exec(code_object, module.__dict__)
             except Exception as e:
                 print("Exception raised while executing code object.")
-                print(e)
+                raise e
 
 
 def create_hook(
@@ -269,20 +230,21 @@ def create_hook(
        It sets the parameters to be used by the import hook, and also
        does so for the interactive console.
     """
+    if extensions is None:
+        extensions = [".py"]
 
-    # We do not include module_class in the console configuration as
-    # it has no module to be instantiated.
-    if transform_source is not None and isinstance(name, str):
-        transform_source.__name__ = name
-    console.configure(
-        callback_params=callback_params,
-        console_dict=console_dict,
-        transform_source=transform_source,
-    )
+    excluded_paths = [PYTHON, IDEAS]
+
+    if verbose_finder:
+        print("Looking for files with extensions: ", extensions)
+        print("The following paths will not be included in the search:")
+        for sub_path in excluded_paths:
+            print("  ", shorten_path(sub_path), "==", sub_path)
 
     hook = IdeasMetaFinder(
         callback_params=callback_params,
         create_module=create_module,
+        excluded_paths=excluded_paths,
         exec_=exec_,
         extensions=extensions,
         module_class=module_class,
@@ -294,6 +256,14 @@ def create_hook(
         sys.meta_path.insert(0, hook)
     else:
         sys.meta_path.append(hook)
+
+    if transform_source is not None and isinstance(name, str):
+        transform_source.__name__ = name
+    console.configure(
+        callback_params=callback_params,
+        console_dict=console_dict,
+        transform_source=transform_source,
+    )
 
     return hook
 
