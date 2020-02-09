@@ -77,8 +77,10 @@ a console (REPL) that supports code transformations.
 
 ## Tools
 
-This project uses black for formatting, pytest for running tests,
-and flake8 for linting.
+This project uses [black](https://black.readthedocs.io/en/stable/) for formatting,
+[pytest](https://docs.pytest.org/en/latest/) for running tests,
+and [flake8](https://flake8.pycqa.org/en/latest/) for linting with custom
+settings compatible with black.
 
 ## Contact
 
@@ -117,16 +119,16 @@ but yourself.
 Wonderful, please file an issue so that I can attempt to fix it. Note however
 that some examples are just proof of concepts and are not meant to be robust.
 
-> _I found a cool use of import hooks in another project, different from
-> all of your examples._
-
-Please, give me the details and I will see if I can **easily** include
-a similar example and if I think it is worthwhile to do so.
-
 > _Can I contribute code for a new example?_
 
 Yes, please, by all means. But I suggest that you first create an issue that gives
 an overview of what you wish to accomplish.
+
+> _I found a cool use of import hooks in another project, different from
+> all of your examples. Could you include it?_
+
+Please, give me the details and I will see if I can **easily** include
+a similar example and if I think it is worthwhile to do so.
 
 > _I think that the explanation you have written for X could be improved upon._
 
