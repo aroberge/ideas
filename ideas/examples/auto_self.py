@@ -65,16 +65,16 @@ def automatic_self(source):
                 var_name = variable.string
                 block_indent = variable.start_col
                 if block_indent > indentation:
+                    dedent = block_indent - indentation
                     if get_nb(tokens) == 1:
-                        new_string = f"{self_name}.{var_name} = {var_name}\n"
-                        new_line = " " * indentation + new_string
-                        tokens = [new_line]
+                        variable.string = f"{self_name}.{var_name} = {var_name}"
+                        tokens = token_utils.dedent(tokens, dedent)
                     else:
-                        new_line = token_utils.untokenize(tokens)
-                        rest = new_line[variable.end_col :]
-                        new_line = " " * indentation + f"{self_name}.{var_name}" + rest
-                        new_line = new_line.replace("__", var_name)
-                        tokens = [new_line]
+                        variable.string = f"{self_name}.{var_name}"
+                        for token in tokens:
+                            if token.string == "__":
+                                token.string = var_name
+                        tokens = token_utils.dedent(tokens, dedent)
                 else:
                     auto_self_block = False
         elif get_nb(tokens) == 4:

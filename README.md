@@ -59,8 +59,19 @@ python loader.py
 So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
-Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/). To actually find out how you can create your own custom import hooks,
-you also need to refer to the documentation.
+The simplest (but flawed) way to create such an import hook with `ideas`
+would be as follows:
+
+```python
+from ideas import import_hook
+
+def transform(source, **kwargs):
+    return source.replace("function", "lambda")
+
+import_hook.create_hook(transform_source=transform)
+```
+
+Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/), including a better way to create such an import hook.
 
 
 ## Tools

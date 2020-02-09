@@ -2,6 +2,9 @@ MIT License
 
 Copyright (c) 2020 André Roberge
 
+[untokenize function modified from https://github.com/myint/untokenize
+Copyright (C) 2013-2018 Steven Myint - MIT Licence]
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights

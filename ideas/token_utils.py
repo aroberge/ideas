@@ -50,8 +50,11 @@ class Token:
         return keyword.iskeyword(self.string)
 
     def is_identifier(self):
-        """Returns True if the token is a valid Python identifier
-        and not a Python keyword.
+        """Returns True if the token represents a valid Python identifier
+        excluding Python keywords.
+
+        Note: this is different from Python's string method ``isidentifier``
+        which also returns True if the string is a keyword.
         """
         return self.string.isidentifier() and not self.is_keyword()
 
@@ -191,9 +194,17 @@ def get_last(tokens, exclude_comment=True):
     return None
 
 
+def dedent(tokens, dedent):
+    """Given a list of tokens, produces an equivalent list corresponding
+    to a line of code with dedent characters removed.
+    """
+    line = untokenize(tokens)
+    line = line[dedent:]
+    return tokenize_source(line)
+
 # untokenize adapted from https://github.com/myint/untokenize
-#
-# TODO: acknowledge it properly in documentation with license added
+# Copyright (C) 2013-2018 Steven Myint
+# MIT License - same as this project
 #
 
 
