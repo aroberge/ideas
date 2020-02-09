@@ -17,8 +17,8 @@ You could do this by creating the following program::
 
     # loader_1.py
 
-    from ideas.examples import function
-    function.add_hook()
+    from ideas.examples import function_keyword
+    function_keyword.add_hook()
 
     import my_program
 
@@ -37,8 +37,8 @@ as the main module.  This can be corrected by using::
     # loader_2.py
 
     from ideas.import_hook import import_as_main
-    from ideas.examples import function
-    function.add_hook()
+    from ideas.examples import function_keyword
+    function_keyword.add_hook()
 
     import_as_main("my_program")  # to be implemented
 
@@ -53,8 +53,8 @@ Another way to activate the hook is using either a sitecustomize.py file
 
     # usercustomize.py
 
-    from ideas.examples import function
-    function.add_hook()
+    from ideas.examples import function_keyword
+    function_keyword.add_hook()
 
     print("  --> usercustomize.py was executed")
 
@@ -107,13 +107,13 @@ We can activate it as follows::
     $ python
     Python 3.7.3 ...
 
-    >>> from ideas.examples import function
-    >>> hook = function.add_hook()
+    >>> from ideas.examples import function_keyword
+    >>> hook = function_keyword.add_hook()
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
         callback_params: {'show_original': False, 'show_transformed': False}
-        transform_source from ideas.examples.function
+        transform_source from ideas.examples.function_keyword
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
 
@@ -133,7 +133,7 @@ to write code to add our hook as it is already set::
     >>> console.start()
     Configuration values for the console:
         callback_params: {'show_original': False, 'show_transformed': False}
-        transform_source from ideas.examples.function
+        transform_source from ideas.examples.function_keyword
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
 

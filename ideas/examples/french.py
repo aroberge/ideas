@@ -1,8 +1,8 @@
 """French Python
 
-Keywords are translated from French to English by a function in this file.
+Keywords are translated from French to English/Python by a function in this file.
 
-A "French Python" file is recognize by its pyfr extension.
+A "French Python" file is recognize by its .pyfr extension.
 """
 from ideas import import_hook, token_utils
 

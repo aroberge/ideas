@@ -19,7 +19,12 @@ python -m pip install ideas
 
 Python 3.6+. No third-party library is installed when you install `ideas`.
 
-Some examples include might require to intall some third-party modules from Pypi.
+
+## Alternatives
+
+Reading Andrew Barnert's post [Hacking Python without hacking Python](http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html)
+is a quick way to find out about various ways to use import hooks to
+change Python's syntax.
 
 ## Usage
 
@@ -39,8 +44,8 @@ To use it, you could start by creating the following program
 ```python
 # Lets's call this 'loader.py'
 
-from ideas.examples import function
-function.add_hook()
+from ideas.examples import function_keyword
+function_keyword.add_hook()
 
 import my_program
 ```
@@ -70,7 +75,7 @@ You can either file an issue or email me at <Andre.Roberge@gmail.com>.
 
 ## License
 
-MIT - see the file listed above.
+MIT
 
 
 ## Infrequently asked questions and comments
@@ -96,7 +101,7 @@ but yourself.
 
 > _I found a bug._
 
-Wonderful, please file an issue so that I can perhaps fix it. Note however
+Wonderful, please file an issue so that I can attempt to fix it. Note however
 that some examples are just proof of concepts and are not meant to be robust.
 
 > _I found a cool use of import hooks in another project, different from
@@ -123,6 +128,8 @@ but please don't be offended if I don't write code for it
 and end up closing the issue: I already have too many ideas of my own
 for this project, too many other projects, and not
 enough time to do all that I want.
+
+That being said, I do like tinkering with import hooks ...
 
 > _In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
 > in a Python project._
@@ -155,8 +162,8 @@ likely be just too confusing.
 I settled on `ideas` as I am guessing that the main application would be
 for people to try out suggestions from or for
 [python-ideas](https://mail.python.org/archives/list/python-ideas@python.org/).
-A few days later, I came up with the above logo and this cemented my opinion that this
-choice of name might not such a bad idea.
+A few days later, I came up with the above image and this cemented my
+highly subjective opinion that this choice of name might not such a bad idea.
 
 Anyway, enough of this banter. If you want to know more about this project,
 please consult the [documentation](https://aroberge.github.io/ideas/docs/html/).
