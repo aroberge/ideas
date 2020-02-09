@@ -7,7 +7,7 @@
 
 ## Documentation
 
-[Everything you need (will eventually) be found here](https://aroberge.github.io/ideas/docs/html/).
+[Everything you need will eventually be found here](https://aroberge.github.io/ideas/docs/html/).
 
 ## Installation
 
@@ -71,7 +71,8 @@ def transform(source, **kwargs):
 import_hook.create_hook(transform_source=transform)
 ```
 
-Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/), including a better way to create such an import hook.
+Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/), including a better way to create such an import hook and information about
+a console (REPL) that supports code transformations.
 
 
 ## Tools
@@ -89,10 +90,11 @@ You can either file an issue or email me at <Andre.Roberge@gmail.com>.
 MIT
 
 
-## Infrequently asked questions and comments
+## Infrequently asked questions, comments and answers
 
-The following imaginary dialogue has been created before anyone else knew about
-this project.
+As I write (and occasionally update) this README file, nobody else knows
+about this project. So, it is impossible for there to be some Frequently Asked
+Questions.  In their absence, the following imaginary dialogue has been written.
 
 > _Why?_
 
