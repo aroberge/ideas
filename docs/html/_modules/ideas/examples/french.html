@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -89,8 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -107,12 +105,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../console.html"> console.py</a></li>
 </ul>
 
@@ -179,9 +178,9 @@
   <h1>Source code for ideas.examples.french</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;French Python</span>
 
-<span class="sd">Keywords are translated from French to English by a function in this file.</span>
+<span class="sd">Keywords are translated from French to English/Python by a function in this file.</span>
 
-<span class="sd">A &quot;French Python&quot; file is recognize by its pyfr extension.</span>
+<span class="sd">A &quot;French Python&quot; file is recognize by its .pyfr extension.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
@@ -272,7 +271,7 @@
     <span class="k">return</span> <span class="n">new_source</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
@@ -283,6 +282,7 @@
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
         <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.pyfr&quot;</span><span class="p">],</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>

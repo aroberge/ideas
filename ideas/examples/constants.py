@@ -177,7 +177,7 @@ def transform_source(source, filename=None, **kwargs):
     if filename not in DECLARED_FINAL:
         DECLARED_FINAL[filename] = set([])
 
-    for tokens in token_utils.get_lines_of_tokens(source):
+    for tokens in token_utils.get_lines(source):
         # a line of tokens can start with DEDENT tokens ...
         if token_utils.get_number(tokens) > 3:
             index = token_utils.get_first_index(tokens)

@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -90,8 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -108,12 +106,13 @@
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -188,6 +187,7 @@
             
   <div class="section" id="ideas-making-it-easier-to-extend-python-s-syntax">
 <h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/aroberge/ideas">Code on Github</a></p>
 <a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" /></a>
 <p>You have an <strong>Excellent Idea</strong> ® to change the Python syntax and want
 to find a way to include your
@@ -284,12 +284,12 @@ but yourself.</p>
 <p><strong>I found a bug.</strong></p>
 <p>Wonderful, please file an issue so that I can perhaps fix it. Note however
 that some examples are just proof of concepts and are not meant to be robust.</p>
-<p><strong>I found a cool use of import hooks in another project, different from all of your examples.</strong></p>
-<p>Please, give me the details and I will see if I can <em>easily</em> include
-a similar example and if I think it is worthwhile to do so.</p>
 <p><strong>Can I contribute code for a new example?</strong></p>
 <p>Yes, please, by all means. But I suggest that you first create an issue that gives
 an overview of what you wish to accomplish.</p>
+<p><strong>I found a cool use of import hooks in another project, different from all of your examples.</strong></p>
+<p>Please, give me the details and I will see if I can <em>easily</em> include
+a similar example and if I think it is worthwhile to do so.</p>
 <p><strong>I think that the explanation you have written for X could be improved upon.</strong></p>
 <p>Please tell me more by filing an issue first and possibly creating a pull-request afterwards.</p>
 <p><strong>I have an idea for a new example, but do not know how to write the code for it.</strong></p>
@@ -325,8 +325,7 @@ Much more content will be added … <em>soon</em>.</p>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -345,6 +344,8 @@ Much more content will be added … <em>soon</em>.</p>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -352,13 +353,17 @@ Much more content will be added … <em>soon</em>.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="to-do">
 <h2>To do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Try to create a different module object.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in ../ideas/examples/constants_README.rst, line 121.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p><strong>Add these examples</strong></p>

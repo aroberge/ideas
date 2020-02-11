@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -95,30 +94,30 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - working code only</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -219,8 +218,8 @@ the same thing as <code class="docutils literal notranslate"><span class="pre">l
 <p>You could do this by creating the following program:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># loader_1.py</span>
 
-<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function</span>
-<span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">my_program</span>
 </pre></div>
@@ -238,8 +237,8 @@ as the main module.  This can be corrected by using:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># loader_2.py</span>
 
 <span class="kn">from</span> <span class="nn">ideas.import_hook</span> <span class="k">import</span> <span class="n">import_as_main</span>
-<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function</span>
-<span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 
 <span class="n">import_as_main</span><span class="p">(</span><span class="s2">&quot;my_program&quot;</span><span class="p">)</span>  <span class="c1"># to be implemented</span>
 </pre></div>
@@ -253,8 +252,8 @@ as the main module.  This can be corrected by using:</p>
 (not recommended) or a temporary usercustomize.py file.  For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># usercustomize.py</span>
 
-<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function</span>
-<span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --&gt; usercustomize.py was executed&quot;</span><span class="p">)</span>
 </pre></div>
@@ -303,13 +302,13 @@ version of an interpreter.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
 Python 3.7.3 ...
 
-&gt;&gt;&gt; from ideas.examples import function
-&gt;&gt;&gt; hook = function.add_hook()
+&gt;&gt;&gt; from ideas.examples import function_keyword
+&gt;&gt;&gt; hook = function_keyword.add_hook()
 &gt;&gt;&gt; from ideas import console
 &gt;&gt;&gt; console.start()
 Configuration values for the console:
     callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: False}
-    transform_source from ideas.examples.function
+    transform_source from ideas.examples.function_keyword
 --------------------------------------------------
 Ideas Console version 0.0.4. [Python version: 3.7.3]
 
@@ -329,7 +328,7 @@ to write code to add our hook as it is already set:</p>
 &gt;&gt;&gt; console.start()
 Configuration values for the console:
     callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: False}
-    transform_source from ideas.examples.function
+    transform_source from ideas.examples.function_keyword
 --------------------------------------------------
 Ideas Console version 0.0.4. [Python version: 3.7.3]
 

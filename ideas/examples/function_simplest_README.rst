@@ -85,7 +85,7 @@ Actual code
 Here's the content of our real simplest example.
 
 .. literalinclude:: ../../ideas/examples/function_simplest.py
-   :emphasize-lines: 7,12,16,19,21,22
+   :emphasize-lines: 9,14,18,21,23,24
    :linenos:
 
 .. sidebar:: Tokens?
@@ -96,7 +96,7 @@ Here's the content of our real simplest example.
 
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-``add_hook`` (line 19), and return the hook that was created (line 22).
+``add_hook`` (line 21), and return the hook that was created (line 24).
 This has at least three benefits:
 
     1. We can control when the hook is created.
@@ -129,9 +129,9 @@ using our import hook.
 
 Once we're done with replacing all ``function`` tokens by ``lambda``,
 we convert the tokens back into a string by calling our
-utility function ``untokenize`` on line 16.
+utility function ``untokenize`` on line 18.
 
-Finally, to make our code easier to understand, on line 7 we use the
+Finally, by convention, on line 9 we use the
 same name, ``transform_source`` that is used as a keyword
-argument for ``import_hook.create_hook`` on line 21.
+argument for ``import_hook.create_hook`` on line 23.
 All of our examples follow this convention.

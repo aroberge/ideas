@@ -84,7 +84,7 @@ def french_to_english(source):
        English version.
     """
     new_tokens = []
-    for token in token_utils.tokenize_source(source):
+    for token in token_utils.tokenize(source):
         if token.string in pyfr:
             token.string = pyfr[token.string]
         new_tokens.append(token)

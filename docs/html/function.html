@@ -33,12 +33,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="λ encoding" href="lambda.html" />
-    <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
+    <link rel="prev" title="About tokens" href="tokenize.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,8 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
@@ -101,24 +99,25 @@
 <li class="toctree-l2"><a class="reference internal" href="#the-gory-details">The gory details</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword - working code only</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants - working code only</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -184,7 +183,7 @@
         <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -278,7 +277,8 @@
 72
 73
 74
-75</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
+75
+76</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">   equivalent to ``lambda``.</span>
 
 <span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
@@ -341,7 +341,7 @@
     <span class="k">return</span> <span class="n">new_source</span>
 
 
-<span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
@@ -351,6 +351,7 @@
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span>
 </pre></div>
@@ -374,7 +375,7 @@ transformers.  As a rule, every function that can be called
 by the import hook machinery should include such an
 unspecified argument.</p>
 <p>Here’s an example using one such parameter:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_transformed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -403,21 +404,21 @@ unspecified argument.</p>
 <p class="sidebar-title">API</p>
 <p>Generated by Sphinx</p>
 </div>
-<span class="target" id="module-ideas.examples.function"></span><p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
+<span class="target" id="module-ideas.examples.function_keyword"></span><p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword
 equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <p>It is slightly more complicated than <code class="docutils literal notranslate"><span class="pre">function_simplest.py</span></code> as it
 demonstrates how we can pass parameters when adding an import hook;
 these parameters will be passed back to our function
 <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 <dl class="function">
-<dt id="ideas.examples.function.add_hook">
-<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.add_hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.function_keyword.add_hook">
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.function.function_as_a_keyword">
-<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">function_as_a_keyword</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#function_as_a_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.function_as_a_keyword" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.function_keyword.function_as_a_keyword">
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">function_as_a_keyword</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#function_as_a_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.function_as_a_keyword" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple replacement of <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <p>Note that, while the string <code class="docutils literal notranslate"><span class="pre">lambda</span></code> is shorter than <code class="docutils literal notranslate"><span class="pre">function</span></code>, we
 do not adjust the information (start_col, end_col) about the position
@@ -427,15 +428,15 @@ spacing between tokens.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.function.print_info">
-<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.print_info" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.function_keyword.print_info">
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.print_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints the source code.</p>
 <p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Transformed&quot;</span></code></p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.function.transform_source">
-<code class="sig-prename descclassname">ideas.examples.function.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function.transform_source" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.function_keyword.transform_source">
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is called by the import hook loader with the named keyword
 that we specified when we created the import hook.</p>
 <p>It gives us the option to compare the original source and the transformed
@@ -460,7 +461,7 @@ create our new transformation.</p>
         <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -52,7 +52,7 @@ def function_as_a_keyword(source):
     spacing between tokens.
     """
     new_tokens = []
-    for token in token_utils.tokenize_source(source):
+    for token in token_utils.tokenize(source):
         if token == "function":  # equivalent to token.string == "function"
             token.string = "lambda"
         new_tokens.append(token)

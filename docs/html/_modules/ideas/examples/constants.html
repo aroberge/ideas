@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -89,8 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -107,12 +105,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../console.html"> console.py</a></li>
 </ul>
 
@@ -195,10 +194,10 @@
 
 <span class="kn">import</span> <span class="nn">types</span>
 
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span><span class="p">,</span> <span class="n">token_utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 <span class="kn">from</span> <span class="nn">ideas.console</span> <span class="k">import</span> <span class="n">CONSOLE_NAME</span>
 
-<span class="n">shorten_path</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span>
+<span class="n">shorten_path</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">shorten_path</span>
 <span class="n">CONSTANTS</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">DECLARED_FINAL</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -408,7 +407,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path</span>
 
 <span class="sd">    When an attempt is made to change the value of a constant, ``on_prevent_change``</span>
@@ -431,6 +430,7 @@
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>

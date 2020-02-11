@@ -10,14 +10,7 @@ Infrequently updated list ...
   - something like `import_as_main(module, name_to_use=__as_main__)` ... but
     make an entry in sys.path so that two copies of this module are found,
     once under its name, and once under `__as__main__`
-- Add test to ensure desired paths (e.g. Python standard library) are excluded.
-- show excluded path
-- show abbreviations used for paths
-- always exclude ideas itself
-- add line tokenizer
-- add space preserving tokenizer
-- add utils.Token with many methods including `is_identifier`, `is_keyword`,
-  `is_operator(optional_string)`
+
 - have a tokenizing option to remove all string contents and strip comments.
 - use decode_source instead of straight read
   - perhaps use a custom encoding (lambda?) as an example
@@ -41,3 +34,5 @@ Infrequently updated list ...
 
 - Have a look at https://tomforb.es/automatically-inline-python-function-calls/
 - https://gist.github.com/dutc/0f7498451d98e3114268
+
+- Have a look at https://mail.python.org/archives/list/python-ideas@python.org/message/CTTKN5F5UK2PUILSKEK6HAYEXZPQN5CM/

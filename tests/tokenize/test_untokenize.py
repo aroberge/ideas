@@ -1,11 +1,11 @@
-from ideas.token_utils import tokenize_source, untokenize
+from ideas.token_utils import tokenize, untokenize
 
 # Note: most of the tests involving untokenize have
 # been adapted from https://github.com/myint/untokenize
 
 
 def check(source):
-    tokens = tokenize_source(source)
+    tokens = tokenize(source)
     new_source = untokenize(tokens)
     assert source == new_source
 

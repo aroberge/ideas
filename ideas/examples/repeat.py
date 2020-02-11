@@ -100,7 +100,7 @@ def convert_repeat(source, predictable_names=False):
     else:
         variable_name = generate_variable_names()
 
-    for tokens in token_utils.get_lines_of_tokens(source):
+    for tokens in token_utils.get_lines(source):
         # a line of tokens can start with INDENT or DEDENT tokens ...
         first_token = token_utils.get_first(tokens)
         if first_token == "repeat":

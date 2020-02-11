@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -91,8 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
@@ -116,12 +114,13 @@
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -312,6 +311,12 @@ As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-
 <span class="go">99</span>
 </pre></div>
 </div>
+<p>I have not (yet) found a way to prevent the cheat that is done.
+I <strong>think</strong> it might be possible by creating a different module object.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Try to create a different module object.</p>
+</div>
 </div>
 <div class="section" id="how-does-it-work">
 <h2>How does it work<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h2>
@@ -389,7 +394,7 @@ or from a list of keywords arguments.</p>
 
 <dl class="function">
 <dt id="ideas.examples.constants.add_hook">
-<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">on_prevent_change=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.add_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.constants.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">on_prevent_change=None</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.constants.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 <p>When an attempt is made to change the value of a constant, <code class="docutils literal notranslate"><span class="pre">on_prevent_change</span></code>
 is called. By default, this function just prints a warning about what

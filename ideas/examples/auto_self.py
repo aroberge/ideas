@@ -58,7 +58,7 @@ def automatic_self(source):
     get_first = token_utils.get_first
     get_first_index = token_utils.get_first_index
 
-    for tokens in token_utils.get_lines_of_tokens(source):
+    for tokens in token_utils.get_lines(source):
         if auto_self_block:
             variable = get_first(tokens)
             if variable is not None:  # None would mean an empty line

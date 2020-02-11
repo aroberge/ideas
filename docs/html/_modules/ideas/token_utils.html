@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -89,8 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -107,12 +105,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../console.html"> console.py</a></li>
 </ul>
 
@@ -229,16 +228,21 @@
         <span class="k">return</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Token.is_identifier"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.Token.is_identifier">[docs]</a>    <span class="k">def</span> <span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a Python identifier and not a Python keyword&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a valid Python identifier</span>
+<span class="sd">        excluding Python keywords.</span>
+
+<span class="sd">        Note: this is different from Python&#39;s string method ``isidentifier``</span>
+<span class="sd">        which also returns True if the string is a keyword.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isidentifier</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_keyword</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
 
 <div class="viewcode-block" id="Token.is_space"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.Token.is_space">[docs]</a>    <span class="k">def</span> <span class="nf">is_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if the token indicates a change in indentation,</span>
-<span class="sd">           the end of a line, or the end of the source.</span>
+<span class="sd">        the end of a line, or the end of the source.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span>
             <span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span>
@@ -249,11 +253,17 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Token.is_newline"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.Token.is_newline">[docs]</a>    <span class="k">def</span> <span class="nf">is_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if token is NEWLINE or NL&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if token is a type of new line (NEWLINE or NL).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Nicely formatted token&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Nicely formatted token to help with debugging session.</span>
+
+<span class="sd">        Note that it does **not** print a string representation that could be</span>
+<span class="sd">        used to create a new ``Token`` instance, which is something you should</span>
+<span class="sd">        never need to do other than indirectly by using the functions</span>
+<span class="sd">        provided in this module.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_token_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">tok_name</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]),</span>
             <span class="n">string</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
@@ -264,7 +274,7 @@
 
 
 <div class="viewcode-block" id="tokenize_source"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.tokenize_source">[docs]</a><span class="k">def</span> <span class="nf">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a list of tokens from a source (str).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Transforms a source (string) into a list of Tokens.&quot;&quot;&quot;</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -282,8 +292,8 @@
 
 
 <div class="viewcode-block" id="get_lines_of_tokens"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_lines_of_tokens">[docs]</a><span class="k">def</span> <span class="nf">get_lines_of_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a list of lists of tokens, with each (inner) list containing</span>
-<span class="sd">       all the tokens found on a given line of code.</span>
+    <span class="sd">&quot;&quot;&quot;Transforms a source (string) into a list of Tokens, with each</span>
+<span class="sd">    (inner) list containing all the tokens found on a given line of code.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">current_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -307,9 +317,9 @@
 
 <div class="viewcode-block" id="get_number"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_number">[docs]</a><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">ignore_comments</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, gives a count of the number of</span>
-<span class="sd">    tokens which are NOT space tokens (such as newline, indent, dedent, etc.)</span>
+<span class="sd">    tokens which are NOT space tokens (such as NEWLINE, INDENT, DEDENT, etc.)</span>
 
-<span class="sd">    If ignore_comments is set to True, comments are ignored as well.</span>
+<span class="sd">    If ``ignore_comments`` is set to ``True``, COMMENT tokens are also excluded.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
@@ -322,9 +332,9 @@
 
 <div class="viewcode-block" id="get_first"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first">[docs]</a><span class="k">def</span> <span class="nf">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the first token which is not a space token</span>
-<span class="sd">    (such as a newline, indent, dedent, etc.)</span>
+<span class="sd">    (such as a NEWLINE, INDENT, DEDENT, etc.)</span>
 
-<span class="sd">    Returns None if none is found.</span>
+<span class="sd">    Returns ``None`` if none is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
@@ -334,7 +344,7 @@
 
 <div class="viewcode-block" id="get_first_index"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_first_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the index of the first one which is</span>
-<span class="sd">    not a space token (such as a newline, indent, dedent, etc.)</span>
+<span class="sd">    not a space token (such as a NEWLINE, INDENT, DEDENT, etc.)</span>
 
 <span class="sd">    Returns -1 if none is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -346,11 +356,11 @@
 
 <div class="viewcode-block" id="get_last"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.get_last">[docs]</a><span class="k">def</span> <span class="nf">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the last token which is not a space token</span>
-<span class="sd">    (such as a newline, indent, dedent, etc.).</span>
+<span class="sd">    (such as a NEWLINE, INDENT, DEDENT, etc.).</span>
 
 <span class="sd">    By default, COMMENT tokens are excluded.</span>
 
-<span class="sd">    Returns None if none is found.</span>
+<span class="sd">    Returns ``None`` if none is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">exclude_comment</span><span class="p">:</span>
@@ -362,34 +372,41 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
+<div class="viewcode-block" id="dedent"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.dedent">[docs]</a><span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">dedent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens, produces an equivalent list corresponding</span>
+<span class="sd">    to a line of code with dedent characters removed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">dedent</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">tokenize_source</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
+
 <span class="c1"># untokenize adapted from https://github.com/myint/untokenize</span>
-<span class="c1">#</span>
-<span class="c1"># TODO: acknowledge it properly in documentation with license added</span>
+<span class="c1"># Copyright (C) 2013-2018 Steven Myint</span>
+<span class="c1"># MIT License - same as this project</span>
 <span class="c1">#</span>
 
 
 <div class="viewcode-block" id="untokenize"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.untokenize">[docs]</a><span class="k">def</span> <span class="nf">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return source code based on tokens.</span>
 
-<span class="sd">    This is similar to Python&#39;s tokenize.untokenize(), except that it</span>
+<span class="sd">    This is similar to Python&#39;s own tokenize.untokenize(), except that it</span>
 <span class="sd">    preserves spacing between tokens, by using the line</span>
 <span class="sd">    information recorded by Python&#39;s tokenize.generate_tokens.</span>
 <span class="sd">    As a result, if the original soure code had multiple spaces between</span>
-<span class="sd">    some tokens or if escaped newlines were used, those things will be</span>
-<span class="sd">    reflected by untokenize.</span>
+<span class="sd">    some tokens or if escaped newlines were used or if tab characters</span>
+<span class="sd">    were present in the original source, those will also be present</span>
+<span class="sd">    in the source code produced by untokenize.</span>
+
+<span class="sd">    Thus ``source == untokenize(tokenize_source(source))``.</span>
+
+<span class="sd">    IMPORTANT: When modifying a list of tokens, do not remove a token</span>
+<span class="sd">    from the original list of tokens prior to calling untokenize;</span>
+<span class="sd">    instead, set its string attribute to an empty string.</span>
+<span class="sd">    If you need to insert a token into an existing list,</span>
+<span class="sd">    simply insert it as a string (and not as a Token instance).</span>
 
 <span class="sd">    If a given item is a string instead of a Token object, it is simply</span>
-<span class="sd">    added as is.</span>
-
-<span class="sd">    IMPORTANT: do not remove a token from the original list of</span>
-<span class="sd">    tokens prior to calling untokenize; instead, set its string attribute</span>
-<span class="sd">    to an empty string.</span>
-
-<span class="sd">    Note that if some tokens are changed, the line information will</span>
-<span class="sd">    no longer reflect the content and the reconstructed content may</span>
-<span class="sd">    no longer be valid, unless some special procedures have been followed</span>
-<span class="sd">    when replacing original tokens by new ones. See the documentation</span>
-<span class="sd">    for examples.</span>
+<span class="sd">    added as is by ``untokenize``.</span>
 
 <span class="sd">    Adapted from https://github.com/myint/untokenize</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -434,7 +451,7 @@
 <div class="viewcode-block" id="print_tokens"><a class="viewcode-back" href="../../token_utils.html#ideas.token_utils.print_tokens">[docs]</a><span class="k">def</span> <span class="nf">print_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints tokens found in source, excluding spaces and comments.</span>
 
-<span class="sd">       Source is either a string to be tokenized, or a list of tokens.</span>
+<span class="sd">       Source is either a string to be tokenized, or a list of Token objects.</span>
 
 <span class="sd">       This is occasionally useful as a debugging tool.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

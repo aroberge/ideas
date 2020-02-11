@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -89,8 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -107,12 +105,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../console.html"> console.py</a></li>
 </ul>
 
@@ -189,14 +188,49 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">console</span>
 
 <span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">stdlib_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
 
-<span class="c1"># N.B. While I was able to play with import hooks using the deprecated</span>
-<span class="c1"># imp module (which still exists), I couldn&#39;t quite figure out how to</span>
-<span class="c1"># do it using the recommended importlib package. I got the required</span>
-<span class="c1"># information after asking a question on StackOverflow which lead</span>
-<span class="c1"># to this answer https://stackoverflow.com/a/43573798/558799.</span>
-<span class="c1"># I used the code provided as my starting point for the code written below.</span>
+<span class="n">PYTHON</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">IDEAS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">TESTS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="shorten_path"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.shorten_path">[docs]</a><span class="k">def</span> <span class="nf">shorten_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function used to reduce the length of the path shown</span>
+<span class="sd">       to a user. For example, a path for a module in the Python</span>
+<span class="sd">       standard library might be shown as::</span>
+
+<span class="sd">           PYTHON:/module.py</span>
+
+<span class="sd">       whereas a file found in the user&#39;s root directory might be shown</span>
+<span class="sd">       as::</span>
+
+<span class="sd">            ~/dir/file.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># On windows, the filenames are not case sensitive</span>
+    <span class="c1"># and the way Python displays filenames may vary.</span>
+    <span class="c1"># To properly compare, we convert everything to lowercase</span>
+    <span class="c1"># However, we ensure that the shortened path retains its cases</span>
+    <span class="n">path_lower</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;PYTHON:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;IDEAS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;TESTS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">TESTS</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOME</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">HOME</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+
+
+<div class="viewcode-block" id="print_paths"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.print_paths">[docs]</a><span class="k">def</span> <span class="nf">print_paths</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints the values of the path abbreviations used in shorten_path().&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;~: </span><span class="si">{HOME}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;PYTHON: </span><span class="si">{PYTHON}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;IDEAS: </span><span class="si">{IDEAS}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;TESTS: </span><span class="si">{TESTS}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IdeasMetaFinder"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">IdeasMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
@@ -207,17 +241,20 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">excluded_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span> <span class="o">=</span> <span class="n">verbose_finder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="o">=</span> <span class="n">create_module</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span> <span class="o">=</span> <span class="n">excluded_paths</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span> <span class="o">=</span> <span class="n">exec_</span>
-        <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.pyw&quot;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="n">extensions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="n">extensions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="o">=</span> <span class="n">module_class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
 
@@ -225,44 +262,52 @@
         <span class="sd">&quot;&quot;&quot;finds the appropriate properties (spec) of a module, and sets</span>
 <span class="sd">           its loader.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()]</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
         <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">fullname</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span>
+
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">stdlib_dir</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>  <span class="c1"># do not process files from standard Library</span>
+            <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    Skipping over:&quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span><span class="p">)):</span>
-                <span class="c1"># this module has child modules</span>
-                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span>
-                <span class="n">submodule_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-                    <span class="k">continue</span>
+
+            <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>  <span class="c1"># be forgiving ...</span>
+                    <span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">extension</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    Searching for {shorten_path(filename)}.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                    <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>  <span class="c1"># be forgiving ...</span>
-                        <span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">extension</span>
-                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
+                <span class="k">continue</span>
 
-                    <span class="n">submodule_locations</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-                        <span class="k">break</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">continue</span>
-
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt;  Found: &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">spec_from_file_location</span><span class="p">(</span>
                 <span class="n">fullname</span><span class="p">,</span>
                 <span class="n">filename</span><span class="p">,</span>
                 <span class="n">loader</span><span class="o">=</span><span class="n">IdeasLoader</span><span class="p">(</span>
                     <span class="n">filename</span><span class="p">,</span>
+                    <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
+                    <span class="n">create_module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span><span class="p">,</span>
+                    <span class="n">exec_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exec_</span><span class="p">,</span>
                     <span class="n">module_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_class</span><span class="p">,</span>
                     <span class="n">transform_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">,</span>
-                    <span class="n">exec_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exec_</span><span class="p">,</span>
-                    <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
                 <span class="p">),</span>
-                <span class="n">submodule_search_locations</span><span class="o">=</span><span class="n">submodule_locations</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;  IdeasMetaFinder did not find {shorten_path(fullname)}.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># we don&#39;t know how to import this</span></div></div>
 
 
@@ -272,19 +317,25 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">filename</span><span class="p">,</span>
+        <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="o">=</span> <span class="n">module_class</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span> <span class="o">=</span> <span class="n">exec_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="o">=</span> <span class="n">create_module</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="o">=</span> <span class="n">module_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
 
 <div class="viewcode-block" id="IdeasLoader.create_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.create_module">[docs]</a>    <span class="k">def</span> <span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># use default module creation semantics</span></div>
+        <span class="c1"># Note: I do not have an example of custom module creation yet.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># use default module creation semantics</span></div>
 
 <div class="viewcode-block" id="IdeasLoader.exec_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Import the source code, transform it before executing it so that</span>
@@ -316,13 +367,13 @@
             <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while parsing source.&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">code_object</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while compiling tree.&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span>
@@ -337,11 +388,12 @@
                 <span class="n">exec</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while executing code object.&quot;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div></div>
+                <span class="k">raise</span> <span class="n">e</span></div></div>
 
 
 <div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span>
     <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -349,15 +401,40 @@
     <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to facilitate the creation of an import hook.</span>
 
 <span class="sd">       It sets the parameters to be used by the import hook, and also</span>
 <span class="sd">       does so for the interactive console.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.py&quot;</span><span class="p">]</span>
 
-    <span class="c1"># We do not include module_class in the console configuration as</span>
-    <span class="c1"># it has no module to be instantiated.</span>
+    <span class="n">excluded_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">PYTHON</span><span class="p">,</span> <span class="n">IDEAS</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">verbose_finder</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Looking for files with extensions: &quot;</span><span class="p">,</span> <span class="n">extensions</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The following paths will not be included in the search:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">excluded_paths</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">sub_path</span><span class="p">),</span> <span class="s2">&quot;==&quot;</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">)</span>
+
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">IdeasMetaFinder</span><span class="p">(</span>
+        <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
+        <span class="n">create_module</span><span class="o">=</span><span class="n">create_module</span><span class="p">,</span>
+        <span class="n">excluded_paths</span><span class="o">=</span><span class="n">excluded_paths</span><span class="p">,</span>
+        <span class="n">exec_</span><span class="o">=</span><span class="n">exec_</span><span class="p">,</span>
+        <span class="n">extensions</span><span class="o">=</span><span class="n">extensions</span><span class="p">,</span>
+        <span class="n">module_class</span><span class="o">=</span><span class="n">module_class</span><span class="p">,</span>
+        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">transform_source</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">name</span>
     <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
@@ -365,19 +442,6 @@
         <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
     <span class="p">)</span>
-
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">IdeasMetaFinder</span><span class="p">(</span>
-        <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
-        <span class="n">exec_</span><span class="o">=</span><span class="n">exec_</span><span class="p">,</span>
-        <span class="n">extensions</span><span class="o">=</span><span class="n">extensions</span><span class="p">,</span>
-        <span class="n">module_class</span><span class="o">=</span><span class="n">module_class</span><span class="p">,</span>
-        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">hook</span></div>
 

@@ -34,7 +34,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -90,8 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -108,12 +106,13 @@
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html"> utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -183,6 +182,7 @@
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
  | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
@@ -205,7 +205,7 @@
 </li>
         <li><a href="french.html#ideas.examples.french.add_hook">(in module ideas.examples.french)</a>
 </li>
-        <li><a href="function.html#ideas.examples.function.add_hook">(in module ideas.examples.function)</a>
+        <li><a href="function.html#ideas.examples.function_keyword.add_hook">(in module ideas.examples.function_keyword)</a>
 </li>
         <li><a href="function_simplest.html#ideas.examples.function_simplest.add_hook">(in module ideas.examples.function_simplest)</a>
 </li>
@@ -235,6 +235,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="token_utils.html#ideas.token_utils.dedent">dedent() (in module ideas.token_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -258,7 +266,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="french.html#ideas.examples.french.french_to_english">french_to_english() (in module ideas.examples.french)</a>
 </li>
-      <li><a href="function.html#ideas.examples.function.function_as_a_keyword">function_as_a_keyword() (in module ideas.examples.function)</a>
+      <li><a href="function.html#ideas.examples.function_keyword.function_as_a_keyword">function_as_a_keyword() (in module ideas.examples.function_keyword)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -296,7 +304,7 @@
 </li>
       <li><a href="french.html#module-ideas.examples.french">ideas.examples.french (module)</a>
 </li>
-      <li><a href="function.html#module-ideas.examples.function">ideas.examples.function (module)</a>
+      <li><a href="function.html#module-ideas.examples.function_keyword">ideas.examples.function_keyword (module)</a>
 </li>
       <li><a href="function_simplest.html#module-ideas.examples.function_simplest">ideas.examples.function_simplest (module)</a>
 </li>
@@ -304,11 +312,9 @@
 </li>
       <li><a href="import_hook.html#module-ideas.import_hook">ideas.import_hook (module)</a>
 </li>
-      <li><a href="token_utils.html#module-ideas.token_utils">ideas.token_utils (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#module-ideas.utils">ideas.utils (module)</a>
+      <li><a href="token_utils.html#module-ideas.token_utils">ideas.token_utils (module)</a>
 </li>
       <li><a href="console.html#ideas.console.IdeasConsole">IdeasConsole (class in ideas.console)</a>
 </li>
@@ -347,14 +353,14 @@
       <ul>
         <li><a href="french.html#ideas.examples.french.print_info">(in module ideas.examples.french)</a>
 </li>
-        <li><a href="function.html#ideas.examples.function.print_info">(in module ideas.examples.function)</a>
+        <li><a href="function.html#ideas.examples.function_keyword.print_info">(in module ideas.examples.function_keyword)</a>
 </li>
         <li><a href="repeat.html#ideas.examples.repeat.print_info">(in module ideas.examples.repeat)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.print_paths">print_paths() (in module ideas.utils)</a>
+      <li><a href="import_hook.html#ideas.import_hook.print_paths">print_paths() (in module ideas.import_hook)</a>
 </li>
       <li><a href="token_utils.html#ideas.token_utils.print_tokens">print_tokens() (in module ideas.token_utils)</a>
 </li>
@@ -386,7 +392,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#ideas.utils.shorten_path">shorten_path() (in module ideas.utils)</a>
+      <li><a href="import_hook.html#ideas.import_hook.shorten_path">shorten_path() (in module ideas.import_hook)</a>
 </li>
       <li><a href="console.html#ideas.console.start">start() (in module ideas.console)</a>
 </li>
@@ -407,7 +413,7 @@
 </li>
         <li><a href="french.html#ideas.examples.french.transform_source">(in module ideas.examples.french)</a>
 </li>
-        <li><a href="function.html#ideas.examples.function.transform_source">(in module ideas.examples.function)</a>
+        <li><a href="function.html#ideas.examples.function_keyword.transform_source">(in module ideas.examples.function_keyword)</a>
 </li>
         <li><a href="function_simplest.html#ideas.examples.function_simplest.transform_source">(in module ideas.examples.function_simplest)</a>
 </li>

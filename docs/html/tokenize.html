@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About tokens &mdash; ideas 0.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Function - part 2" href="function.html" />
+    <link rel="prev" title="A deep dive" href="possible.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> About tokens</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-ideas-tokens">About ideas’ tokens</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>About tokens</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tokenize.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="possible.html" class="btn btn-neutral float-left" title="A deep dive" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-tokens">
+<h1>About tokens<a class="headerlink" href="#about-tokens" title="Permalink to this headline">¶</a></h1>
+<p>While <code class="docutils literal notranslate"><span class="pre">ideas</span></code> aims to provide support for all kinds of transformations,
+including those that affect the Abstract Syntax Tree or the bytecode,
+most transformations deal with exploring alternative syntax that is
+not compatible with Python’s current syntax defined by its
+<a class="reference external" href="https://docs.python.org/3/reference/grammar.html">grammar</a>.
+Such alternative syntax cannot be parsed by Python without generating …
+a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> and prevent the execution of the code.
+For this reason, almost all of our examples transform the code
+prior to letting Python parse it.  We do this using a set of tools
+built upon Python’s <a class="reference external" href="https://docs.python.org/3/library/tokenize.html">tokenize module</a>.</p>
+<p>In our description of these tools below, we assume that you are
+somewhat familiar with the concept of token objects generated by Python’s
+tokenize module.  If you are not familiar with those, we suggest that
+you read through at least once through the documentation about Python’s
+tokenize module mentioned above.</p>
+<div class="sidebar">
+<p class="sidebar-title">An excellent tutorial</p>
+<p><a class="reference external" href="https://www.asmeurer.com/brown-water-python/">Brown Water Python</a>, written by Aaron Meurer, is an excellent and very comprehensive tutorial about Python’s
+tokenize module.</p>
+</div>
+<p>The main points to understand:</p>
+<ul>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> function, a source can be broken down in tokens,
+which are 5-tuples carrying information about their
+<strong>type</strong>, their <strong>string</strong> content, their position in the source
+(identified by starting and ending <strong>row</strong>, aka line number, and <strong>column</strong>),
+as well as the content of the line where they are found.</p></li>
+<li><p>From a list of tokens, the original source can essentially recreated
+by using the <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> function.
+However, as stated in the documentation:</p>
+<blockquote>
+<div><p><em>The result is guaranteed to tokenize back to match the input so that
+the conversion is lossless and round-trips are assured.
+The guarantee applies only to the token type and
+token string as the spacing between tokens (column positions) may change.</em></p>
+</div></blockquote>
+<p>In particular, tab characters used as spaces between tokens
+are going to be lost in the back and forth translation.</p>
+</li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> using the function from the Python
+standard library, one can use either a list of 5-tuple tokens,
+or a list of two-tuple tokens that include only the <strong>type</strong> and <strong>string</strong>
+information.</p></li>
+</ul>
+<div class="section" id="about-ideas-tokens">
+<h2>About ideas’ tokens<a class="headerlink" href="#about-ideas-tokens" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> defines its own <code class="docutils literal notranslate"><span class="pre">Token</span></code> class built from Python’s tokens.
+While they carry the same information, they are much easier to use and manipulate.
+Furthermore, the process of tokenizing and untokenizing a source
+is guaranteed to yield back an exact copy of the original source, with all
+the spacing information intact.
+Experience has shown that this is <strong>extremely</strong> useful when writing
+tests about the expected results for some source transformation.</p>
+<p>Let’s jump right in and demonstrate how to use <code class="docutils literal notranslate"><span class="pre">ideas</span></code> version
+with some code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">token_utils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="s2">square = function x: x**2</span>
+<span class="gp">... </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">type=56 (NL)  string=&#39;\n&#39;  start=(1, 0)  end=(1, 1)  line=&#39;&#39;\n&#39;&#39;</span>
+<span class="go">type=1 (NAME)  string=&#39;square&#39;  start=(2, 0)  end=(2, 6)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=53 (OP)  string=&#39;=&#39;  start=(2, 7)  end=(2, 8)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=1 (NAME)  string=&#39;function&#39;  start=(2, 9)  end=(2, 17)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=1 (NAME)  string=&#39;x&#39;  start=(2, 18)  end=(2, 19)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=53 (OP)  string=&#39;:&#39;  start=(2, 19)  end=(2, 20)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=1 (NAME)  string=&#39;x&#39;  start=(2, 21)  end=(2, 22)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=53 (OP)  string=&#39;**&#39;  start=(2, 22)  end=(2, 24)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=2 (NUMBER)  string=&#39;2&#39;  start=(2, 24)  end=(2, 25)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=4 (NEWLINE)  string=&#39;\n&#39;  start=(2, 25)  end=(2, 26)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="go">type=0 (ENDMARKER)  string=&#39;&#39;  start=(3, 0)  end=(3, 0)  line=&#39;&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Let’s recover the original source by untokenizing this list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_source</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_source</span> <span class="o">==</span> <span class="n">source</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Ideas’ <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> function uses the <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">end</span></code>, and <code class="docutils literal notranslate"><span class="pre">line</span></code>
+attributes to keep track of the spaces between tokens.
+The content of each token is given by the <code class="docutils literal notranslate"><span class="pre">string</span></code> attribute;
+the <code class="docutils literal notranslate"><span class="pre">type</span></code> information is completely irrelevant when it comes to
+recovering the original source.</p>
+<p>We can change the <code class="docutils literal notranslate"><span class="pre">string</span></code> attribute of a given content, leaving
+all the other information intact, to obtain a transformed source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">type=1 (NAME)  string=&#39;function&#39;  start=(2, 9)  end=(2, 17)  line=&#39;&#39;square = function x: x**2\n&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;lambda&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="go">&#39;\nsquare = lambda x: x**2\n&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source</span>
+<span class="go">&#39;\nsquare = function x: x**2\n&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="possible.html" class="btn btn-neutral float-left" title="A deep dive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

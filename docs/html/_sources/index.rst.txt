@@ -2,6 +2,8 @@
 Ideas: making it easier to extend Python's syntax
 ========================================================
 
+`Code on Github <https://github.com/aroberge/ideas>`_
+
 .. image:: _static/ideas.png
    :scale: 40 %
    :alt: ideas logo
@@ -110,15 +112,15 @@ but yourself.
 Wonderful, please file an issue so that I can perhaps fix it. Note however
 that some examples are just proof of concepts and are not meant to be robust.
 
-**I found a cool use of import hooks in another project, different from all of your examples.**
-
-Please, give me the details and I will see if I can *easily* include
-a similar example and if I think it is worthwhile to do so.
-
 **Can I contribute code for a new example?**
 
 Yes, please, by all means. But I suggest that you first create an issue that gives
 an overview of what you wish to accomplish.
+
+**I found a cool use of import hooks in another project, different from all of your examples.**
+
+Please, give me the details and I will see if I can *easily* include
+a similar example and if I think it is worthwhile to do so.
 
 **I think that the explanation you have written for X could be improved upon.**
 
@@ -169,13 +171,11 @@ Quick links to topics
     Usage  <usage>
     Create your own <function_simplest>
     A deep dive <possible>
-    Importing a module as main - to do <as_main>
-    Examples never included - first draft<excluded>
+    About tokens <tokenize>
 
 .. toctree::
    :maxdepth: 1
    :caption: Examples
-
 
     Improving function as a keyword <function>
     λ encoding and the main problem - to do <lambda>
@@ -190,6 +190,8 @@ Quick links to topics
     Json module - todo  <json>
     PEP 505: None-aware operators - to do  <pep_505>
     Import from non-standard locations - to do  <non_files>
+    Importing a module as main - to do <as_main>
+    Examples never included - first draft<excluded>
 
 .. toctree::
    :maxdepth: 1
@@ -197,7 +199,6 @@ Quick links to topics
 
     import_hook.py <import_hook>
     token_utils.py <token_utils>
-    utils.py <utils>
     console.py <console>
 
 

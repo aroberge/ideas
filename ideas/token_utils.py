@@ -4,15 +4,15 @@ A collection of useful functions and methods to deal with tokenizing
 source code.
 """
 import keyword
-import tokenize
+import tokenize as py_tokenize
 
 from io import StringIO
 
-_token_format = "type={type}  string={string}  start={start}  end={end}  line='{line}'"
+_token_format = "type={type}  string={string}  start={start}  end={end}  line={line}"
 
 
 class Token:
-    """Token as generated from tokenize.generate_tokens written here in
+    """Token as generated from Python's tokenize.generate_tokens written here in
     a more convenient form, and with some custom methods.
 
     The various parameters are::
@@ -60,23 +60,23 @@ class Token:
 
     def is_comment(self):
         """Returns True if the token is a comment."""
-        return self.type == tokenize.COMMENT
+        return self.type == py_tokenize.COMMENT
 
     def is_space(self):
         """Returns True if the token indicates a change in indentation,
         the end of a line, or the end of the source.
         """
         return self.type in (
-            tokenize.INDENT,
-            tokenize.NEWLINE,
-            tokenize.NL,
-            tokenize.DEDENT,
-            tokenize.ENDMARKER,
+            py_tokenize.INDENT,
+            py_tokenize.NEWLINE,
+            py_tokenize.NL,
+            py_tokenize.DEDENT,
+            py_tokenize.ENDMARKER,
         )
 
     def is_newline(self):
         """Returns True if token is a type of new line (NEWLINE or NL)."""
-        return self.type in (tokenize.NEWLINE, tokenize.NL)
+        return self.type in (py_tokenize.NEWLINE, py_tokenize.NL)
 
     def __repr__(self):
         """Nicely formatted token to help with debugging session.
@@ -87,7 +87,7 @@ class Token:
         provided in this module.
         """
         return _token_format.format(
-            type="%s (%s)" % (self.type, tokenize.tok_name[self.type]),
+            type="%s (%s)" % (self.type, py_tokenize.tok_name[self.type]),
             string=repr(self.string),
             start=str(self.start),
             end=str(self.end),
@@ -95,25 +95,25 @@ class Token:
         )
 
 
-def tokenize_source(source):
+def tokenize(source):
     """Transforms a source (string) into a list of Tokens."""
     tokens = []
 
     try:
-        for tok in tokenize.generate_tokens(StringIO(source).readline):
+        for tok in py_tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
             tokens.append(token)
-    except (tokenize.TokenError, Exception) as exc:
+    except (py_tokenize.TokenError, Exception) as exc:
         print(
             "WARNING: the following error was raised in",
-            f"{__name__}.tokenize_source\n",
+            f"{__name__}.tokenize\n",
             exc,
         )
 
     return tokens
 
 
-def get_lines_of_tokens(source):
+def get_lines(source):
     """Transforms a source (string) into a list of Tokens, with each
     (inner) list containing all the tokens found on a given line of code.
     """
@@ -121,7 +121,7 @@ def get_lines_of_tokens(source):
     current_row = -1
     new_line = []
     try:
-        for tok in tokenize.generate_tokens(StringIO(source).readline):
+        for tok in py_tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
             if token.start_row != current_row:
                 current_row = token.start_row
@@ -129,7 +129,7 @@ def get_lines_of_tokens(source):
                     lines.append(new_line)
                 new_line = []
             new_line.append(token)
-    except (tokenize.TokenError, Exception) as exc:
+    except (py_tokenize.TokenError, Exception) as exc:
         print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
 
     if new_line:
@@ -168,12 +168,12 @@ def get_first_index(tokens):
     """Given a list of tokens, find the index of the first one which is
     not a space token (such as a NEWLINE, INDENT, DEDENT, etc.)
 
-    Returns -1 if none is found.
+    Returns ``None`` if none is found.
     """
     for index, token in enumerate(tokens):
         if not token.is_space():
             return index
-    return -1
+    return None
 
 
 def get_last(tokens, exclude_comment=True):
@@ -194,13 +194,31 @@ def get_last(tokens, exclude_comment=True):
     return None
 
 
+def get_last_index(tokens, exclude_comment=True):
+    """Given a list of tokens, find the index of the last token which is
+    not a space token (such as a NEWLINE, INDENT, DEDENT, etc.).
+
+    By default, COMMENT tokens are excluded.
+
+    Returns ``None`` if none is found.
+    """
+    for index, token in enumerate(reversed(tokens)):
+        if exclude_comment:
+            if not token.is_space() and not token.is_comment():
+                return len(tokens) - index
+        else:
+            if not token.is_space():
+                return len(tokens) - index
+    return None
+
+
 def dedent(tokens, dedent):
     """Given a list of tokens, produces an equivalent list corresponding
     to a line of code with dedent characters removed.
     """
     line = untokenize(tokens)
     line = line[dedent:]
-    return tokenize_source(line)
+    return tokenize(line)
 
 # untokenize adapted from https://github.com/myint/untokenize
 # Copyright (C) 2013-2018 Steven Myint
@@ -219,7 +237,7 @@ def untokenize(tokens):
     were present in the original source, those will also be present
     in the source code produced by untokenize.
 
-    Thus ``source == untokenize(tokenize_source(source))``.
+    Thus ``source == untokenize(tokenize(source))``.
 
     IMPORTANT: When modifying a list of tokens, do not remove a token
     from the original list of tokens prior to calling untokenize;
@@ -242,12 +260,12 @@ def untokenize(tokens):
         if isinstance(token, str):
             words.append(token)
             continue
-        if token.type == tokenize.ENCODING:
+        if token.type == py_tokenize.ENCODING:
             continue
 
         # Preserve escaped newlines.
         if (
-            last_non_whitespace_token_type != tokenize.COMMENT
+            last_non_whitespace_token_type != py_tokenize.COMMENT
             and token.start_row > last_row
         ):
             if previous_line.endswith(("\\\n", "\\\r\n", "\\\r")):
@@ -280,6 +298,6 @@ def print_tokens(source):
     if isinstance(source[0], Token):
         tokens = source
     else:
-        tokens = tokenize_source(source)
+        tokens = tokenize(source)
     for token in tokens:
         print(token)
