@@ -3,8 +3,6 @@
 Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class's ``__init__()`` method.
 """
-from functools import partial
-
 from ideas import import_hook, token_utils
 
 
@@ -54,7 +52,7 @@ def automatic_self(source):
     self_name = ""
     indentation = 0
 
-    get_nb = partial(token_utils.get_number, ignore_comments=True)
+    get_nb = token_utils.get_number
     get_first = token_utils.get_first
     get_first_index = token_utils.get_first_index
 

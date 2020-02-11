@@ -50,11 +50,11 @@ class Token:
         return keyword.iskeyword(self.string)
 
     def is_identifier(self):
-        """Returns True if the token represents a valid Python identifier
+        """Returns ``True`` if the token represents a valid Python identifier
         excluding Python keywords.
 
         Note: this is different from Python's string method ``isidentifier``
-        which also returns True if the string is a keyword.
+        which also returns ``True`` if the string is a keyword.
         """
         return self.string.isidentifier() and not self.is_keyword()
 
@@ -66,6 +66,8 @@ class Token:
         """Returns True if the token indicates a change in indentation,
         the end of a line, or the end of the source.
         """
+        # Note that spaces between tokens on a given line are not considered
+        # to be tokens themselves.
         return self.type in (
             py_tokenize.INDENT,
             py_tokenize.NEWLINE,
@@ -73,10 +75,6 @@ class Token:
             py_tokenize.DEDENT,
             py_tokenize.ENDMARKER,
         )
-
-    def is_newline(self):
-        """Returns True if token is a type of new line (NEWLINE or NL)."""
-        return self.type in (py_tokenize.NEWLINE, py_tokenize.NL)
 
     def __repr__(self):
         """Nicely formatted token to help with debugging session.
@@ -137,79 +135,74 @@ def get_lines(source):
     return lines
 
 
-def get_number(tokens, ignore_comments=False):
+def get_number(tokens, exclude_comment=True):
     """Given a list of tokens, gives a count of the number of
-    tokens which are NOT space tokens (such as NEWLINE, INDENT, DEDENT, etc.)
+    tokens which are not space tokens (such as ``NEWLINE``, ``INDENT``,
+    ``DEDENT``, etc.)
 
-    If ``ignore_comments`` is set to ``True``, COMMENT tokens are also excluded.
+    By default, ``COMMMENT`` tokens are not included in the count.
+    If you wish to include them, set ``exclude_comment`` to ``False``.
     """
     nb = len(tokens)
     for token in tokens:
         if token.is_space():
             nb -= 1
-        elif ignore_comments and token.is_comment():
+        elif exclude_comment and token.is_comment():
             nb -= 1
     return nb
 
 
-def get_first(tokens):
+def get_first(tokens, exclude_comment=True):
     """Given a list of tokens, find the first token which is not a space token
-    (such as a NEWLINE, INDENT, DEDENT, etc.)
+    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,
+    by default, also not a ``COMMMENT``.
+
+    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.
 
     Returns ``None`` if none is found.
     """
     for token in tokens:
-        if not token.is_space():
-            return token
+        if token.is_space() or (exclude_comment and token.is_comment()):
+            continue
+        return token
     return None
 
 
-def get_first_index(tokens):
-    """Given a list of tokens, find the index of the first one which is
-    not a space token (such as a NEWLINE, INDENT, DEDENT, etc.)
+def get_first_index(tokens, exclude_comment=True):
+    """Given a list of tokens, find the index of the first token which is
+    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor
+    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``
+    to ``True``.
 
     Returns ``None`` if none is found.
     """
     for index, token in enumerate(tokens):
-        if not token.is_space():
-            return index
+        if token.is_space() or (exclude_comment and token.is_comment()):
+            continue
+        return index
     return None
 
 
 def get_last(tokens, exclude_comment=True):
     """Given a list of tokens, find the last token which is not a space token
-    (such as a NEWLINE, INDENT, DEDENT, etc.).
+    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default, also not a ``COMMMENT``.
 
-    By default, COMMENT tokens are excluded.
+    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.
 
     Returns ``None`` if none is found.
     """
-    for token in reversed(tokens):
-        if exclude_comment:
-            if not token.is_space() and not token.is_comment():
-                return token
-        else:
-            if not token.is_space():
-                return token
-    return None
+    return get_first(reversed(tokens), exclude_comment=exclude_comment)
 
 
 def get_last_index(tokens, exclude_comment=True):
     """Given a list of tokens, find the index of the last token which is
-    not a space token (such as a NEWLINE, INDENT, DEDENT, etc.).
-
-    By default, COMMENT tokens are excluded.
+    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor
+    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``
+    to True.
 
     Returns ``None`` if none is found.
     """
-    for index, token in enumerate(reversed(tokens)):
-        if exclude_comment:
-            if not token.is_space() and not token.is_comment():
-                return len(tokens) - index
-        else:
-            if not token.is_space():
-                return len(tokens) - index
-    return None
+    return get_first_index(reversed(tokens), exclude_comment=exclude_comment)
 
 
 def dedent(tokens, dedent):
@@ -291,13 +284,15 @@ def untokenize(tokens):
 def print_tokens(source):
     """Prints tokens found in source, excluding spaces and comments.
 
-       Source is either a string to be tokenized, or a list of Token objects.
+    ``source`` is either a string to be tokenized, or a list of Token objects.
 
-       This is occasionally useful as a debugging tool.
+    This is occasionally useful as a debugging tool.
     """
     if isinstance(source[0], Token):
         tokens = source
     else:
         tokens = tokenize(source)
-    for token in tokens:
-        print(token)
+    for lines in get_lines(tokens):
+        for token in lines:
+            print(token)
+        print()
