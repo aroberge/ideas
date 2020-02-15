@@ -31,22 +31,7 @@ The result will be::
 
     16 is the square of 4.
 
-Note that, perhaps unfortunately, ``my_program`` can not be run
-as the main module.  This can be corrected by using::
 
-    # loader_2.py
-
-    from ideas.import_hook import import_as_main
-    from ideas.examples import function_keyword
-    function_keyword.add_hook()
-
-    import_as_main("my_program")  # to be implemented
-
-
-The result is::
-
-    ...
-    NotImplementedError
 
 Another way to activate the hook is using either a sitecustomize.py file
 (not recommended) or a temporary usercustomize.py file.  For example::
@@ -93,6 +78,11 @@ following, a ``SyntaxError`` will be raised::
 Python (cPython at least...) ignores the existence of any import hook
 when executing the main script. Perhaps I should make a suggestion
 to change this on Python-ideas. ;-)
+
+.. todo::
+
+    Implement make_encoding and add example.
+
 
 Using the Ideas Console
 -----------------------

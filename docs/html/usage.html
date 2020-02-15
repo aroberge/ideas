@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -95,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -114,10 +116,9 @@
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -192,7 +193,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="usage">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
 <p>All the examples below are based on an import hook which makes
 it possible to use the word <code class="docutils literal notranslate"><span class="pre">function</span></code> as being equivalent
@@ -230,22 +255,6 @@ the same thing as <code class="docutils literal notranslate"><span class="pre">l
 </div>
 <p>The result will be:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">16</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="mf">4.</span>
-</pre></div>
-</div>
-<p>Note that, perhaps unfortunately, <code class="docutils literal notranslate"><span class="pre">my_program</span></code> can not be run
-as the main module.  This can be corrected by using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># loader_2.py</span>
-
-<span class="kn">from</span> <span class="nn">ideas.import_hook</span> <span class="k">import</span> <span class="n">import_as_main</span>
-<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
-<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-
-<span class="n">import_as_main</span><span class="p">(</span><span class="s2">&quot;my_program&quot;</span><span class="p">)</span>  <span class="c1"># to be implemented</span>
-</pre></div>
-</div>
-<p>The result is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
-<span class="ne">NotImplementedError</span>
 </pre></div>
 </div>
 <p>Another way to activate the hook is using either a sitecustomize.py file
@@ -292,6 +301,10 @@ SyntaxError: invalid syntax
 <p>Python (cPython at least…) ignores the existence of any import hook
 when executing the main script. Perhaps I should make a suggestion
 to change this on Python-ideas. ;-)</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Implement make_encoding and add example.</p>
+</div>
 </div>
 <div class="section" id="using-the-ideas-console">
 <h2>Using the Ideas Console<a class="headerlink" href="#using-the-ideas-console" title="Permalink to this headline">¶</a></h2>

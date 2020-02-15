@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -37,7 +38,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="λ encoding" href="lambda.html" />
-    <link rel="prev" title="About tokens" href="tokenize.html" /> 
+    <link rel="prev" title="Tokenize notebook" href="tokenize_notebook.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenize notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
@@ -183,7 +185,7 @@
         <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenize notebook" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -192,7 +194,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="function-part-2">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="function-part-2">
 <h1>Function - part 2<a class="headerlink" href="#function-part-2" title="Permalink to this headline">¶</a></h1>
 <p><strong>Summary:</strong> This builds upon our previous example of allowing
 <code class="docutils literal notranslate"><span class="pre">function</span></code> to being equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
@@ -332,7 +358,7 @@
 <span class="sd">    spacing between tokens.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
@@ -461,7 +487,7 @@ create our new transformation.</p>
         <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenize notebook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

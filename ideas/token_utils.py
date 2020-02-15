@@ -64,15 +64,17 @@ class Token:
 
     def is_space(self):
         """Returns True if the token indicates a change in indentation,
-        the end of a line, or the end of the source.
+        the end of a line, or the end of the source
+        (``INDENT``, ``DEDENT``, ``NEWLINE``, ``NL``, and ``ENDMARKER``).
+
+        Note that spaces, including tab charcters ``\\t``, between tokens
+        on a given line are not considered to be tokens themselves.
         """
-        # Note that spaces between tokens on a given line are not considered
-        # to be tokens themselves.
         return self.type in (
             py_tokenize.INDENT,
+            py_tokenize.DEDENT,
             py_tokenize.NEWLINE,
             py_tokenize.NL,
-            py_tokenize.DEDENT,
             py_tokenize.ENDMARKER,
         )
 
@@ -97,16 +99,13 @@ def tokenize(source):
     """Transforms a source (string) into a list of Tokens."""
     tokens = []
 
-    try:
-        for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+    for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+        try:
             token = Token(tok)
             tokens.append(token)
-    except (py_tokenize.TokenError, Exception) as exc:
-        print(
-            "WARNING: the following error was raised in",
-            f"{__name__}.tokenize\n",
-            exc,
-        )
+        except (py_tokenize.TokenError, Exception) as exc:
+            print("WARNING: the following error was raised in ", f"{__name__}.tokenize")
+            print(exc)
 
     return tokens
 
@@ -118,8 +117,8 @@ def get_lines(source):
     lines = []
     current_row = -1
     new_line = []
-    try:
-        for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+    for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+        try:
             token = Token(tok)
             if token.start_row != current_row:
                 current_row = token.start_row
@@ -127,8 +126,12 @@ def get_lines(source):
                     lines.append(new_line)
                 new_line = []
             new_line.append(token)
-    except (py_tokenize.TokenError, Exception) as exc:
-        print("###\nWARNING: the following tokenize error was raised\n", exc, "\n###")
+        except (py_tokenize.TokenError, Exception) as exc:
+            print(
+                "WARNING: the following tokenize error was raised in "
+                f"{__name__}.get_lines"
+            )
+            print(exc)
 
     if new_line:
         lines.append(new_line)
@@ -202,25 +205,42 @@ def get_last_index(tokens, exclude_comment=True):
 
     Returns ``None`` if none is found.
     """
-    return get_first_index(reversed(tokens), exclude_comment=exclude_comment)
+    return (
+        len(tokens)
+        - 1
+        - get_first_index(reversed(tokens), exclude_comment=exclude_comment)
+    )
 
 
-def dedent(tokens, dedent):
+def dedent(tokens, nb):
     """Given a list of tokens, produces an equivalent list corresponding
-    to a line of code with dedent characters removed.
+    to a line of code with the first nb characters removed.
     """
     line = untokenize(tokens)
-    line = line[dedent:]
+    line = line[nb:]
     return tokenize(line)
 
-# untokenize adapted from https://github.com/myint/untokenize
-# Copyright (C) 2013-2018 Steven Myint
-# MIT License - same as this project
-#
+
+def indent(tokens, nb, tab=False):
+    """Given a list of tokens, produces an equivalent list corresponding
+    to a line of code with nb space characters inserted at the beginning.
+
+    If ``tab`` is specified to be ``True``, ``nb`` tab characters are inserted
+    instead of spaces.
+    """
+    line = untokenize(tokens)
+    if tab:
+        line = "\t" * nb + line
+    else:
+        line = " " * nb + line
+    return tokenize(line)
 
 
 def untokenize(tokens):
     """Return source code based on tokens.
+
+    Adapted from https://github.com/myint/untokenize,
+    Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).
 
     This is similar to Python's own tokenize.untokenize(), except that it
     preserves spacing between tokens, by using the line
@@ -232,16 +252,11 @@ def untokenize(tokens):
 
     Thus ``source == untokenize(tokenize(source))``.
 
-    IMPORTANT: When modifying a list of tokens, do not remove a token
-    from the original list of tokens prior to calling untokenize;
-    instead, set its string attribute to an empty string.
-    If you need to insert a token into an existing list,
-    simply insert it as a string (and not as a Token instance).
+    Note: if you you modifying tokens from an original source:
 
-    If a given item is a string instead of a Token object, it is simply
-    added as is by ``untokenize``.
-
-    Adapted from https://github.com/myint/untokenize
+    Instead of full token object, ``untokenize`` will accept simple
+    strings; however, it will only insert them *as is* without taking them
+    into account when it comes with figuring out spacing between tokens.
     """
     words = []
     previous_line = ""
@@ -289,10 +304,9 @@ def print_tokens(source):
     This is occasionally useful as a debugging tool.
     """
     if isinstance(source[0], Token):
-        tokens = source
-    else:
-        tokens = tokenize(source)
-    for lines in get_lines(tokens):
+        source = untokenize(source)
+
+    for lines in get_lines(source):
         for token in lines:
             print(token)
         print()

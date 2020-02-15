@@ -37,8 +37,12 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
-    "sphinx.ext.githubpages"
+    "sphinx.ext.githubpages",
+    'nbsphinx',
+    'sphinx.ext.mathjax',
 ]
+exclude_patterns = ['_build', '**/.ipynb_checkpoints']
+nbsphinx_allow_errors = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

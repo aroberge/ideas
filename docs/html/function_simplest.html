@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -96,6 +97,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenize notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -193,7 +195,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="create-your-own-import-hook">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="create-your-own-import-hook">
 <h1>Create your own import hook<a class="headerlink" href="#create-your-own-import-hook" title="Permalink to this headline">¶</a></h1>
 <p>You’ve seen how to use <code class="docutils literal notranslate"><span class="pre">ideas</span></code> import hooks; now it is time to
 create your first one.</p>
@@ -301,7 +327,7 @@ in the source. Thus, given something like:</p>
 </span>    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize_source</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
 <span class="hll">        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
 </span>            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>

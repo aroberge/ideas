@@ -35,4 +35,5 @@ Infrequently updated list ...
 - Have a look at https://tomforb.es/automatically-inline-python-function-calls/
 - https://gist.github.com/dutc/0f7498451d98e3114268
 
-- Have a look at https://mail.python.org/archives/list/python-ideas@python.org/message/CTTKN5F5UK2PUILSKEK6HAYEXZPQN5CM/
+- Have a look at https://mail.python.org/archives/list/python-ideas@python.org/message/CTTKN5F5UK2PUILSKEK6HAYEXZPQN5CM/ ... and https://mail.python.org/archives/list/python-ideas@python.org/message/BNEAOKFZ6OBXQMP37CLRMUPDEXAQJOCB/
+

@@ -4,6 +4,16 @@ Ideas: making it easier to extend Python's syntax
 
 `Code on Github <https://github.com/aroberge/ideas>`_
 
+.. warning::
+
+    If you see this warning, it is likely because you have stumbled upon
+    this project prior to any public announcement.
+
+    I am currently in the middle of writing this first draft for the
+    documentation, occasionally changing the API of **Ideas**
+    in an attempt to make it more user-friendly and adding/removing
+    pages here. You cannot rely on any information written here ... yet.
+
 .. image:: _static/ideas.png
    :scale: 40 %
    :alt: ideas logo
@@ -29,7 +39,8 @@ but it will still remain a major task. Furthermore, it would not be easy
 to share your work with others so that they can try it out.
 
 However, **there is a simpler way:** it is possible to run code with a
-modified syntax using import hooks.
+modified syntax using import hooks [*or, in some cases as shown later,
+using a custom codec*.]
 
 What is an import hook
 ----------------------
@@ -75,7 +86,7 @@ examples that can be used as starting points for new ideas.
 Instead of figuring out how to write an import hook, using ``ideas`` you
 can focus exclusively on what what might be needed to convert your proposed new
 syntax into something that Python can understand -- ``ideas`` will
-take care of the rest.
+take care of the rest, including inserting it in ``sys.meta_path``.
 
 .. warning::
 
@@ -150,7 +161,7 @@ about a PEP-8 violation? ...
 Ok, perhaps you can tell me and it might make sense to change what I wrote.
 
 **People from the Python-ideas mailing lists mentioned that I should look
-at this project for my idea, but I don't know where to start.**
+at this project for my suggestion for a new syntax, but I don't know where to start.**
 
 Just keep reading.
 
@@ -172,6 +183,7 @@ Quick links to topics
     Create your own <function_simplest>
     A deep dive <possible>
     About tokens <tokenize>
+    Tokenizing notebook <tokenize_notebook>
 
 .. toctree::
    :maxdepth: 1
@@ -195,10 +207,9 @@ Quick links to topics
 
 .. toctree::
    :maxdepth: 1
-   :caption: API
+   :caption: Other modules
 
     import_hook.py <import_hook>
-    token_utils.py <token_utils>
     console.py <console>
 
 
