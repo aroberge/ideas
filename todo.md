@@ -11,7 +11,6 @@ Infrequently updated list ...
     make an entry in sys.path so that two copies of this module are found,
     once under its name, and once under `__as__main__`
 
-- have a tokenizing option to remove all string contents and strip comments.
 - use decode_source instead of straight read
   - perhaps use a custom encoding (lambda?) as an example
 - use two different keywords for match: match_in and match_equal ?
@@ -37,3 +36,4 @@ Infrequently updated list ...
 
 - Have a look at https://mail.python.org/archives/list/python-ideas@python.org/message/CTTKN5F5UK2PUILSKEK6HAYEXZPQN5CM/ ... and https://mail.python.org/archives/list/python-ideas@python.org/message/BNEAOKFZ6OBXQMP37CLRMUPDEXAQJOCB/
 
+- Have a look at https://www.python.org/dev/peps/pep-0501/

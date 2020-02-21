@@ -1,6 +1,6 @@
 # ideas
 
-## *Easy creation of custom import hooks to try out new ideas for Python's syntax.*
+## *Ideas: making it easier to extend Python’s syntax.*
 
 ![ideas logo](https://raw.githubusercontent.com/aroberge/ideas/master/ideas.png)
 
@@ -38,8 +38,22 @@ square = function x: x**2
 print(f"{square(4)} is the square of 4.")
 ```
 
-There is already an example import hook that allows you to do so.
-To use it, you could start by creating the following program
+The simplest (but flawed) way to create such an import hook with `ideas`
+would be as follows:
+
+```python
+from ideas import import_hook
+
+def transform(source, **kwargs):
+    return source.replace("function", "lambda")
+
+import_hook.create_hook(transform_source=transform)
+```
+
+Then, you'd need to use it. Since there is already an example import hook
+that does this, we'll use it instead.  All you have to do
+is instruct Python to add your import hook and it will be used
+from that point on. Something like the following.
 
 ```python
 # Lets's call this 'loader.py'
@@ -58,18 +72,6 @@ python loader.py
 
 So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
-
-The simplest (but flawed) way to create such an import hook with `ideas`
-would be as follows:
-
-```python
-from ideas import import_hook
-
-def transform(source, **kwargs):
-    return source.replace("function", "lambda")
-
-import_hook.create_hook(transform_source=transform)
-```
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/), including a better way to create such an import hook and information about
 a console (REPL) that supports code transformations.

@@ -7,6 +7,7 @@ from ideas import token_utils
 def check(source):
     tokens = token_utils.tokenize(source)
     new_source = token_utils.untokenize(tokens)
+    print(len(source), len(new_source))
     assert source == new_source
 
 
@@ -62,7 +63,6 @@ def test_cpython_bug_35107():
     # Checking https://bugs.python.org/issue35107#msg328884
     check("#")
     check("#\n")
-
 
 source1 = "a = b"
 source2 = "a = b # comment\n"

@@ -1,27 +1,36 @@
 .. To avoid duplication, this is used both as a readme file for the
    function_simplest.py module and as contents of the documentation.
 
-Function - part 2
-==================
+Improving function as a keyword
+================================
 
-**Summary:** This builds upon our previous example of allowing
-``function`` to being equivalent to ``lambda``.
+.. admonition:: Summary
 
-This example demonstrates the use of:
+    This builds upon our previous example of allowing
+    ``function`` to being equivalent to ``lambda``.
 
-- Passing back parameters to an import hook and some possible usage.
+    This example demonstrates the use of passing back parameters
+    to an import hook and some possible usage.
 
 
 Actual source
 --------------
 
-Here's the content of our example.
+.. admonition:: This time only
+
+    For this example, we include the entire source in the documentation,
+    highlighting a few lines which we refer to in the explanation
+    below.
+    For the other examples, we will not include a complete listing of the
+    code as we do here, relying instead on Sphinx to generate the API
+    by extracting the docstring and linking to the source.
+
 
 .. literalinclude:: ../../ideas/examples/function_keyword.py
-   :emphasize-lines: 12-16,19,30-31,35-36,59
+   :emphasize-lines: 12-19,22,33-34,39-40,64
    :linenos:
 
-On lines 12 to 16, we defined a function that can be used to print
+On lines 12 to 19, we defined a function that can be used to print
 either the original code or the transformed one.
 This can be useful in debugging sessions. Once it has been written,
 there is essential no advantage in removing the code: we leave it
@@ -29,12 +38,12 @@ in so that other programmers wishing to build upon this example
 do not have to rewrite such code.
 
 Whether or not we invoke the diagnostic code is determined
-on lines 30-31, and 35-36.  The values of the relevant parameters
+on lines 33-34, and 39-40.  The values of the relevant parameters
 are actually set when we call the function to add a hook on
-line 59.
+line 64.
 
 In addition to these callback parameters, you might have noticed
-on line 19 the extra function argument ``**kwargs``.
+on line 22 the extra function argument ``**kwargs``.
 In addition to some parameters unique to each import hook,
 our import hook machinery returns some other parameters, such
 as the file name and others, which can be of use to some

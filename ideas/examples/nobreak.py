@@ -55,8 +55,7 @@ def nobreak_as_a_keyword(source):
             if first.start_col in indentations:
                 if indentations[first.start_col] in ["for", "while"]:
                     first.string = "else"
-        else:
-            indentations[first.start_col] = first.string
+        indentations[first.start_col] = first.string
         new_tokens.extend(line)
 
     return token_utils.untokenize(new_tokens)

@@ -101,6 +101,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#Getting-the-indentation-of-a-line">Getting the indentation of a line</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#Changing-information">Changing information</a></li>
 </ul>
 </li>
 </ul>
@@ -548,7 +549,7 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(4, 0)  end=(4, 0)  line=&#39;&#39;
 <h3>Getting tokens by line of code<a class="headerlink" href="#Getting-tokens-by-line-of-code" title="Permalink to this headline">¶</a></h3>
 <p>Once a source is broken down into token, it might be difficult to find some particular tokens of interest if we print the entire content. Instead, using <code class="docutils literal notranslate"><span class="pre">get_lines</span></code>, we can tokenize by line of code , and just focus on a few lines of interest.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -557,7 +558,7 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(4, 0)  end=(4, 0)  line=&#39;&#39;
 <span class="s2">    if False:</span>
 <span class="s2">        pass</span>
 <span class="s2">    else:</span>
-<span class="s2">        a = 1 # a comment</span>
+<span class="s2">        a = 42 # a comment</span>
 <span class="s2">print(&#39;ok&#39;)</span>
 <span class="s2">&quot;&quot;&quot;</span>
 <span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
@@ -578,12 +579,12 @@ type=1 (NAME)  string=&#39;else&#39;  start=(5, 4)  end=(5, 8)  line=&#39;    el
 type=53 (OP)  string=&#39;:&#39;  start=(5, 8)  end=(5, 9)  line=&#39;    else:\n&#39;
 type=4 (NEWLINE)  string=&#39;\n&#39;  start=(5, 9)  end=(5, 10)  line=&#39;    else:\n&#39;
 
-type=5 (INDENT)  string=&#39;        &#39;  start=(6, 0)  end=(6, 8)  line=&#39;        a = 1 # a comment\n&#39;
-type=1 (NAME)  string=&#39;a&#39;  start=(6, 8)  end=(6, 9)  line=&#39;        a = 1 # a comment\n&#39;
-type=53 (OP)  string=&#39;=&#39;  start=(6, 10)  end=(6, 11)  line=&#39;        a = 1 # a comment\n&#39;
-type=2 (NUMBER)  string=&#39;1&#39;  start=(6, 12)  end=(6, 13)  line=&#39;        a = 1 # a comment\n&#39;
-type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 14)  end=(6, 25)  line=&#39;        a = 1 # a comment\n&#39;
-type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 25)  end=(6, 26)  line=&#39;        a = 1 # a comment\n&#39;
+type=5 (INDENT)  string=&#39;        &#39;  start=(6, 0)  end=(6, 8)  line=&#39;        a = 42 # a comment\n&#39;
+type=1 (NAME)  string=&#39;a&#39;  start=(6, 8)  end=(6, 9)  line=&#39;        a = 42 # a comment\n&#39;
+type=53 (OP)  string=&#39;=&#39;  start=(6, 10)  end=(6, 11)  line=&#39;        a = 42 # a comment\n&#39;
+type=2 (NUMBER)  string=&#39;42&#39;  start=(6, 12)  end=(6, 14)  line=&#39;        a = 42 # a comment\n&#39;
+type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 15)  end=(6, 26)  line=&#39;        a = 42 # a comment\n&#39;
+type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 26)  end=(6, 27)  line=&#39;        a = 42 # a comment\n&#39;
 
 </pre></div></div>
 </div>
@@ -592,7 +593,7 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 25)  end=(6, 26)  line=&#39;   
 <h3>Getting particular tokens<a class="headerlink" href="#Getting-particular-tokens" title="Permalink to this headline">¶</a></h3>
 <p>Let’s focus on the sixth line.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -606,13 +607,13 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 25)  end=(6, 26)  line=&#39;   
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-        a = 1 # a comment
+        a = 42 # a comment
 
 </pre></div></div>
 </div>
 <p>Ignoring the indentation, the first token is <code class="docutils literal notranslate"><span class="pre">a</span></code>; ignoring newlines indicator and comments, the last token is <code class="docutils literal notranslate"><span class="pre">1</span></code>. We can get at these tokens using some utility functions.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -630,17 +631,17 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 25)  end=(6, 26)  line=&#39;   
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 The first useful token is:
-    type=1 (NAME)  string=&#39;a&#39;  start=(6, 8)  end=(6, 9)  line=&#39;        a = 1 # a comment\n&#39;
+    type=1 (NAME)  string=&#39;a&#39;  start=(6, 8)  end=(6, 9)  line=&#39;        a = 42 # a comment\n&#39;
 The index of the first token is:  1
 
 The last useful token on that line is:
-   type=2 (NUMBER)  string=&#39;1&#39;  start=(6, 12)  end=(6, 13)  line=&#39;        a = 1 # a comment\n&#39;
-Its index is 2
+   type=2 (NUMBER)  string=&#39;42&#39;  start=(6, 12)  end=(6, 14)  line=&#39;        a = 42 # a comment\n&#39;
+Its index is 3
 </pre></div></div>
 </div>
 <p>Note that these four functions, <code class="docutils literal notranslate"><span class="pre">get_first</span></code>, <code class="docutils literal notranslate"><span class="pre">get_first_index</span></code>, <code class="docutils literal notranslate"><span class="pre">get_last</span></code>, <code class="docutils literal notranslate"><span class="pre">get_last_index</span></code> exclude end of line comments by default; but this can be changed by setting the optional parameter <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -653,13 +654,13 @@ Its index is 2
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 14)  end=(6, 25)  line=&#39;        a = 1 # a comment\n&#39;
+type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 15)  end=(6, 26)  line=&#39;        a = 42 # a comment\n&#39;
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Getting-the-indentation-of-a-line">
 <h3>Getting the indentation of a line<a class="headerlink" href="#Getting-the-indentation-of-a-line" title="Permalink to this headline">¶</a></h3>
-<p>This particular line starts with an <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token. We can get the indentation of that line, either by printing the length of the <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token string, or by looking at the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token.</p>
+<p>This particular line starts with an <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token. We can get the indentation of that line, either by printing the length of the <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token string, or by looking at the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token. The attribute <code class="docutils literal notranslate"><span class="pre">start_col</span></code> is part of the two-tuple <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">=</span> <span class="pre">(start_row,</span> <span class="pre">start_col)</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -682,7 +683,7 @@ type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 14)  end=(6, 25)  lin
 </div>
 <p>In general, <strong>the second method is more reliable</strong>. For example, if we look at tokens the previous line (line 5, index 4), we can see that the length of the string of the first token, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, does not give us the information about the line indentation. Furthermore, a given line may start with multiple <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> tokens. However, once again, the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token can give us this value.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -711,6 +712,70 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(5, 9)  end=(5, 10)  line=&#39;    
 indentation =  4
 </pre></div></div>
 </div>
+</div>
+</div>
+<div class="section" id="Changing-information">
+<h2>Changing information<a class="headerlink" href="#Changing-information" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we give examples of changing the information, either by changing the string content, adding or removing tokens, or changing the indentation.</p>
+<p>We’ll first use the following transformations, modified from an actual example we give later:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>
+    <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">break</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+<p>which we aim to transform into the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">break</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+<p>While we could figure out the exact index/position of each token, we’ll use the functions introduced above as though we are searching in a larger piece of code.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">repeat forever:</span>
+<span class="s2">    until condition:</span>
+<span class="s2">        repeat while condition:</span>
+<span class="s2">            break</span>
+<span class="s2">        break</span>
+<span class="s2">    break</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+
+<span class="c1"># search for a line that has the &quot;repeat forever:&quot; pattern</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;repeat&quot;</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;forever&quot;</span><span class="p">:</span>
+            <span class="k">break</span>
+
+<span class="c1"># This case is a simple string replacement</span>
+<span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>   <span class="c1"># repeat -&gt; while</span>
+<span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+while True:
+
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -718,7 +783,6 @@ indentation =  4
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>

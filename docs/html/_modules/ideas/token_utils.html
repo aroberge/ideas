@@ -384,7 +384,11 @@
 
 <span class="sd">    Returns ``None`` if none is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">get_first_index</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="n">exclude_comment</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="o">-</span> <span class="mi">1</span>
+        <span class="o">-</span> <span class="n">get_first_index</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="n">exclude_comment</span><span class="p">)</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="dedent"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.dedent">[docs]</a><span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
@@ -405,9 +409,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tab</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
     <span class="k">return</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
 
