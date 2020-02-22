@@ -38,6 +38,7 @@ square = function x: x**2
 print(f"{square(4)} is the square of 4.")
 ```
 
+You can do this using an import hook.
 The simplest (but flawed) way to create such an import hook with `ideas`
 would be as follows:
 

@@ -68,6 +68,8 @@ class IdeasMetaFinder(MetaPathFinder):
         exec_=None,
         extensions=None,
         module_class=None,
+        prepend_source=None,
+        transform_ast=None,
         transform_source=None,
         verbose_finder=False,
     ):
@@ -78,13 +80,15 @@ class IdeasMetaFinder(MetaPathFinder):
         self.exec_ = exec_
         self.extensions = extensions
         self.module_class = module_class
+        self.prepend_source = prepend_source
+        self.transform_ast = transform_ast
         self.transform_source = transform_source
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
            its loader."""
         if not path:
-            return None
+            path = [os.getcwd()]
 
         if "." in fullname:
             name = fullname.split(".")[-1]
@@ -125,6 +129,8 @@ class IdeasMetaFinder(MetaPathFinder):
                     create_module=self.custom_create_module,
                     exec_=self.exec_,
                     module_class=self.module_class,
+                    prepend_source=self.prepend_source,
+                    transform_ast=self.transform_ast,
                     transform_source=self.transform_source,
                 ),
             )
@@ -143,6 +149,8 @@ class IdeasLoader(Loader):
         create_module=None,
         exec_=None,
         module_class=None,
+        prepend_source=None,
+        transform_ast=None,
         transform_source=None,
     ):
         self.filename = filename
@@ -150,6 +158,8 @@ class IdeasLoader(Loader):
         self.callback_params = callback_params
         self.custom_create_module = create_module
         self.module_class = module_class
+        self.prepend_source = prepend_source
+        self.transform_ast = transform_ast
         self.transform_source = transform_source
 
     def create_module(self, spec):
@@ -185,11 +195,17 @@ class IdeasLoader(Loader):
                 callback_params=self.callback_params,
             )
 
+        if self.prepend_source is not None:
+            source = self.prepend_source() + source
+
         try:
             tree = ast.parse(source, self.filename)
         except Exception as e:
             print("Exception raised while parsing source.")
             raise e
+
+        if self.transform_ast is not None:
+            tree = self.transform_ast(tree)
 
         try:
             code_object = compile(tree, self.filename, "exec")
@@ -222,6 +238,8 @@ def create_hook(
     first=True,
     module_class=None,
     name=None,
+    prepend_source=None,
+    transform_ast=None,
     transform_source=None,
     verbose_finder=False,
 ):
@@ -248,6 +266,8 @@ def create_hook(
         exec_=exec_,
         extensions=extensions,
         module_class=module_class,
+        prepend_source=prepend_source,
+        transform_ast=transform_ast,
         transform_source=transform_source,
         verbose_finder=verbose_finder,
     )
@@ -259,9 +279,13 @@ def create_hook(
 
     if transform_source is not None and isinstance(name, str):
         transform_source.__name__ = name
+    if transform_ast is not None and isinstance(name, str):
+        transform_ast.__name__ = name
     console.configure(
         callback_params=callback_params,
         console_dict=console_dict,
+        prepend_source=prepend_source,
+        transform_ast=transform_ast,
         transform_source=transform_source,
     )
 

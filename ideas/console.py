@@ -4,6 +4,7 @@ Adaptation of Python's console found in code.py so that it can be
 used with import hooks.
 """
 
+import ast
 import platform
 import os
 import sys
@@ -28,6 +29,8 @@ def configure(**kwargs):
 class IdeasConsole(InteractiveConsole):
     def __init__(
         self,
+        prepend_source=None,
+        transform_ast=None,
         transform_source=None,
         callback_params=None,
         console_dict=None,
@@ -35,6 +38,7 @@ class IdeasConsole(InteractiveConsole):
         """This class builds upon Python's code.InteractiveConsole
         so as to work with import hooks.
         """
+        self.transform_ast = transform_ast
         self.transform_source = transform_source
         self.callback_params = callback_params
 
@@ -43,6 +47,12 @@ class IdeasConsole(InteractiveConsole):
 
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
+
+        if prepend_source is not None:
+            try:
+                exec(prepend_source(), self.locals)
+            except Exception:
+                self.showtraceback()
 
     def push(self, line):
         """Push a line to the interpreter.
@@ -96,8 +106,19 @@ class IdeasConsole(InteractiveConsole):
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
         """
+
         try:
-            code = self.compile(source, filename, symbol)
+            tree = ast.parse(source, filename)
+        except (OverflowError, SyntaxError, ValueError):
+            # Case 1
+            self.showsyntaxerror(filename)
+            return False
+
+        if self.transform_ast is not None:
+            tree = self.transform_ast(tree)
+
+        try:
+            code = self.compile(tree, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
             self.showsyntaxerror(filename)
