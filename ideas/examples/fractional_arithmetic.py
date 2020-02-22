@@ -36,7 +36,7 @@ def range(n, *args):
 """
 
 
-def prepend_source():
+def source_init():
     import_fraction = "from fractions import Fraction\n"
     return import_fraction + new_range
 
@@ -44,9 +44,9 @@ def prepend_source():
 def add_hook(verbose_finder=False):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
-        prepend_source=prepend_source,
-        transform_ast=transform_ast,
         name=__name__,
+        source_init=source_init,
+        transform_ast=transform_ast,
         verbose_finder=verbose_finder,
     )
     return hook

@@ -29,7 +29,7 @@ def configure(**kwargs):
 class IdeasConsole(InteractiveConsole):
     def __init__(
         self,
-        prepend_source=None,
+        source_init=None,
         transform_ast=None,
         transform_source=None,
         callback_params=None,
@@ -48,9 +48,9 @@ class IdeasConsole(InteractiveConsole):
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
-        if prepend_source is not None:
+        if source_init is not None:
             try:
-                exec(prepend_source(), self.locals)
+                exec(source_init(), self.locals)
             except Exception:
                 self.showtraceback()
 
@@ -106,19 +106,8 @@ class IdeasConsole(InteractiveConsole):
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
         """
-
         try:
-            tree = ast.parse(source, filename)
-        except (OverflowError, SyntaxError, ValueError):
-            # Case 1
-            self.showsyntaxerror(filename)
-            return False
-
-        if self.transform_ast is not None:
-            tree = self.transform_ast(tree)
-
-        try:
-            code = self.compile(tree, filename, symbol)
+            code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
             self.showsyntaxerror(filename)
@@ -129,6 +118,13 @@ class IdeasConsole(InteractiveConsole):
             return True
 
         # Case 3
+
+        if self.transform_ast is not None:
+            # recreate code object, this time, with ast transform
+            tree = ast.parse(source, filename)
+            tree = self.transform_ast(tree)
+            code = compile(tree, filename, "exec")
+
         self.runcode(code)
         return False
 
@@ -156,6 +152,7 @@ class IdeasConsole(InteractiveConsole):
 
 def start():
     """Starts a console; modified from code.interact"""
+    global BANNER
     sys.ps1 = "~>> "
     if _CONFIG:
         print("Configuration values for the console:")
@@ -167,4 +164,10 @@ def start():
                     print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)
     console = IdeasConsole(**_CONFIG)
+
+    if console.transform_ast is not None:
+        BANNER += """
+AST transformations applied: you will need to explicitly
+call print() to see the result of a command.
+"""
     console.interact(banner=BANNER)

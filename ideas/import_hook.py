@@ -68,7 +68,7 @@ class IdeasMetaFinder(MetaPathFinder):
         exec_=None,
         extensions=None,
         module_class=None,
-        prepend_source=None,
+        source_init=None,
         transform_ast=None,
         transform_source=None,
         verbose_finder=False,
@@ -80,7 +80,7 @@ class IdeasMetaFinder(MetaPathFinder):
         self.exec_ = exec_
         self.extensions = extensions
         self.module_class = module_class
-        self.prepend_source = prepend_source
+        self.source_init = source_init
         self.transform_ast = transform_ast
         self.transform_source = transform_source
 
@@ -129,7 +129,7 @@ class IdeasMetaFinder(MetaPathFinder):
                     create_module=self.custom_create_module,
                     exec_=self.exec_,
                     module_class=self.module_class,
-                    prepend_source=self.prepend_source,
+                    source_init=self.source_init,
                     transform_ast=self.transform_ast,
                     transform_source=self.transform_source,
                 ),
@@ -149,7 +149,7 @@ class IdeasLoader(Loader):
         create_module=None,
         exec_=None,
         module_class=None,
-        prepend_source=None,
+        source_init=None,
         transform_ast=None,
         transform_source=None,
     ):
@@ -158,7 +158,7 @@ class IdeasLoader(Loader):
         self.callback_params = callback_params
         self.custom_create_module = create_module
         self.module_class = module_class
-        self.prepend_source = prepend_source
+        self.source_init = source_init
         self.transform_ast = transform_ast
         self.transform_source = transform_source
 
@@ -195,8 +195,8 @@ class IdeasLoader(Loader):
                 callback_params=self.callback_params,
             )
 
-        if self.prepend_source is not None:
-            source = self.prepend_source() + source
+        if self.source_init is not None:
+            source = self.source_init() + source
 
         try:
             tree = ast.parse(source, self.filename)
@@ -238,7 +238,7 @@ def create_hook(
     first=True,
     module_class=None,
     name=None,
-    prepend_source=None,
+    source_init=None,
     transform_ast=None,
     transform_source=None,
     verbose_finder=False,
@@ -266,7 +266,7 @@ def create_hook(
         exec_=exec_,
         extensions=extensions,
         module_class=module_class,
-        prepend_source=prepend_source,
+        source_init=source_init,
         transform_ast=transform_ast,
         transform_source=transform_source,
         verbose_finder=verbose_finder,
@@ -284,7 +284,7 @@ def create_hook(
     console.configure(
         callback_params=callback_params,
         console_dict=console_dict,
-        prepend_source=prepend_source,
+        source_init=source_init,
         transform_ast=transform_ast,
         transform_source=transform_source,
     )
