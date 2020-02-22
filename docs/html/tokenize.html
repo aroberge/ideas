@@ -93,7 +93,10 @@
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> About tokens</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#about-ideas-tokens">About Ideas’ tokens</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.token_utils">token_utils.py API extracted by Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.token_utils">token_utils.py API extracted by Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#token-utils-py">token_utils.py</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
@@ -106,12 +109,11 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
@@ -266,15 +268,25 @@ information.</p></li>
 <p>Unlike Python’s version, the process of tokenizing and untokenizing a source
 using ideas’ own <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> and <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> functions
 is guaranteed to yield back an exact copy of the original source, with all
-the spacing information intact with one exception: if the source ends
-with a line containing only space or tab characters, these will be lost
-by Python’s tokenizing procedure and will not be recovered when untokenizing.
-This caveat aside, experience has shown that being able to recover the
+the spacing information intact [*].
+Experience has shown that being able to recover the
 original source with spacing included is <strong>extremely</strong> useful when writing
 tests about the expected results for some source transformation.</p>
+<p>[*] With one exception: if the source <strong>ends</strong>
+with a line containing only space or tab characters, these will be lost
+by Python’s tokenizing procedure and will not be recovered when untokenizing:
+the last line will consists of a single <code class="docutils literal notranslate"><span class="pre">\n</span></code> character.</p>
 </div>
 <div class="section" id="about-ideas-tokens">
 <h2>About Ideas’ tokens<a class="headerlink" href="#about-ideas-tokens" title="Permalink to this headline">¶</a></h2>
+<p>Recently (Feb. 21, 2020), on the Python-ideas mailing list,
+<a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/message/UNL62EMSNPA5USUS7SCEQZQ63PVP2FDL/">Andrew Barnert wrote</a>:</p>
+<blockquote>
+<div><p><em>Unfortunately, the boilerplate to write an import hook is more complicated than you’d
+like (and pretty hard to figure out the first time),</em> <strong>and the support for filtering on the
+token stream (the most obvious way to do this one)</strong> [emphasis added]
+<em>rather than the text stream, AST, or bytecode is pretty minimal and clumsy.</em></p>
+</div></blockquote>
 <p><strong>Ideas</strong> defines its own <code class="docutils literal notranslate"><span class="pre">Token</span></code> class built from Python’s tokens.
 While they carry the same information, they are much easier to use and manipulate.</p>
 <p>Below is the API from the <code class="docutils literal notranslate"><span class="pre">token_utils</span></code> module.</p>
@@ -287,7 +299,8 @@ of its usage, done in an actual programming session using a Jupyter notebook.</p
 </div>
 <div class="section" id="module-ideas.token_utils">
 <span id="token-utils-py-api-extracted-by-sphinx"></span><h2>token_utils.py API extracted by Sphinx<a class="headerlink" href="#module-ideas.token_utils" title="Permalink to this headline">¶</a></h2>
-<p>token_utils.py</p>
+<div class="section" id="token-utils-py">
+<h3>token_utils.py<a class="headerlink" href="#token-utils-py" title="Permalink to this headline">¶</a></h3>
 <p>A collection of useful functions and methods to deal with tokenizing
 source code.</p>
 <dl class="class">
@@ -319,9 +332,21 @@ which also returns <code class="docutils literal notranslate"><span class="pre">
 </dd></dl>
 
 <dl class="method">
+<dt id="ideas.token_utils.Token.is_integer">
+<code class="sig-name descname">is_integer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#Token.is_integer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.Token.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token represents an integer</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="ideas.token_utils.Token.is_keyword">
 <code class="sig-name descname">is_keyword</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#Token.is_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.Token.is_keyword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the token represents a Python keyword.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ideas.token_utils.Token.is_number">
+<code class="sig-name descname">is_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#Token.is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.Token.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token represents a number</p>
 </dd></dl>
 
 <dl class="method">
@@ -442,6 +467,7 @@ strings; however, it will only insert them <em>as is</em> without taking them
 into account when it comes with figuring out spacing between tokens.</p>
 </dd></dl>
 
+</div>
 </div>
 </div>
 

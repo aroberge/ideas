@@ -100,12 +100,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
@@ -178,11 +177,13 @@
             
   <h1>Source code for ideas.console</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;console.py</span>
+<span class="sd">--------------</span>
 
 <span class="sd">Adaptation of Python&#39;s console found in code.py so that it can be</span>
 <span class="sd">used with import hooks.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -207,6 +208,8 @@
 <div class="viewcode-block" id="IdeasConsole"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole">[docs]</a><span class="k">class</span> <span class="nc">IdeasConsole</span><span class="p">(</span><span class="n">InteractiveConsole</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -214,6 +217,7 @@
         <span class="sd">&quot;&quot;&quot;This class builds upon Python&#39;s code.InteractiveConsole</span>
 <span class="sd">        so as to work with import hooks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="o">=</span> <span class="n">transform_ast</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
 
@@ -222,6 +226,12 @@
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="n">console_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">CONSOLE_NAME</span>
+
+        <span class="k">if</span> <span class="n">source_init</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">exec</span><span class="p">(</span><span class="n">source_init</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span>
 
 <div class="viewcode-block" id="IdeasConsole.push"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Push a line to the interpreter.</span>
@@ -287,6 +297,13 @@
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># Case 3</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># recreate code object, this time, with ast transform</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -314,6 +331,7 @@
 
 <div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">BANNER</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s2">&quot;~&gt;&gt; &quot;</span>
     <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration values for the console:&quot;</span><span class="p">)</span>
@@ -325,6 +343,12 @@
                     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2">: </span><span class="si">{_CONFIG[key]}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
     <span class="n">console</span> <span class="o">=</span> <span class="n">IdeasConsole</span><span class="p">(</span><span class="o">**</span><span class="n">_CONFIG</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">console</span><span class="o">.</span><span class="n">transform_ast</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">BANNER</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">AST transformations applied: you will need to explicitly</span>
+<span class="s2">call print() to see the result of a command.</span>
+<span class="s2">&quot;&quot;&quot;</span>
     <span class="n">console</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">BANNER</span><span class="p">)</span></div>
 </pre></div>
 

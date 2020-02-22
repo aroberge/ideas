@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function_simplest &mdash; ideas 0.0.4 documentation</title>
+  <title>ideas.examples.fractions_tok &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -160,7 +160,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>ideas.examples.function_simplest</li>
+      <li>ideas.examples.fractions_tok</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -175,31 +175,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ideas.examples.function_simplest</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;function_simplest.py</span>
-<span class="sd">-------------------------</span>
+  <h1>Source code for ideas.examples.fractions_tok</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;fractions_tok.py</span>
+<span class="sd">----------------</span>
 
-<span class="sd">This module enables someone to use ``function`` as a keyword</span>
-<span class="sd">equivalent to ``lambda``.</span>
+<span class="sd">Converts integers literals into instances of the Fraction class in</span>
+<span class="sd">the source using the tokenizer.</span>
+<span class="sd">This works for doing using Python exclusively to do integer arithmetics but it</span>
+<span class="sd">fails miserably in other contexts that expect ``int``.</span>
+
+<span class="sd">It is only meant as an alternative to the AST transformation demo.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../ast.html#ideas.examples.fractions_tok.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Replace integers by Fraction objects&quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;Fraction(</span><span class="si">{token.string}</span><span class="s2">)&quot;</span>
 
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+<span class="n">new_range</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">old_range = range</span>
+<span class="s2">def range(n, *args):</span>
+<span class="s2">    if len(args) == 0:</span>
+<span class="s2">        return old_range(int(n))</span>
+<span class="s2">    elif len(args) == 1:</span>
+<span class="s2">        return old_range(int(n), int(args[0]))</span>
+<span class="s2">    else:</span>
+<span class="s2">        return old_range(int(n), int(args[0]), int(args[1]))</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="source_init"><a class="viewcode-back" href="../../../ast.html#ideas.examples.fractions_tok.source_init">[docs]</a><span class="k">def</span> <span class="nf">source_init</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Adds required imports and function redefinitions&quot;&quot;&quot;</span>
+    <span class="n">import_fraction</span> <span class="o">=</span> <span class="s2">&quot;from fractions import Fraction</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">import_fraction</span> <span class="o">+</span> <span class="n">new_range</span></div>
+
+
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../ast.html#ideas.examples.fractions_tok.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">source_init</span><span class="o">=</span><span class="n">source_init</span><span class="p">,</span>
+        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>
 

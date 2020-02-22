@@ -100,12 +100,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
@@ -178,6 +177,7 @@
             
   <h1>Source code for ideas.token_utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;token_utils.py</span>
+<span class="sd">------------------</span>
 
 <span class="sd">A collection of useful functions and methods to deal with tokenizing</span>
 <span class="sd">source code.</span>
@@ -223,10 +223,9 @@
                 <span class="s2">&quot;A token can only be compared to another token or to a string.&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
 
 <div class="viewcode-block" id="Token.is_identifier"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_identifier">[docs]</a>    <span class="k">def</span> <span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns ``True`` if the token represents a valid Python identifier</span>
@@ -237,9 +236,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isidentifier</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_keyword</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
+<div class="viewcode-block" id="Token.is_integer"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_integer">[docs]</a>    <span class="k">def</span> <span class="nf">is_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents an integer&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Token.is_number"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_number">[docs]</a>    <span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a number&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">NUMBER</span></div>
 
 <div class="viewcode-block" id="Token.is_space"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.Token.is_space">[docs]</a>    <span class="k">def</span> <span class="nf">is_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if the token indicates a change in indentation,</span>

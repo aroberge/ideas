@@ -101,12 +101,11 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
@@ -205,6 +204,10 @@
       <ul>
         <li><a href="constants.html#ideas.examples.constants.add_hook">(in module ideas.examples.constants)</a>
 </li>
+        <li><a href="ast.html#ideas.examples.fractions_ast.add_hook">(in module ideas.examples.fractions_ast)</a>
+</li>
+        <li><a href="ast.html#ideas.examples.fractions_tok.add_hook">(in module ideas.examples.fractions_tok)</a>
+</li>
         <li><a href="french.html#ideas.examples.french.add_hook">(in module ideas.examples.french)</a>
 </li>
         <li><a href="function.html#ideas.examples.function_keyword.add_hook">(in module ideas.examples.function_keyword)</a>
@@ -268,6 +271,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ast.html#ideas.examples.fractions_ast.FractionWrapper">FractionWrapper (class in ideas.examples.fractions_ast)</a>
+</li>
       <li><a href="french.html#ideas.examples.french.french_to_english">french_to_english() (in module ideas.examples.french)</a>
 </li>
       <li><a href="function.html#ideas.examples.function_keyword.function_as_a_keyword">function_as_a_keyword() (in module ideas.examples.function_keyword)</a>
@@ -308,6 +313,10 @@
 </li>
       <li><a href="constants.html#module-ideas.examples.constants">ideas.examples.constants (module)</a>
 </li>
+      <li><a href="ast.html#module-ideas.examples.fractions_ast">ideas.examples.fractions_ast (module)</a>
+</li>
+      <li><a href="ast.html#module-ideas.examples.fractions_tok">ideas.examples.fractions_tok (module)</a>
+</li>
       <li><a href="french.html#module-ideas.examples.french">ideas.examples.french (module)</a>
 </li>
       <li><a href="function.html#module-ideas.examples.function_keyword">ideas.examples.function_keyword (module)</a>
@@ -336,7 +345,11 @@
 </li>
       <li><a href="tokenize.html#ideas.token_utils.Token.is_identifier">is_identifier() (ideas.token_utils.Token method)</a>
 </li>
+      <li><a href="tokenize.html#ideas.token_utils.Token.is_integer">is_integer() (ideas.token_utils.Token method)</a>
+</li>
       <li><a href="tokenize.html#ideas.token_utils.Token.is_keyword">is_keyword() (ideas.token_utils.Token method)</a>
+</li>
+      <li><a href="tokenize.html#ideas.token_utils.Token.is_number">is_number() (ideas.token_utils.Token method)</a>
 </li>
       <li><a href="tokenize.html#ideas.token_utils.Token.is_space">is_space() (ideas.token_utils.Token method)</a>
 </li>
@@ -408,10 +421,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="constants.html#ideas.examples.constants.FinalDict.setdefault">setdefault() (ideas.examples.constants.FinalDict method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="import_hook.html#ideas.import_hook.shorten_path">shorten_path() (in module ideas.import_hook)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ast.html#ideas.examples.fractions_ast.source_init">source_init() (in module ideas.examples.fractions_ast)</a>
+
+      <ul>
+        <li><a href="ast.html#ideas.examples.fractions_tok.source_init">(in module ideas.examples.fractions_tok)</a>
+</li>
+      </ul></li>
       <li><a href="console.html#ideas.console.start">start() (in module ideas.console)</a>
 </li>
   </ul></td>
@@ -424,10 +443,14 @@
 </li>
       <li><a href="tokenize.html#ideas.token_utils.tokenize">tokenize() (in module ideas.token_utils)</a>
 </li>
+      <li><a href="ast.html#ideas.examples.fractions_ast.transform_ast">transform_ast() (in module ideas.examples.fractions_ast)</a>
+</li>
       <li><a href="auto_self.html#ideas.examples.auto_self.transform_source">transform_source() (in module ideas.examples.auto_self)</a>
 
       <ul>
         <li><a href="constants.html#ideas.examples.constants.transform_source">(in module ideas.examples.constants)</a>
+</li>
+        <li><a href="ast.html#ideas.examples.fractions_tok.transform_source">(in module ideas.examples.fractions_tok)</a>
 </li>
         <li><a href="french.html#ideas.examples.french.transform_source">(in module ideas.examples.french)</a>
 </li>

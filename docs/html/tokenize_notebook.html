@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Function - part 2" href="function.html" />
+    <link rel="next" title="Improving function as a keyword" href="function.html" />
     <link rel="prev" title="About tokens" href="tokenize.html" /> 
 </head>
 
@@ -102,6 +102,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Changing-information">Changing information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Changing-indentation">Changing indentation</a></li>
 </ul>
 </li>
 </ul>
@@ -113,12 +114,11 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
@@ -188,7 +188,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -444,7 +444,14 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Tokenizing-notebook">
 <h1>Tokenizing notebook<a class="headerlink" href="#Tokenizing-notebook" title="Permalink to this headline">¶</a></h1>
-<p>Here, we demonstrate some usage of the tokenizing utility functions. The content is in two main sections. First, we demonstrate the usage of various functions to get information. Once this is done, we demonstrate how to change the content in a reliable way.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is from a Jupyter notebook used to demonstrate some usage of the tokenizing utility functions.
+The content is in two main sections. First, we demonstrate the
+usage of various functions to get information about the source. Once this is
+done, we demonstrate how to change the content in a reliable way.</p>
+</div>
+<p>First, the all important <code class="docutils literal notranslate"><span class="pre">import</span></code> statement.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -611,7 +618,7 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 26)  end=(6, 27)  line=&#39;   
 
 </pre></div></div>
 </div>
-<p>Ignoring the indentation, the first token is <code class="docutils literal notranslate"><span class="pre">a</span></code>; ignoring newlines indicator and comments, the last token is <code class="docutils literal notranslate"><span class="pre">1</span></code>. We can get at these tokens using some utility functions.</p>
+<p>Ignoring the indentation, the first token is <code class="docutils literal notranslate"><span class="pre">a</span></code>; ignoring newlines indicator and comments, the last token is <code class="docutils literal notranslate"><span class="pre">42</span></code>. We can get at these tokens using some utility functions.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -660,7 +667,7 @@ type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 15)  end=(6, 26)  lin
 </div>
 <div class="section" id="Getting-the-indentation-of-a-line">
 <h3>Getting the indentation of a line<a class="headerlink" href="#Getting-the-indentation-of-a-line" title="Permalink to this headline">¶</a></h3>
-<p>This particular line starts with an <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token. We can get the indentation of that line, either by printing the length of the <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token string, or by looking at the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token. The attribute <code class="docutils literal notranslate"><span class="pre">start_col</span></code> is part of the two-tuple <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">=</span> <span class="pre">(start_row,</span> <span class="pre">start_col)</span></code>.</p>
+<p>The sixth line starts with an <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token. We can get the indentation of that line, either by printing the length of the <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token string, or by looking at the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token. The attribute <code class="docutils literal notranslate"><span class="pre">start_col</span></code> is part of the two-tuple <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">=</span> <span class="pre">(start_row,</span> <span class="pre">start_col)</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -716,53 +723,27 @@ indentation =  4
 </div>
 <div class="section" id="Changing-information">
 <h2>Changing information<a class="headerlink" href="#Changing-information" title="Permalink to this headline">¶</a></h2>
-<p>In this section, we give examples of changing the information, either by changing the string content, adding or removing tokens, or changing the indentation.</p>
-<p>We’ll first use the following transformations, modified from an actual example we give later:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>
-    <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
-        <span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="k">break</span>
-    <span class="k">break</span>
+<p>Suppose we wish to do the following replacement</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span> <span class="o">--&gt;</span> <span class="k">for</span> <span class="n">some_variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 </pre></div>
 </div>
-<p>which we aim to transform into the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
-        <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="k">break</span>
-    <span class="k">break</span>
-</pre></div>
-</div>
-<p>While we could figure out the exact index/position of each token, we’ll use the functions introduced above as though we are searching in a larger piece of code.</p>
+<p>Here <code class="docutils literal notranslate"><span class="pre">n</span></code> might be anything that evaluates as an integer. Let’s see a couple of different ways to do this.</p>
+<p>First, we simply change the string content of two tokens.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">repeat forever:</span>
-<span class="s2">    until condition:</span>
-<span class="s2">        repeat while condition:</span>
-<span class="s2">            break</span>
-<span class="s2">        break</span>
-<span class="s2">    break</span>
-<span class="s2">&quot;&quot;&quot;</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;repeat 2 * 3 : &quot;</span>
 
-<span class="c1"># search for a line that has the &quot;repeat forever:&quot; pattern</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;repeat&quot;</span><span class="p">:</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;forever&quot;</span><span class="p">:</span>
-            <span class="k">break</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">repeat</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">colon</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 
-<span class="c1"># This case is a simple string replacement</span>
-<span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>   <span class="c1"># repeat -&gt; while</span>
-<span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+<span class="n">repeat</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;for some_variable in range(&quot;</span>
+<span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;):&quot;</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
 
 </pre></div>
 </div>
@@ -772,18 +753,172 @@ indentation =  4
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-while True:
-
+for some_variable in range( 2 * 3 ):
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p>Let’s revert back the change for the colon, to see a different way of doing the same thing.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<span></span><span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+for some_variable in range( 2 * 3 :
+</pre></div></div>
+</div>
+<p>This time, let’s <strong>insert</strong> an extra token, written as a simple Python string.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">colon_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">tokens</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">colon_index</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+type=1 (NAME)  string=&#39;for some_variable in range(&#39;  start=(1, 0)  end=(1, 6)  line=&#39;repeat 2 * 3 : &#39;
+type=2 (NUMBER)  string=&#39;2&#39;  start=(1, 7)  end=(1, 8)  line=&#39;repeat 2 * 3 : &#39;
+type=53 (OP)  string=&#39;*&#39;  start=(1, 9)  end=(1, 10)  line=&#39;repeat 2 * 3 : &#39;
+type=2 (NUMBER)  string=&#39;3&#39;  start=(1, 11)  end=(1, 12)  line=&#39;repeat 2 * 3 : &#39;
+)
+type=53 (OP)  string=&#39;:&#39;  start=(1, 13)  end=(1, 14)  line=&#39;repeat 2 * 3 : &#39;
+type=4 (NEWLINE)  string=&#39;&#39;  start=(1, 15)  end=(1, 16)  line=&#39;&#39;
+type=0 (ENDMARKER)  string=&#39;&#39;  start=(2, 0)  end=(2, 0)  line=&#39;&#39;
+</pre></div></div>
+</div>
+<p>In spite of <code class="docutils literal notranslate"><span class="pre">')'</span></code> being a normal Python string, it can still be processed correctly by the <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+for some_variable in range( 2 * 3) :
+</pre></div></div>
+</div>
+<p>Thus, unlike Python’s own untokenize function, we do not have to worry about token types when we wish to insert extra tokens.</p>
+</div>
+<div class="section" id="Changing-indentation">
+<h2>Changing indentation<a class="headerlink" href="#Changing-indentation" title="Permalink to this headline">¶</a></h2>
+<p>We can easily change the indentation of a given line using either the <code class="docutils literal notranslate"><span class="pre">indent</span></code> or <code class="docutils literal notranslate"><span class="pre">dedent</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">if True:</span>
+<span class="s2">    a = 1</span>
+<span class="s2">      b = 2</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># First, reducing the indentation of the &quot;b = 2&quot; line</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">a_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">a_line</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+<span class="n">b_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">b_line</span><span class="p">)</span>
+<span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">b_line</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">a_line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    a = 1
+
+    b = 2
+
+</pre></div></div>
+</div>
+<p>Alternatively, we can indent the “a = 1” line</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">a_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">a_line</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+<span class="n">b_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">b_line</span><span class="p">)</span>
+<span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">a_line</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">b_line</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+      a = 1
+
+      b = 2
+
+</pre></div></div>
+</div>
+<p>Finally, let’s recover the entire source with the fixed indentation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+if True:
+      a = 1
+      b = 2
+
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -796,7 +931,7 @@ while True:
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="function.html" class="btn btn-neutral float-right" title="Function - part 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -1,7 +1,7 @@
 @startuml
     :Search for file;
     note right #White
-        We can specify a different file type.
+        We can specify a different file type. See example **french**.
         <back:lightblue> We could specify different search locations.</back>
     end note
     :Return file spec & Loader;
@@ -21,30 +21,28 @@
         :Convert bytes into string;
     }
     #White: We can transform the source;
-    note right
+    note right #White
         This is the case for most of our examples.
         Starting from syntax that would be invalid
         in Python we need to make sure that it can
         parsed by Python.
-        ----
-        This step could be replaced by implementing
-        our own parser to generate an AST.
     end note
     partition AST {
         note right #LightBlue
            Substitution of this entire block
-           as a single unit is possible.
+           as a single unit could be done.
            No example exists yet.
         end note
         :Convert the source into a series of tokens;
         :Transform into a Concrete Parse Tree (CPT);
         :Transform the CPT into an Abstract Syntax Tree (AST);
     }
-    #LightBlue: We can modify the AST that was created;
+    #White: We can modify the AST that was created;
+    note right #White: See example **fractions_ast**
     partition Bytecode {
         note right #LightBlue
            Substitution of this entire block
-           as a single unit is possible.
+           as a single unit could be done.
            No example exists yet.
         end note
         :Transform AST into a Control Flow Graph (CFG);

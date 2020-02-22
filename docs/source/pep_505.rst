@@ -1,7 +1,0 @@
-PEP 505: None-aware operators
-=============================
-
-Implement this using the module developed by someone else (find link
-and give credit) which uses a normal function syntax.
-"All" that I need is a way to convert the proposed notation into
-the function syntax that already implements the idea.

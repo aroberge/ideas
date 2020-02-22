@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="token_utils.py" href="token_utils.html" />
+    <link rel="next" title="console.py" href="console.html" />
     <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
 </head>
 
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenize notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -102,20 +102,21 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Other modules</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> import_hook.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">import_hook.py</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -178,7 +179,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="token_utils.html" class="btn btn-neutral float-right" title="token_utils.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="console.html" class="btn btn-neutral float-right" title="console.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -216,10 +217,12 @@
 </style>
 <div class="section" id="module-ideas.import_hook">
 <span id="import-hook-py"></span><h1>import_hook.py<a class="headerlink" href="#module-ideas.import_hook" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>import_hook.py<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>This module contains the core functions required to create an import hook.</p>
 <dl class="class">
 <dt id="ideas.import_hook.IdeasLoader">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">source_init=None</em>, <em class="sig-param">transform_ast=None</em>, <em class="sig-param">transform_source=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>A custom loader which will transform the source prior to its execution</p>
 <dl class="method">
 <dt id="ideas.import_hook.IdeasLoader.create_module">
@@ -241,7 +244,7 @@ it is known to Python.</p>
 
 <dl class="class">
 <dt id="ideas.import_hook.IdeasMetaFinder">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasMetaFinder</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">excluded_paths=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">IdeasMetaFinder</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">excluded_paths=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">source_init=None</em>, <em class="sig-param">transform_ast=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder" title="Permalink to this definition">¶</a></dt>
 <dd><p>A custom finder to locate modules.  The main reason for this code
 is to ensure that our custom loader, which does the code transformations,
 is used.</p>
@@ -256,7 +259,7 @@ its loader.</p>
 
 <dl class="function">
 <dt id="ideas.import_hook.create_hook">
-<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">create_hook</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">console_dict=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">first=True</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.import_hook.</code><code class="sig-name descname">create_hook</code><span class="sig-paren">(</span><em class="sig-param">callback_params=None</em>, <em class="sig-param">create_module=None</em>, <em class="sig-param">console_dict=None</em>, <em class="sig-param">exec_=None</em>, <em class="sig-param">extensions=None</em>, <em class="sig-param">first=True</em>, <em class="sig-param">module_class=None</em>, <em class="sig-param">name=None</em>, <em class="sig-param">source_init=None</em>, <em class="sig-param">transform_ast=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to facilitate the creation of an import hook.</p>
 <p>It sets the parameters to be used by the import hook, and also
 does so for the interactive console.</p>
@@ -291,6 +294,7 @@ as:</p>
 </dd></dl>
 
 </div>
+</div>
 
 
            </div>
@@ -300,7 +304,7 @@ as:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="token_utils.html" class="btn btn-neutral float-right" title="token_utils.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="console.html" class="btn btn-neutral float-right" title="console.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

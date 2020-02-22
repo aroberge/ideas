@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simple AST transformation &mdash; ideas 0.0.4 documentation</title>
+  <title>Fractional math &mdash; ideas 0.0.4 documentation</title>
   
 
   
@@ -92,7 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenize notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
@@ -102,20 +102,22 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Fractional math</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fractions-ast-py">fractions_ast.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fractions-tok-py">fractions_tok.py</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -162,7 +164,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Simple AST transformation</li>
+      <li>Fractional math</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -214,9 +216,176 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="simple-ast-transformation">
-<h1>Simple AST transformation<a class="headerlink" href="#simple-ast-transformation" title="Permalink to this headline">¶</a></h1>
-<p>Use the AST  nihack from Andrew Barnert as an example.</p>
+<div class="section" id="fractional-math">
+<h1>Fractional math<a class="headerlink" href="#fractional-math" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<ul class="simple">
+<li><p>Demonstrates how to use an import hook that does an AST transformation</p></li>
+<li><p>Demonstrates how to add code to initialize a module or the console
+with necessary imports and/or function definitions.</p></li>
+</ul>
+</div>
+<p>Consider the following standard Python code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0.0</span>
+<span class="go">0.1</span>
+<span class="go">0.2</span>
+<span class="go">0.30000000000000004</span>
+<span class="go">0.4</span>
+<span class="go">0.5</span>
+<span class="go">0.6000000000000001</span>
+<span class="go">0.7000000000000001</span>
+<span class="go">0.8</span>
+<span class="go">0.9</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>This is quite surprising for beginners, not familiar with the
+limitations of representing floating point numbers.</p>
+<p>However, we can “fix” this using an import hook that performs
+and Abstract Syntax Tree (AST) transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">fractions_ast</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">fractions_ast</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    source_init from source_init</span>
+<span class="go">    transform_ast from ideas.examples.fractions_ast</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
+
+<span class="go">AST transformations applied: you will need to explicitly</span>
+<span class="go">call print() to see the result of a command.</span>
+
+<span class="go">~&gt;&gt; x = 1 / 10</span>
+<span class="go">~&gt;&gt; for i in range(11):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0</span>
+<span class="go">1/10</span>
+<span class="go">1/5</span>
+<span class="go">3/10</span>
+<span class="go">2/5</span>
+<span class="go">1/2</span>
+<span class="go">3/5</span>
+<span class="go">7/10</span>
+<span class="go">4/5</span>
+<span class="go">9/10</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>We can also achieve the same result using an import hook that
+does a simple source transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">fractions_tok</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">fractions_tok</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    source_init from source_init</span>
+<span class="go">    transform_source from ideas.examples.fractions_tok</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
+
+<span class="go">~&gt;&gt; x = 1 / 10</span>
+<span class="go">~&gt;&gt; for i in range(11):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0</span>
+<span class="go">1/10</span>
+<span class="go">1/5</span>
+<span class="go">3/10</span>
+<span class="go">2/5</span>
+<span class="go">1/2</span>
+<span class="go">3/5</span>
+<span class="go">7/10</span>
+<span class="go">4/5</span>
+<span class="go">9/10</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>The difference between the two is that, using the source transformation,
+the REPL behaves as expected, printing out any unassigned result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~&gt;&gt;</span> <span class="c1"># fractions_tok</span>
+<span class="o">~&gt;&gt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+<span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="o">~&gt;&gt;</span>
+</pre></div>
+</div>
+<p>However, this is not the case using the AST-based approach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~&gt;&gt;</span> <span class="c1"># fractions_ast</span>
+<span class="o">~&gt;&gt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+<span class="o">~&gt;&gt;</span>
+</pre></div>
+</div>
+<p>In fact, even the underscore, <cite>_</cite>, does not have its usual meaning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~&gt;&gt;</span> <span class="c1"># fractions_ast</span>
+<span class="o">~&gt;&gt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+<span class="o">~&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ideas</span><span class="o">.</span><span class="n">import_hook</span><span class="o">.</span><span class="n">IdeasMetaFinder</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x02E42030</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<span class="target" id="module-ideas.examples.fractions_ast"></span><div class="section" id="fractions-ast-py">
+<h2>fractions_ast.py<a class="headerlink" href="#fractions-ast-py" title="Permalink to this headline">¶</a></h2>
+<p>Converts integers literals into instances of the Fraction class at the
+Abstract Syntax Tree level.
+This works for doing using Python exclusively to do integer arithmetics but it
+fails miserably in other contexts that expect <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+<p>It is only meant as a demo of AST transformations.</p>
+<dl class="class">
+<dt id="ideas.examples.fractions_ast.FractionWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.fractions_ast.</code><code class="sig-name descname">FractionWrapper</code><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#FractionWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_ast.FractionWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps all integers in a call to Integer()</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.fractions_ast.add_hook">
+<code class="sig-prename descclassname">ideas.examples.fractions_ast.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_ast.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.fractions_ast.source_init">
+<code class="sig-prename descclassname">ideas.examples.fractions_ast.</code><code class="sig-name descname">source_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#source_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_ast.source_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds required imports and function redefinitions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.fractions_ast.transform_ast">
+<code class="sig-prename descclassname">ideas.examples.fractions_ast.</code><code class="sig-name descname">transform_ast</code><span class="sig-paren">(</span><em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#transform_ast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_ast.transform_ast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms the Abstract Syntax Tree</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-ideas.examples.fractions_tok"></span><div class="section" id="fractions-tok-py">
+<h2>fractions_tok.py<a class="headerlink" href="#fractions-tok-py" title="Permalink to this headline">¶</a></h2>
+<p>Converts integers literals into instances of the Fraction class in
+the source using the tokenizer.
+This works for doing using Python exclusively to do integer arithmetics but it
+fails miserably in other contexts that expect <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+<p>It is only meant as an alternative to the AST transformation demo.</p>
+<dl class="function">
+<dt id="ideas.examples.fractions_tok.add_hook">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.fractions_tok.source_init">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">source_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds required imports and function redefinitions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.fractions_tok.transform_source">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace integers by Fraction objects</p>
+</dd></dl>
+
+</div>
 </div>
 
 

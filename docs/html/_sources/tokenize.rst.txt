@@ -50,15 +50,27 @@ The main points to understand:
     Unlike Python's version, the process of tokenizing and untokenizing a source
     using ideas' own ``tokenize`` and ``untokenize`` functions
     is guaranteed to yield back an exact copy of the original source, with all
-    the spacing information intact with one exception: if the source ends
-    with a line containing only space or tab characters, these will be lost
-    by Python's tokenizing procedure and will not be recovered when untokenizing.
-    This caveat aside, experience has shown that being able to recover the
+    the spacing information intact [*].
+    Experience has shown that being able to recover the
     original source with spacing included is **extremely** useful when writing
     tests about the expected results for some source transformation.
 
+    [*] With one exception: if the source **ends**
+    with a line containing only space or tab characters, these will be lost
+    by Python's tokenizing procedure and will not be recovered when untokenizing:
+    the last line will consists of a single ``\n`` character.
+
 About Ideas' tokens
 -------------------
+
+Recently (Feb. 21, 2020), on the Python-ideas mailing list,
+`Andrew Barnert wrote <https://mail.python.org/archives/list/python-ideas@python.org/message/UNL62EMSNPA5USUS7SCEQZQ63PVP2FDL/>`_:
+
+    *Unfortunately, the boilerplate to write an import hook is more complicated than you’d
+    like (and pretty hard to figure out the first time),* **and the support for filtering on the
+    token stream (the most obvious way to do this one)** [emphasis added]
+    *rather than the text stream, AST, or bytecode is pretty minimal and clumsy.*
+
 
 **Ideas** defines its own ``Token`` class built from Python's tokens.
 While they carry the same information, they are much easier to use and manipulate.

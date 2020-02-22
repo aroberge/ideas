@@ -97,7 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenize notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -107,20 +107,18 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Simple AST transformation - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pep_505.html"> PEP 505: None-aware operators - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="token_utils.html"> token_utils.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
@@ -221,17 +219,24 @@
 </style>
 <div class="section" id="additional-motivation-for-this-project">
 <h1>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-the-f-thing-and-the-walrus admonition">
-<p class="admonition-title">The f-thing and the walrus</p>
 <p>While ideas such as the f-strings and <strong>especially</strong> the walrus operator
 were discussed on Python-ideas and similar places, many people were
-opposed to them being added to Python.</p>
-<p>However, once it became possible to write code using them, it seems that
+opposed to them being added to Python. This likely lead to the
+following explanation added in <a class="reference external" href="https://www.python.org/dev/peps/pep-0572/#the-importance-of-real-code">PEP 572</a>:</p>
+<blockquote>
+<div><p><strong>The importance of real code</strong></p>
+<p><em>During the development of this PEP many people (supporters and critics both) have had a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.</em></p>
+<p><em>The danger of toy examples is twofold: they are often too abstract to make anyone go “ooh, that’s compelling”, and they are easily refuted with “I would never write it that way anyway”.</em></p>
+<p><em>The danger of overly complex examples is that they provide a convenient strawman for critics of the proposal to shoot down (“that’s obfuscated”).</em></p>
+<p><em>Yet there is some use for both extremely simple and extremely complex examples: they are helpful to clarify the intended semantics.</em></p>
+</div></blockquote>
+<p>However, once it became possible for programmers to write their own code using
+either the f-strings or the walrus operator instead of just reading
+examples from PEP 572, it seems that
 everyone became enthusiastic about them.</p>
 <p><strong>If only it were possible to write short programs using currently invalid
 syntax to truly get a feel for it rather than just complaining based
-on reading a few examples …</strong></p>
-</div>
+on reading a few examples.</strong>  This is what <strong>ideas</strong> can help accomplish.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can skip the rest of this section if you already know that you want to

@@ -1,18 +1,32 @@
 Additional motivation for this project
 =======================================
 
-.. admonition:: The f-thing and the walrus
 
-    While ideas such as the f-strings and **especially** the walrus operator
-    were discussed on Python-ideas and similar places, many people were
-    opposed to them being added to Python.
+While ideas such as the f-strings and **especially** the walrus operator
+were discussed on Python-ideas and similar places, many people were
+opposed to them being added to Python. This likely lead to the
+following explanation added in `PEP 572 <https://www.python.org/dev/peps/pep-0572/#the-importance-of-real-code>`_:
 
-    However, once it became possible to write code using them, it seems that
-    everyone became enthusiastic about them.
 
-    **If only it were possible to write short programs using currently invalid
-    syntax to truly get a feel for it rather than just complaining based
-    on reading a few examples ...**
+    **The importance of real code**
+
+    *During the development of this PEP many people (supporters and critics both) have had a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.*
+
+    *The danger of toy examples is twofold: they are often too abstract to make anyone go "ooh, that's compelling", and they are easily refuted with "I would never write it that way anyway".*
+
+    *The danger of overly complex examples is that they provide a convenient strawman for critics of the proposal to shoot down ("that's obfuscated").*
+
+    *Yet there is some use for both extremely simple and extremely complex examples: they are helpful to clarify the intended semantics.*
+
+
+However, once it became possible for programmers to write their own code using
+either the f-strings or the walrus operator instead of just reading
+examples from PEP 572, it seems that
+everyone became enthusiastic about them.
+
+**If only it were possible to write short programs using currently invalid
+syntax to truly get a feel for it rather than just complaining based
+on reading a few examples.**  This is what **ideas** can help accomplish.
 
 
 .. tip::

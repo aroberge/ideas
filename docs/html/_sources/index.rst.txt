@@ -195,12 +195,11 @@ Quick links to topics
     French Python - to do <french>
     Auto-self <auto_self>
     repeat as a keyword <repeat>
-    Simple AST transformation - to do <ast>
+    Fractional math <ast>
     Simple bytecode transformation - todo <bytecode>
     Pythonic switch statement - to do  <switch>
     True constants <constants>
     Json module - todo  <json>
-    PEP 505: None-aware operators - to do  <pep_505>
     Import from non-standard locations - to do  <non_files>
     Importing a module as main - to do <as_main>
     Examples never included - first draft<excluded>
