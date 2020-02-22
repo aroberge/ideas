@@ -44,10 +44,9 @@ class Token:
                 "A token can only be compared to another token or to a string."
             )
 
-    def is_keyword(self):
-        """Returns True if the token represents a Python keyword.
-        """
-        return keyword.iskeyword(self.string)
+    def is_comment(self):
+        """Returns True if the token is a comment."""
+        return self.type == py_tokenize.COMMENT
 
     def is_identifier(self):
         """Returns ``True`` if the token represents a valid Python identifier
@@ -58,9 +57,17 @@ class Token:
         """
         return self.string.isidentifier() and not self.is_keyword()
 
-    def is_comment(self):
-        """Returns True if the token is a comment."""
-        return self.type == py_tokenize.COMMENT
+    def is_integer(self):
+        """Returns True if the token represents an integer"""
+        return self.is_number() and self.string.isdigit()
+
+    def is_keyword(self):
+        """Returns True if the token represents a Python keyword."""
+        return keyword.iskeyword(self.string)
+
+    def is_number(self):
+        """Returns True if the token represents a number"""
+        return self.type == py_tokenize.NUMBER
 
     def is_space(self):
         """Returns True if the token indicates a change in indentation,

@@ -1,27 +1,19 @@
-"""Converts integers literals into instances of the Fraction class at the
-Abstract Syntax Tree level.
+"""Converts integers literals into instances of the Fraction class in
+the source using the tokenizer.
 This works for doing using Python exclusively to do integer arithmetics but it
 fails miserably in other contexts that expect ``int``s.
- It is only meant as a demo of AST transformations.
+ It is only meant as an alternative to the AST transformation demo.
 """
-import ast
-
-from ideas import import_hook
+from ideas import import_hook, token_utils
 
 
-class FractionWrapper(ast.NodeTransformer):
-    """Wraps all integers in a call to Integer()"""
-    def visit_Num(self, node):
-        if isinstance(node.n, int):
-            return ast.Call(func=ast.Name(id='Fraction', ctx=ast.Load()),
-                            args=[node], keywords=[])
-        return node
+def transform_source(source, **kwargs):
+    tokens = token_utils.tokenize(source)
+    for token in tokens:
+        if token.is_integer():
+            token.string = f"Fraction({token.string})"
 
-
-def transform_ast(tree):
-    tree = FractionWrapper().visit(tree)
-    ast.fix_missing_locations(tree)
-    return tree
+    return token_utils.untokenize(tokens)
 
 
 new_range = """
@@ -47,7 +39,7 @@ def add_hook(verbose_finder=False):
     hook = import_hook.create_hook(
         name=__name__,
         source_init=source_init,
-        transform_ast=transform_ast,
+        transform_source=transform_source,
         verbose_finder=verbose_finder,
     )
     return hook
