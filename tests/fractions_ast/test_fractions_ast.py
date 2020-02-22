@@ -1,9 +1,9 @@
-from ideas.examples import fractional_arithmetic
+from ideas.examples import fractions_ast
 from ideas.import_hook import remove_hook
 
 
 def test_simple_addition():
-    hook = fractional_arithmetic.add_hook()
+    hook = fractions_ast.add_hook()
 
     try:
         import addition  # for testing only this file
