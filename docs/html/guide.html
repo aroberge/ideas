@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pythonic switch statement &mdash; ideas 0.0.6 documentation</title>
+  <title>Guide to the examples &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="λ encoding" href="lambda.html" />
-    <link rel="prev" title="True constants" href="constants.html" /> 
+    <link rel="next" title="Improving function as a keyword" href="function.html" />
+    <link rel="prev" title="Tokenizing notebook" href="tokenize_notebook.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,7 +96,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Guide to the examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
@@ -105,7 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -158,13 +158,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Pythonic switch statement</li>
+      <li>Guide to the examples</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/switch.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -174,10 +174,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="constants.html" class="btn btn-neutral float-left" title="True constants" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenizing notebook" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -210,12 +210,39 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="pythonic-switch-statement">
-<h1>Pythonic switch statement<a class="headerlink" href="#pythonic-switch-statement" title="Permalink to this headline">¶</a></h1>
-<p>Implement differently my previous Pythonic switch statement</p>
-<p><a class="reference external" href="https://aroberge.blogspot.com/2018/06/pythonic-switch-statement.html">https://aroberge.blogspot.com/2018/06/pythonic-switch-statement.html</a></p>
-<p>However, change the code to prevent fall through from one
-case to the next unless explicitly specified with a <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement.</p>
+<div class="section" id="guide-to-the-examples">
+<h1>Guide to the examples<a class="headerlink" href="#guide-to-the-examples" title="Permalink to this headline">¶</a></h1>
+<p>The examples included are listed roughly in increasing level of
+complexity.</p>
+<p><strong>Improving function as a keyword</strong> should be your starting point.
+We show how to use the tokenizer to transform a source and explain
+how to make use of some diagnostic “tools”. Admittedly, using
+these “tools” make the code more complicated than strictly needed.
+Since we incorporate such “tools” in later examples, you might want
+to be familiar with them so that you can learn to recognize and potentially
+ignore them while looking at the actual code.</p>
+<p><strong>nobreak as a keyword</strong> shows how to keep track of indentation
+level and only replace a keyword when some conditions are met.</p>
+<p><strong>repeat as a keyword</strong> includes four different transformations,
+one of which requires to add some extra variables to the original code.
+We do so in a way that avoid any conflict with existing variable names.</p>
+<p><strong>French Python</strong> is a source transformation that allows one
+to use French equivalent keywords to the existing ones.
+It is included mostly for historical reason.</p>
+<p><strong>Auto-self</strong> is an example of a syntax that is intended to reduce
+boiler-plate code when initializing a class instance.
+The code transformation is more complex than the previous ones and
+include a change of indentation of an entire block of code.</p>
+<p>All of the previous examples are done as source transformation.
+However, we can do other types of transformations.</p>
+<p><strong>Fractional math</strong> is a proof-of-concept of a transformation
+at the Abstract Syntax Tree level.</p>
+<p><strong>Confused math</strong> is a proof-of-concept bytecode transformation.</p>
+<p><strong>True constants</strong> is a fairly complex example that illustrates
+the use of a custom module dict and class.</p>
+<p>Finally, import hooks are not the only way one can transform a source; this
+can also be done by custom codecs as demonstrated in
+<strong>λ encoding</strong>.</p>
 </div>
 
 
@@ -226,10 +253,10 @@ case to the next unless explicitly specified with a <code class="docutils litera
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="constants.html" class="btn btn-neutral float-left" title="True constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenizing notebook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Improving function as a keyword &mdash; ideas 0.0.5 documentation</title>
+  <title>Improving function as a keyword &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="λ encoding" href="lambda.html" />
-    <link rel="prev" title="Tokenizing notebook" href="tokenize_notebook.html" /> 
+    <link rel="next" title="nobreak as a keyword" href="nobreak.html" />
+    <link rel="prev" title="Guide to the examples" href="guide.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.5
+                0.0.6
               </div>
             
           
@@ -96,14 +96,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Improving function as a keyword</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#actual-source">Actual source</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#function-keyword-py">function_keyword.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-a-complete-example">Building a complete example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verbose-finder">Verbose finder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-the-original-and-the-transformed-source">Comparing the original and the transformed source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#function-keyword-py">function_keyword.py</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -112,6 +116,7 @@
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -179,10 +184,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenizing notebook" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="guide.html" class="btn btn-neutral float-left" title="Guide to the examples" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -224,165 +229,98 @@
 <p>This example demonstrates the use of passing back parameters
 to an import hook and some possible usage.</p>
 </div>
-<div class="section" id="actual-source">
-<h2>Actual source<a class="headerlink" href="#actual-source" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-this-time-only admonition">
-<p class="admonition-title">This time only</p>
-<p>For this example, we include the entire source in the documentation,
-highlighting a few lines which we refer to in the explanation
-below.
-For the other examples, we will not include a complete listing of the
-code as we do here, relying instead on Sphinx to generate the API
-by extracting the docstring and linking to the source.</p>
+<p>Basic usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">my_program</span>
+</pre></div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">function_keyword.py</span>
-<span class="sd">-------------------</span>
+<div class="section" id="building-a-complete-example">
+<h2>Building a complete example<a class="headerlink" href="#building-a-complete-example" title="Permalink to this headline">¶</a></h2>
+<p>In addition to making it easy to create import hooks, <strong>ideas</strong> also
+attempts to make it easy to include diagnostic “tools”.
+The <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> example, whose API listed below includes
+links to the actual source, includes such “tools”.
+While they can help during development, they do admitedly make
+the code more complicated.  If you want to create your own hook,
+you do not have to include all possible features.</p>
+<p>For example, here is a much simpler version, functionally
+equivalent the <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> example,
+but without some diagnostic options included:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
-<span class="sd">This module enables someone to use ``function`` as a keyword</span>
-<span class="sd">   equivalent to ``lambda``.</span>
-
-<span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
-<span class="sd">   demonstrates how we can pass parameters when adding an import hook;</span>
-<span class="sd">   these parameters will be passed back to our function</span>
-<span class="sd">   ``transform_source``.</span>
-<span class="hll"><span class="sd">&quot;&quot;&quot;</span>
-</span><span class="hll"><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
-</span><span class="hll">
-</span><span class="hll">
-</span><span class="hll"><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-</span><span class="hll">    <span class="sd">&quot;&quot;&quot;Prints the source code.</span>
-</span><span class="hll">
-</span><span class="hll"><span class="sd">    ``kind`` is usually either ``&quot;Original&quot;`` or ``&quot;Transformed&quot;``</span>
-</span><span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
-<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
-<span class="sd">       that we specified when we created the import hook.</span>
+<span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the unused <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> in the definition of <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>:
+you should ensure to add something similar when creating your own import hook
+even if you do not plan to make use of extra parameters.</p>
+<div class="section" id="verbose-finder">
+<h3>Verbose finder<a class="headerlink" href="#verbose-finder" title="Permalink to this headline">¶</a></h3>
+<p>Suppose you want to see information about names and paths of
+files that are searched by your Finder: you can do this by adding
+an extra parameter to <code class="docutils literal notranslate"><span class="pre">add_hook</span></code> and
+<code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
-<span class="sd">       It gives us the option to compare the original source and the transformed</span>
-<span class="sd">       one. This type of additional option can be useful when debugging</span>
-<span class="sd">       a source transformer. Furthermore, if we wish to define a source</span>
-<span class="hll"><span class="sd">       transformation that combines the effect of multiple existing</span>
-</span><span class="hll"><span class="sd">       transformations, we can combine the existing &quot;inner&quot; functions to</span>
-</span><span class="sd">       create our new transformation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Here’s a sample session from a different example, where the import hook
+is looking for files with a custom extension:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">french</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Looking for files with extensions:  [&#39;.pyfr&#39;]</span>
+<span class="go">The following paths will not be included in the search:</span>
+<span class="go">   PYTHON: == c:\users\andre\appdata\local\programs\python\python37-32\lib</span>
+<span class="go">   IDEAS: == c:\users\andre\github\ideas\ideas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mon_programme</span>
+<span class="go">    Searching for TESTS:\french\mon_programme.pyfr.</span>
+<span class="go">-&gt;  Found:  TESTS:\french\mon_programme.pyfr</span>
+
+<span class="go">    Searching for TESTS:\french\unicodedata.pyfr.</span>
+<span class="go">  IdeasMetaFinder did not find unicodedata.</span>
+</pre></div>
+</div>
+<p>The last file that was needed was <code class="docutils literal notranslate"><span class="pre">unicodedata.py</span></code> from the Python
+standard library; it was found by a “normal” finder used by Python.</p>
+</div>
+<div class="section" id="comparing-the-original-and-the-transformed-source">
+<h3>Comparing the original and the transformed source<a class="headerlink" href="#comparing-the-original-and-the-transformed-source" title="Permalink to this headline">¶</a></h3>
+<p>It might be sometimes useful to compare the original source with
+the transformed one. Instead of actually adding <code class="docutils literal notranslate"><span class="pre">print</span></code> statements
+when needed, we can use some callback parameters to enable or disable
+such <code class="docutils literal notranslate"><span class="pre">print</span></code> statemeent.  <strong>ideas</strong> makes it fairly easy to
+do this using callback parameters.
+Here’s the basic pattern used in almost all the examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
-<span class="hll">            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-</span><span class="hll">
-</span>    <span class="n">source</span> <span class="o">=</span> <span class="n">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+
+    <span class="n">new_source</span> <span class="o">=</span> <span class="n">do_transform</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
-            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">source</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_source</span>
 
 
-<span class="k">def</span> <span class="nf">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.</span>
-
-<span class="sd">    Note that, while the string ``lambda`` is shorter than ``function``, we</span>
-<span class="sd">    do not adjust the information (start_col, end_col) about the position</span>
-<span class="sd">    of the token. ``untokenize`` uses that information together with the</span>
-<span class="sd">    information about each original line, to properly keep track of the</span>
-<span class="sd">    spacing between tokens.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-<span class="hll">    <span class="n">new_source</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">new_source</span>
-
-
-<span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
         <span class="s2">&quot;show_transformed&quot;</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
@@ -390,31 +328,12 @@ by extracting the docstring and linking to the source.</p>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
-        <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span>
 </pre></div>
-</td></tr></table></div>
-<p>On lines 12 to 19, we defined a function that can be used to print
-either the original code or the transformed one.
-This can be useful in debugging sessions. Once it has been written,
-there is essential no advantage in removing the code: we leave it
-in so that other programmers wishing to build upon this example
-do not have to rewrite such code.</p>
-<p>Whether or not we invoke the diagnostic code is determined
-on lines 33-34, and 39-40.  The values of the relevant parameters
-are actually set when we call the function to add a hook on
-line 64.</p>
-<p>In addition to these callback parameters, you might have noticed
-on line 22 the extra function argument <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>.
-In addition to some parameters unique to each import hook,
-our import hook machinery returns some other parameters, such
-as the file name and others, which can be of use to some
-transformers.  As a rule, every function that can be called
-by the import hook machinery should include such an
-unspecified argument.</p>
-<p>Here’s an example using one such parameter:</p>
+</div>
+<p>Here’s an actual example using one such parameter to show the transformed
+source:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_transformed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
@@ -437,12 +356,19 @@ unspecified argument.</p>
 <span class="go">~&gt;&gt;</span>
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You do not need to make use of these extra features when
+creating your own hooks.</p>
+</div>
+<p>If you want to have a look at the actual source for <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code>,
+use the links below.</p>
 <div class="sidebar">
 <p class="sidebar-title">API</p>
 <p>Generated by Sphinx</p>
 </div>
 <span class="target" id="module-ideas.examples.function_keyword"></span><div class="section" id="function-keyword-py">
-<h3>function_keyword.py<a class="headerlink" href="#function-keyword-py" title="Permalink to this headline">¶</a></h3>
+<h4>function_keyword.py<a class="headerlink" href="#function-keyword-py" title="Permalink to this headline">¶</a></h4>
 <dl>
 <dt>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword</dt><dd><p>equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <p>It is slightly more complicated than <code class="docutils literal notranslate"><span class="pre">function_simplest.py</span></code> as it
@@ -491,6 +417,7 @@ create our new transformation.</p>
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -500,10 +427,10 @@ create our new transformation.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tokenize_notebook.html" class="btn btn-neutral float-left" title="Tokenizing notebook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="guide.html" class="btn btn-neutral float-left" title="Guide to the examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

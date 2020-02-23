@@ -82,7 +82,6 @@ Actual code
 Here's the content of our real simplest example.
 
 .. literalinclude:: ../../ideas/examples/function_simplest.py
-   :emphasize-lines: 9,14,18,21,23,24
    :linenos:
 
 .. sidebar:: Tokens?
@@ -93,7 +92,7 @@ Here's the content of our real simplest example.
 
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-``add_hook`` (line 21), and return the hook that was created (line 24).
+``add_hook`` (line 22), and return the hook that was created (line 25).
 This has at least three benefits:
 
     1. We can control when the hook is created.
@@ -110,7 +109,7 @@ an individual token. Rather than using directly the tokenizer
 from Python's standard library, we use our own version which has some useful
 added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
-We can compare a token directly to a string like we did in the code above on line 12.
+We can compare a token directly to a string like we did in the code above on line 16.
 
 Note that, just like::
 
@@ -126,11 +125,11 @@ using our import hook.
 
 Once we're done with replacing all ``function`` tokens by ``lambda``,
 we convert the tokens back into a string by calling our
-utility function ``untokenize`` on line 18.
+utility function ``untokenize`` on line 19.
 
-Finally, by convention, on line 9 we use the
+Finally, by convention, on line 10 we use the
 same name, ``transform_source`` that is used as a keyword
-argument for ``import_hook.create_hook`` on line 23.
+argument for ``import_hook.create_hook`` on line 24.
 All of our examples follow this convention.
 
 

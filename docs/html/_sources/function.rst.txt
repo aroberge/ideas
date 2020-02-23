@@ -10,46 +10,122 @@ Improving function as a keyword
     to an import hook and some possible usage.
 
 
-Actual source
---------------
+Basic usage::
 
-.. admonition:: This time only
+    from ideas.examples import function_keyword
+    function_keyword.add_hook()
 
-    For this example, we include the entire source in the documentation,
-    highlighting a few lines which we refer to in the explanation
-    below.
-    For the other examples, we will not include a complete listing of the
-    code as we do here, relying instead on Sphinx to generate the API
-    by extracting the docstring and linking to the source.
+    import my_program
 
 
-.. literalinclude:: ../../ideas/examples/function_keyword.py
-   :emphasize-lines: 12-19,22,33-34,39-40,64
-   :linenos:
+Building a complete example
+----------------------------
 
-On lines 12 to 19, we defined a function that can be used to print
-either the original code or the transformed one.
-This can be useful in debugging sessions. Once it has been written,
-there is essential no advantage in removing the code: we leave it
-in so that other programmers wishing to build upon this example
-do not have to rewrite such code.
+In addition to making it easy to create import hooks, **ideas** also
+attempts to make it easy to include diagnostic "tools".
+The ``function_keyword`` example, whose API listed below includes
+links to the actual source, includes such "tools".
+While they can help during development, they do admitedly make
+the code more complicated.  If you want to create your own hook,
+you do not have to include all possible features.
 
-Whether or not we invoke the diagnostic code is determined
-on lines 33-34, and 39-40.  The values of the relevant parameters
-are actually set when we call the function to add a hook on
-line 64.
-
-In addition to these callback parameters, you might have noticed
-on line 22 the extra function argument ``**kwargs``.
-In addition to some parameters unique to each import hook,
-our import hook machinery returns some other parameters, such
-as the file name and others, which can be of use to some
-transformers.  As a rule, every function that can be called
-by the import hook machinery should include such an
-unspecified argument.
+For example, here is a much simpler version, functionally
+equivalent the ``function_keyword`` example,
+but without some diagnostic options included::
 
 
-Here's an example using one such parameter::
+    from ideas import import_hook, token_utils
+
+    def transform_source(source, **kwargs):
+        new_tokens = []
+        for token in token_utils.tokenize(source):
+            if token == "function":
+                token.string = "lambda"
+            new_tokens.append(token)
+        return token_utils.untokenize(new_tokens)
+
+
+    def add_hook():
+        return import_hook.create_hook(transform_source=transform_source)
+
+
+Note the unused ``**kwargs`` in the definition of ``transform_source``:
+you should ensure to add something similar when creating your own import hook
+even if you do not plan to make use of extra parameters.
+
+
+Verbose finder
+~~~~~~~~~~~~~~~
+
+Suppose you want to see information about names and paths of
+files that are searched by your Finder: you can do this by adding
+an extra parameter to ``add_hook`` and
+``import_hook.create_hook`` as follows::
+
+    def add_hook(verbose_finder=False):
+
+        return import_hook.create_hook(
+            transform_source=transform_source,
+            verbose_finder=verbose_finder,
+        )
+
+Here's a sample session from a different example, where the import hook
+is looking for files with a custom extension::
+
+    >>> from ideas.examples import french
+    >>> hook = french.add_hook(verbose_finder=True)
+    Looking for files with extensions:  ['.pyfr']
+    The following paths will not be included in the search:
+       PYTHON: == c:\users\andre\appdata\local\programs\python\python37-32\lib
+       IDEAS: == c:\users\andre\github\ideas\ideas
+    >>> import mon_programme
+        Searching for TESTS:\french\mon_programme.pyfr.
+    ->  Found:  TESTS:\french\mon_programme.pyfr
+
+        Searching for TESTS:\french\unicodedata.pyfr.
+      IdeasMetaFinder did not find unicodedata.
+
+The last file that was needed was ``unicodedata.py`` from the Python
+standard library; it was found by a "normal" finder used by Python.
+
+
+Comparing the original and the transformed source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It might be sometimes useful to compare the original source with
+the transformed one. Instead of actually adding ``print`` statements
+when needed, we can use some callback parameters to enable or disable
+such ``print`` statemeent.  **ideas** makes it fairly easy to
+do this using callback parameters.
+Here's the basic pattern used in almost all the examples::
+
+    def transform_source(source, callback_params=None, **kwargs):
+        if callback_params is not None:
+            if callback_params["show_original"]:
+                print(source)
+
+        new_source = do_transform(source)
+
+        if callback_params is not None:
+            if callback_params["show_transformed"]:
+                print(new_source)
+        return new_source
+
+
+    def add_hook(show_original=False, show_transformed=False):
+        callback_params = {
+            "show_original": show_original,
+            "show_transformed": show_transformed,
+        }
+        hook = import_hook.create_hook(
+            transform_source=transform_source,
+            callback_params=callback_params,
+        )
+        return hook
+
+
+Here's an actual example using one such parameter to show the transformed
+source::
 
     >>> from ideas.examples import function_keyword
     >>> hook = function.add_hook(show_transformed=True)
@@ -71,6 +147,15 @@ Here's an example using one such parameter::
     -----------------------------
     9
     ~>>
+
+
+.. tip::
+
+    You do not need to make use of these extra features when
+    creating your own hooks.
+
+If you want to have a look at the actual source for ``function_keyword``,
+use the links below.
 
 .. sidebar:: API
 

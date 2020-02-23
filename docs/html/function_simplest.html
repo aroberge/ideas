@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Create your own import hook &mdash; ideas 0.0.5 documentation</title>
+  <title>Create your own import hook &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.5
+                0.0.6
               </div>
             
           
@@ -103,8 +103,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -113,6 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -321,23 +322,23 @@ in the source. Thus, given something like:</p>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
-<span class="hll">
-</span><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="hll">    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-</span>        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-<span class="hll">
-</span>    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
 
-<span class="hll">
-</span><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
-<span class="hll">    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-</span><span class="hll">    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
-</span>    <span class="k">return</span> <span class="n">hook</span>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span>
 </pre></div>
 </td></tr></table></div>
 <div class="sidebar">
@@ -348,7 +349,7 @@ Each of these is an individual <strong>token</strong>.</p>
 </div>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
-<code class="docutils literal notranslate"><span class="pre">add_hook</span></code> (line 21), and return the hook that was created (line 24).
+<code class="docutils literal notranslate"><span class="pre">add_hook</span></code> (line 22), and return the hook that was created (line 25).
 This has at least three benefits:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -367,7 +368,7 @@ an individual token. Rather than using directly the tokenizer
 from Python’s standard library, we use our own version which has some useful
 added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
-We can compare a token directly to a string like we did in the code above on line 12.</p>
+We can compare a token directly to a string like we did in the code above on line 16.</p>
 <p>Note that, just like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>
@@ -381,10 +382,10 @@ We can compare a token directly to a string like we did in the code above on lin
 <p>using our import hook.</p>
 <p>Once we’re done with replacing all <code class="docutils literal notranslate"><span class="pre">function</span></code> tokens by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>,
 we convert the tokens back into a string by calling our
-utility function <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> on line 18.</p>
-<p>Finally, by convention, on line 9 we use the
+utility function <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> on line 19.</p>
+<p>Finally, by convention, on line 10 we use the
 same name, <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> that is used as a keyword
-argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> on line 23.
+argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> on line 24.
 All of our examples follow this convention.</p>
 <div class="sidebar">
 <p class="sidebar-title">Content generated by Sphinx</p>

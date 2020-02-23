@@ -178,8 +178,8 @@ Quick links to topics
    :maxdepth: 1
    :caption: Examples
 
+    Guide to the examples <guide>
     Improving function as a keyword <function>
-    λ encoding <lambda>
     nobreak as a keyword <nobreak>
     repeat as a keyword <repeat>
     French Python <french>
@@ -188,6 +188,7 @@ Quick links to topics
     Confused math (Bytecode) <bytecode>
     True constants <constants>
     Pythonic switch statement - to do  <switch>
+    λ encoding <lambda>
     Examples never included - first draft <excluded>
 
 .. toctree::

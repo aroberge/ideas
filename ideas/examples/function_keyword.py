@@ -57,12 +57,11 @@ def function_as_a_keyword(source):
     """
     new_tokens = []
     for token in token_utils.tokenize(source):
-        if token == "function":  # equivalent to token.string == "function"
+        if token == "function":
             token.string = "lambda"
         new_tokens.append(token)
 
-    new_source = token_utils.untokenize(new_tokens)
-    return new_source
+    return token_utils.untokenize(new_tokens)
 
 
 def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
