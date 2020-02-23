@@ -1,4 +1,8 @@
-"""This module contains the core functions required to create an import hook."""
+"""import_hook.py
+------------------
+
+This module contains the core functions required to create an import hook.
+"""
 
 import ast
 import os
@@ -27,7 +31,7 @@ def shorten_path(path):
        whereas a file found in the user's root directory might be shown
        as::
 
-            ~/dir/file.py
+            ~/file.py
     """
     # On windows, the filenames are not case sensitive
     # and the way Python displays filenames may vary.
@@ -70,6 +74,7 @@ class IdeasMetaFinder(MetaPathFinder):
         module_class=None,
         source_init=None,
         transform_ast=None,
+        transform_bytecode=None,
         transform_source=None,
         verbose_finder=False,
     ):
@@ -82,6 +87,7 @@ class IdeasMetaFinder(MetaPathFinder):
         self.module_class = module_class
         self.source_init = source_init
         self.transform_ast = transform_ast
+        self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
 
     def find_spec(self, fullname, path, target=None):
@@ -131,6 +137,7 @@ class IdeasMetaFinder(MetaPathFinder):
                     module_class=self.module_class,
                     source_init=self.source_init,
                     transform_ast=self.transform_ast,
+                    transform_bytecode=self.transform_bytecode,
                     transform_source=self.transform_source,
                 ),
             )
@@ -151,6 +158,7 @@ class IdeasLoader(Loader):
         module_class=None,
         source_init=None,
         transform_ast=None,
+        transform_bytecode=None,
         transform_source=None,
     ):
         self.filename = filename
@@ -160,6 +168,7 @@ class IdeasLoader(Loader):
         self.module_class = module_class
         self.source_init = source_init
         self.transform_ast = transform_ast
+        self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
 
     def create_module(self, spec):
@@ -213,6 +222,9 @@ class IdeasLoader(Loader):
             print("Exception raised while compiling tree.")
             raise e
 
+        if self.transform_bytecode is not None:
+            code_object = self.transform_bytecode(code_object)
+
         if self.exec_ is not None:
             self.exec_(
                 code_object,
@@ -237,9 +249,10 @@ def create_hook(
     extensions=None,
     first=True,
     module_class=None,
-    name=None,
+    hook_name=None,
     source_init=None,
     transform_ast=None,
+    transform_bytecode=None,
     transform_source=None,
     verbose_finder=False,
 ):
@@ -268,6 +281,7 @@ def create_hook(
         module_class=module_class,
         source_init=source_init,
         transform_ast=transform_ast,
+        transform_bytecode=transform_bytecode,
         transform_source=transform_source,
         verbose_finder=verbose_finder,
     )
@@ -277,15 +291,16 @@ def create_hook(
     else:
         sys.meta_path.append(hook)
 
-    if transform_source is not None and isinstance(name, str):
-        transform_source.__name__ = name
-    if transform_ast is not None and isinstance(name, str):
-        transform_ast.__name__ = name
+    for obj in [transform_source, transform_ast, transform_bytecode, source_init]:
+        if obj is not None and isinstance(hook_name, str):
+            obj._hook_name_ = hook_name
+
     console.configure(
         callback_params=callback_params,
         console_dict=console_dict,
         source_init=source_init,
         transform_ast=transform_ast,
+        transform_bytecode=transform_bytecode,
         transform_source=transform_source,
     )
 

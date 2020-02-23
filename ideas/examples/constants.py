@@ -1,4 +1,5 @@
 """constants.py
+---------------
 
 This import hook makes it possible to define constants, that is variables
 which cannot have their initial value changed.
@@ -251,7 +252,7 @@ def add_hook(on_prevent_change=None, verbose_finder=False):
         exec_=exec_,
         callback_params=callback_params,
         console_dict=console_dict,
-        name=__name__,
+        hook_name=__name__,
         verbose_finder=verbose_finder,
     )
     return hook

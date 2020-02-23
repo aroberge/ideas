@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>console.py &mdash; ideas 0.0.4 documentation</title>
+  <title>console.py &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -96,27 +96,21 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> console.py</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">console.py</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> console.py</a></li>
 </ul>
 
             
@@ -212,16 +206,17 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="module-ideas.console">
-<span id="console-py"></span><h1>console.py<a class="headerlink" href="#module-ideas.console" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>console.py<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-ideas.console"></span><div class="section" id="console-py">
+<h1>console.py<a class="headerlink" href="#console-py" title="Permalink to this headline">¶</a></h1>
 <p>Adaptation of Python’s console found in code.py so that it can be
 used with import hooks.</p>
 <dl class="class">
 <dt id="ideas.console.IdeasConsole">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">IdeasConsole</code><span class="sig-paren">(</span><em class="sig-param">source_init=None</em>, <em class="sig-param">transform_ast=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">console_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">IdeasConsole</code><span class="sig-paren">(</span><em class="sig-param">source_init=None</em>, <em class="sig-param">transform_ast=None</em>, <em class="sig-param">transform_bytecode=None</em>, <em class="sig-param">transform_source=None</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">console_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole" title="Permalink to this definition">¶</a></dt>
+<dd><p>An interactive console that works with source transformations,
+AST transformations and Bytecode transformations.</p>
+<p>It should not need to be instantiated directly.</p>
+<dl class="method">
 <dt id="ideas.console.IdeasConsole.push">
 <code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.push" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push a line to the interpreter.</p>
@@ -238,7 +233,7 @@ with in some way (this is the same as runsource()).</p>
 
 <dl class="method">
 <dt id="ideas.console.IdeasConsole.runcode">
-<code class="sig-name descname">runcode</code><span class="sig-paren">(</span><em class="sig-param">code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.runcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.runcode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">runcode</code><span class="sig-paren">(</span><em class="sig-param">code_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#IdeasConsole.runcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.IdeasConsole.runcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a code object.</p>
 <p>When an exception occurs, friendly_traceback.explain() is called to
 display a traceback.  All exceptions are caught except
@@ -282,10 +277,9 @@ line.</p>
 <dl class="function">
 <dt id="ideas.console.start">
 <code class="sig-prename descclassname">ideas.console.</code><code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/console.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.console.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a console; modified from code.interact</p>
+<dd><p>Starts a special console that works with import hooks.</p>
 </dd></dl>
 
-</div>
 </div>
 
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>λ encoding &mdash; ideas 0.0.4 documentation</title>
+  <title>λ encoding &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -97,18 +97,18 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> λ encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lambda-encoding-py">lambda_encoding.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -214,9 +214,100 @@
 </style>
 <div class="section" id="encoding">
 <h1>λ encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h1>
-<p>Show how a custom codec can be used … but how it is simpler
-to use the ideas machinery to do this. While this could be implemented
-as a source transformation, we do it at the decode stage.</p>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Using a custom codec instead of an import hook.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following is just a quick first draft.</p>
+</div>
+<p>Suppose we want to run a program that has a custom encoding;
+in this case, we use <code class="docutils literal notranslate"><span class="pre">λ</span></code> to represent Python’s <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: lambda-encoding</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">λ</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using lambda-encoding: λ&quot;</span><span class="p">)</span>  <span class="c1"># λ is not converted inside strings</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The square of 5 is&quot;</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Before we can do this, we need to make Python aware of the existence
+of our custom encoding. This can be done by having the following
+program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># usercustomize.py</span>
+
+<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">lambda_encoding</span>  <span class="c1"># noqa</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --&gt; usercustomize.py was executed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> to a directory where a program named
+<code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found, any such program is automatically run before
+the main script.</p>
+<p>As we can see, when we run it, the source transformation is done
+correctly.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>TESTS:\lambda_encoding
+$ set PYTHONPATH=%CD%
+
+TESTS:\lambda_encoding
+$ python short_program.py
+  --&gt; usercustomize.py was executed
+Using lambda-encoding: λ
+The square of 5 is 25
+</pre></div>
+</div>
+<p>We can also use the <strong>ideas</strong> console and have our special encoding be used.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">lambda_encoding</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lambda_encoding</span><span class="o">.</span><span class="n">enable_console</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    transform_source from ideas.examples.lambda_encoding</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.5. [Python version: 3.7.3]</span>
+
+<span class="go">~&gt;&gt; sq = λ x: x*x</span>
+<span class="go">~&gt;&gt; sq(3)</span>
+<span class="go">9</span>
+</pre></div>
+</div>
+<span class="target" id="module-ideas.examples.lambda_encoding"></span><div class="section" id="lambda-encoding-py">
+<h2>lambda_encoding.py<a class="headerlink" href="#lambda-encoding-py" title="Permalink to this headline">¶</a></h2>
+<p>This codec replaces any Python identifier (token) represented by the
+single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
+the Python keyword.</p>
+<p>The source is assumed to be actually encoded in utf-8.</p>
+<dl class="class">
+<dt id="ideas.examples.lambda_encoding.LambdaIncrementalDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">LambdaIncrementalDecoder</code><span class="sig-paren">(</span><em class="sig-param">errors='strict'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#LambdaIncrementalDecoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.LambdaIncrementalDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode">
+<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">final=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#LambdaIncrementalDecoder.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode input and returns the resulting object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.lambda_encoding.lambda_decode">
+<code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">lambda_decode</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">errors='strict'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#lambda_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.lambda_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes the source as utf8 and use <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> to
+perform the required source transformation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.lambda_encoding.transform_source">
+<code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple transformation: replaces any single token λ by lambda.</p>
+<p>By defining this function, we can also make use of Ideas’ console.</p>
+</dd></dl>
+
+</div>
 </div>
 
 

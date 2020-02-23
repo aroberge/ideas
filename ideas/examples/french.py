@@ -1,4 +1,6 @@
-"""French Python
+"""
+french.py
+---------
 
 Keywords are translated from French to English/Python by a function in this file.
 
@@ -102,7 +104,7 @@ def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        name=__name__,
+        hook_name=__name__,
         extensions=[".pyfr"],
         verbose_finder=verbose_finder,
     )

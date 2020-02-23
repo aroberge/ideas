@@ -68,8 +68,9 @@ Recently (Feb. 21, 2020), on the Python-ideas mailing list,
 
     *Unfortunately, the boilerplate to write an import hook is more complicated than you’d
     like (and pretty hard to figure out the first time),* **and the support for filtering on the
-    token stream (the most obvious way to do this one)** [emphasis added]
-    *rather than the text stream, AST, or bytecode is pretty minimal and clumsy.*
+    token stream (the most obvious way to do this one)**
+    *rather than the text stream, AST, or bytecode* **is pretty minimal and clumsy.**
+    [emphasis added]
 
 
 **Ideas** defines its own ``Token`` class built from Python's tokens.

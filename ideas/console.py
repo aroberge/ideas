@@ -1,4 +1,5 @@
 """console.py
+--------------
 
 Adaptation of Python's console found in code.py so that it can be
 used with import hooks.
@@ -27,10 +28,16 @@ def configure(**kwargs):
 
 
 class IdeasConsole(InteractiveConsole):
+    """An interactive console that works with source transformations,
+       AST transformations and Bytecode transformations.
+
+       It should not need to be instantiated directly.
+    """
     def __init__(
         self,
         source_init=None,
         transform_ast=None,
+        transform_bytecode=None,
         transform_source=None,
         callback_params=None,
         console_dict=None,
@@ -39,6 +46,7 @@ class IdeasConsole(InteractiveConsole):
         so as to work with import hooks.
         """
         self.transform_ast = transform_ast
+        self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
         self.callback_params = callback_params
 
@@ -107,13 +115,13 @@ class IdeasConsole(InteractiveConsole):
         line.
         """
         try:
-            code = self.compile(source, filename, symbol)
+            code_obj = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
             self.showsyntaxerror(filename)
             return False
 
-        if code is None:
+        if code_obj is None:
             # Case 2
             return True
 
@@ -123,12 +131,16 @@ class IdeasConsole(InteractiveConsole):
             # recreate code object, this time, with ast transform
             tree = ast.parse(source, filename)
             tree = self.transform_ast(tree)
-            code = compile(tree, filename, "exec")
+            code_obj = compile(tree, filename, "exec")
 
-        self.runcode(code)
+
+        if self.transform_bytecode is not None:
+            code_obj = self.transform_bytecode(code_obj)
+
+        self.runcode(code_obj)
         return False
 
-    def runcode(self, code):
+    def runcode(self, code_obj):
         """Execute a code object.
 
         When an exception occurs, friendly_traceback.explain() is called to
@@ -143,7 +155,7 @@ class IdeasConsole(InteractiveConsole):
         caller should be prepared to deal with it.
         """
         try:
-            exec(code, self.locals)
+            exec(code_obj, self.locals)
         except SystemExit:
             os._exit(1)
         except Exception:
@@ -151,15 +163,15 @@ class IdeasConsole(InteractiveConsole):
 
 
 def start():
-    """Starts a console; modified from code.interact"""
+    """Starts a special console that works with import hooks."""
     global BANNER
     sys.ps1 = "~>> "
     if _CONFIG:
         print("Configuration values for the console:")
         for key in _CONFIG:
             if _CONFIG[key] is not None:
-                if hasattr(_CONFIG[key], '__name__'):
-                    print(f"    {key} from {_CONFIG[key].__name__}")
+                if hasattr(_CONFIG[key], '_hook_name_'):
+                    print(f"    {key} from {_CONFIG[key]._hook_name_}")
                 else:
                     print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)
@@ -167,7 +179,7 @@ def start():
 
     if console.transform_ast is not None:
         BANNER += """
-AST transformations applied: you will need to explicitly
-call print() to see the result of a command.
-"""
+    AST transformations applied: you will need to explicitly
+    call print() to see the result of a command.
+    """
     console.interact(banner=BANNER)

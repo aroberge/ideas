@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nobreak as a keyword &mdash; ideas 0.0.4 documentation</title>
+  <title>nobreak as a keyword &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="French Python" href="french.html" />
+    <link rel="next" title="repeat as a keyword" href="repeat.html" />
     <link rel="prev" title="λ encoding" href="lambda.html" /> 
 </head>
 
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -97,8 +97,8 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> nobreak as a keyword - to do</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> nobreak as a keyword</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#implementing-nobreak">Implementing nobreak</a><ul>
@@ -107,16 +107,13 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -184,7 +181,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="french.html" class="btn btn-neutral float-right" title="French Python" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="repeat.html" class="btn btn-neutral float-right" title="repeat as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -222,6 +219,13 @@
 </style>
 <div class="section" id="nobreak-as-a-keyword">
 <h1><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Somewhat similar to the function keyword example except
+that we keep track of the indentation level and
+replace our new keyword (<code class="docutils literal notranslate"><span class="pre">nobreak</span></code>) only if
+some conditions are met.</p>
+</div>
 <p>Python’s <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loop include an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause
 whose meaning is not immediately obvious:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
@@ -332,7 +336,7 @@ create our new transformation.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="french.html" class="btn btn-neutral float-right" title="French Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="repeat.html" class="btn btn-neutral float-right" title="repeat as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

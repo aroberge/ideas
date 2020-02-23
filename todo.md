@@ -35,9 +35,3 @@ Infrequently updated list ...
 - https://gist.github.com/dutc/0f7498451d98e3114268
 
 - Have a look at https://mail.python.org/archives/list/python-ideas@python.org/message/CTTKN5F5UK2PUILSKEK6HAYEXZPQN5CM/ ... and https://mail.python.org/archives/list/python-ideas@python.org/message/BNEAOKFZ6OBXQMP37CLRMUPDEXAQJOCB/
-
-- Have a look at https://www.python.org/dev/peps/pep-0501/
-
-
-- include comments from
-  https://mail.python.org/archives/list/python-ideas@python.org/message/UNL62EMSNPA5USUS7SCEQZQ63PVP2FDL

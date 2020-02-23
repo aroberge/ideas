@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ideas.examples.lambda_encoding &mdash; ideas 0.0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Tokenizing notebook</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html"> console.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ideas.examples.lambda_encoding</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ideas.examples.lambda_encoding</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;lambda_encoding.py</span>
+<span class="sd">------------------------</span>
+
+<span class="sd">This codec replaces any Python identifier (token) represented by the</span>
+<span class="sd">single Greek letter &#39;λ&#39; by the corresponding string &#39;lambda&#39; which is</span>
+<span class="sd">the Python keyword.</span>
+
+<span class="sd">The source is assumed to be actually encoded in utf-8.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">encodings</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span><span class="p">,</span> <span class="n">token_utils</span>
+
+
+<span class="n">utf8</span> <span class="o">=</span> <span class="n">encodings</span><span class="o">.</span><span class="n">search_function</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../lambda.html#ideas.examples.lambda_encoding.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple transformation: replaces any single token λ by lambda.</span>
+
+<span class="sd">    By defining this function, we can also make use of Ideas&#39; console.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;λ&quot;</span><span class="p">:</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="lambda_decode"><a class="viewcode-back" href="../../../lambda.html#ideas.examples.lambda_encoding.lambda_decode">[docs]</a><span class="k">def</span> <span class="nf">lambda_decode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;strict&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decodes the source as utf8 and use ``transform_source`` to</span>
+<span class="sd">    perform the required source transformation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">utf8</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">transform_source</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="n">length</span></div>
+
+
+<div class="viewcode-block" id="LambdaIncrementalDecoder"><a class="viewcode-back" href="../../../lambda.html#ideas.examples.lambda_encoding.LambdaIncrementalDecoder">[docs]</a><span class="k">class</span> <span class="nc">LambdaIncrementalDecoder</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">utf_8</span><span class="o">.</span><span class="n">IncrementalDecoder</span><span class="p">):</span>
+<div class="viewcode-block" id="LambdaIncrementalDecoder.decode"><a class="viewcode-back" href="../../../lambda.html#ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">+=</span> <span class="nb">input</span>
+        <span class="k">if</span> <span class="n">final</span><span class="p">:</span>
+            <span class="n">buff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">lambda_decode</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+            <span class="n">buff</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">search_function</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">encoding</span> <span class="o">!=</span> <span class="s2">&quot;lambda-encoding&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">CodecInfo</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lambda-encoding&quot;</span><span class="p">,</span>
+        <span class="n">encode</span><span class="o">=</span><span class="n">utf8</span><span class="o">.</span><span class="n">encode</span><span class="p">,</span>
+        <span class="n">decode</span><span class="o">=</span><span class="n">lambda_decode</span><span class="p">,</span>
+        <span class="n">incrementalencoder</span><span class="o">=</span><span class="n">utf8</span><span class="o">.</span><span class="n">incrementalencoder</span><span class="p">,</span>
+        <span class="n">incrementaldecoder</span><span class="o">=</span><span class="n">LambdaIncrementalDecoder</span><span class="p">,</span>
+        <span class="n">streamreader</span><span class="o">=</span><span class="n">encodings</span><span class="o">.</span><span class="n">utf_8</span><span class="o">.</span><span class="n">StreamReader</span><span class="p">,</span>
+        <span class="n">streamwriter</span><span class="o">=</span><span class="n">utf8</span><span class="o">.</span><span class="n">streamwriter</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="n">codecs</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">search_function</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">enable_console</span><span class="p">():</span>
+    <span class="n">transform_source</span><span class="o">.</span><span class="n">_hook_name_</span> <span class="o">=</span> <span class="vm">__name__</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

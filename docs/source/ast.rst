@@ -38,7 +38,7 @@ and Abstract Syntax Tree (AST) transformation::
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        source_init from source_init
+        source_init from ideas.examples.fractions_ast
         transform_ast from ideas.examples.fractions_ast
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
@@ -70,7 +70,7 @@ does a simple source transformation::
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        source_init from source_init
+        source_init from ideas.examples.fractions_tok
         transform_source from ideas.examples.fractions_tok
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
@@ -91,7 +91,7 @@ does a simple source transformation::
     9/10
     1
 
-The difference between the two is that, using the source transformation,
+One difference between the two is that, using the source transformation,
 the REPL behaves as expected, printing out any unassigned result::
 
     ~>> # fractions_tok
@@ -105,13 +105,18 @@ However, this is not the case using the AST-based approach::
     ~>> 1 / 10
     ~>>
 
-In fact, even the underscore, `_`, does not have its usual meaning::
+In fact, even the underscore, `_`, most unfortunately,
+does not have its usual meaning::
 
     ~>> # fractions_ast
     ~>> 1 / 10
     ~>> print(_)
     <ideas.import_hook.IdeasMetaFinder object at 0x02E42030>
 
+The reason for this is that normally, the code in the console is
+evaluated using the ``"single"`` mode of the ``compile`` function;
+however, after doing an AST transform, the code must be compiled
+using the ``exec`` mode.
 
 .. automodule:: ideas.examples.fractions_ast
    :members:

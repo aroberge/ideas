@@ -5,4 +5,5 @@ Implement differently my previous Pythonic switch statement
 
 https://aroberge.blogspot.com/2018/06/pythonic-switch-statement.html
 
-Have it no support fall through.
+However, change the code to prevent fall through from one
+case to the next unless explicitly specified with a ``continue`` statement.

@@ -79,9 +79,17 @@ Python (cPython at least...) ignores the existence of any import hook
 when executing the main script. Perhaps I should make a suggestion
 to change this on Python-ideas. ;-)
 
-.. todo::
+However, we can do the following::
 
-    Implement make_encoding and add example.
+    $ python -c "import my_program"
+      --> usercustomize.py was executed
+    16 is the square of 4.
+
+The only drawback of this approach is that ``my_program`` will never
+be found to have its name to be ``"__main__"``.
+If we want to have a program with its source transformed but run
+as main, we can use a custom codec. This is described in the
+"λ encoding" example.
 
 
 Using the Ideas Console

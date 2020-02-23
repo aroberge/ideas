@@ -1,4 +1,5 @@
 """auto_self.py
+-----------------
 
 Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class's ``__init__()`` method.
@@ -101,7 +102,7 @@ def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        name=__name__,
+        hook_name=__name__,
         verbose_finder=verbose_finder,
     )
     return hook

@@ -1,4 +1,5 @@
 """function_simplest.py
+-------------------------
 
 This module enables someone to use ``function`` as a keyword
 equivalent to ``lambda``.

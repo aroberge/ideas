@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ideas.examples.confused_math_bc &mdash; ideas 0.0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Tokenizing notebook</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html"> console.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ideas.examples.confused_math_bc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ideas.examples.confused_math_bc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;confused_math_bc.py</span>
+<span class="sd">------------------------</span>
+
+<span class="sd">Import hook that performs bytecode changes,</span>
+<span class="sd">swapping BINARY_ADD and BINARY_MULTIPLY.</span>
+
+<span class="sd">Note: If code contains something like a + b, or a * b, where</span>
+<span class="sd">a and b are integer literals (e.g. 2 + 4), the operations are</span>
+<span class="sd">done prior to the creation of a code object and thus are</span>
+<span class="sd">not captured by this transformation.</span>
+
+<span class="sd">Requires Python version &gt;= 3.6 as it assumed that bytecode</span>
+<span class="sd">instructions are &quot;wordcode&quot; i.e. that instructions like</span>
+<span class="sd">BINARY_ADD and BINARY_MULTIPLY will fall on even-index values</span>
+<span class="sd">of the bytecode.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">dis</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">CodeType</span>
+
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+
+<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="n">ADD</span> <span class="o">=</span> <span class="n">dis</span><span class="o">.</span><span class="n">opmap</span><span class="p">[</span><span class="s1">&#39;BINARY_ADD&#39;</span><span class="p">]</span>
+<span class="n">MUL</span> <span class="o">=</span> <span class="n">dis</span><span class="o">.</span><span class="n">opmap</span><span class="p">[</span><span class="s1">&#39;BINARY_MULTIPLY&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="swap_add_mul"><a class="viewcode-back" href="../../../bytecode.html#ideas.examples.confused_math_bc.swap_add_mul">[docs]</a><span class="k">def</span> <span class="nf">swap_add_mul</span><span class="p">(</span><span class="n">bytecode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interchange BINARY_ADD and BINARY_MULTIPLY&quot;&quot;&quot;</span>
+    <span class="n">new_bc</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bytecode</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="n">ADD</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">new_bc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MUL</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="n">MUL</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">new_bc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ADD</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_bc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">new_bc</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_new_co"><a class="viewcode-back" href="../../../bytecode.html#ideas.examples.confused_math_bc.create_new_co">[docs]</a><span class="k">def</span> <span class="nf">create_new_co</span><span class="p">(</span><span class="n">code_object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursivelly creates new code objects from old ones, swapping</span>
+<span class="sd">    BINARY_ADD and BINARY_MULTIPLY.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_code</span> <span class="o">=</span> <span class="n">swap_add_mul</span><span class="p">(</span><span class="n">code_object</span><span class="o">.</span><span class="n">co_code</span><span class="p">)</span>
+    <span class="n">new_const</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">code_object</span><span class="o">.</span><span class="n">co_consts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">CodeType</span><span class="p">):</span>
+            <span class="n">new_const</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_new_co</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_const</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">new_code_object</span> <span class="o">=</span> <span class="n">CodeType</span><span class="p">(</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_argcount</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_kwonlyargcount</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_nlocals</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_stacksize</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_flags</span><span class="p">,</span>
+        <span class="n">new_code</span><span class="p">,</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="n">new_const</span><span class="p">),</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_names</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_varnames</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_name</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_firstlineno</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_lnotab</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_freevars</span><span class="p">,</span>
+        <span class="n">code_object</span><span class="o">.</span><span class="n">co_cellvars</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_code_object</span></div>
+
+
+<div class="viewcode-block" id="transform_bytecode"><a class="viewcode-back" href="../../../bytecode.html#ideas.examples.confused_math_bc.transform_bytecode">[docs]</a><span class="k">def</span> <span class="nf">transform_bytecode</span><span class="p">(</span><span class="n">code_object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms the code object into a new code object&quot;&quot;&quot;</span>
+    <span class="n">new_code_object</span> <span class="o">=</span> <span class="n">create_new_co</span><span class="p">(</span><span class="n">code_object</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_code_object</span></div>
+
+
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../bytecode.html#ideas.examples.confused_math_bc.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">transform_bytecode</span><span class="o">=</span><span class="n">transform_bytecode</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

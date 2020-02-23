@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>A deep dive &mdash; ideas 0.0.4 documentation</title>
+  <title>A deep dive &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -100,18 +100,15 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -238,19 +235,19 @@ it is important to distinguish
 the two main phases, that is creating a <code class="docutils literal notranslate"><span class="pre">Finder</span></code> and a <code class="docutils literal notranslate"><span class="pre">Loader</span></code>.
 Using <code class="docutils literal notranslate"><span class="pre">ideas</span></code>, these are automatically done for us, and we can focus
 on various parts over which we can have control.</p>
-<p><strong>In the diagram below:</strong></p>
-<blockquote>
-<div><ul class="simple">
+<div class="admonition-in-the-diagram-below admonition">
+<p class="admonition-title"><strong>In the diagram below:</strong></p>
+<ul class="simple">
 <li><p>Inside each of the major blocks (Decode, AST, Bytecode), we don’t have
 control over the individual components;
-however, we can substitute our own version of the entire block.</p></li>
+however, we could, in principle, substitute our own version of the entire block.</p></li>
 <li><p>There exists at least one example for anything (excluding major blocks) with
 a white background.</p></li>
 <li><p>Anything with a light blue background indicates that some examples of this should
 be doable. Ideally, at least one example of each possible case
 should be added.</p></li>
 </ul>
-</div></blockquote>
+</div>
 <img alt="ideas import hook possibilities" class="align-center" src="_images/import_hook3.png" />
 </div>
 </div>

@@ -4,16 +4,6 @@ Ideas: making it easier to extend Python's syntax
 
 `Code on Github <https://github.com/aroberge/ideas>`_
 
-.. warning::
-
-    If you see this warning, it is likely because you have stumbled upon
-    this project prior to any public announcement.
-
-    I am currently in the middle of writing this first draft for the
-    documentation, occasionally changing the API of **Ideas**
-    in an attempt to make it more user-friendly and adding/removing
-    pages here. You cannot rely on any information written here ... yet.
-
 .. image:: _static/ideas.png
    :scale: 40 %
    :alt: ideas logo
@@ -100,7 +90,7 @@ Infrequently asked questions and comments
 
 .. sidebar:: No FAQ
 
-    In the absence of real questions having been asked,
+    In the absence of real questions having yet been asked,
     the following imaginary dialogue has been written before anyone else knew about
     this project.
 
@@ -121,7 +111,7 @@ but yourself.
 **I found a bug.**
 
 Wonderful, please file an issue so that I can perhaps fix it. Note however
-that some examples are just proof of concepts and are not meant to be robust.
+that some examples are just proof of concepts and are known to not be robust.
 
 **Can I contribute code for a new example?**
 
@@ -171,7 +161,6 @@ Quick links to topics
 
 .. sidebar:: Work in progress
 
-    Most of the links below lead to mostly empty pages.
     Much more content will be added ... *soon*.
 
 
@@ -190,19 +179,16 @@ Quick links to topics
    :caption: Examples
 
     Improving function as a keyword <function>
-    λ encoding and the main problem - to do <lambda>
-    nobreak as a keyword - to do <nobreak>
-    French Python - to do <french>
-    Auto-self <auto_self>
+    λ encoding <lambda>
+    nobreak as a keyword <nobreak>
     repeat as a keyword <repeat>
-    Fractional math <ast>
-    Simple bytecode transformation - todo <bytecode>
-    Pythonic switch statement - to do  <switch>
+    French Python <french>
+    Auto-self <auto_self>
+    Fractional math (AST) <ast>
+    Confused math (Bytecode) <bytecode>
     True constants <constants>
-    Json module - todo  <json>
-    Import from non-standard locations - to do  <non_files>
-    Importing a module as main - to do <as_main>
-    Examples never included - first draft<excluded>
+    Pythonic switch statement - to do  <switch>
+    Examples never included - first draft <excluded>
 
 .. toctree::
    :maxdepth: 1

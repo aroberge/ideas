@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.console &mdash; ideas 0.0.4 documentation</title>
+  <title>ideas.console &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -95,18 +95,15 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -206,10 +203,16 @@
 
 
 <div class="viewcode-block" id="IdeasConsole"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole">[docs]</a><span class="k">class</span> <span class="nc">IdeasConsole</span><span class="p">(</span><span class="n">InteractiveConsole</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An interactive console that works with source transformations,</span>
+<span class="sd">       AST transformations and Bytecode transformations.</span>
+
+<span class="sd">       It should not need to be instantiated directly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">transform_bytecode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -218,6 +221,7 @@
 <span class="sd">        so as to work with import hooks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="o">=</span> <span class="n">transform_ast</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="o">=</span> <span class="n">transform_bytecode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
 
@@ -286,13 +290,13 @@
 <span class="sd">        line.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+            <span class="n">code_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">OverflowError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
             <span class="c1"># Case 1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">showsyntaxerror</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">code_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Case 2</span>
             <span class="k">return</span> <span class="kc">True</span>
 
@@ -302,12 +306,16 @@
             <span class="c1"># recreate code object, this time, with ast transform</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-            <span class="n">code</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
+            <span class="n">code_obj</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">code_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span><span class="p">(</span><span class="n">code_obj</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code_obj</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="IdeasConsole.runcode"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.runcode">[docs]</a>    <span class="k">def</span> <span class="nf">runcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+<div class="viewcode-block" id="IdeasConsole.runcode"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.runcode">[docs]</a>    <span class="k">def</span> <span class="nf">runcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code_obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Execute a code object.</span>
 
 <span class="sd">        When an exception occurs, friendly_traceback.explain() is called to</span>
@@ -322,7 +330,7 @@
 <span class="sd">        caller should be prepared to deal with it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
+            <span class="n">exec</span><span class="p">(</span><span class="n">code_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -330,15 +338,15 @@
 
 
 <div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Starts a special console that works with import hooks.&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">BANNER</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s2">&quot;~&gt;&gt; &quot;</span>
     <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration values for the console:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_CONFIG</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;__name__&#39;</span><span class="p">):</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2"> from </span><span class="si">{_CONFIG[key].__name__}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;_hook_name_&#39;</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2"> from </span><span class="si">{_CONFIG[key]._hook_name_}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{key}</span><span class="s2">: </span><span class="si">{_CONFIG[key]}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
@@ -346,9 +354,9 @@
 
     <span class="k">if</span> <span class="n">console</span><span class="o">.</span><span class="n">transform_ast</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">BANNER</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">AST transformations applied: you will need to explicitly</span>
-<span class="s2">call print() to see the result of a command.</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    AST transformations applied: you will need to explicitly</span>
+<span class="s2">    call print() to see the result of a command.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
     <span class="n">console</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">BANNER</span><span class="p">)</span></div>
 </pre></div>
 

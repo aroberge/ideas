@@ -1,7 +1,7 @@
 @startuml
     :Search for file;
     note right #White
-        We can specify a different file type. See example **french**.
+        We can specify a different file type. See example **french.py**.
         <back:lightblue> We could specify different search locations.</back>
     end note
     :Return file spec & Loader;
@@ -10,12 +10,13 @@
         We could substitute our own.
     end note
     #White: We can replace the module's ~__class__;
-    note right #White: See example **constants**
+    note right #White: See example **constants.py**
     partition Decode {
-        note right #LightBlue
-           Substitution of this entire block
-           as a single unit is possible.
-           No example exists yet.
+        note right #White
+           See **lambda_encoding.py** which is
+           a custom codec, and does not need
+           the rest of Python's importlib
+           machinery.
         end note
         :Read file content as bytes;
         :Convert bytes into string;
@@ -38,7 +39,7 @@
         :Transform the CPT into an Abstract Syntax Tree (AST);
     }
     #White: We can modify the AST that was created;
-    note right #White: See example **fractions_ast**
+    note right #White: See example **fractions_ast.py**
     partition Bytecode {
         note right #LightBlue
            Substitution of this entire block
@@ -48,10 +49,11 @@
         :Transform AST into a Control Flow Graph (CFG);
         :Transform CFG into bytecodes;
     }
-    #LightBlue: We can modify the bytecode;
+    #White: We can modify the bytecode;
+    note right #White: See example **confused_math_bc.py**
     :Execute bytecode into module's dict;
     note right #White
        We can substitute our own version.
-       See example **constants**
+       See example **constants.py**
     end note
 @enduml

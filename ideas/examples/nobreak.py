@@ -1,4 +1,7 @@
-"""This module enables someone to use ``nobreak`` as a keyword
+"""nobreak.py
+-------------
+
+This module enables someone to use ``nobreak`` as a keyword
    equivalent to ``else`` in ``for`` and ``while`` loops.
 
 """
@@ -70,7 +73,7 @@ def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        name=__name__,
+        hook_name=__name__,
         verbose_finder=verbose_finder,
     )
     return hook

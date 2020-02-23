@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; ideas 0.0.4 documentation</title>
+  <title>Index &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -96,18 +96,15 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -187,6 +184,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
@@ -202,6 +200,8 @@
       <li><a href="auto_self.html#ideas.examples.auto_self.add_hook">add_hook() (in module ideas.examples.auto_self)</a>
 
       <ul>
+        <li><a href="bytecode.html#ideas.examples.confused_math_bc.add_hook">(in module ideas.examples.confused_math_bc)</a>
+</li>
         <li><a href="constants.html#ideas.examples.constants.add_hook">(in module ideas.examples.constants)</a>
 </li>
         <li><a href="ast.html#ideas.examples.fractions_ast.add_hook">(in module ideas.examples.fractions_ast)</a>
@@ -239,11 +239,17 @@
 </li>
       <li><a href="import_hook.html#ideas.import_hook.IdeasLoader.create_module">create_module() (ideas.import_hook.IdeasLoader method)</a>
 </li>
+      <li><a href="bytecode.html#ideas.examples.confused_math_bc.create_new_co">create_new_co() (in module ideas.examples.confused_math_bc)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lambda.html#ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode">decode() (ideas.examples.lambda_encoding.LambdaIncrementalDecoder method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tokenize.html#ideas.token_utils.dedent">dedent() (in module ideas.token_utils)</a>
 </li>
@@ -311,6 +317,8 @@
 </li>
       <li><a href="auto_self.html#module-ideas.examples.auto_self">ideas.examples.auto_self (module)</a>
 </li>
+      <li><a href="bytecode.html#module-ideas.examples.confused_math_bc">ideas.examples.confused_math_bc (module)</a>
+</li>
       <li><a href="constants.html#module-ideas.examples.constants">ideas.examples.constants (module)</a>
 </li>
       <li><a href="ast.html#module-ideas.examples.fractions_ast">ideas.examples.fractions_ast (module)</a>
@@ -323,14 +331,16 @@
 </li>
       <li><a href="function_simplest.html#module-ideas.examples.function_simplest">ideas.examples.function_simplest (module)</a>
 </li>
+      <li><a href="lambda.html#module-ideas.examples.lambda_encoding">ideas.examples.lambda_encoding (module)</a>
+</li>
       <li><a href="nobreak.html#module-ideas.examples.nobreak">ideas.examples.nobreak (module)</a>
 </li>
       <li><a href="repeat.html#module-ideas.examples.repeat">ideas.examples.repeat (module)</a>
 </li>
-      <li><a href="import_hook.html#module-ideas.import_hook">ideas.import_hook (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_hook.html#module-ideas.import_hook">ideas.import_hook (module)</a>
+</li>
       <li><a href="tokenize.html#module-ideas.token_utils">ideas.token_utils (module)</a>
 </li>
       <li><a href="console.html#ideas.console.IdeasConsole">IdeasConsole (class in ideas.console)</a>
@@ -352,6 +362,18 @@
       <li><a href="tokenize.html#ideas.token_utils.Token.is_number">is_number() (ideas.token_utils.Token method)</a>
 </li>
       <li><a href="tokenize.html#ideas.token_utils.Token.is_space">is_space() (ideas.token_utils.Token method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lambda.html#ideas.examples.lambda_encoding.lambda_decode">lambda_decode() (in module ideas.examples.lambda_encoding)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lambda.html#ideas.examples.lambda_encoding.LambdaIncrementalDecoder">LambdaIncrementalDecoder (class in ideas.examples.lambda_encoding)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -423,15 +445,17 @@
 </li>
       <li><a href="import_hook.html#ideas.import_hook.shorten_path">shorten_path() (in module ideas.import_hook)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ast.html#ideas.examples.fractions_ast.source_init">source_init() (in module ideas.examples.fractions_ast)</a>
 
       <ul>
         <li><a href="ast.html#ideas.examples.fractions_tok.source_init">(in module ideas.examples.fractions_tok)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="console.html#ideas.console.start">start() (in module ideas.console)</a>
+</li>
+      <li><a href="bytecode.html#ideas.examples.confused_math_bc.swap_add_mul">swap_add_mul() (in module ideas.examples.confused_math_bc)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -445,6 +469,8 @@
 </li>
       <li><a href="ast.html#ideas.examples.fractions_ast.transform_ast">transform_ast() (in module ideas.examples.fractions_ast)</a>
 </li>
+      <li><a href="bytecode.html#ideas.examples.confused_math_bc.transform_bytecode">transform_bytecode() (in module ideas.examples.confused_math_bc)</a>
+</li>
       <li><a href="auto_self.html#ideas.examples.auto_self.transform_source">transform_source() (in module ideas.examples.auto_self)</a>
 
       <ul>
@@ -457,6 +483,8 @@
         <li><a href="function.html#ideas.examples.function_keyword.transform_source">(in module ideas.examples.function_keyword)</a>
 </li>
         <li><a href="function_simplest.html#ideas.examples.function_simplest.transform_source">(in module ideas.examples.function_simplest)</a>
+</li>
+        <li><a href="lambda.html#ideas.examples.lambda_encoding.transform_source">(in module ideas.examples.lambda_encoding)</a>
 </li>
         <li><a href="nobreak.html#ideas.examples.nobreak.transform_source">(in module ideas.examples.nobreak)</a>
 </li>

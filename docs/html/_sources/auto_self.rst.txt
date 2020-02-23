@@ -1,6 +1,13 @@
 Auto self
 ==========
 
+.. admonition:: Summary
+
+   This example illustrates how one can change the indentation
+   of an entire block of code, eliminate lines, and change the
+   content much more drastically than what the previous
+   examples have done.
+
 Python is known for its concise and readable syntax. One exception
 about the concisiveness is the boiler plate code that has to be
 written when defining one's own class, especially if it has

@@ -1,4 +1,5 @@
 """repeat.py
+-------------
 
 Adds ``repeat`` as a keyword to write loops. The four constructs supported
 are::
@@ -141,7 +142,7 @@ def add_hook(show_original=False, show_transformed=False, predictable_names=Fals
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        name=__name__,
+        hook_name=__name__,
         verbose_finder=verbose_finder,
     )
     return hook

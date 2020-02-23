@@ -1,4 +1,8 @@
-"""This module enables someone to use ``function`` as a keyword
+"""
+function_keyword.py
+-------------------
+
+This module enables someone to use ``function`` as a keyword
    equivalent to ``lambda``.
 
    It is slightly more complicated than ``function_simplest.py`` as it
@@ -70,7 +74,7 @@ def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        name=__name__,
+        hook_name=__name__,
         verbose_finder=verbose_finder,
     )
     return hook

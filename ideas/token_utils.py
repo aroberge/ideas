@@ -1,4 +1,5 @@
 """token_utils.py
+------------------
 
 A collection of useful functions and methods to deal with tokenizing
 source code.

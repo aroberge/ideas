@@ -1,6 +1,13 @@
 ``nobreak`` as a keyword
 ========================
 
+.. admonition:: Summary
+
+    Somewhat similar to the function keyword example except
+    that we keep track of the indentation level and
+    replace our new keyword (``nobreak``) only if
+    some conditions are met.
+
 Python's ``for`` and ``while`` loop include an ``else`` clause
 whose meaning is not immediately obvious::
 

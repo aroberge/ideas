@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>True constants &mdash; ideas 0.0.4 documentation</title>
+  <title>True constants &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Json module" href="json.html" />
-    <link rel="prev" title="Pythonic switch statement" href="switch.html" /> 
+    <link rel="next" title="Pythonic switch statement" href="switch.html" />
+    <link rel="prev" title="Confused math" href="bytecode.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -97,28 +97,24 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> True constants</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#consenting-adults">Consenting adults</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demonstration">Demonstration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-does-it-work">How does it work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#suggestion-for-you">Suggestion for you</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#constants-py">constants.py</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">constants.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#suggestion-for-you">Suggestion for you</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constants-py">constants.py</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -186,10 +182,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="json.html" class="btn btn-neutral float-right" title="Json module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Pythonic switch statement" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="switch.html" class="btn btn-neutral float-left" title="Pythonic switch statement" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bytecode.html" class="btn btn-neutral float-left" title="Confused math" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -364,15 +360,12 @@ as a new keyword:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">this_variable</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># this_variable is thus declared as constant</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="constants-py">
-<h2>constants.py<a class="headerlink" href="#constants-py" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="sidebar-title">API</p>
 <p>Generated by Sphinx</p>
 </div>
-<span class="target" id="module-ideas.examples.constants"></span><div class="section" id="id2">
-<h3>constants.py<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-ideas.examples.constants"></span><div class="section" id="constants-py">
+<h3>constants.py<a class="headerlink" href="#constants-py" title="Permalink to this headline">¶</a></h3>
 <p>This import hook makes it possible to define constants, that is variables
 which cannot have their initial value changed.</p>
 <p>In this import hook, constants are identified in two ways:</p>
@@ -475,10 +468,10 @@ the source unchanged.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="json.html" class="btn btn-neutral float-right" title="Json module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Pythonic switch statement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="switch.html" class="btn btn-neutral float-left" title="Pythonic switch statement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bytecode.html" class="btn btn-neutral float-left" title="Confused math" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

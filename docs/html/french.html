@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>French Python &mdash; ideas 0.0.4 documentation</title>
+  <title>French Python &mdash; ideas 0.0.5 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Auto self" href="auto_self.html" />
-    <link rel="prev" title="nobreak as a keyword" href="nobreak.html" /> 
+    <link rel="prev" title="repeat as a keyword" href="repeat.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.5
               </div>
             
           
@@ -97,9 +97,10 @@
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding and the main problem - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword - to do</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python - to do</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.french">En français, svp !</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#french-py">french.py</a></li>
 </ul>
@@ -107,14 +108,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Simple bytecode transformation - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json.html"> Json module - todo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="non_files.html"> Import from non-standard locations - to do</a></li>
-<li class="toctree-l1"><a class="reference internal" href="as_main.html"> Importing a module as main - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -185,7 +182,7 @@
         <a href="auto_self.html" class="btn btn-neutral float-right" title="Auto self" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nobreak.html" class="btn btn-neutral float-left" title="nobreak as a keyword" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="repeat.html" class="btn btn-neutral float-left" title="repeat as a keyword" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -220,7 +217,24 @@
 </style>
 <div class="section" id="french-python">
 <h1>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline">¶</a></h1>
-<p>Show how to do this. Already done for AvantPy.</p>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This example demonstrates the how to use a non-standard file
+extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>) as an indication that an import hook must
+be used.</p>
+</div>
+<p>Imagine you are a French beginner who has learned the basics
+of programming using a block-based environment such as Scratch
+or Blockly. All the text shown on these blocks was in French,
+the only language you know.  You now want to do a transition
+to actually writing code in an editor, instead of putting
+predefined blocks together. It would be so much easier if
+you could use a version of Python where the keywords were in French,
+with most of them being identical to what you were using in the
+block-based environment.</p>
+<p>This is what this import hook example allows one to do.
+A more elaborate example is that given by
+<a class="reference external" href="https://aroberge.github.io/avantpy/docs/html/">AvantPy</a>.</p>
 <div class="section" id="module-ideas.examples.french">
 <span id="en-francais-svp"></span><h2>En français, svp !<a class="headerlink" href="#module-ideas.examples.french" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="french-py">
@@ -269,7 +283,7 @@ wrapper for the function where the real transformation is performed.</p>
         <a href="auto_self.html" class="btn btn-neutral float-right" title="Auto self" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nobreak.html" class="btn btn-neutral float-left" title="nobreak as a keyword" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="repeat.html" class="btn btn-neutral float-left" title="repeat as a keyword" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

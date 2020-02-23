@@ -30,11 +30,11 @@ the two main phases, that is creating a ``Finder`` and a ``Loader``.
 Using ``ideas``, these are automatically done for us, and we can focus
 on various parts over which we can have control.
 
-**In the diagram below:**
+.. admonition:: **In the diagram below:**
 
   - Inside each of the major blocks (Decode, AST, Bytecode), we don't have
     control over the individual components;
-    however, we can substitute our own version of the entire block.
+    however, we could, in principle, substitute our own version of the entire block.
   - There exists at least one example for anything (excluding major blocks) with
     a white background.
   - Anything with a light blue background indicates that some examples of this should
