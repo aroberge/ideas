@@ -1,9 +1,17 @@
 Usage
 =====
 
-All the examples below are based on an import hook which makes
-it possible to use the word ``function`` as being equivalent
-to the Python keyword ``lambda``.
+.. admonition:: Hello World!
+
+    All the examples below, as well as a few other mentioned later,
+    are based on an import hook which makes
+    it possible to use the word ``function`` as being equivalent
+    to the Python keyword ``lambda``.
+
+    Think of this simple example as the ``"Hello World!"`` for this project.
+
+
+
 
 .. tip::
 
