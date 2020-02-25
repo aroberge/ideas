@@ -8,9 +8,7 @@ A "French Python" file is recognize by its .pyfr extension.
 """
 from ideas import import_hook, token_utils
 
-# The name of the dict is irrelevant ... but we choose it to be the same
-# as the file extension should be.
-pyfr = {
+fr_to_py = {
     "Faux": "False",
     "Aucun": "None",
     "Vrai": "True",
@@ -87,8 +85,8 @@ def french_to_english(source):
     """
     new_tokens = []
     for token in token_utils.tokenize(source):
-        if token.string in pyfr:
-            token.string = pyfr[token.string]
+        if token.string in fr_to_py:
+            token.string = fr_to_py[token.string]
         new_tokens.append(token)
 
     new_source = token_utils.untokenize(new_tokens)

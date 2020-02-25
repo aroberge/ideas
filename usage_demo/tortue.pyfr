@@ -1,0 +1,19 @@
+from turtle import color, fd, left, pen
+
+pen(pensize=3)
+
+définir square(length, t_color):
+    color(t_color)
+    répéter 4:
+        fd(length)
+        left(90)
+
+repeat 4:
+    color('black')
+    fd(90)
+    square(60, 'red')
+    square(30, 'green')
+    left(90)
+
+
+input("Press any key to quit.")
