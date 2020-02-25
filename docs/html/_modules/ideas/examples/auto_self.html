@@ -99,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
@@ -181,32 +182,20 @@
 <span class="sd">Helps to reduce the amount of typing required and increases readability</span>
 <span class="sd">when assigning attributes in a class&#39;s ``__init__()`` method.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
-
-
-<div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Prints the source code.</span>
-
-<span class="sd">    ``kind`` is usually either ``&quot;Original&quot;`` or ``&quot;Transformed&quot;``</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;===========</span><span class="si">{kind}</span><span class="s2">============&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
 
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
 <span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
-            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="n">automatic_self</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
-            <span class="n">print_info</span><span class="p">(</span><span class="s2">&quot;Transformed&quot;</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Transformed&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">source</span></div>
 

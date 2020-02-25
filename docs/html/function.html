@@ -111,6 +111,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
@@ -303,12 +304,16 @@ standard library; it was found by a “normal” finder used by Python.</p>
 </div>
 <div class="section" id="comparing-the-original-and-the-transformed-source">
 <h3>Comparing the original and the transformed source<a class="headerlink" href="#comparing-the-original-and-the-transformed-source" title="Permalink to this headline">¶</a></h3>
+<div class="sidebar">
+<p class="sidebar-title">pattern != actual code</p>
+<p>The code used is slightly different than was is shown here.</p>
+</div>
 <p>It might be sometimes useful to compare the original source with
 the transformed one. Instead of actually adding <code class="docutils literal notranslate"><span class="pre">print</span></code> statements
 when needed, we can use some callback parameters to enable or disable
 such <code class="docutils literal notranslate"><span class="pre">print</span></code> statemeent.  <strong>ideas</strong> makes it fairly easy to
 do this using callback parameters.
-Here’s the basic pattern used in almost all the examples:</p>
+Here’s the basic <strong>pattern</strong> used in almost all the examples:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
@@ -394,13 +399,6 @@ do not adjust the information (start_col, end_col) about the position
 of the token. <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> uses that information together with the
 information about each original line, to properly keep track of the
 spacing between tokens.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.function_keyword.print_info">
-<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">print_info</code><span class="sig-paren">(</span><em class="sig-param">kind</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#print_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.print_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the source code.</p>
-<p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Transformed&quot;</span></code></p>
 </dd></dl>
 
 <dl class="function">

@@ -99,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fractional_math_ast.html"> Fractional math (AST)</a></li>
@@ -189,51 +190,7 @@
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span><span class="p">,</span> <span class="n">decode_source</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">console</span>
-
-<span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="n">PYTHON</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">IDEAS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">TESTS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-
-
-<div class="viewcode-block" id="shorten_path"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.shorten_path">[docs]</a><span class="k">def</span> <span class="nf">shorten_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Utility function used to reduce the length of the path shown</span>
-<span class="sd">       to a user. For example, a path for a module in the Python</span>
-<span class="sd">       standard library might be shown as::</span>
-
-<span class="sd">           PYTHON:/module.py</span>
-
-<span class="sd">       whereas a file found in the user&#39;s root directory might be shown</span>
-<span class="sd">       as::</span>
-
-<span class="sd">            ~/file.py</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># On windows, the filenames are not case sensitive</span>
-    <span class="c1"># and the way Python displays filenames may vary.</span>
-    <span class="c1"># To properly compare, we convert everything to lowercase</span>
-    <span class="c1"># However, we ensure that the shortened path retains its cases</span>
-    <span class="n">path_lower</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;PYTHON:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">PYTHON</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;IDEAS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IDEAS</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;TESTS:&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">TESTS</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">elif</span> <span class="n">path_lower</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOME</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">HOME</span><span class="p">)</span> <span class="p">:]</span>
-    <span class="k">return</span> <span class="n">path</span></div>
-
-
-<div class="viewcode-block" id="print_paths"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.print_paths">[docs]</a><span class="k">def</span> <span class="nf">print_paths</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Prints the values of the path abbreviations used in shorten_path().&quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;~: </span><span class="si">{HOME}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;PYTHON: </span><span class="si">{PYTHON}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;IDEAS: </span><span class="si">{IDEAS}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">TESTS</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;TESTS: </span><span class="si">{TESTS}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">shorten_path</span><span class="p">,</span> <span class="n">PYTHON</span><span class="p">,</span> <span class="n">IDEAS</span>
 
 
 <div class="viewcode-block" id="IdeasMetaFinder"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">IdeasMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
@@ -359,18 +316,11 @@
         <span class="sd">&quot;&quot;&quot;Import the source code, transform it before executing it so that</span>
 <span class="sd">           it is known to Python.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">Main_Module_Name</span>
-
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+b&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">decode_source</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-
-        <span class="k">if</span> <span class="n">Main_Module_Name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;__main__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
-            <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
-            <span class="n">Main_Module_Name</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
@@ -494,10 +444,6 @@
         <span class="k">return</span>
     <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">()</span></div>
-
-
-<span class="k">def</span> <span class="nf">import_as_main</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </pre></div>
 
            </div>

@@ -93,12 +93,16 @@ standard library; it was found by a "normal" finder used by Python.
 Comparing the original and the transformed source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. sidebar:: pattern != actual code
+
+    The code used is slightly different than was is shown here.
+
 It might be sometimes useful to compare the original source with
 the transformed one. Instead of actually adding ``print`` statements
 when needed, we can use some callback parameters to enable or disable
 such ``print`` statemeent.  **ideas** makes it fairly easy to
 do this using callback parameters.
-Here's the basic pattern used in almost all the examples::
+Here's the basic **pattern** used in almost all the examples::
 
     def transform_source(source, callback_params=None, **kwargs):
         if callback_params is not None:

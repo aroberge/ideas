@@ -183,6 +183,7 @@ Quick links to topics
     nobreak as a keyword <nobreak>
     repeat as a keyword <repeat>
     French Python <french>
+    French repeat <french_repeat>
     Auto-self <auto_self>
     Fractional math (token) <fractional_math_tok>
     Fractional math (AST) <fractional_math_ast>

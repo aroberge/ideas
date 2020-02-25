@@ -38,6 +38,13 @@ This is a source transformation that allows one
 to use French equivalent keywords to the existing ones.
 It shows how to make use of a different file extension (``.pyfr``)
 
+French repeat
+~~~~~~~~~~~~~~
+
+Extends the French keywords from **French Python** to include those
+in **repeat as a keyword**. It then combines both examples into
+a single transformation.
+
 Auto-self
 ~~~~~~~~~~~~~~
 

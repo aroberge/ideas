@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Confused math &mdash; ideas 0.0.6 documentation</title>
+  <title>French repeat &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="True constants" href="constants.html" />
-    <link rel="prev" title="Fractional math (AST)" href="fractional_math_ast.html" /> 
+    <link rel="next" title="Auto self" href="auto_self.html" />
+    <link rel="prev" title="French Python" href="french.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,14 +101,14 @@
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> French repeat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#french-repeat-py">french_repeat.py</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#confused-math-bc-py">confused_math_bc.py</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
@@ -163,13 +163,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Confused math</li>
+      <li>French repeat</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/bytecode.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/french_repeat.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,10 +179,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="auto_self.html" class="btn btn-neutral float-right" title="Auto self" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="french.html" class="btn btn-neutral float-left" title="French Python" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -215,69 +215,66 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="confused-math">
-<h1>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="french-repeat">
+<h1>French repeat<a class="headerlink" href="#french-repeat" title="Permalink to this headline">¶</a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>Demonstration of a simple bytecode transformation where
-we interchange <code class="docutils literal notranslate"><span class="pre">BINARY_ADD</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_MULTIPLY</span></code>.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py">Source code</a></p>
+<p>This example re-uses two existing transformations:</p>
+<ul class="simple">
+<li><p><strong>French Python</strong>, which uses a non-standard file extension <code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>
+as an indication that an import hook must be used.</p></li>
+<li><p><strong>repeat as a keyword</strong></p></li>
+</ul>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/french_repeat.py">Source code</a></p>
 </div>
-<p>Let’s start with a demo from the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">confused_math_bc</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">confused_math_bc</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;ideas.import_hook.IdeasMetaFinder object at 0x0317A590&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Configuration values for the console:</span>
-<span class="go">    transform_bytecode from ideas.examples.confused_math_bc</span>
-<span class="go">--------------------------------------------------</span>
-<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
+<a class="reference internal image-reference" href="_images/turtle_demo.png"><img alt="ideas logo" class="align-center" src="_images/turtle_demo.png" style="width: 227.60000000000002px; height: 229.60000000000002px;" /></a>
+<p>To produce the above image, you can use the following (files found
+in usage_demo directory):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">french_repeat</span>
 
-<span class="go">~&gt;&gt; x = 3</span>
-<span class="go">~&gt;&gt; x + x</span>
-<span class="go">9</span>
-<span class="go">~&gt;&gt; x * x</span>
-<span class="go">6</span>
+<span class="n">french_repeat</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">tortue</span>
 </pre></div>
 </div>
-<p>Yes, it is a silly example. However, I cannot come up with anything
-possibly useful. Feel free to submit a better example.</p>
-<span class="target" id="module-ideas.examples.confused_math_bc"></span><div class="section" id="confused-math-bc-py">
-<h2>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Permalink to this headline">¶</a></h2>
-<p>Import hook that performs bytecode changes,
-swapping BINARY_ADD and BINARY_MULTIPLY.</p>
-<p>Note: If code contains something like a + b, or a * b, where
-a and b are integer literals (e.g. 2 + 4), the operations are
-done prior to the creation of a code object and thus are
-not captured by this transformation.</p>
-<p>Requires Python version &gt;= 3.6 as it assumed that bytecode
-instructions are “wordcode” i.e. that instructions like
-BINARY_ADD and BINARY_MULTIPLY will fall on even-index values
-of the bytecode.</p>
+<p>and</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;tortue.pyfr&quot;&quot;&quot;</span>
+
+<span class="n">de</span> <span class="n">turtle</span> <span class="n">importer</span> <span class="n">color</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">pen</span>
+
+<span class="n">pen</span><span class="p">(</span><span class="n">pensize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">répéter</span> <span class="mi">4</span><span class="p">:</span>   <span class="c1"># French ...</span>
+    <span class="n">repeat</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># or English ... both work.</span>
+        <span class="n">repeat</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">color</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+            <span class="n">fd</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+            <span class="n">left</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">)</span>
+        <span class="n">color</span><span class="p">(</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+        <span class="n">fd</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">color</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">fd</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+
+<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press any key to quit.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="module-ideas.examples.french_repeat"></span><div class="section" id="french-repeat-py">
+<h2>french_repeat.py<a class="headerlink" href="#french-repeat-py" title="Permalink to this headline">¶</a></h2>
+<p>Combining tranformations from two other examples.</p>
 <dl class="function">
-<dt id="ideas.examples.confused_math_bc.add_hook">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+<dt id="ideas.examples.french_repeat.add_hook">
+<code class="sig-prename descclassname">ideas.examples.french_repeat.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french_repeat.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french_repeat.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.confused_math_bc.create_new_co">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">create_new_co</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recursivelly creates new code objects from old ones, swapping
-BINARY_ADD and BINARY_MULTIPLY.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.confused_math_bc.swap_add_mul">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">swap_add_mul</code><span class="sig-paren">(</span><em class="sig-param">bytecode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interchange BINARY_ADD and BINARY_MULTIPLY</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.confused_math_bc.transform_bytecode">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">transform_bytecode</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms the code object into a new code object</p>
+<dt id="ideas.examples.french_repeat.transform_source">
+<code class="sig-prename descclassname">ideas.examples.french_repeat.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french_repeat.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.french_repeat.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader and uses
+transformations from two other examples.</p>
 </dd></dl>
 
 </div>
@@ -291,10 +288,10 @@ BINARY_ADD and BINARY_MULTIPLY.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="auto_self.html" class="btn btn-neutral float-right" title="Auto self" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="french.html" class="btn btn-neutral float-left" title="French Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

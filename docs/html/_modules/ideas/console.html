@@ -99,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fractional_math_ast.html"> Fractional math (AST)</a></li>
@@ -285,6 +286,9 @@
 <span class="sd">        3) The input is complete; compile_command() returned a code</span>
 <span class="sd">        object.  The code is executed by calling self.runcode() (which</span>
 <span class="sd">        also handles run-time exceptions, except for SystemExit).</span>
+<span class="sd">        However, if we an AST transformation is performed, we go back</span>
+<span class="sd">        to the source and recompile in two steps so that we can</span>
+<span class="sd">        perform an AST transformation.</span>
 
 <span class="sd">        The return value is True in case 2, False in the other cases (unless</span>
 <span class="sd">        an exception is raised).  The return value can be used to</span>
@@ -309,7 +313,6 @@
             <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
             <span class="n">code_obj</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
-
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">code_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span><span class="p">(</span><span class="n">code_obj</span><span class="p">)</span>

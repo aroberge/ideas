@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function_keyword &mdash; ideas 0.0.6 documentation</title>
+  <title>ideas.examples.french_repeat &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -160,7 +160,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>ideas.examples.function_keyword</li>
+      <li>ideas.examples.french_repeat</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -175,37 +175,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ideas.examples.function_keyword</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">function_keyword.py</span>
-<span class="sd">-------------------</span>
+  <h1>Source code for ideas.examples.french_repeat</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;french_repeat.py</span>
+<span class="sd">--------------------</span>
 
-<span class="sd">This module enables someone to use ``function`` as a keyword</span>
-<span class="sd">   equivalent to ``lambda``.</span>
-
-<span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
-<span class="sd">   demonstrates how we can pass parameters when adding an import hook;</span>
-<span class="sd">   these parameters will be passed back to our function</span>
-<span class="sd">   ``transform_source``.</span>
+<span class="sd">Combining tranformations from two other examples.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
+
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">french</span><span class="p">,</span> <span class="n">repeat</span>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
-<span class="sd">       that we specified when we created the import hook.</span>
+<span class="n">additional_vocab</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;répéter&quot;</span><span class="p">:</span> <span class="s2">&quot;repeat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sansfin&quot;</span><span class="p">:</span> <span class="s2">&quot;forever&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jusquà&quot;</span><span class="p">:</span> <span class="s2">&quot;until&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-<span class="sd">       It gives us the option to compare the original source and the transformed</span>
-<span class="sd">       one. This type of additional option can be useful when debugging</span>
-<span class="sd">       a source transformer. Furthermore, if we wish to define a source</span>
-<span class="sd">       transformation that combines the effect of multiple existing</span>
-<span class="sd">       transformations, we can combine the existing &quot;inner&quot; functions to</span>
-<span class="sd">       create our new transformation.</span>
+<span class="n">french</span><span class="o">.</span><span class="n">fr_to_py</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_vocab</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french_repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and uses</span>
+<span class="sd">    transformations from two other examples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
         <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">french_to_english</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">repeat</span><span class="o">.</span><span class="n">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
         <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Transformed&quot;</span><span class="p">)</span>
@@ -213,26 +211,8 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="function_as_a_keyword"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.function_as_a_keyword">[docs]</a><span class="k">def</span> <span class="nf">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.</span>
-
-<span class="sd">    Note that, while the string ``lambda`` is shorter than ``function``, we</span>
-<span class="sd">    do not adjust the information (start_col, end_col) about the position</span>
-<span class="sd">    of the token. ``untokenize`` uses that information together with the</span>
-<span class="sd">    information about each original line, to properly keep track of the</span>
-<span class="sd">    spacing between tokens.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french_repeat.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
         <span class="s2">&quot;show_transformed&quot;</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
@@ -241,6 +221,7 @@
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.pyfr&quot;</span><span class="p">],</span>
         <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
