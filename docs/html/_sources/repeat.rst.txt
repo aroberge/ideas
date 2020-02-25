@@ -18,6 +18,8 @@ repeat as a keyword
     environments for beginners can benefit from the inclusion of** ``repeat``
     **as a temporary additional keyword.**
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
+
 
 From blocks to textual code
 ---------------------------

@@ -9,6 +9,7 @@ Improving function as a keyword
     This example demonstrates the use of passing back parameters
     to an import hook and some possible usage.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/function_keyword.py>`_
 
 Basic usage::
 

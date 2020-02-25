@@ -13,6 +13,8 @@ True constants
     - Custom module class
     - Specialized dict to temporarily replace the read-only module dict.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/constants.py>`_
+
 It took me quite a while to come up with the solution described below,
 and I learned a fair bit along the way.  Given the relative complexity of
 the final solution, I thought it would be appropriate to start slowly,

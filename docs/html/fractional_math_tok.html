@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Confused math &mdash; ideas 0.0.6 documentation</title>
+  <title>Fractional math (token) &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="True constants" href="constants.html" />
-    <link rel="prev" title="Fractional math (AST)" href="fractional_math_ast.html" /> 
+    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
+    <link rel="prev" title="Auto self" href="auto_self.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,12 +102,12 @@
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#confused-math-bc-py">confused_math_bc.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Fractional math (token)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fractions-tok-py">fractions_tok.py</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
@@ -162,13 +162,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Confused math</li>
+      <li>Fractional math (token)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/bytecode.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/fractional_math_tok.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -178,10 +178,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="auto_self.html" class="btn btn-neutral float-left" title="Auto self" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -214,69 +214,91 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="confused-math">
-<h1>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fractional-math-token">
+<h1>Fractional math (token)<a class="headerlink" href="#fractional-math-token" title="Permalink to this headline">¶</a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>Demonstration of a simple bytecode transformation where
-we interchange <code class="docutils literal notranslate"><span class="pre">BINARY_ADD</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_MULTIPLY</span></code>.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py">Source code</a></p>
+<ul class="simple">
+<li><p>Demonstrates how to add code to initialize a module or the console
+with necessary imports and/or function definitions.</p></li>
+</ul>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_tok.py">Source code</a></p>
 </div>
-<p>Let’s start with a demo from the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">confused_math_bc</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">confused_math_bc</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;ideas.import_hook.IdeasMetaFinder object at 0x0317A590&gt;</span>
+<p>Consider the following standard Python code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0.0</span>
+<span class="go">0.1</span>
+<span class="go">0.2</span>
+<span class="go">0.30000000000000004</span>
+<span class="go">0.4</span>
+<span class="go">0.5</span>
+<span class="go">0.6000000000000001</span>
+<span class="go">0.7000000000000001</span>
+<span class="go">0.8</span>
+<span class="go">0.9</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>This is quite surprising for beginners, not familiar with the
+limitations of representing floating point numbers.</p>
+<p>However, we can “fix” this using an import hook that wraps
+integer into a <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">fractions_tok</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">fractions_tok</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
-<span class="go">    transform_bytecode from ideas.examples.confused_math_bc</span>
+<span class="go">    source_init from ideas.examples.fractions_tok</span>
+<span class="go">    transform_source from ideas.examples.fractions_tok</span>
 <span class="go">--------------------------------------------------</span>
 <span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
 
-<span class="go">~&gt;&gt; x = 3</span>
-<span class="go">~&gt;&gt; x + x</span>
-<span class="go">9</span>
-<span class="go">~&gt;&gt; x * x</span>
-<span class="go">6</span>
+<span class="go">~&gt;&gt; x = 1 / 10</span>
+<span class="go">~&gt;&gt; for i in range(11):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0</span>
+<span class="go">1/10</span>
+<span class="go">1/5</span>
+<span class="go">3/10</span>
+<span class="go">2/5</span>
+<span class="go">1/2</span>
+<span class="go">3/5</span>
+<span class="go">7/10</span>
+<span class="go">4/5</span>
+<span class="go">9/10</span>
+<span class="go">1</span>
 </pre></div>
 </div>
-<p>Yes, it is a silly example. However, I cannot come up with anything
-possibly useful. Feel free to submit a better example.</p>
-<span class="target" id="module-ideas.examples.confused_math_bc"></span><div class="section" id="confused-math-bc-py">
-<h2>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Permalink to this headline">¶</a></h2>
-<p>Import hook that performs bytecode changes,
-swapping BINARY_ADD and BINARY_MULTIPLY.</p>
-<p>Note: If code contains something like a + b, or a * b, where
-a and b are integer literals (e.g. 2 + 4), the operations are
-done prior to the creation of a code object and thus are
-not captured by this transformation.</p>
-<p>Requires Python version &gt;= 3.6 as it assumed that bytecode
-instructions are “wordcode” i.e. that instructions like
-BINARY_ADD and BINARY_MULTIPLY will fall on even-index values
-of the bytecode.</p>
+<p>This example was created after a similar example using AST transformation
+was created as a proof of concept. For more details about the
+difference, please have a look at the AST-based example.</p>
+<span class="target" id="module-ideas.examples.fractions_tok"></span><div class="section" id="fractions-tok-py">
+<h2>fractions_tok.py<a class="headerlink" href="#fractions-tok-py" title="Permalink to this headline">¶</a></h2>
+<p>Converts integers literals into instances of the Fraction class in
+the source using the tokenizer.
+This works for doing using Python exclusively to do integer arithmetics but it
+fails miserably in other contexts that expect <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+<p>It is only meant as an alternative to the AST transformation demo.</p>
 <dl class="function">
-<dt id="ideas.examples.confused_math_bc.add_hook">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ideas.examples.fractions_tok.add_hook">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.confused_math_bc.create_new_co">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">create_new_co</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recursivelly creates new code objects from old ones, swapping
-BINARY_ADD and BINARY_MULTIPLY.</p>
+<dt id="ideas.examples.fractions_tok.source_init">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">source_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds required imports and function redefinitions</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ideas.examples.confused_math_bc.swap_add_mul">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">swap_add_mul</code><span class="sig-paren">(</span><em class="sig-param">bytecode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interchange BINARY_ADD and BINARY_MULTIPLY</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.confused_math_bc.transform_bytecode">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">transform_bytecode</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms the code object into a new code object</p>
+<dt id="ideas.examples.fractions_tok.transform_source">
+<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace integers by Fraction objects</p>
 </dd></dl>
 
 </div>
@@ -290,10 +312,10 @@ BINARY_ADD and BINARY_MULTIPLY.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="auto_self.html" class="btn btn-neutral float-left" title="Auto self" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

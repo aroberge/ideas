@@ -6,6 +6,8 @@ Confused math
     Demonstration of a simple bytecode transformation where
     we interchange ``BINARY_ADD`` and ``BINARY_MULTIPLY``.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py>`_
+
 
 Let's start with a demo from the console::
 

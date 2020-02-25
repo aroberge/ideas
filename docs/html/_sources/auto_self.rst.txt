@@ -8,6 +8,8 @@ Auto self
    content much more drastically than what the previous
    examples have done.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/auto_self.py>`_
+
 Python is known for its concise and readable syntax. One exception
 about the concisiveness is the boiler plate code that has to be
 written when defining one's own class, especially if it has

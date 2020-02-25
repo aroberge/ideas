@@ -184,7 +184,8 @@ Quick links to topics
     repeat as a keyword <repeat>
     French Python <french>
     Auto-self <auto_self>
-    Fractional math (AST) <ast>
+    Fractional math (token) <fractional_math_tok>
+    Fractional math (AST) <fractional_math_ast>
     Confused math (Bytecode) <bytecode>
     True constants <constants>
     Pythonic switch statement - to do  <switch>

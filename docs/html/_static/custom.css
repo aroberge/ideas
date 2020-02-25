@@ -1,6 +1,11 @@
 
 /* see https://yeun.github.io/open-color/#blue for color palette*/
 
+h3 {background-color: #e7f5ff;
+    border-left: 2px solid #1864ab;
+    padding-left: 5px;
+}
+
 .wy-side-nav-search {background-color: #1864ab;}
 
 .wy-nav-side {background-color: #d0ebff;
@@ -44,8 +49,9 @@
     color:black;
 }
 
-.rst-content tt.literal, 
-.rst-content tt.literal, 
+.rst-content tt.literal,
+.rst-content tt.literal,
 .rst-content code.literal {
     color: purple;
 }
+

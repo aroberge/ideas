@@ -5,6 +5,10 @@
 
     Using a custom codec instead of an import hook.
 
+
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_encoding.py>`_
+
+
 .. warning::
 
     The following is just a quick first draft.

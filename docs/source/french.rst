@@ -7,6 +7,8 @@ French Python
     extension (``.pyfr``) as an indication that an import hook must
     be used.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/french.py>`_
+
 
 Imagine you are a French beginner who has learned the basics
 of programming using a block-based environment such as Scratch

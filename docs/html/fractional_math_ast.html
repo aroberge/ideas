@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Fractional math &mdash; ideas 0.0.6 documentation</title>
+  <title>Fractional math (AST) &mdash; ideas 0.0.6 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Confused math" href="bytecode.html" />
-    <link rel="prev" title="Auto self" href="auto_self.html" /> 
+    <link rel="prev" title="Fractional math (token)" href="fractional_math_tok.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,9 +102,9 @@
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Fractional math (AST)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#fractions-ast-py">fractions_ast.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fractions-tok-py">fractions_tok.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
@@ -162,13 +162,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Fractional math</li>
+      <li>Fractional math (AST)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/ast.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/fractional_math_ast.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -181,7 +181,7 @@
         <a href="bytecode.html" class="btn btn-neutral float-right" title="Confused math" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="auto_self.html" class="btn btn-neutral float-left" title="Auto self" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -214,8 +214,8 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="fractional-math">
-<h1>Fractional math<a class="headerlink" href="#fractional-math" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fractional-math-ast">
+<h1>Fractional math (AST)<a class="headerlink" href="#fractional-math-ast" title="Permalink to this headline">¶</a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <ul class="simple">
@@ -223,6 +223,7 @@
 <li><p>Demonstrates how to add code to initialize a module or the console
 with necessary imports and/or function definitions.</p></li>
 </ul>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_ast.py">Source code</a></p>
 </div>
 <p>Consider the following standard Python code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
@@ -363,32 +364,6 @@ fails miserably in other contexts that expect <code class="docutils literal notr
 </dd></dl>
 
 </div>
-<span class="target" id="module-ideas.examples.fractions_tok"></span><div class="section" id="fractions-tok-py">
-<h2>fractions_tok.py<a class="headerlink" href="#fractions-tok-py" title="Permalink to this headline">¶</a></h2>
-<p>Converts integers literals into instances of the Fraction class in
-the source using the tokenizer.
-This works for doing using Python exclusively to do integer arithmetics but it
-fails miserably in other contexts that expect <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
-<p>It is only meant as an alternative to the AST transformation demo.</p>
-<dl class="function">
-<dt id="ideas.examples.fractions_tok.add_hook">
-<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.fractions_tok.source_init">
-<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">source_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds required imports and function redefinitions</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.fractions_tok.transform_source">
-<code class="sig-prename descclassname">ideas.examples.fractions_tok.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.fractions_tok.transform_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace integers by Fraction objects</p>
-</dd></dl>
-
-</div>
 </div>
 
 
@@ -402,7 +377,7 @@ fails miserably in other contexts that expect <code class="docutils literal notr
         <a href="bytecode.html" class="btn btn-neutral float-right" title="Confused math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="auto_self.html" class="btn btn-neutral float-left" title="Auto self" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

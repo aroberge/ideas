@@ -96,13 +96,41 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Guide to the examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Guide to the examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#source-transformations">Source transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#improving-function-as-a-keyword">Improving function as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nobreak-as-a-keyword">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repeat-as-a-keyword">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#french-python">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#auto-self">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fractional-math-token">Fractional math (token)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#abstract-syntax-tree-transformations">Abstract Syntax Tree transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fractional-math-ast">Fractional math (AST)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bytecode-transformations">Bytecode transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#confused-math">Confused math</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-types">Other types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#true-constants">True constants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-encoding">Custom encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#encoding">λ encoding</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
@@ -212,37 +240,90 @@
 </style>
 <div class="section" id="guide-to-the-examples">
 <h1>Guide to the examples<a class="headerlink" href="#guide-to-the-examples" title="Permalink to this headline">¶</a></h1>
-<p>The examples included are listed roughly in increasing level of
-complexity.</p>
-<p><strong>Improving function as a keyword</strong> should be your starting point.
+<p>The examples included are listed roughly in increasing level of complexity.</p>
+<div class="section" id="source-transformations">
+<h2>Source transformations<a class="headerlink" href="#source-transformations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="improving-function-as-a-keyword">
+<h3>Improving function as a keyword<a class="headerlink" href="#improving-function-as-a-keyword" title="Permalink to this headline">¶</a></h3>
+<p>This example should be your starting point.
 We show how to use the tokenizer to transform a source and explain
 how to make use of some diagnostic “tools”. Admittedly, using
 these “tools” make the code more complicated than strictly needed.
 Since we incorporate such “tools” in later examples, you might want
 to be familiar with them so that you can learn to recognize and potentially
 ignore them while looking at the actual code.</p>
-<p><strong>nobreak as a keyword</strong> shows how to keep track of indentation
+</div>
+<div class="section" id="nobreak-as-a-keyword">
+<h3>nobreak as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline">¶</a></h3>
+<p>This shows how to keep track of indentation
 level and only replace a keyword when some conditions are met.</p>
-<p><strong>repeat as a keyword</strong> includes four different transformations,
+</div>
+<div class="section" id="repeat-as-a-keyword">
+<h3>repeat as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline">¶</a></h3>
+<p>This includes four different transformations,
 one of which requires to add some extra variables to the original code.
 We do so in a way that avoid any conflict with existing variable names.</p>
-<p><strong>French Python</strong> is a source transformation that allows one
+</div>
+<div class="section" id="french-python">
+<h3>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline">¶</a></h3>
+<p>This is a source transformation that allows one
 to use French equivalent keywords to the existing ones.
-It is included mostly for historical reason.</p>
-<p><strong>Auto-self</strong> is an example of a syntax that is intended to reduce
-boiler-plate code when initializing a class instance.
+It shows how to make use of a different file extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>)</p>
+</div>
+<div class="section" id="auto-self">
+<h3>Auto-self<a class="headerlink" href="#auto-self" title="Permalink to this headline">¶</a></h3>
+<p>This is an example of a syntax that is intended to reduce
+boilerplate code when initializing a class instance.
 The code transformation is more complex than the previous ones and
-include a change of indentation of an entire block of code.</p>
-<p>All of the previous examples are done as source transformation.
-However, we can do other types of transformations.</p>
-<p><strong>Fractional math</strong> is a proof-of-concept of a transformation
-at the Abstract Syntax Tree level.</p>
-<p><strong>Confused math</strong> is a proof-of-concept bytecode transformation.</p>
-<p><strong>True constants</strong> is a fairly complex example that illustrates
+include a change of indentation of an entire block of code.S</p>
+</div>
+<div class="section" id="fractional-math-token">
+<h3>Fractional math (token)<a class="headerlink" href="#fractional-math-token" title="Permalink to this headline">¶</a></h3>
+<p>This is a functionally equivalent version to the AST proof of concept
+example [Fractional math (ast)] mentioned below.
+It demontrattes how to include
+supplementary code, such as importing a module or defining a function,
+in addition to the user code, while ensuring that the console (REPL)
+can still work properly.</p>
+</div>
+</div>
+<div class="section" id="abstract-syntax-tree-transformations">
+<h2>Abstract Syntax Tree transformations<a class="headerlink" href="#abstract-syntax-tree-transformations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fractional-math-ast">
+<h3>Fractional math (AST)<a class="headerlink" href="#fractional-math-ast" title="Permalink to this headline">¶</a></h3>
+<p>This is a proof-of-concept of a transformation
+at the Abstract Syntax Tree level. It also shows how to include
+supplementary code, such as importing a module or defining a function,
+in addition to the user code while ensuring that the console (REPL)
+can still work properly.</p>
+</div>
+</div>
+<div class="section" id="bytecode-transformations">
+<h2>Bytecode transformations<a class="headerlink" href="#bytecode-transformations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="confused-math">
+<h3>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline">¶</a></h3>
+<p>This is a proof-of-concept bytecode transformation.</p>
+</div>
+</div>
+<div class="section" id="other-types">
+<h2>Other types<a class="headerlink" href="#other-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="true-constants">
+<h3>True constants<a class="headerlink" href="#true-constants" title="Permalink to this headline">¶</a></h3>
+<p>This is a fairly complex example that illustrates
 the use of a custom module dict and class.</p>
-<p>Finally, import hooks are not the only way one can transform a source; this
-can also be done by custom codecs as demonstrated in
-<strong>λ encoding</strong>.</p>
+</div>
+</div>
+<div class="section" id="custom-encoding">
+<h2>Custom encoding<a class="headerlink" href="#custom-encoding" title="Permalink to this headline">¶</a></h2>
+<p>Import hooks are not the only way one can transform a source; this
+can also be done by custom encodings.</p>
+<div class="section" id="encoding">
+<h3>λ encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
+<p>This is an adaptation of our basic example, but using a custom
+encoding which needs to be explicitly declared in a file whose
+source must be transformed.</p>
+</div>
+</div>
 </div>
 
 

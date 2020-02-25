@@ -8,6 +8,8 @@
     replace our new keyword (``nobreak``) only if
     some conditions are met.
 
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/nobreak.py>`_
+
 Python's ``for`` and ``while`` loop include an ``else`` clause
 whose meaning is not immediately obvious::
 

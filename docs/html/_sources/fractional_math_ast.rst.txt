@@ -1,4 +1,4 @@
-Fractional math
+Fractional math (AST)
 ==========================
 
 .. admonition:: Summary
@@ -6,6 +6,8 @@ Fractional math
     - Demonstrates how to use an import hook that does an AST transformation
     - Demonstrates how to add code to initialize a module or the console
       with necessary imports and/or function definitions.
+
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_ast.py>`_
 
 
 Consider the following standard Python code::
@@ -119,8 +121,4 @@ however, after doing an AST transform, the code must be compiled
 using the ``exec`` mode.
 
 .. automodule:: ideas.examples.fractions_ast
-   :members:
-
-
-.. automodule:: ideas.examples.fractions_tok
    :members:
