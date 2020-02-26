@@ -25,14 +25,14 @@ For example::
 
 is equivalent to::
 
-    for random_variable_name_1 in range(3):
+    for unique_variable_name_1 in range(3):
         a = 2
-        for random_variable_name_2 in range(a*a):
+        for unique_variable_name_2 in range(a*a):
             pass
 """
 import uuid
 
-from ideas import import_hook, token_utils
+from ideas import import_hook, token_utils, utils
 
 
 class RepeatSyntaxError(Exception):
@@ -56,29 +56,20 @@ def generate_predictable_names():
         yield "_%s" % n
 
 
-def print_info(kind, source):
-    """Prints the source code.
-
-    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
-    """
-    print(f"==========={kind}============")
-    print(source)
-    print("-----------------------------")
-
-
 def transform_source(source, callback_params=None, **kwargs):
     """This function is called by the import hook loader and is used as a
     wrapper for the function where the real transformation is performed.
     """
     if callback_params["show_original"]:
-        print_info("Original", source)
+        utils.print_source(source, "Original")
 
     source = convert_repeat(
         source, predictable_names=callback_params["predictable_names"]
     )
 
     if callback_params["show_transformed"]:
-        print_info("Transformed", source)
+        utils.print_source(source, "Transformed")
+
     return source
 
 

@@ -10,17 +10,7 @@ This module enables someone to use ``function`` as a keyword
    these parameters will be passed back to our function
    ``transform_source``.
 """
-from ideas import import_hook, token_utils
-
-
-def print_info(kind, source):
-    """Prints the source code.
-
-    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
-    """
-    print(f"==========={kind}============")
-    print(source)
-    print("-----------------------------")
+from ideas import import_hook, token_utils, utils
 
 
 def transform_source(source, callback_params=None, **kwargs):
@@ -34,15 +24,14 @@ def transform_source(source, callback_params=None, **kwargs):
        transformations, we can combine the existing "inner" functions to
        create our new transformation.
     """
-    if callback_params is not None:
-        if callback_params["show_original"]:
-            print_info("Original", source)
+    if callback_params["show_original"]:
+        utils.print_source(source, "Original")
 
     source = function_as_a_keyword(source)
 
-    if callback_params is not None:
-        if callback_params["show_transformed"]:
-            print_info("Transformed", source)
+    if callback_params["show_transformed"]:
+        utils.print_source(source, "Transformed")
+
     return source
 
 

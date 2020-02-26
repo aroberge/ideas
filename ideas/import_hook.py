@@ -12,55 +12,11 @@ from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
 
 from . import console
-
-Main_Module_Name = None
-
-PYTHON = os.path.dirname(os.__file__).lower()
-IDEAS = os.path.dirname(__file__).lower()
-TESTS = os.path.normpath(os.path.join(IDEAS, "..", "tests")).lower()
-HOME = os.path.expanduser("~").lower()
-
-
-def shorten_path(path):
-    """Utility function used to reduce the length of the path shown
-       to a user. For example, a path for a module in the Python
-       standard library might be shown as::
-
-           PYTHON:/module.py
-
-       whereas a file found in the user's root directory might be shown
-       as::
-
-            ~/file.py
-    """
-    # On windows, the filenames are not case sensitive
-    # and the way Python displays filenames may vary.
-    # To properly compare, we convert everything to lowercase
-    # However, we ensure that the shortened path retains its cases
-    path_lower = path.lower()
-
-    if path_lower.startswith(PYTHON):
-        path = "PYTHON:" + path[len(PYTHON) :]
-    elif path_lower.startswith(IDEAS):
-        path = "IDEAS:" + path[len(IDEAS) :]
-    elif path_lower.startswith(TESTS):
-        path = "TESTS:" + path[len(TESTS) :]
-    elif path_lower.startswith(HOME):
-        path = "~" + path[len(HOME) :]
-    return path
-
-
-def print_paths():
-    """Prints the values of the path abbreviations used in shorten_path()."""
-    print(f"~: {HOME}")
-    print(f"PYTHON: {PYTHON}")
-    print(f"IDEAS: {IDEAS}")
-    if os.path.exists(TESTS):
-        print(f"TESTS: {TESTS}")
+from .utils import shorten_path, PYTHON, IDEAS
 
 
 class IdeasMetaFinder(MetaPathFinder):
-    """A custom finder to locate modules.  The main reason for this code
+    """A custom finder to locate modules. The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
        is used."""
 
@@ -182,18 +138,11 @@ class IdeasLoader(Loader):
         """Import the source code, transform it before executing it so that
            it is known to Python.
         """
-        global Main_Module_Name
-
         if self.module_class is not None:
             module.__class__ = self.module_class
 
         with open(self.filename, mode="r+b") as f:
             source = decode_source(f.read())
-
-        if Main_Module_Name is not None:
-            sys.modules["__main__"] = sys.modules[module.__name__]
-            module.__name__ = "__main__"
-            Main_Module_Name = None
 
         if self.transform_source is not None:
             source = self.transform_source(
@@ -317,7 +266,3 @@ def remove_hook(hook):
         return
     del sys.meta_path[index]
     console.configure()
-
-
-def import_as_main(module):
-    raise NotImplementedError

@@ -108,6 +108,9 @@ class IdeasConsole(InteractiveConsole):
         3) The input is complete; compile_command() returned a code
         object.  The code is executed by calling self.runcode() (which
         also handles run-time exceptions, except for SystemExit).
+        However, if we an AST transformation is performed, we go back
+        to the source and recompile in two steps so that we can
+        perform an AST transformation.
 
         The return value is True in case 2, False in the other cases (unless
         an exception is raised).  The return value can be used to
@@ -132,7 +135,6 @@ class IdeasConsole(InteractiveConsole):
             tree = ast.parse(source, filename)
             tree = self.transform_ast(tree)
             code_obj = compile(tree, filename, "exec")
-
 
         if self.transform_bytecode is not None:
             code_obj = self.transform_bytecode(code_obj)

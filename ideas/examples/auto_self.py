@@ -4,32 +4,20 @@
 Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class's ``__init__()`` method.
 """
-from ideas import import_hook, token_utils
-
-
-def print_info(kind, source):
-    """Prints the source code.
-
-    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
-    """
-    print(f"==========={kind}============")
-    print(source)
-    print("-----------------------------")
+from ideas import import_hook, token_utils, utils
 
 
 def transform_source(source, callback_params=None, **kwargs):
     """This function is called by the import hook loader and is used as a
     wrapper for the function where the real transformation is performed.
     """
-    if callback_params is not None:
-        if callback_params["show_original"]:
-            print_info("Original", source)
+    if callback_params["show_original"]:
+        utils.print_source(source, "Original")
 
     source = automatic_self(source)
 
-    if callback_params is not None:
-        if callback_params["show_transformed"]:
-            print_info("Transformed", source)
+    if callback_params["show_transformed"]:
+        utils.print_source(source, "Transformed")
 
     return source
 

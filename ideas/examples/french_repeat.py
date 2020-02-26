@@ -1,5 +1,12 @@
-from ideas import import_hook
+"""french_repeat.py
+--------------------
+
+Combining tranformations from two other examples.
+"""
+
+from ideas import import_hook, utils
 from ideas.examples import french, repeat
+
 
 additional_vocab = {
     "répéter": "repeat",
@@ -10,30 +17,18 @@ additional_vocab = {
 french.fr_to_py.update(additional_vocab)
 
 
-def print_info(kind, source):
-    """Prints the source code.
-
-    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
-    """
-    print(f"==========={kind}============")
-    print(source)
-    print("-----------------------------")
-
-
 def transform_source(source, callback_params=None, **kwargs):
-    """This function is called by the import hook loader and is used as a
-    wrapper for the function where the real transformation is performed.
+    """This function is called by the import hook loader and uses
+    transformations from two other examples.
     """
-    if callback_params is not None:
-        if callback_params["show_original"]:
-            print_info("Original", source)
+    if callback_params["show_original"]:
+        utils.print_source(source, "Original")
 
     source = french.french_to_english(source)
     source = repeat.convert_repeat(source)
 
-    if callback_params is not None:
-        if callback_params["show_transformed"]:
-            print_info("Transformed", source)
+    if callback_params["show_transformed"]:
+        utils.print_source(source, "Transformed")
 
     return source
 

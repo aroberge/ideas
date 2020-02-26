@@ -1,19 +1,21 @@
-from turtle import color, fd, left, pen
+"""tortue.pyfr"""
+
+de turtle importer color, fd, left, pen
 
 pen(pensize=3)
 
-définir square(length, t_color):
-    color(t_color)
-    répéter 4:
-        fd(length)
+répéter 4:   # French ...
+    repeat 4:  # or English ... both work.
+        repeat 4:
+            color('blue')
+            fd(30)
+            left(-90)
+        color('green')
+        fd(60)
         left(90)
-
-repeat 4:
-    color('black')
-    fd(90)
-    square(60, 'red')
-    square(30, 'green')
+    color('red')
     left(90)
+    fd(90)
 
 
 input("Press any key to quit.")

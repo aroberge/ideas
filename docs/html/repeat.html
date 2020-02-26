@@ -223,8 +223,16 @@
 </style>
 <div class="section" id="repeat-as-a-keyword">
 <h1>repeat as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-why-this-is-an-important-example-to-me admonition">
-<p class="admonition-title">Why this is an important example to me?</p>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Adds a <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword that can be used to indicate 4 different
+versions of a loop.</p>
+<p><strong>Limitation</strong>: <code class="docutils literal notranslate"><span class="pre">repeat</span></code> statements must be on a single line of
+code ending with a colon [and an optional end of line comment].</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py">Source code</a></p>
+</div>
+<div class="sidebar">
+<p class="sidebar-title">Why this is an important example to me?</p>
 <p>Having a <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword addition is something that I have wanted
 (and included) for teaching young beginners. It was also my
 <a class="reference external" href="https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html">first attempt at writing an import hook</a>. Prior to that, I
@@ -234,10 +242,6 @@ in <a class="reference external" href="http://reeborg.ca">Reeborg’s World</a><
 created <a class="reference external" href="http://jython.tobiaskohn.ch/">TygerJython</a>
 as part of his Ph.D. thesis, also found it useful to add such a keyword
 to Python.</p>
-<p><strong>I will first attempt to explain to you why I think Python-based
-environments for beginners can benefit from the inclusion of</strong> <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
-<strong>as a temporary additional keyword.</strong></p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py">Source code</a></p>
 </div>
 <div class="section" id="from-blocks-to-textual-code">
 <h2>From blocks to textual code<a class="headerlink" href="#from-blocks-to-textual-code" title="Permalink to this headline">¶</a></h2>
@@ -249,7 +253,7 @@ running programs.  Block-based programming environments, such as
 have different blocks that can be used for this purpose.  For example:</p>
 <a class="reference internal image-reference" href="_images/repeat10.png"><img alt="Repeat 10 block" src="_images/repeat10.png" style="width: 140.0px; height: 83.0px;" /></a>
 <a class="reference internal image-reference" href="_images/repeat_until.png"><img alt="Repeat until block" src="_images/repeat_until.png" style="width: 190.0px; height: 84.0px;" /></a>
-<p>and a “repeat forever” loop in French:</p>
+<p>and a “repeat forever” loop (shown in French below):</p>
 <a class="reference internal image-reference" href="_images/repeat_forever_fr.png"><img alt="French repeat forever block" src="_images/repeat_forever_fr.png" style="width: 123.20000000000002px; height: 81.4px;" /></a>
 <p>Depending on the block-based environment one uses, there are up to four
 four main such cases, which can be written as follows

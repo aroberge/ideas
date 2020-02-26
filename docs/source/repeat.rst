@@ -1,7 +1,17 @@
 repeat as a keyword
 =======================
 
-.. admonition:: Why this is an important example to me?
+.. admonition:: Summary
+
+    Adds a ``repeat`` keyword that can be used to indicate 4 different
+    versions of a loop.
+
+    **Limitation**: ``repeat`` statements must be on a single line of
+    code ending with a colon [and an optional end of line comment].
+
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
+
+.. sidebar:: Why this is an important example to me?
 
     Having a ``repeat`` keyword addition is something that I have wanted
     (and included) for teaching young beginners. It was also my
@@ -13,12 +23,6 @@ repeat as a keyword
     created `TygerJython <http://jython.tobiaskohn.ch/>`_
     as part of his Ph.D. thesis, also found it useful to add such a keyword
     to Python.
-
-    **I will first attempt to explain to you why I think Python-based
-    environments for beginners can benefit from the inclusion of** ``repeat``
-    **as a temporary additional keyword.**
-
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
 
 
 From blocks to textual code
@@ -40,7 +44,7 @@ have different blocks that can be used for this purpose.  For example:
    :scale: 100 %
    :alt: Repeat until block
 
-and a "repeat forever" loop in French:
+and a "repeat forever" loop (shown in French below):
 
 .. image:: _static/repeat_forever_fr.png
    :scale: 55 %
