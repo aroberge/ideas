@@ -11,6 +11,14 @@ def check(source):
     assert source == new_source
 
 
+def check_lines(source):
+    lines = token_utils.get_lines(source)
+    tokens = []
+    for line in lines:
+        tokens.extend(line)
+    assert source == token_utils.untokenize(tokens)
+
+
 def test_untokenize():
     check(
         '''
@@ -63,6 +71,22 @@ def test_cpython_bug_35107():
     # Checking https://bugs.python.org/issue35107#msg328884
     check("#")
     check("#\n")
+
+
+def test_last_line_empty():
+    """If the last line contains only space characters with no newline
+    Python's tokenizer drops this content. To ensure that the
+    tokenize-untokenize returns the original value, we have introduced
+    a fix in our utility functions"""
+
+    source = "a\n  "
+    source2 = "a\n\t"
+    check(source)
+    check(source2)
+
+    check_lines(source)
+    check_lines(source2)
+
 
 source1 = "a = b"
 source2 = "a = b # comment\n"

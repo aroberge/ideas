@@ -103,6 +103,23 @@ class Token:
         )
 
 
+def fix_empty_line(source, tokens):
+    """Python's tokenizer drops entirely a last line if it consists only of
+    space characters and/or tab characters.  To ensure that we can always have::
+
+        untokenize(tokenize(source)) == source
+
+    we correct the last token content if needed.
+    """
+    nb = 0
+    for char in reversed(source):
+        if char in (" ", "\t"):
+            nb += 1
+        else:
+            break
+    tokens[-1].string = source[-nb:]
+
+
 def tokenize(source):
     """Transforms a source (string) into a list of Tokens."""
     tokens = []
@@ -114,6 +131,9 @@ def tokenize(source):
         except (py_tokenize.TokenError, Exception) as exc:
             print("WARNING: the following error was raised in ", f"{__name__}.tokenize")
             print(exc)
+
+    if source.endswith((" ", "\t")):
+        fix_empty_line(source, tokens)
 
     return tokens
 
@@ -143,6 +163,8 @@ def get_lines(source):
 
     if new_line:
         lines.append(new_line)
+    if source.endswith((" ", "\t")):
+        fix_empty_line(source, lines[-1])
     return lines
 
 
