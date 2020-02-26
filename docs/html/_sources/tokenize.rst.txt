@@ -50,15 +50,10 @@ The main points to understand:
     Unlike Python's version, the process of tokenizing and untokenizing a source
     using ideas' own ``tokenize`` and ``untokenize`` functions
     is guaranteed to yield back an exact copy of the original source, with all
-    the spacing information intact [*].
+    the spacing information intact.
     Experience has shown that being able to recover the
     original source with spacing included is **extremely** useful when writing
     tests about the expected results for some source transformation.
-
-    [*] With one exception: if the source **ends**
-    with a line containing only space or tab characters, these will be lost
-    by Python's tokenizing procedure and will not be recovered when untokenizing:
-    the last line will consists of a single ``\n`` character.
 
 About Ideas' tokens
 -------------------

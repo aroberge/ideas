@@ -268,14 +268,10 @@ information.</p></li>
 <p>Unlike Python’s version, the process of tokenizing and untokenizing a source
 using ideas’ own <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> and <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> functions
 is guaranteed to yield back an exact copy of the original source, with all
-the spacing information intact [*].
+the spacing information intact.
 Experience has shown that being able to recover the
 original source with spacing included is <strong>extremely</strong> useful when writing
 tests about the expected results for some source transformation.</p>
-<p>[*] With one exception: if the source <strong>ends</strong>
-with a line containing only space or tab characters, these will be lost
-by Python’s tokenizing procedure and will not be recovered when untokenizing:
-the last line will consists of a single <code class="docutils literal notranslate"><span class="pre">\n</span></code> character.</p>
 </div>
 <div class="section" id="about-ideas-tokens">
 <h2>About Ideas’ tokens<a class="headerlink" href="#about-ideas-tokens" title="Permalink to this headline">¶</a></h2>
@@ -367,6 +363,17 @@ on a given line are not considered to be tokens themselves.</p>
 <code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">dedent</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">nb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#dedent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.dedent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, produces an equivalent list corresponding
 to a line of code with the first nb characters removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.token_utils.fix_empty_line">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">fix_empty_line</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#fix_empty_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.fix_empty_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python’s tokenizer drops entirely a last line if it consists only of
+space characters and/or tab characters.  To ensure that we can always have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">))</span> <span class="o">==</span> <span class="n">source</span>
+</pre></div>
+</div>
+<p>we correct the last token content if needed.</p>
 </dd></dl>
 
 <dl class="function">
