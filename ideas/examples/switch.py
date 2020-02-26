@@ -1,7 +1,8 @@
 """switch.py
 -----------------
 
-Implements version 1.B of `PEP 3103 <https://www.python.org/dev/peps/pep-3103>`_
+Implements something similar to version 1.B of
+`PEP 3103 <https://www.python.org/dev/peps/pep-3103>`_
 """
 import uuid
 
@@ -82,37 +83,41 @@ def convert_switch(source, predictable_names=False):
         if first_token is None:
             new_tokens.extend(line)
             continue
-        first_token_index = token_utils.get_first_index(line)
-        second_token = line[first_token_index + 1]
 
-        if switch_block:
-            if first_token.start_col == switch_indent:  # noqa
+        if len(line) > 1:
+            _index = token_utils.get_first_index(line)
+            second_token = line[_index + 1]
+        else:
+            second_token = None
+
+        if not switch_block:
+            if first_token == "switch":
+                switch_indent = first_token.start_col
+                var_name = next(variable_name)
+                first_token.string = f"{var_name} ="
+                switch_block = True
+                first_case = True
+                colon = token_utils.get_last(line)
+                colon.string = ""
+        else:
+            if first_token.start_col == switch_indent:
                 switch_block = False
-                new_tokens.extend([" " * switch_indent + f"del {var_name}\n"])  # noqa
+                new_tokens.extend([" " * switch_indent + f"del {var_name}\n"])
 
             elif first_token == "case" or first_token == "else":
                 if first_case and first_token == "case":
                     if second_token == "in":
-                        first_token.string = f"if {var_name}"  # noqa
+                        first_token.string = f"if {var_name}"
                     else:
-                        first_token.string = f"if {var_name} =="  # noqa
+                        first_token.string = f"if {var_name} =="
                     first_case = False
                 elif first_token == "case":
                     if second_token == "in":
-                        first_token.string = f"elif {var_name}"  # noqa
+                        first_token.string = f"elif {var_name}"
                     else:
-                        first_token.string = f"elif {var_name} =="  # noqa
-                dedent = first_token.start_col - switch_indent  # noqa
+                        first_token.string = f"elif {var_name} =="
+                dedent = first_token.start_col - switch_indent
                 line = token_utils.dedent(line, dedent)
-
-        elif first_token == "switch":
-            switch_indent = first_token.start_col  # noqa
-            var_name = next(variable_name)
-            first_token.string = f"{var_name} ="
-            switch_block = True
-            first_case = True
-            colon = token_utils.get_last(line)
-            colon.string = ""
 
         new_tokens.extend(line)
     return token_utils.untokenize(new_tokens)
