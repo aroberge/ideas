@@ -3,9 +3,10 @@ Implicit multiplication
 
 .. admonition:: Summary
 
+    Using a very simple transformation during the tokenzing phase,
     Python's syntax is extended to recognize that multiplication is implied
     in some situations that would normally be identified as ``SyntaxError``
-    in Python since a multiplication operator ``*`` would be considered
+    since a multiplication operator ``*`` would be considered
     to be missing.
 
     `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/implicit_multiplication.py>`_
