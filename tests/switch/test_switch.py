@@ -33,6 +33,18 @@ def test_transform():
     assert result == expected, "Switch conversion test"
 
 
+def test_switch1():
+    hook = switch.add_hook()
+
+    try:
+        import switch1  # for testing only this file
+    except ImportError:
+        from . import switch1  # for testing as part of a suite with pytest
+
+    remove_hook(hook)
+
+
 if __name__ == '__main__':
     test_transform()
+    test_switch1()
     print("Done.")
