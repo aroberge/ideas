@@ -33,13 +33,15 @@ def transform_source(source, callback_params=None, **kwargs):
 
 def add_multiplication_symbol(source):
     """In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``
-    is a syntax error.
+    is a syntax error.  So, we treat those cases as though they indicate
+    that a multiplication is implied.
     """
     new_tokens = []
 
     lines = token_utils.get_lines(source)
     for line in lines:
         multiply_by_number(line)
+        multiply_two_identifiers(line)
         new_tokens.extend(line)
 
     return token_utils.untokenize(new_tokens)
@@ -55,6 +57,17 @@ def multiply_by_number(line):
     for token, next_token in token_utils.get_pairs(line):
         if token.is_number() and (next_token.is_identifier() or next_token == "("):
             token.string = token.string + " * "
+
+
+def multiply_two_identifiers(line):
+    """In Python, having an identifier followed by another identifier,
+    where neither identifier is a keyword, is a syntax error.
+    The following transformation identifies such
+    cases and inserts a multiplication symbol between the two identifiers.
+    """
+    for token, next_token in token_utils.get_pairs(line):
+        if token.is_identifier() and next_token.is_identifier():
+            token.string = token.string + " *"
 
 
 def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
