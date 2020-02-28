@@ -23,6 +23,10 @@ class Token:
         start = (start_row, start_col)
         end = (end_row, end_col)
         line: entire line of code where the token is found.
+
+    Token instances are mutable objects. Therefore, given a list of tokens,
+    we can change the value of any token's attribute, untokenize the list and
+    automatically obtain a transformed source.
     """
 
     def __init__(self, token):
@@ -101,6 +105,9 @@ class Token:
             end=str(self.end),
             line=repr(self.line),
         )
+
+
+Null = Token((-1, "", (0, 0), (0, 0), ""))
 
 
 def fix_empty_line(source, tokens):
@@ -218,9 +225,11 @@ def get_first_index(tokens, exclude_comment=True):
 
 def get_last(tokens, exclude_comment=True):
     """Given a list of tokens, find the last token which is not a space token
-    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default, also not a ``COMMMENT``.
+    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default,
+    also not a ``COMMMENT``.
 
-    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.
+    ``COMMMENT`` tokens can be included by setting``exclude_comment``
+    to ``False``.
 
     Returns ``None`` if none is found.
     """
@@ -240,6 +249,26 @@ def get_last_index(tokens, exclude_comment=True):
         - 1
         - get_first_index(reversed(tokens), exclude_comment=exclude_comment)
     )
+
+
+def get_pairs(tokens):
+    """Given a list of tokens having at least two items, returns a list of
+    pairs of consecutive tokens, with the first pair consisting of a Null
+    token and the first token in the list.
+    Thus, given a list like ``[1, 2, 3]``, this function would return
+    ``[(Null, 1), (1, 2), (2, 3)]``.
+
+    Returns an empty list if the original list contains fewer than two items.
+    """
+    if len(tokens) < 2:
+        return []
+
+    first = tokens[0]
+    pairs = [(Null, first)]
+    for token in tokens[1:]:
+        pairs.append((first, token))
+        first = token
+    return pairs
 
 
 def dedent(tokens, nb):
