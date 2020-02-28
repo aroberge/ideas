@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pythonic switch statement &mdash; ideas 0.0.6 documentation</title>
+  <title>Pythonic switch statement &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.6
+                0.0.7a
               </div>
             
           
@@ -107,7 +107,13 @@
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Pythonic switch statement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#result">Result</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#switch-py">switch.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -214,9 +220,123 @@
 </style>
 <div class="section" id="pythonic-switch-statement">
 <h1>Pythonic switch statement<a class="headerlink" href="#pythonic-switch-statement" title="Permalink to this headline">¶</a></h1>
-<p>Implement differently my previous Pythonic switch statement</p>
-<p><a class="reference external" href="https://aroberge.blogspot.com/2018/06/pythonic-switch-statement.html">https://aroberge.blogspot.com/2018/06/pythonic-switch-statement.html</a></p>
-<p>Implement 1.B from <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">https://www.python.org/dev/peps/pep-3103</a></p>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Adds a switch statement to Python.</p>
+<p><strong>Limitation</strong>: a switch statement cannot contain another switch statement.</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/switch.py">Source code</a></p>
+</div>
+<p>There have been 2 PEPs looking at the possibility of adding a <code class="docutils literal notranslate"><span class="pre">switch</span></code>
+statement to Python.
+First, in 2001, <a class="reference external" href="https://www.python.org/dev/peps/pep-0275/">PEP 275</a> made
+this suggestion. This was later superceded by <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a> written in 2006 by Guido van Rossum and, after a straw poll during
+his keynote at PyCon 2007, he rejected it.</p>
+<p>In order to “play” with the syntax and try to evaluate the benefit,
+I decided to implement it. PEP 3103 looks at various possible syntax,
+and I chose the one which seemed the most in line with normal Python syntax,
+namely version 1 B. The implementation meant to replace code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
+    <span class="n">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="n">SUITE</span>
+    <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_name</span> <span class="o">=</span> <span class="n">EXPR</span>
+<span class="k">if</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="n">SUITE</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">del</span> <span class="n">var_name</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">var_name</span></code> is a unique variable name chosen randomly.
+Note that I didn’t bother to dedent the inner <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> as it is
+never shown to the end user and would only complicate the code.</p>
+<div class="section" id="result">
+<h2>Result<a class="headerlink" href="#result" title="Permalink to this headline">¶</a></h2>
+<p>The actual result is not particularly enlightning.
+PEP 3103 considers the fact that each <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> has two levels
+of indentation to be a downside. Personally, after writing some testing
+code with it (not saved anywhere), I found the fact that, due to having
+all the <code class="docutils literal notranslate"><span class="pre">case</span></code> statements indented make the code stand out better than
+having a traditional <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code> suite; so, I consider the extra
+indentation to be a bonus. However, perhaps I might feel otherwise if I
+always limited myself to having line with no more than 79 characters
+which was the norm when the PEP was written.</p>
+<span class="target" id="module-ideas.examples.switch"></span><div class="section" id="switch-py">
+<h3>switch.py<a class="headerlink" href="#switch-py" title="Permalink to this headline">¶</a></h3>
+<p>Implements something similar to version 1.B of
+<a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a></p>
+<dl class="function">
+<dt id="ideas.examples.switch.add_hook">
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">predictable_names=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.switch.convert_switch">
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">convert_switch</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">predictable_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#convert_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.convert_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
+    <span class="n">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_name</span> <span class="o">=</span> <span class="n">EXPR</span>
+<span class="k">if</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">del</span> <span class="n">var_name</span>
+</pre></div>
+</div>
+<p>Limitation: switch blocks cannot be part of a SUITE of another switch block.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.switch.generate_predictable_names">
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">generate_predictable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#generate_predictable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.generate_predictable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator that yields predictable variable names - useful for testing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.switch.generate_variable_names">
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">generate_variable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#generate_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.generate_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator that yields random variable names</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.switch.transform_source">
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader and is used as a
+wrapper for the function where the real transformation is performed.</p>
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 

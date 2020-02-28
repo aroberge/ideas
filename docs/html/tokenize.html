@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>About tokens &mdash; ideas 0.0.6 documentation</title>
+  <title>About tokens &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.6
+                0.0.7a
               </div>
             
           
@@ -313,6 +313,9 @@ a more convenient form, and with some custom methods.</p>
 <span class="n">line</span><span class="p">:</span> <span class="n">entire</span> <span class="n">line</span> <span class="n">of</span> <span class="n">code</span> <span class="n">where</span> <span class="n">the</span> <span class="n">token</span> <span class="ow">is</span> <span class="n">found</span><span class="o">.</span>
 </pre></div>
 </div>
+<p>Token instances are mutable objects. Therefore, given a list of tokens,
+we can change the value of any token’s attribute, untokenize the list and
+automatically obtain a transformed source.</p>
 <dl class="method">
 <dt id="ideas.token_utils.Token.is_comment">
 <code class="sig-name descname">is_comment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#Token.is_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.Token.is_comment" title="Permalink to this definition">¶</a></dt>
@@ -400,8 +403,10 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <dt id="ideas.token_utils.get_last">
 <code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_last</code><span class="sig-paren">(</span><em class="sig-param">tokens</em>, <em class="sig-param">exclude_comment=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_last" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of tokens, find the last token which is not a space token
-(such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) and, by default, also not a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens can be included by setting <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+(such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) and, by default,
+also not a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens can be included by setting``exclude_comment``
+to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 <p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is found.</p>
 </dd></dl>
 
@@ -430,6 +435,17 @@ tokens which are not space tokens (such as <code class="docutils literal notrans
 <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.)</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens are not included in the count.
 If you wish to include them, set <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.token_utils.get_pairs">
+<code class="sig-prename descclassname">ideas.token_utils.</code><code class="sig-name descname">get_pairs</code><span class="sig-paren">(</span><em class="sig-param">tokens</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/token_utils.html#get_pairs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.token_utils.get_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens having at least two items, returns a list of
+pairs of consecutive tokens, with the first pair consisting of a Null
+token and the first token in the list.
+Thus, given a list like <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, this function would return
+<code class="docutils literal notranslate"><span class="pre">[(Null,</span> <span class="pre">1),</span> <span class="pre">(1,</span> <span class="pre">2),</span> <span class="pre">(2,</span> <span class="pre">3)]</span></code>.</p>
+<p>Returns an empty list if the original list contains fewer than two items.</p>
 </dd></dl>
 
 <dl class="function">

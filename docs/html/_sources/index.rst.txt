@@ -189,7 +189,7 @@ Quick links to topics
     Fractional math (AST) <fractional_math_ast>
     Confused math (Bytecode) <bytecode>
     True constants <constants>
-    Pythonic switch statement - to do  <switch>
+    Pythonic switch statement <switch>
     λ encoding <lambda>
     Examples never included - first draft <excluded>
 

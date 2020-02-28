@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.french &mdash; ideas 0.0.6 documentation</title>
+  <title>ideas.examples.french &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.6
+                0.0.7a
               </div>
             
           
@@ -105,7 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -230,7 +230,7 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="print_info"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.print_info">[docs]</a><span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints the source code.</span>
 
 <span class="sd">    ``kind`` is usually either ``&quot;Original&quot;`` or ``&quot;Transformed&quot;``</span>
@@ -240,7 +240,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------------&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
 <span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -257,7 +257,7 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="french_to_english"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french.french_to_english">[docs]</a><span class="k">def</span> <span class="nf">french_to_english</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="french_to_english"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.french_to_english">[docs]</a><span class="k">def</span> <span class="nf">french_to_english</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A simple replacement of &#39;French Python keyword&#39; by their normal</span>
 <span class="sd">       English version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -271,7 +271,7 @@
     <span class="k">return</span> <span class="n">new_source</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french_repeat.html#ideas.examples.french.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>

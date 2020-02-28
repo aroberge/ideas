@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.repeat &mdash; ideas 0.0.7a documentation</title>
+  <title>ideas.examples.switch &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -160,7 +160,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>ideas.examples.repeat</li>
+      <li>ideas.examples.switch</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -175,58 +175,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ideas.examples.repeat</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;repeat.py</span>
-<span class="sd">-------------</span>
+  <h1>Source code for ideas.examples.switch</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;switch.py</span>
+<span class="sd">-----------------</span>
 
-<span class="sd">Adds ``repeat`` as a keyword to write loops. The four constructs supported</span>
-<span class="sd">are::</span>
-
-<span class="sd">    repeat n:</span>
-<span class="sd">        # code</span>
-
-<span class="sd">    repeat while condition:</span>
-<span class="sd">        # code</span>
-
-<span class="sd">    repeat until condition:</span>
-<span class="sd">        # code</span>
-
-<span class="sd">    repeat forever:</span>
-<span class="sd">        # code</span>
-
-<span class="sd">For example::</span>
-
-<span class="sd">    repeat 3:</span>
-<span class="sd">        a = 2</span>
-<span class="sd">        repeat a*a:</span>
-<span class="sd">            pass</span>
-
-<span class="sd">is equivalent to::</span>
-
-<span class="sd">    for unique_variable_name_1 in range(3):</span>
-<span class="sd">        a = 2</span>
-<span class="sd">        for unique_variable_name_2 in range(a*a):</span>
-<span class="sd">            pass</span>
+<span class="sd">Implements something similar to version 1.B of</span>
+<span class="sd">`PEP 3103 &lt;https://www.python.org/dev/peps/pep-3103&gt;`_</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
 
 
-<div class="viewcode-block" id="RepeatSyntaxError"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.RepeatSyntaxError">[docs]</a><span class="k">class</span> <span class="nc">RepeatSyntaxError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Currently, only raised when a repeat statement has a missing colon&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="generate_variable_names"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.generate_variable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_variable_names</span><span class="p">():</span>
+<div class="viewcode-block" id="generate_variable_names"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.generate_variable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_variable_names</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Generator that yields random variable names&quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
         <span class="k">yield</span> <span class="s2">&quot;_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="o">.</span><span class="n">hex</span></div>
 
 
-<div class="viewcode-block" id="generate_predictable_names"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.generate_predictable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_predictable_names</span><span class="p">():</span>
+<div class="viewcode-block" id="generate_predictable_names"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.generate_predictable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_predictable_names</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Generator that yields predictable variable names - useful for testing&quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -234,14 +202,14 @@
         <span class="k">yield</span> <span class="s2">&quot;_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">n</span></div>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
 <span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
         <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_switch</span><span class="p">(</span>
         <span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
@@ -251,57 +219,94 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="convert_repeat"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.convert_repeat">[docs]</a><span class="k">def</span> <span class="nf">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Replaces instances of::</span>
+<div class="viewcode-block" id="convert_switch"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.convert_switch">[docs]</a><span class="k">def</span> <span class="nf">convert_switch</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Replaces code like::</span>
 
-<span class="sd">        repeat forever: -&gt; while True:</span>
-<span class="sd">        repeat while condition: -&gt; while  condition:</span>
-<span class="sd">        repeat until condition: -&gt; while not condition:</span>
-<span class="sd">        repeat n: -&gt; for _uid in range(n):</span>
+<span class="sd">        switch EXPR:</span>
+<span class="sd">            case EXPR_1:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">            case EXPR_2:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">            case in EXPR_3, EXPR_4, ...:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">            ...</span>
+<span class="sd">            else:</span>
+<span class="sd">                SUITE</span>
 
-<span class="sd">    A complete repeat statement is restricted to be on a single line ending</span>
-<span class="sd">    with a colon (optionally followed by a comment). If the colon is</span>
-<span class="sd">    missing, a ``RepeatSyntaxError`` is raised.</span>
+<span class="sd">    by::</span>
+
+<span class="sd">        var_name = EXPR</span>
+<span class="sd">        if var_name == EXPR_1:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">        elif var_name == EXPR_2:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">        elif var_name in EXPR_3, EXPR_4, ...:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">        else:</span>
+<span class="sd">                SUITE</span>
+<span class="sd">        del var_name</span>
+
+<span class="sd">    Limitation: switch blocks cannot be part of a SUITE of another switch block.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">first_case</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">predictable_names</span><span class="p">:</span>
         <span class="n">variable_name</span> <span class="o">=</span> <span class="n">generate_predictable_names</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">variable_name</span> <span class="o">=</span> <span class="n">generate_variable_names</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="c1"># a line of tokens can start with INDENT or DEDENT tokens ...</span>
-        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;repeat&quot;</span><span class="p">:</span>
-            <span class="n">last_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">last_token</span> <span class="o">!=</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">RepeatSyntaxError</span><span class="p">(</span>
-                    <span class="s2">&quot;Missing colon for repeat statement on line &quot;</span>
-                    <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{first_token.start_row}</span><span class="se">\n</span><span class="s2">    </span><span class="si">{first_token.line}</span><span class="s2">.&quot;</span>
-                <span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">first_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">continue</span>
 
-            <span class="n">repeat_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-            <span class="n">second_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">repeat_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;forever&quot;</span><span class="p">:</span>
-                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
-                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
-            <span class="k">elif</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;while&quot;</span><span class="p">:</span>
-                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
-                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">elif</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;until&quot;</span><span class="p">:</span>
-                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;while&quot;</span>
-                <span class="n">second_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;not&quot;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> in range(&quot;</span> <span class="o">%</span> <span class="nb">next</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span>
-                <span class="n">last_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;):&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">second_token</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">second_token</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">switch_block</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;switch&quot;</span><span class="p">:</span>
+                <span class="n">switch_indent</span> <span class="o">=</span> <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span>
+                <span class="n">var_name</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span>
+                <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{var_name}</span><span class="s2"> =&quot;</span>
+                <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">first_case</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">colon</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">==</span> <span class="n">switch_indent</span><span class="p">:</span>
+                <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">switch_indent</span> <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;del </span><span class="si">{var_name}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span>
 
+            <span class="k">elif</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;case&quot;</span> <span class="ow">or</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;else&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">first_case</span> <span class="ow">and</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;case&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;in&quot;</span><span class="p">:</span>
+                        <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;if </span><span class="si">{var_name}</span><span class="s2">&quot;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;if </span><span class="si">{var_name}</span><span class="s2"> ==&quot;</span>
+                    <span class="n">first_case</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">elif</span> <span class="n">first_token</span> <span class="o">==</span> <span class="s2">&quot;case&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">second_token</span> <span class="o">==</span> <span class="s2">&quot;in&quot;</span><span class="p">:</span>
+                        <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;elif </span><span class="si">{var_name}</span><span class="s2">&quot;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;elif </span><span class="si">{var_name}</span><span class="s2"> ==&quot;</span>
+                <span class="n">dedent</span> <span class="o">=</span> <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">switch_indent</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">dedent</span><span class="p">)</span>
+
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span>
+    <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>

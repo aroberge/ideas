@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.token_utils &mdash; ideas 0.0.6 documentation</title>
+  <title>ideas.token_utils &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.6
+                0.0.7a
               </div>
             
           
@@ -105,7 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Pythonic switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -201,6 +201,10 @@
 <span class="sd">        start = (start_row, start_col)</span>
 <span class="sd">        end = (end_row, end_col)</span>
 <span class="sd">        line: entire line of code where the token is found.</span>
+
+<span class="sd">    Token instances are mutable objects. Therefore, given a list of tokens,</span>
+<span class="sd">    we can change the value of any token&#39;s attribute, untokenize the list and</span>
+<span class="sd">    automatically obtain a transformed source.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
@@ -279,6 +283,9 @@
             <span class="n">end</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">),</span>
             <span class="n">line</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">),</span>
         <span class="p">)</span></div>
+
+
+<span class="n">Null</span> <span class="o">=</span> <span class="n">Token</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="fix_empty_line"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.fix_empty_line">[docs]</a><span class="k">def</span> <span class="nf">fix_empty_line</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
@@ -396,9 +403,11 @@
 
 <div class="viewcode-block" id="get_last"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.get_last">[docs]</a><span class="k">def</span> <span class="nf">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the last token which is not a space token</span>
-<span class="sd">    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default, also not a ``COMMMENT``.</span>
+<span class="sd">    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default,</span>
+<span class="sd">    also not a ``COMMMENT``.</span>
 
-<span class="sd">    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.</span>
+<span class="sd">    ``COMMMENT`` tokens can be included by setting``exclude_comment``</span>
+<span class="sd">    to ``False``.</span>
 
 <span class="sd">    Returns ``None`` if none is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -418,6 +427,26 @@
         <span class="o">-</span> <span class="mi">1</span>
         <span class="o">-</span> <span class="n">get_first_index</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="n">exclude_comment</span><span class="p">)</span>
     <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_pairs"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.get_pairs">[docs]</a><span class="k">def</span> <span class="nf">get_pairs</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of tokens having at least two items, returns a list of</span>
+<span class="sd">    pairs of consecutive tokens, with the first pair consisting of a Null</span>
+<span class="sd">    token and the first token in the list.</span>
+<span class="sd">    Thus, given a list like ``[1, 2, 3]``, this function would return</span>
+<span class="sd">    ``[(Null, 1), (1, 2), (2, 3)]``.</span>
+
+<span class="sd">    Returns an empty list if the original list contains fewer than two items.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">Null</span><span class="p">,</span> <span class="n">first</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">first</span><span class="p">,</span> <span class="n">token</span><span class="p">))</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">token</span>
+    <span class="k">return</span> <span class="n">pairs</span></div>
 
 
 <div class="viewcode-block" id="dedent"><a class="viewcode-back" href="../../tokenize.html#ideas.token_utils.dedent">[docs]</a><span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
