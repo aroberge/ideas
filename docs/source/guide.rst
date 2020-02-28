@@ -76,6 +76,20 @@ supplementary code, such as importing a module or defining a function,
 in addition to the user code while ensuring that the console (REPL)
 can still work properly.
 
+Switch statement
+~~~~~~~~~~~~~~~~~
+
+Implementing a switch statement as described in the rejected PEP 3103.
+
+Implicit multiplication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python's syntax does not allow to write a number followed by an
+non-keyword identifier or by a parenthesis, nor does it allow to write two
+non-keyword identifiers in a row. However, when writing equations on
+paper, these constructs are recognized as indicating a multiplication.
+This transformation does the same.
+
 Bytecode transformations
 -------------------------
 

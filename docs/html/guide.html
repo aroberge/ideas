@@ -109,6 +109,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#abstract-syntax-tree-transformations">Abstract Syntax Tree transformations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fractional-math-ast">Fractional math (AST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switch-statement">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-multiplication">Implicit multiplication</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#bytecode-transformations">Bytecode transformations</a><ul>
@@ -135,7 +137,8 @@
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch.html"> Pythonic switch statement - to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
@@ -304,6 +307,18 @@ at the Abstract Syntax Tree level. It also shows how to include
 supplementary code, such as importing a module or defining a function,
 in addition to the user code while ensuring that the console (REPL)
 can still work properly.</p>
+</div>
+<div class="section" id="switch-statement">
+<h3>Switch statement<a class="headerlink" href="#switch-statement" title="Permalink to this headline">¶</a></h3>
+<p>Implementing a switch statement as described in the rejected PEP 3103.</p>
+</div>
+<div class="section" id="implicit-multiplication">
+<h3>Implicit multiplication<a class="headerlink" href="#implicit-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>Python’s syntax does not allow to write a number followed by an
+non-keyword identifier or by a parenthesis, nor does it allow to write two
+non-keyword identifiers in a row. However, when writing equations on
+paper, these constructs are recognized as indicating a multiplication.
+This transformation does the same.</p>
 </div>
 </div>
 <div class="section" id="bytecode-transformations">

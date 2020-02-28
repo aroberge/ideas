@@ -1,5 +1,5 @@
-Pythonic switch statement
-==========================
+Switch statement
+==================
 
 .. admonition:: Summary
 

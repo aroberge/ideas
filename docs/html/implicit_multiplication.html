@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Implicit multiplication &mdash; ideas 0.0.7a documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="λ encoding" href="lambda.html" />
+    <link rel="prev" title="Switch statement" href="switch.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ideas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.7a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Implicit multiplication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implicit-multiplication-py">implicit_multiplication.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ideas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Implicit multiplication</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/implicit_multiplication.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="switch.html" class="btn btn-neutral float-left" title="Switch statement" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="implicit-multiplication">
+<h1>Implicit multiplication<a class="headerlink" href="#implicit-multiplication" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Python’s syntax is extended to recognize that multiplication is implied
+in some situations that would normally be identified as <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>
+in Python since a multiplication operator <code class="docutils literal notranslate"><span class="pre">*</span></code> would be considered
+to be missing.</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/implicit_multiplication.py">Source code</a></p>
+</div>
+<p>Quoting from a <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/message/52DLME5DKNZYFEETCTRENRNKWJ2B4DD5/">post from Guido van Rossum</a>:</p>
+<blockquote>
+<div><p><em>The power of visual processing really becomes apparent when you combine
+multiple operators. For example, consider the distributive law</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mul</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="o">==</span> <span class="n">add</span><span class="p">(</span><span class="n">mul</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">mul</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>  <span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>That was painful to write, and I believe that at first you won’t see the
+pattern (or at least you wouldn’t have immediately seen it if I hadn’t
+mentioned this was the distributive law).</em>
+<em>Compare to</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">y</span>    <span class="p">(</span><span class="mi">5</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Notice how this also uses relative operator priorities. Often
+mathematicians write this even more compact</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span> <span class="o">+</span> <span class="n">ny</span>    <span class="p">(</span><span class="mi">5</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>but alas, that currently goes beyond the capacities of Python’s parser.</em>
+…
+<em>Now, programming isn’t exactly the same activity as math, but we all know
+that Readability Counts, and this is where operator overloading in Python
+comes in</em>.  …</p>
+</div></blockquote>
+<p>What if we could do something half-way between what Python currently allow
+and what mathematicians would write?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">implicit_multiplication</span> <span class="k">as</span> <span class="n">mul</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">mul</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Configuration values for the console:</span>
+<span class="go">    callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: False}</span>
+<span class="go">    transform_source from ideas.examples.implicit_multiplication</span>
+<span class="go">--------------------------------------------------</span>
+<span class="go">Ideas Console version 0.0.7a. [Python version: 3.7.3]</span>
+
+<span class="go">~&gt;&gt; 2(3 + 4)</span>
+<span class="go">14</span>
+<span class="go">~&gt;&gt; a = 3</span>
+<span class="go">~&gt;&gt; b = 4</span>
+<span class="go">~&gt;&gt; 2a</span>
+<span class="go">6</span>
+<span class="go">~&gt;&gt; a b</span>
+<span class="go">12</span>
+</pre></div>
+</div>
+<span class="target" id="module-ideas.examples.implicit_multiplication"></span><div class="section" id="implicit-multiplication-py">
+<h2>implicit_multiplication.py<a class="headerlink" href="#implicit-multiplication-py" title="Permalink to this headline">¶</a></h2>
+<p>This module is intended to demonstrate some unusual transformations
+to allow someone to write equations as they would on paper
+and have Python interpret them properly.</p>
+<dl class="function">
+<dt id="ideas.examples.implicit_multiplication.add_hook">
+<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.implicit_multiplication.add_multiplication_symbol">
+<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">add_multiplication_symbol</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_multiplication_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_multiplication_symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Python, having a <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">NAME</span></code> or a <code class="docutils literal notranslate"><span class="pre">(</span></code>
+is a syntax error.  So, we treat those cases as though they indicate
+that a multiplication is implied.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.implicit_multiplication.multiply_by_number">
+<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">multiply_by_number</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#multiply_by_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.multiply_by_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Python, having a <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">NAME</span></code> or a <code class="docutils literal notranslate"><span class="pre">(</span></code>
+is a syntax error. The following transformation identifies such
+cases and inserts a multiplication symbol between <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> and
+the next token.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.implicit_multiplication.multiply_two_identifiers">
+<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">multiply_two_identifiers</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#multiply_two_identifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.multiply_two_identifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>In Python, having an identifier followed by another identifier,
+where neither identifier is a keyword, is a syntax error.
+The following transformation identifies such
+cases and inserts a multiplication symbol between the two identifiers.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ideas.examples.implicit_multiplication.transform_source">
+<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.transform_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called by the import hook loader with the named keyword
+that we specified when we created the import hook.</p>
+<p>It gives us the option to compare the original source and the transformed
+one. This type of additional option can be useful when debugging
+a source transformer. Furthermore, if we wish to define a source
+transformation that combines the effect of multiple existing
+transformations, we can combine the existing “inner” functions to
+create our new transformation.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="switch.html" class="btn btn-neutral float-left" title="Switch statement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function_keyword &mdash; ideas 0.0.7a documentation</title>
+  <title>ideas.examples.implicit_multiplication &mdash; ideas 0.0.7a documentation</title>
   
 
   
@@ -161,7 +161,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>ideas.examples.function_keyword</li>
+      <li>ideas.examples.implicit_multiplication</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -176,23 +176,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for ideas.examples.function_keyword</h1><div class="highlight"><pre>
+  <h1>Source code for ideas.examples.implicit_multiplication</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">function_keyword.py</span>
-<span class="sd">-------------------</span>
+<span class="sd">implicit_multiplication.py</span>
+<span class="sd">---------------------------</span>
 
-<span class="sd">This module enables someone to use ``function`` as a keyword</span>
-<span class="sd">   equivalent to ``lambda``.</span>
-
-<span class="sd">   It is slightly more complicated than ``function_simplest.py`` as it</span>
-<span class="sd">   demonstrates how we can pass parameters when adding an import hook;</span>
-<span class="sd">   these parameters will be passed back to our function</span>
-<span class="sd">   ``transform_source``.</span>
+<span class="sd">This module is intended to demonstrate some unusual transformations</span>
+<span class="sd">to allow someone to write equations as they would on paper</span>
+<span class="sd">and have Python interpret them properly.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
 
 
-<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader with the named keyword</span>
 <span class="sd">       that we specified when we created the import hook.</span>
 
@@ -206,7 +202,7 @@
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
         <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">add_multiplication_symbol</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
         <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Transformed&quot;</span><span class="p">)</span>
@@ -214,25 +210,46 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="function_as_a_keyword"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.function_as_a_keyword">[docs]</a><span class="k">def</span> <span class="nf">function_as_a_keyword</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.</span>
-
-<span class="sd">    Note that, while the string ``lambda`` is shorter than ``function``, we</span>
-<span class="sd">    do not adjust the information (start_col, end_col) about the position</span>
-<span class="sd">    of the token. ``untokenize`` uses that information together with the</span>
-<span class="sd">    information about each original line, to properly keep track of the</span>
-<span class="sd">    spacing between tokens.</span>
+<div class="viewcode-block" id="add_multiplication_symbol"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.add_multiplication_symbol">[docs]</a><span class="k">def</span> <span class="nf">add_multiplication_symbol</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``</span>
+<span class="sd">    is a syntax error.  So, we treat those cases as though they indicate</span>
+<span class="sd">    that a multiplication is implied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">multiply_by_number</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">multiply_two_identifiers</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function.html#ideas.examples.function_keyword.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="multiply_by_number"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.multiply_by_number">[docs]</a><span class="k">def</span> <span class="nf">multiply_by_number</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``</span>
+<span class="sd">    is a syntax error. The following transformation identifies such</span>
+<span class="sd">    cases and inserts a multiplication symbol between ``NUMBER`` and</span>
+<span class="sd">    the next token.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">next_token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_pairs</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">next_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">or</span> <span class="n">next_token</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">):</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; * &quot;</span></div>
+
+
+<div class="viewcode-block" id="multiply_two_identifiers"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.multiply_two_identifiers">[docs]</a><span class="k">def</span> <span class="nf">multiply_two_identifiers</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;In Python, having an identifier followed by another identifier,</span>
+<span class="sd">    where neither identifier is a keyword, is a syntax error.</span>
+<span class="sd">    The following transformation identifies such</span>
+<span class="sd">    cases and inserts a multiplication symbol between the two identifiers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">next_token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_pairs</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">and</span> <span class="n">next_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">():</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; *&quot;</span></div>
+
+
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>

@@ -10,7 +10,7 @@ def test_transform():
                 SUITE
             case EXPR_2:
                 SUITE
-            case in EXPR_3, EXPR_4, ...:
+            case in (EXPR_3, EXPR_4, ...):
                 SUITE
             else:
                 SUITE
@@ -22,7 +22,7 @@ def test_transform():
                 SUITE
         elif _1 == EXPR_2:
                 SUITE
-        elif _1 in EXPR_3, EXPR_4, ...:
+        elif _1 in (EXPR_3, EXPR_4, ...):
                 SUITE
         else:
                 SUITE
