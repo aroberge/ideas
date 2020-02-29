@@ -107,7 +107,8 @@ class Token:
         )
 
 
-Null = Token((-1, "", (0, 0), (0, 0), ""))
+IDEAS_NULL = Token((-1, "", (0, 0), (0, 0), ""))
+py_tokenize.tok_name[-1] = "IDEAS_NULL"
 
 
 def fix_empty_line(source, tokens):
@@ -264,7 +265,7 @@ def get_pairs(tokens):
         return []
 
     first = tokens[0]
-    pairs = [(Null, first)]
+    pairs = [(IDEAS_NULL, first)]
     for token in tokens[1:]:
         pairs.append((first, token))
         first = token
