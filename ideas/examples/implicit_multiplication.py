@@ -49,13 +49,16 @@ def add_multiplication_symbol(source):
 
 def multiply_by_number(line):
     """In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``
-    is a syntax error. The following transformation identifies such
+    or another ``NUMBER`` is a syntax error.
+    The following transformation identifies such
     cases and inserts a multiplication symbol between ``NUMBER`` and
     the next token.
     """
 
     for token, next_token in token_utils.get_pairs(line):
-        if token.is_number() and (next_token.is_identifier() or next_token == "("):
+        if token.is_number() and (
+            next_token.is_identifier() or next_token == "(" or next_token.is_number()
+        ):
             token.string = token.string + " * "
 
 

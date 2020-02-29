@@ -8,6 +8,7 @@ def test_multiply_by_number():
     assert add_mul("3 n") == "3 *  n", "Multiply name by 3"
     assert add_mul("4()") == "4 * ()", "Multiply ( by 4"
     assert add_mul("5 ()") == "5 *  ()", "Multiply ( by 5"
+    assert add_mul("6 7") == "6 *  7", "Multiply 6 by 7"
 
 
 def test_multiply_two_identifiers():
