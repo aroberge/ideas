@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.implicit_multiplication &mdash; ideas 0.0.7a documentation</title>
+  <title>ideas.examples.implicit_multiplication &mdash; ideas 0.0.9a documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.7a
+                0.0.9a
               </div>
             
           
@@ -211,42 +211,48 @@
 
 
 <div class="viewcode-block" id="add_multiplication_symbol"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.add_multiplication_symbol">[docs]</a><span class="k">def</span> <span class="nf">add_multiplication_symbol</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``</span>
-<span class="sd">    is a syntax error.  So, we treat those cases as though they indicate</span>
-<span class="sd">    that a multiplication is implied.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="sd">&quot;&quot;&quot;This adds a multiplication symbol where it would be understood as</span>
+<span class="sd">    being implicit by the normal way algebraic equations are written but would</span>
+<span class="sd">    be a SyntaxError in Python. Thus we have::</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="n">multiply_by_number</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">multiply_two_identifiers</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="sd">        2n  -&gt; 2*n</span>
+<span class="sd">        n 2 -&gt; n* 2</span>
+<span class="sd">        2(a+b) -&gt; 2*(a+b)</span>
+<span class="sd">        (a+b)2 -&gt; (a+b)*2</span>
+<span class="sd">        2 3 -&gt; 2* 3</span>
+<span class="sd">        m n -&gt; m* n</span>
+<span class="sd">        (a+b)c -&gt; (a+b)*c</span>
+
+<span class="sd">    The obvious one (in algebra) being left out is something like ``n(...)``</span>
+<span class="sd">    which is a function call - and thus valid Python syntax.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tokens</span>
+
+    <span class="n">prev_token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">prev_token</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="c1"># The code has been written in a way to demonstrate that this type of</span>
+        <span class="c1"># transformation could be done as the source is tokenized by Python.</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">prev_token</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">prev_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span><span class="o">.</span><span class="n">is_number</span><span class="p">())</span>
+            <span class="p">)</span>
+            <span class="ow">or</span> <span class="p">(</span><span class="n">prev_token</span> <span class="o">==</span> <span class="s2">&quot;)&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">or</span> <span class="n">token</span><span class="o">.</span><span class="n">is_number</span><span class="p">()))</span>
+        <span class="p">):</span>
+            <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="n">prev_token</span> <span class="o">=</span> <span class="n">token</span>
 
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="multiply_by_number"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.multiply_by_number">[docs]</a><span class="k">def</span> <span class="nf">multiply_by_number</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;In Python, having a ``NUMBER`` followed by a ``NAME`` or a ``(``</span>
-<span class="sd">    is a syntax error. The following transformation identifies such</span>
-<span class="sd">    cases and inserts a multiplication symbol between ``NUMBER`` and</span>
-<span class="sd">    the next token.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">next_token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_pairs</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">next_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">or</span> <span class="n">next_token</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">):</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; * &quot;</span></div>
-
-
-<div class="viewcode-block" id="multiply_two_identifiers"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.multiply_two_identifiers">[docs]</a><span class="k">def</span> <span class="nf">multiply_two_identifiers</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;In Python, having an identifier followed by another identifier,</span>
-<span class="sd">    where neither identifier is a keyword, is a syntax error.</span>
-<span class="sd">    The following transformation identifies such</span>
-<span class="sd">    cases and inserts a multiplication symbol between the two identifiers.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">next_token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_pairs</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span> <span class="ow">and</span> <span class="n">next_token</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">():</span>
-            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; *&quot;</span></div>
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>

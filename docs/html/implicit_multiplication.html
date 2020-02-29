@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Implicit multiplication &mdash; ideas 0.0.7a documentation</title>
+  <title>Implicit multiplication &mdash; ideas 0.0.9a documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.7a
+                0.0.9a
               </div>
             
           
@@ -109,7 +109,10 @@
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Implicit multiplication</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#implicit-multiplication-py">implicit_multiplication.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algebra">Algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-multiplication-py">implicit_multiplication.py</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
@@ -227,6 +230,40 @@ since a multiplication operator <code class="docutils literal notranslate"><span
 to be missing.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/implicit_multiplication.py">Source code</a></p>
 </div>
+<div class="section" id="algebra">
+<h2>Algebra<a class="headerlink" href="#algebra" title="Permalink to this headline">¶</a></h2>
+<p>Let’s talk about algebra.  Consider the following set of equations.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax = 1
+ay = 2
+az = 3
+
+x1 = 2ax
+x2 = 3(ax + ay)
+x3 = ax ay
+x4 = (ax + ay)4
+x5 = (ax + ay)az
+x6 = ax(ay + az)
+</pre></div>
+</div>
+<p>I am confident that you can calculate the values of the unknowns <code class="docutils literal notranslate"><span class="pre">x1</span></code> to
+<code class="docutils literal notranslate"><span class="pre">x6</span></code>.</p>
+<p>Now, suppose that the above would be code written as a Python program.
+You would find that the lines for <code class="docutils literal notranslate"><span class="pre">x1</span></code> to <code class="docutils literal notranslate"><span class="pre">x5</span></code> would give rise
+to <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>, whereas the last one would be a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>.
+Python’s syntax could be change to allow the cases above that
+result in a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> without breaking anyone’s program.</p>
+<p>Here is another equation, taken from a class I taught last week.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>y = 2A cos(k x + (w_1 + w_2)t/2) cos((w_1 - w_2)t/2)
+</pre></div>
+</div>
+<p>If I were to write this as part of a Python program, and using the recommended
+way of writing spaces around operators, I would have to write
+is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">w_1</span> <span class="o">+</span> <span class="n">w_2</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">((</span><span class="n">w_1</span> <span class="o">-</span> <span class="n">w_2</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which of the two do you find easier to decipher?  Personally, it is the first
+one.</p>
 <p>Quoting from a <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/message/52DLME5DKNZYFEETCTRENRNKWJ2B4DD5/">post from Guido van Rossum</a>:</p>
 <blockquote>
 <div><p><em>The power of visual processing really becomes apparent when you combine
@@ -253,7 +290,13 @@ that Readability Counts, and this is where operator overloading in Python
 comes in</em>.  …</p>
 </div></blockquote>
 <p>What if we could do something half-way between what Python currently allow
-and what mathematicians would write?</p>
+and what mathematicians would write, so that the equation I mentioned
+and wrote as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>y = 2A cos(k x + (w_1 + w_2)t/2) cos((w_1 - w_2)t/2)
+</pre></div>
+</div>
+<p>would be valid Python code?</p>
+<p>This can be done with the <code class="docutils literal notranslate"><span class="pre">implicit_multiplication</span></code> import hook.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">implicit_multiplication</span> <span class="k">as</span> <span class="n">mul</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">mul</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
@@ -275,7 +318,7 @@ and what mathematicians would write?</p>
 </pre></div>
 </div>
 <span class="target" id="module-ideas.examples.implicit_multiplication"></span><div class="section" id="implicit-multiplication-py">
-<h2>implicit_multiplication.py<a class="headerlink" href="#implicit-multiplication-py" title="Permalink to this headline">¶</a></h2>
+<h3>implicit_multiplication.py<a class="headerlink" href="#implicit-multiplication-py" title="Permalink to this headline">¶</a></h3>
 <p>This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.</p>
@@ -288,27 +331,20 @@ and have Python interpret them properly.</p>
 <dl class="function">
 <dt id="ideas.examples.implicit_multiplication.add_multiplication_symbol">
 <code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">add_multiplication_symbol</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_multiplication_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_multiplication_symbol" title="Permalink to this definition">¶</a></dt>
-<dd><p>In Python, having a <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">NAME</span></code> or a <code class="docutils literal notranslate"><span class="pre">(</span></code>
-is a syntax error.  So, we treat those cases as though they indicate
-that a multiplication is implied.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.implicit_multiplication.multiply_by_number">
-<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">multiply_by_number</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#multiply_by_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.multiply_by_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>In Python, having a <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">NAME</span></code> or a <code class="docutils literal notranslate"><span class="pre">(</span></code>
-is a syntax error. The following transformation identifies such
-cases and inserts a multiplication symbol between <code class="docutils literal notranslate"><span class="pre">NUMBER</span></code> and
-the next token.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.implicit_multiplication.multiply_two_identifiers">
-<code class="sig-prename descclassname">ideas.examples.implicit_multiplication.</code><code class="sig-name descname">multiply_two_identifiers</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#multiply_two_identifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.multiply_two_identifiers" title="Permalink to this definition">¶</a></dt>
-<dd><p>In Python, having an identifier followed by another identifier,
-where neither identifier is a keyword, is a syntax error.
-The following transformation identifies such
-cases and inserts a multiplication symbol between the two identifiers.</p>
+<dd><p>This adds a multiplication symbol where it would be understood as
+being implicit by the normal way algebraic equations are written but would
+be a SyntaxError in Python. Thus we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="n">n</span>  <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span>
+<span class="n">n</span> <span class="mi">2</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="o">*</span> <span class="mi">2</span>
+<span class="mi">2</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+<span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="mi">2</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
+<span class="mi">2</span> <span class="mi">3</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">*</span> <span class="mi">3</span>
+<span class="n">m</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">m</span><span class="o">*</span> <span class="n">n</span>
+<span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="n">c</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="n">c</span>
+</pre></div>
+</div>
+<p>The obvious one (in algebra) being left out is something like <code class="docutils literal notranslate"><span class="pre">n(...)</span></code>
+which is a function call - and thus valid Python syntax.</p>
 </dd></dl>
 
 <dl class="function">
@@ -324,6 +360,7 @@ transformations, we can combine the existing “inner” functions to
 create our new transformation.</p>
 </dd></dl>
 
+</div>
 </div>
 </div>
 
