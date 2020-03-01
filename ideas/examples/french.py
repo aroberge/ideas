@@ -6,7 +6,8 @@ Keywords are translated from French to English/Python by a function in this file
 
 A "French Python" file is recognize by its .pyfr extension.
 """
-from ideas import import_hook, token_utils
+from ideas import import_hook
+import token_utils
 
 fr_to_py = {
     "Faux": "False",

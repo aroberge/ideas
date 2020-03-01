@@ -4,7 +4,8 @@
 Implements something similar to version 1.B of
 `PEP 3103 <https://www.python.org/dev/peps/pep-3103>`_
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 def transform_source(source, callback_params=None, **kwargs):

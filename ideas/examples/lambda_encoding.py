@@ -10,7 +10,8 @@ The source is assumed to be actually encoded in utf-8.
 
 import codecs
 import encodings
-from ideas import console, token_utils
+from ideas import console
+import token_utils
 
 
 utf8 = encodings.search_function("utf8")

@@ -4,7 +4,8 @@
 This module enables someone to use ``function`` as a keyword
 equivalent to ``lambda``.
 """
-from ideas import import_hook, token_utils
+from ideas import import_hook
+import token_utils
 
 
 def transform_source(source, **kwargs):

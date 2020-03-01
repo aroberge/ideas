@@ -30,7 +30,8 @@ is equivalent to::
         for unique_variable_name_2 in range(a*a):
             pass
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 class RepeatSyntaxError(Exception):
@@ -106,7 +107,12 @@ def convert_repeat(source, predictable_names=False):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(show_original=False, show_transformed=False, predictable_names=False, verbose_finder=False):
+def add_hook(
+    show_original=False,
+    show_transformed=False,
+    predictable_names=False,
+    verbose_finder=False,
+):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,

@@ -5,7 +5,8 @@ This module enables someone to use ``nobreak`` as a keyword
    equivalent to ``else`` in ``for`` and ``while`` loops.
 
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 def transform_source(source, callback_params=None, **kwargs):

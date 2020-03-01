@@ -4,7 +4,8 @@
 Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class's ``__init__()`` method.
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 def transform_source(source, callback_params=None, **kwargs):

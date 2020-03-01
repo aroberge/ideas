@@ -10,7 +10,8 @@ This module enables someone to use ``function`` as a keyword
    these parameters will be passed back to our function
    ``transform_source``.
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 def transform_source(source, callback_params=None, **kwargs):

@@ -8,7 +8,8 @@ fails miserably in other contexts that expect ``int``.
 
 It is only meant as an alternative to the AST transformation demo.
 """
-from ideas import import_hook, token_utils
+from ideas import import_hook
+import token_utils
 
 
 def transform_source(source, **kwargs):

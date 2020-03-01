@@ -6,7 +6,8 @@ This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
-from ideas import import_hook, token_utils, utils
+from ideas import import_hook, utils
+import token_utils
 
 
 def transform_source(source, callback_params=None, **kwargs):
