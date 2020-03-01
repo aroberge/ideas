@@ -30,8 +30,6 @@ is equivalent to::
         for unique_variable_name_2 in range(a*a):
             pass
 """
-import uuid
-
 from ideas import import_hook, token_utils, utils
 
 
@@ -39,21 +37,6 @@ class RepeatSyntaxError(Exception):
     """Currently, only raised when a repeat statement has a missing colon"""
 
     pass
-
-
-def generate_variable_names():
-    """Generator that yields random variable names"""
-    while True:
-        name = uuid.uuid4()
-        yield "_%s" % name.hex
-
-
-def generate_predictable_names():
-    """Generator that yields predictable variable names - useful for testing"""
-    n = 0
-    while True:
-        n += 1
-        yield "_%s" % n
 
 
 def transform_source(source, callback_params=None, **kwargs):
@@ -88,9 +71,9 @@ def convert_repeat(source, predictable_names=False):
 
     new_tokens = []
     if predictable_names:
-        variable_name = generate_predictable_names()
+        variable_name = utils.generate_predictable_names()
     else:
-        variable_name = generate_variable_names()
+        variable_name = utils.generate_variable_names()
 
     for tokens in token_utils.get_lines(source):
         # a line of tokens can start with INDENT or DEDENT tokens ...

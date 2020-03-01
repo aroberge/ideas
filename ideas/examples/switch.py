@@ -4,24 +4,7 @@
 Implements something similar to version 1.B of
 `PEP 3103 <https://www.python.org/dev/peps/pep-3103>`_
 """
-import uuid
-
 from ideas import import_hook, token_utils, utils
-
-
-def generate_variable_names():
-    """Generator that yields random variable names"""
-    while True:
-        name = uuid.uuid4()
-        yield "_%s" % name.hex
-
-
-def generate_predictable_names():
-    """Generator that yields predictable variable names - useful for testing"""
-    n = 0
-    while True:
-        n += 1
-        yield "_%s" % n
 
 
 def transform_source(source, callback_params=None, **kwargs):
@@ -74,9 +57,9 @@ def convert_switch(source, predictable_names=False):
     switch_block = False
     first_case = False
     if predictable_names:
-        variable_name = generate_predictable_names()
+        variable_name = utils.generate_predictable_names()
     else:
-        variable_name = generate_variable_names()
+        variable_name = utils.generate_variable_names()
 
     for line in token_utils.get_lines(source):
         first_token = token_utils.get_first(line)
