@@ -22,8 +22,7 @@ setup(
     url="https://github.com/aroberge/ideas",
     author="André Roberge",
     author_email="Andre.Roberge@gmail.com",
-    packages=find_packages(
-        exclude=["dist", "build", "tools", "tests", "examples", "docs"]
-    ),
+    install_requires=["token-utils"],
+    packages=find_packages(exclude=["dist", "build", "tests", "docs"]),
     python_requires=">=3.6",
 )
