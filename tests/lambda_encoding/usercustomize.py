@@ -2,4 +2,4 @@
 
 from ideas.examples import lambda_encoding  # noqa
 
-print("  --> usercustomize.py was executed")
+print(f"  --> {__file__} was executed")

@@ -10,14 +10,11 @@ import token_utils
 
 def transform_source(source, **kwargs):
     """A simple replacement of ``function`` by ``lambda``."""
-    new_tokens = []
-
-    for token in token_utils.tokenize(source):
-        if token == "function":  # equivalent to token.string == "function"
+    tokens = token_utils.tokenize(source)
+    for token in tokens:
+        if token == "λ":
             token.string = "lambda"
-        new_tokens.append(token)
-
-    return token_utils.untokenize(new_tokens)
+    return token_utils.untokenize(tokens)
 
 
 def add_hook():
