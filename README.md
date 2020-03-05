@@ -17,7 +17,9 @@ python -m pip install ideas
 
 ## Dependencies
 
-Python 3.6+. No third-party library is installed when you install `ideas`.
+Python 3.6+ and [token-utils](https://github.com/aroberge/token-utils).
+token-utils used to be included with ideas but has since been made into
+its own (single module) package.
 
 
 ## Alternatives
