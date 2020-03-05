@@ -1,8 +1,8 @@
 """decimal_math.py
 ------------------------
 
-This replaces any Python identifier (token) a floating point variable
-by a Decimal. It can be used either as an custom codec or import hook.
+This replaces any explicit float by a Decimal.
+It can be used either as an custom codec or import hook.
 
 The source is assumed to be actually encoded in utf-8.
 """
@@ -18,7 +18,7 @@ def source_init():
 
 
 def transform_source(source, **kwargs):
-    """Simple transformation: replaces any single token λ by lambda.
+    """Simple transformation: replaces any explicit float by a Decimal.
 
     By defining this function, we can also make use of Ideas' console.
     """
