@@ -26,7 +26,7 @@ def transform_source(source, **kwargs):
 
 
 encoding.register_encoding(
-    encoding_name="lambda_encoding",
+    encoding_name="lambda-encoding",
     transform_source=transform_source,
     hook_name=__name__,
 )

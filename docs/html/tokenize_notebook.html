@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tokenizing notebook &mdash; ideas 0.0.9a documentation</title>
+  <title>Tokenizing notebook &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -36,9 +36,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Guide to the examples" href="guide.html" />
-    <link rel="prev" title="About tokens" href="tokenize.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +60,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -86,25 +84,12 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Tokenizing notebook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Getting-information">Getting information</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Comparing-tokens">Comparing tokens</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Printing-tokens-by-line-of-code">Printing tokens by line of code</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Getting-tokens-by-line-of-code">Getting tokens by line of code</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Getting-particular-tokens">Getting particular tokens</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Getting-the-indentation-of-a-line">Getting the indentation of a line</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#Changing-information">Changing information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Changing-indentation">Changing indentation</a></li>
-</ul>
-</li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -115,13 +100,13 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -186,15 +171,6 @@
     
   </ul>
 
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="guide.html" class="btn btn-neutral float-right" title="Guide to the examples" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-  </div>
   
   <hr/>
 </div>
@@ -929,15 +905,6 @@ if True:
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="guide.html" class="btn btn-neutral float-right" title="Guide to the examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

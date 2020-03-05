@@ -169,10 +169,9 @@ Quick links to topics
 
     Additional motivation <motivation>
     Usage  <usage>
-    Create your own <function_simplest>
+    Create your own import hook <function_simplest>
+    Create your own codec <lambda>
     A deep dive <possible>
-    About tokens <tokenize>
-    Tokenizing notebook <tokenize_notebook>
 
 .. toctree::
    :maxdepth: 1
@@ -185,13 +184,13 @@ Quick links to topics
     French Python <french>
     French repeat <french_repeat>
     Auto-self <auto_self>
+    Decimal math <decimal_math>
     Fractional math (token) <fractional_math_tok>
     Fractional math (AST) <fractional_math_ast>
     Confused math (Bytecode) <bytecode>
     True constants <constants>
     Switch statement <switch>
     Implicit multiplication <implicit_multiplication>
-    λ encoding <lambda>
     Examples never included - first draft <excluded>
 
 .. toctree::

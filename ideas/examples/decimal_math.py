@@ -30,14 +30,10 @@ def transform_source(source, **kwargs):
     return token_utils.untokenize(tokens)
 
 
-def register(add_init=None):
-    if add_init:
-        add_init = source_init
-
+def register():
     encoding.register_encoding(
         encoding_name="decimal-math",
         transform_source=transform_source,
-        source_init=add_init,
         hook_name=__name__,
     )
 

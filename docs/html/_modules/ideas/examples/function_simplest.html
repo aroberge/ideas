@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.function_simplest &mdash; ideas 0.0.9a documentation</title>
+  <title>ideas.examples.function_simplest &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -87,10 +87,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -101,13 +100,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -183,19 +182,17 @@
 <span class="sd">This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+<span class="kn">import</span> <span class="nn">token_utils</span>
 
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;λ&quot;</span><span class="p">:</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../function_simplest.html#ideas.examples.function_simplest.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>

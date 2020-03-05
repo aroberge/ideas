@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.switch &mdash; ideas 0.0.9a documentation</title>
+  <title>ideas.examples.switch &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -87,10 +87,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -101,13 +100,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -183,24 +182,8 @@
 <span class="sd">Implements something similar to version 1.B of</span>
 <span class="sd">`PEP 3103 &lt;https://www.python.org/dev/peps/pep-3103&gt;`_</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
-
-
-<div class="viewcode-block" id="generate_variable_names"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.generate_variable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_variable_names</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Generator that yields random variable names&quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
-        <span class="k">yield</span> <span class="s2">&quot;_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="o">.</span><span class="n">hex</span></div>
-
-
-<div class="viewcode-block" id="generate_predictable_names"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.generate_predictable_names">[docs]</a><span class="k">def</span> <span class="nf">generate_predictable_names</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Generator that yields predictable variable names - useful for testing&quot;&quot;&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">yield</span> <span class="s2">&quot;_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">n</span></div>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">token_utils</span>
 
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../switch.html#ideas.examples.switch.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -253,9 +236,9 @@
     <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">first_case</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">predictable_names</span><span class="p">:</span>
-        <span class="n">variable_name</span> <span class="o">=</span> <span class="n">generate_predictable_names</span><span class="p">()</span>
+        <span class="n">variable_name</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_predictable_names</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">variable_name</span> <span class="o">=</span> <span class="n">generate_variable_names</span><span class="p">()</span>
+        <span class="n">variable_name</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_variable_names</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>

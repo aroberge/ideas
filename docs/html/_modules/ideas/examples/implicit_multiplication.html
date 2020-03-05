@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ideas.examples.implicit_multiplication &mdash; ideas 0.0.9a documentation</title>
+  <title>ideas.examples.implicit_multiplication &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -87,10 +87,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -101,13 +100,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -185,7 +184,8 @@
 <span class="sd">to allow someone to write equations as they would on paper</span>
 <span class="sd">and have Python interpret them properly.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">token_utils</span>
 
 
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../implicit_multiplication.html#ideas.examples.implicit_multiplication.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

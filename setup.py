@@ -1,5 +1,5 @@
 # pylint: skip-file
-from setuptools import setup
+from setuptools import setup, find_packages
 from ideas import __version__
 
 with open("README.md", encoding="utf8") as f:
@@ -23,6 +23,8 @@ setup(
     author="André Roberge",
     author_email="Andre.Roberge@gmail.com",
     install_requires=["token-utils"],
-    packages=["ideas"],
+    packages=find_packages(
+        exclude=["dist", "build", "tools", "tests", "examples", "docs"]
+    ),
     python_requires=">=3.6",
 )

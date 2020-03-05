@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Create your own import hook &mdash; ideas 0.0.9a documentation</title>
+  <title>Create your own import hook &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="A deep dive" href="possible.html" />
+    <link rel="next" title="λ encoding" href="lambda.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -89,7 +89,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own import hook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-do-this">How to do this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#actual-code">Actual code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#function-simplest-py">function_simplest.py</a></li>
@@ -97,9 +97,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
@@ -110,13 +109,13 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> λ encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -184,7 +183,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -315,27 +314,23 @@ in the source. Thus, given something like:</p>
 20
 21
 22
-23
-24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;function_simplest.py</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;function_simplest.py</span>
 <span class="sd">-------------------------</span>
 
 <span class="sd">This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">equivalent to ``lambda``.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span>
+<span class="kn">import</span> <span class="nn">token_utils</span>
 
 
 <span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A simple replacement of ``function`` by ``lambda``.&quot;&quot;&quot;</span>
-    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>  <span class="c1"># equivalent to token.string == &quot;function&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">&quot;λ&quot;</span><span class="p">:</span>
             <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;lambda&quot;</span>
-        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">add_hook</span><span class="p">():</span>
@@ -424,7 +419,7 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">lambd
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lambda.html" class="btn btn-neutral float-right" title="λ encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

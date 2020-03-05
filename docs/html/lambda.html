@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>λ encoding &mdash; ideas 0.0.9a documentation</title>
+  <title>λ encoding &mdash; ideas 0.0.15 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples that will never be included" href="excluded.html" />
-    <link rel="prev" title="Implicit multiplication" href="implicit_multiplication.html" /> 
+    <link rel="next" title="A deep dive" href="possible.html" />
+    <link rel="prev" title="Create your own import hook" href="function_simplest.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.9a
+                0.0.15
               </div>
             
           
@@ -86,16 +86,18 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own codec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lambda-encoding-py">lambda_encoding.py</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Tokenizing notebook</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
@@ -103,16 +105,13 @@
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> λ encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lambda-encoding-py">lambda_encoding.py</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
@@ -180,10 +179,10 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples that will never be included" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Create your own import hook" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -287,24 +286,6 @@ The square of 5 is 25
 single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
 the Python keyword.</p>
 <p>The source is assumed to be actually encoded in utf-8.</p>
-<dl class="class">
-<dt id="ideas.examples.lambda_encoding.LambdaIncrementalDecoder">
-<em class="property">class </em><code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">LambdaIncrementalDecoder</code><span class="sig-paren">(</span><em class="sig-param">errors='strict'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#LambdaIncrementalDecoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.LambdaIncrementalDecoder" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode">
-<code class="sig-name descname">decode</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">final=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#LambdaIncrementalDecoder.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.LambdaIncrementalDecoder.decode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode input and returns the resulting object.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="ideas.examples.lambda_encoding.lambda_decode">
-<code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">lambda_decode</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">errors='strict'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#lambda_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.lambda_decode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decodes the source as utf8 and use <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> to
-perform the required source transformation.</p>
-</dd></dl>
-
 <dl class="function">
 <dt id="ideas.examples.lambda_encoding.transform_source">
 <code class="sig-prename descclassname">ideas.examples.lambda_encoding.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_encoding.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.lambda_encoding.transform_source" title="Permalink to this definition">¶</a></dt>
@@ -323,10 +304,10 @@ perform the required source transformation.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="excluded.html" class="btn btn-neutral float-right" title="Examples that will never be included" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="function_simplest.html" class="btn btn-neutral float-left" title="Create your own import hook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

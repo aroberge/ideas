@@ -16,7 +16,7 @@ utf8 = encodings.search_function("utf8")
 
 
 def register_encoding(
-    encoding_name=None, transform_source=None, hook_name=None, source_init=None
+    encoding_name=None, transform_source=None, hook_name=None
 ):
     if encoding_name is None:
         raise TypeError("You must supply a name for your encoding")
@@ -28,8 +28,6 @@ def register_encoding(
         perform the required source transformation.
         """
         text, length = utf8.decode(input, errors)
-        if source_init is not None:
-            text = source_init() + text
         text = transform_source(text)
         return text, length
 
@@ -63,4 +61,4 @@ def register_encoding(
 
     if hook_name is not None:
         transform_source._hook_name_ = hook_name
-    console.configure(transform_source=transform_source, source_init=source_init)
+    console.configure(transform_source=transform_source)
