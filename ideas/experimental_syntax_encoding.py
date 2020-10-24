@@ -14,6 +14,8 @@ from . import console
 
 utf8 = encodings.search_function("utf8")
 
+TRANSFORMERS = []
+
 
 def transform_source(source, **kwargs):
     """Scans a module for special construct identifying transformers
@@ -21,7 +23,6 @@ def transform_source(source, **kwargs):
     and returns a transformed source.
     """
     modules = []
-    transformers = []
 
     # Scan for special import statements
     pattern = re.compile("from experimental-syntax import (.*)")
@@ -33,13 +34,14 @@ def transform_source(source, **kwargs):
             module_name = match.group(1).strip()
             module = __import__(module_name)
             new_lines.append(getattr(module, "import_statement"))
-            transformers.append(getattr(module, "transform_source"))
+            TRANSFORMERS.append(getattr(module, "transform_source"))
         else:
             new_lines.append(line)
     source = "\n".join(new_lines)
 
-    for transform in transformers:
+    for transform in TRANSFORMERS:
         source = transform(source)
+
     return source
 
 
