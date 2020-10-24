@@ -8,7 +8,7 @@ The source is assumed to be actually encoded in utf-8.
 """
 
 
-from ideas import encoding, import_hook
+from ideas import lambda_encoding, import_hook
 import token_utils
 
 
@@ -31,7 +31,7 @@ def transform_source(source, **kwargs):
 
 
 def register():
-    encoding.register_encoding(
+    lambda_encoding.register_encoding(
         encoding_name="decimal-math",
         transform_source=transform_source,
         hook_name=__name__,

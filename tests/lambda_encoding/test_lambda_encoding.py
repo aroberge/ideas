@@ -1,5 +1,5 @@
 # The following import will automatically register a codec
-from ideas.examples import lambda_encoding  # noqa
+from ideas.examples import lambda_codec  # noqa
 
 
 def test_import():

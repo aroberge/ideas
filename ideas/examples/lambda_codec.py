@@ -1,4 +1,4 @@
-"""lambda_encoding.py
+"""lambda_codec.py
 ------------------------
 
 This codec replaces any Python identifier (token) represented by the
@@ -9,7 +9,7 @@ The source is assumed to be actually encoded in utf-8.
 """
 
 
-from ideas import encoding
+from ideas import lambda_encoding
 import token_utils
 
 
@@ -25,7 +25,7 @@ def transform_source(source, **kwargs):
     return token_utils.untokenize(tokens)
 
 
-encoding.register_encoding(
+lambda_encoding.register_encoding(
     encoding_name="lambda-encoding",
     transform_source=transform_source,
     hook_name=__name__,
