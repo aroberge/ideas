@@ -1,40 +1,41 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Confused math &mdash; ideas 0.0.15 documentation</title>
+  <title>Confused math &mdash; ideas 0.0.17 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="True constants" href="constants.html" />
@@ -52,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ideas
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                0.0.15
+                0.0.17
               </div>
             
           
@@ -79,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -116,6 +118,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -123,6 +127,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -161,7 +166,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Confused math</li>
     
@@ -224,10 +229,10 @@ we interchange <code class="docutils literal notranslate"><span class="pre">BINA
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py">Source code</a></p>
 </div>
 <p>Let’s start with a demo from the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">confused_math_bc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">confused_math_bc</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">confused_math_bc</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="go">&lt;ideas.import_hook.IdeasMetaFinder object at 0x0317A590&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
 <span class="go">    transform_bytecode from ideas.examples.confused_math_bc</span>
@@ -255,28 +260,28 @@ not captured by this transformation.</p>
 instructions are “wordcode” i.e. that instructions like
 BINARY_ADD and BINARY_MULTIPLY will fall on even-index values
 of the bytecode.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.confused_math_bc.add_hook">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verbose_finder</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.confused_math_bc.create_new_co">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">create_new_co</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">create_new_co</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code_object</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recursivelly creates new code objects from old ones, swapping
 BINARY_ADD and BINARY_MULTIPLY.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.confused_math_bc.swap_add_mul">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">swap_add_mul</code><span class="sig-paren">(</span><em class="sig-param">bytecode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">swap_add_mul</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bytecode</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interchange BINARY_ADD and BINARY_MULTIPLY</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.confused_math_bc.transform_bytecode">
-<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">transform_bytecode</code><span class="sig-paren">(</span><em class="sig-param">code_object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.confused_math_bc.</code><code class="sig-name descname">transform_bytecode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code_object</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms the code object into a new code object</p>
 </dd></dl>
 
@@ -303,11 +308,19 @@ BINARY_ADD and BINARY_MULTIPLY.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, André Roberge
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -318,7 +331,6 @@ BINARY_ADD and BINARY_MULTIPLY.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

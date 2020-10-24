@@ -197,6 +197,8 @@ Quick links to topics
    :maxdepth: 1
    :caption: Other modules
 
+    About tokens <tokenize>
+    <tokenize_notebook.ipynb>
     import_hook.py <import_hook>
     console.py <console>
 

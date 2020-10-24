@@ -1,40 +1,41 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Switch statement &mdash; ideas 0.0.15 documentation</title>
+  <title>Switch statement &mdash; ideas 0.0.17 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Implicit multiplication" href="implicit_multiplication.html" />
@@ -52,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ideas
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                0.0.15
+                0.0.17
               </div>
             
           
@@ -79,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -119,6 +121,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -126,6 +130,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -164,7 +169,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Switch statement</li>
     
@@ -278,15 +283,15 @@ which was the norm when the PEP was written.</p>
 <h3>switch.py<a class="headerlink" href="#switch-py" title="Permalink to this headline">¶</a></h3>
 <p>Implements something similar to version 1.B of
 <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a></p>
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.switch.add_hook">
-<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">predictable_names=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">show_original</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_transformed</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">predictable_names</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose_finder</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.switch.convert_switch">
-<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">convert_switch</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">predictable_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#convert_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.convert_switch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">convert_switch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">predictable_names</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#convert_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.convert_switch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces code like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
     <span class="n">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
@@ -316,9 +321,9 @@ which was the norm when the PEP was written.</p>
 <p>Limitation: switch blocks cannot be part of a SUITE of another switch block.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.switch.transform_source">
-<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.switch.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">callback_params</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is called by the import hook loader and is used as a
 wrapper for the function where the real transformation is performed.</p>
 </dd></dl>
@@ -347,11 +352,19 @@ wrapper for the function where the real transformation is performed.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, André Roberge
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -362,7 +375,6 @@ wrapper for the function where the real transformation is performed.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

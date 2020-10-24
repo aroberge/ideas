@@ -1,40 +1,41 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Improving function as a keyword &mdash; ideas 0.0.15 documentation</title>
+  <title>Improving function as a keyword &mdash; ideas 0.0.17 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="nobreak as a keyword" href="nobreak.html" />
@@ -52,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ideas
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                0.0.15
+                0.0.17
               </div>
             
           
@@ -79,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -123,6 +125,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -130,6 +134,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -168,7 +173,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Improving function as a keyword</li>
     
@@ -233,7 +238,7 @@ to an import hook and some possible usage.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/function_keyword.py">Source code</a></p>
 </div>
 <p>Basic usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">my_program</span>
@@ -251,7 +256,7 @@ you do not have to include all possible features.</p>
 <p>For example, here is a much simpler version, functionally
 equivalent the <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> example,
 but without some diagnostic options included:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
 <span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
@@ -285,7 +290,7 @@ an extra parameter to <code class="docutils literal notranslate"><span class="pr
 </div>
 <p>Here’s a sample session from a different example, where the import hook
 is looking for files with a custom extension:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">french</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">french</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">Looking for files with extensions:  [&#39;.pyfr&#39;]</span>
 <span class="go">The following paths will not be included in the search:</span>
@@ -341,9 +346,9 @@ Here’s the basic <strong>pattern</strong> used in almost all the examples:</p>
 </div>
 <p>Here’s an actual example using one such parameter to show the transformed
 source:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="k">import</span> <span class="n">function_keyword</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_transformed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="k">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
 <span class="go">    callback_params: {&#39;show_original&#39;: False, &#39;show_transformed&#39;: True}</span>
@@ -384,15 +389,15 @@ these parameters will be passed back to our function
 <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 </dd>
 </dl>
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.function_keyword.add_hook">
-<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.add_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">show_original</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_transformed</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose_finder</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.function_keyword.function_as_a_keyword">
-<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">function_as_a_keyword</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#function_as_a_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.function_as_a_keyword" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">function_as_a_keyword</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#function_as_a_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.function_as_a_keyword" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple replacement of <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <p>Note that, while the string <code class="docutils literal notranslate"><span class="pre">lambda</span></code> is shorter than <code class="docutils literal notranslate"><span class="pre">function</span></code>, we
 do not adjust the information (start_col, end_col) about the position
@@ -401,9 +406,9 @@ information about each original line, to properly keep track of the
 spacing between tokens.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.function_keyword.transform_source">
-<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.transform_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.function_keyword.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">callback_params</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/function_keyword.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.function_keyword.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is called by the import hook loader with the named keyword
 that we specified when we created the import hook.</p>
 <p>It gives us the option to compare the original source and the transformed
@@ -439,11 +444,19 @@ create our new transformation.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, André Roberge
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -454,7 +467,6 @@ create our new transformation.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

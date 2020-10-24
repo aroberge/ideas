@@ -1,40 +1,41 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Auto self &mdash; ideas 0.0.15 documentation</title>
+  <title>Auto self &mdash; ideas 0.0.17 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Decimal math" href="decimal_math.html" />
@@ -52,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ideas
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                0.0.15
+                0.0.17
               </div>
             
           
@@ -79,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -119,6 +121,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -126,6 +130,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -164,7 +169,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Auto self</li>
     
@@ -266,7 +271,7 @@ in my opinion, reduces readability.</p>
 <p>As a concrete example of using traditional Python notation and
 dataclasses, let’s consider the code given in <a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">requirements</span><span class="p">,</span>
@@ -287,7 +292,7 @@ dataclasses, let’s consider the code given in <a class="reference external" hr
 <p>From the same PEP document, this is the proposed code
 which gives the same initialization, but using the <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code>
 decorator:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="k">import</span> <span class="n">dataclass</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
@@ -316,17 +321,17 @@ the Python standard library. Still, you can try it out using
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">requirements</span><span class="p">,</span>
-        <span class="n">constraints</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">executable_links</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
     <span class="p">):</span>
         <span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
             <span class="n">name</span>
             <span class="n">requirements</span>
-            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
             <span class="n">path</span>
-            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
             <span class="n">executables_dir</span>
             <span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
@@ -345,7 +350,7 @@ everywhere. The following is completely equivalent - although I now
 find it less readable, having been used to seeing <code class="docutils literal notranslate"><span class="pre">__</span></code> as easy to scan
 placeholder:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">name</span><span class="p">,</span>
         <span class="n">requirements</span><span class="p">,</span>
@@ -376,15 +381,15 @@ created by <code class="docutils literal notranslate"><span class="pre">auto_sel
 <h3>auto_self.py<a class="headerlink" href="#auto-self-py" title="Permalink to this headline">¶</a></h3>
 <p>Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class’s <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.auto_self.add_hook">
-<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param">show_original=False</em>, <em class="sig-param">show_transformed=False</em>, <em class="sig-param">verbose_finder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">show_original</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_transformed</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose_finder</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.auto_self.automatic_self">
-<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">automatic_self</code><span class="sig-paren">(</span><em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#automatic_self"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.automatic_self" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">automatic_self</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#automatic_self"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.automatic_self" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces code like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
     <span class="n">a</span>
@@ -400,9 +405,9 @@ when assigning attributes in a class’s <code class="docutils literal notransla
 </div>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="ideas.examples.auto_self.transform_source">
-<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">callback_params=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ideas.examples.auto_self.</code><code class="sig-name descname">transform_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">callback_params</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is called by the import hook loader and is used as a
 wrapper for the function where the real transformation is performed.</p>
 </dd></dl>
@@ -431,11 +436,19 @@ wrapper for the function where the real transformation is performed.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, André Roberge
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -446,7 +459,6 @@ wrapper for the function where the real transformation is performed.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

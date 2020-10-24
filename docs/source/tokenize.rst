@@ -1,6 +1,12 @@
 About tokens
 =============
 
+.. warning::
+
+     The module token_utils has been made into its own library.
+     It should be installed automatically when installing ideas.
+     You can get it on its own using ``python -m pip install token-utils``
+
 While **ideas** aims to provide support for all kinds of transformations,
 including those that affect the Abstract Syntax Tree or the bytecode,
 most transformations deal with exploring alternative syntax that is
@@ -68,7 +74,8 @@ Recently (Feb. 21, 2020), on the Python-ideas mailing list,
     [emphasis added]
 
 
-**Ideas** defines its own ``Token`` class built from Python's tokens.
+**Ideas** uses ``token-utils`` which defines its own ``Token`` class built
+from Python's tokens.
 While they carry the same information, they are much easier to use and manipulate.
 
 Below is the API from the ``token_utils`` module.
@@ -83,5 +90,5 @@ Below is the API from the ``token_utils`` module.
 token_utils.py API extracted by Sphinx
 --------------------------------------
 
-.. automodule:: ideas.token_utils
+.. automodule:: token_utils
    :members:

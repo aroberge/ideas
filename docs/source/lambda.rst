@@ -6,12 +6,14 @@
     Using a custom codec instead of an import hook.
 
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_encoding.py>`_
+    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_codec.py>`_
 
 
 .. warning::
 
-    The following is just a quick first draft.
+    The following is just a quick first draft. The code shown here
+    might be completely out of date and not work as written.
+    As of version 0.0.17, the console example shown below did work.
 
 Suppose we want to run a program that has a custom encoding;
 in this case, we use ``λ`` to represent Python's ``lambda`` keyword::
@@ -33,7 +35,7 @@ program::
 
     # usercustomize.py
 
-    from ideas.examples import lambda_encoding  # noqa
+    from ideas.examples import lambda_codec  # noqa
 
     print("  --> usercustomize.py was executed")
 
@@ -59,18 +61,20 @@ correctly.
 
 We can also use the **ideas** console and have our special encoding be used.::
 
-    >>> from ideas.examples import lambda_encoding
-    >>> lambda_encoding.enable_console()
+    >>> from ideas.examples import lambda_codec
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        transform_source from ideas.examples.lambda_encoding
+        transform_source from ideas.examples.lambda_codec
     --------------------------------------------------
-    Ideas Console version 0.0.5. [Python version: 3.7.3]
+    Ideas Console version 0.0.17. [Python version: 3.7.3]
 
     ~>> sq = λ x: x*x
     ~>> sq(3)
     9
 
-.. automodule:: ideas.examples.lambda_encoding
+.. automodule:: ideas.examples.lambda_codec
+   :members:
+
+.. automodule:: ideas.lambda_encoding
    :members:

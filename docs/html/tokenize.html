@@ -1,42 +1,45 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>About tokens &mdash; ideas 0.0.15 documentation</title>
+  <title>About tokens &mdash; ideas 0.0.17 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tokenizing notebook" href="tokenize_notebook.html" />
+    <link rel="prev" title="Examples that will never be included" href="excluded.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> ideas
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
           
 
           
@@ -60,7 +63,7 @@
             
             
               <div class="version">
-                0.0.15
+                0.0.17
               </div>
             
           
@@ -77,6 +80,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -110,7 +114,16 @@
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Other modules</span></p>
-<ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> About tokens</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-ideas-tokens">About Ideas’ tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-token_utils">token_utils.py API extracted by Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#token-utils-py">token_utils.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -118,6 +131,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -156,7 +170,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>About tokens</li>
     
@@ -171,6 +185,15 @@
     
   </ul>
 
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-right" title="Tokenizing notebook" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
   
   <hr/>
 </div>
@@ -203,6 +226,12 @@
 </style>
 <div class="section" id="about-tokens">
 <h1>About tokens<a class="headerlink" href="#about-tokens" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The module token_utils has been made into its own library.
+It should be installed automatically when installing ideas.
+You can get it on its own using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">token-utils</span></code></p>
+</div>
 <p>While <strong>ideas</strong> aims to provide support for all kinds of transformations,
 including those that affect the Abstract Syntax Tree or the bytecode,
 most transformations deal with exploring alternative syntax that is
@@ -266,7 +295,8 @@ token stream (the most obvious way to do this one)</strong>
 <em>rather than the text stream, AST, or bytecode</em> <strong>is pretty minimal and clumsy.</strong>
 [emphasis added]</p>
 </div></blockquote>
-<p><strong>Ideas</strong> defines its own <code class="docutils literal notranslate"><span class="pre">Token</span></code> class built from Python’s tokens.
+<p><strong>Ideas</strong> uses <code class="docutils literal notranslate"><span class="pre">token-utils</span></code> which defines its own <code class="docutils literal notranslate"><span class="pre">Token</span></code> class built
+from Python’s tokens.
 While they carry the same information, they are much easier to use and manipulate.</p>
 <p>Below is the API from the <code class="docutils literal notranslate"><span class="pre">token_utils</span></code> module.</p>
 <div class="admonition tip">
@@ -276,8 +306,204 @@ you might want to first to to next page to see a demonstration
 of its usage, done in an actual programming session using a Jupyter notebook.</p>
 </div>
 </div>
-<div class="section" id="token-utils-py-api-extracted-by-sphinx">
-<h2>token_utils.py API extracted by Sphinx<a class="headerlink" href="#token-utils-py-api-extracted-by-sphinx" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-token_utils">
+<span id="token-utils-py-api-extracted-by-sphinx"></span><h2>token_utils.py API extracted by Sphinx<a class="headerlink" href="#module-token_utils" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="token-utils-py">
+<h3>token_utils.py<a class="headerlink" href="#token-utils-py" title="Permalink to this headline">¶</a></h3>
+<p>A collection of useful functions and methods to deal with tokenizing
+source code.</p>
+<dl class="py class">
+<dt id="token_utils.Token">
+<em class="property">class </em><code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">Token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Token as generated from Python’s tokenize.generate_tokens written here in
+a more convenient form, and with some custom methods.</p>
+<p>The various parameters are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">:</span> <span class="n">token</span> <span class="nb">type</span>
+<span class="n">string</span><span class="p">:</span> <span class="n">the</span> <span class="n">token</span> <span class="n">written</span> <span class="k">as</span> <span class="n">a</span> <span class="n">string</span>
+<span class="n">start</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_row</span><span class="p">,</span> <span class="n">end_col</span><span class="p">)</span>
+<span class="n">line</span><span class="p">:</span> <span class="n">entire</span> <span class="n">line</span> <span class="n">of</span> <span class="n">code</span> <span class="n">where</span> <span class="n">the</span> <span class="n">token</span> <span class="ow">is</span> <span class="n">found</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Token instances are mutable objects. Therefore, given a list of tokens,
+we can change the value of any token’s attribute, untokenize the list and
+automatically obtain a transformed source.</p>
+<dl class="py method">
+<dt id="token_utils.Token.is_comment">
+<code class="sig-name descname">is_comment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token is a comment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="token_utils.Token.is_identifier">
+<code class="sig-name descname">is_identifier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_identifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the token represents a valid Python identifier
+excluding Python keywords.</p>
+<p>Note: this is different from Python’s string method <code class="docutils literal notranslate"><span class="pre">isidentifier</span></code>
+which also returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the string is a keyword.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="token_utils.Token.is_integer">
+<code class="sig-name descname">is_integer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_integer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token represents an integer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="token_utils.Token.is_keyword">
+<code class="sig-name descname">is_keyword</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_keyword" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token represents a Python keyword.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="token_utils.Token.is_number">
+<code class="sig-name descname">is_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token represents a number</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="token_utils.Token.is_space">
+<code class="sig-name descname">is_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#Token.is_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.Token.is_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the token indicates a change in indentation,
+the end of a line, or the end of the source
+(<code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">NL</span></code>, and <code class="docutils literal notranslate"><span class="pre">ENDMARKER</span></code>).</p>
+<p>Note that spaces, including tab charcters <code class="docutils literal notranslate"><span class="pre">\t</span></code>, between tokens
+on a given line are not considered to be tokens themselves.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.dedent">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">dedent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">nb</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#dedent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.dedent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, produces an equivalent list corresponding
+to a line of code with the first nb characters removed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.fix_empty_line">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">fix_empty_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">tokens</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#fix_empty_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.fix_empty_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python’s tokenizer drops entirely a last line if it consists only of
+space characters and/or tab characters.  To ensure that we can always have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">))</span> <span class="o">==</span> <span class="n">source</span>
+</pre></div>
+</div>
+<p>we correct the last token content if needed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_first">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_first</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">exclude_comment</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_first"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the first token which is not a space token
+(such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) and,
+by default, also not a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens can be included by setting <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_first_index">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_first_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">exclude_comment</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_first_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_first_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the index of the first token which is
+not a space token (such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) nor
+a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>. If it is desired to include COMMENT, set <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code>
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_last">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_last</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">exclude_comment</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the last token which is not a space token
+(such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) and, by default,
+also not a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens can be included by setting``exclude_comment``
+to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_last_index">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_last_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">exclude_comment</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_last_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_last_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, find the index of the last token which is
+not a space token (such as a <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>, <code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.) nor
+a <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code>. If it is desired to include COMMENT, set <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code>
+to True.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if none is found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_lines">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_lines</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a source (string) into a list of Tokens, with each
+(inner) list containing all the tokens found on a given line of code.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_number">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">exclude_comment</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, gives a count of the number of
+tokens which are not space tokens (such as <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code>, <code class="docutils literal notranslate"><span class="pre">INDENT</span></code>,
+<code class="docutils literal notranslate"><span class="pre">DEDENT</span></code>, etc.)</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">COMMMENT</span></code> tokens are not included in the count.
+If you wish to include them, set <code class="docutils literal notranslate"><span class="pre">exclude_comment</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.get_pairs">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">get_pairs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#get_pairs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.get_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens having at least two items, returns a list of
+pairs of consecutive tokens, with the first pair consisting of a Null
+token and the first token in the list.
+Thus, given a list like <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>, this function would return
+<code class="docutils literal notranslate"><span class="pre">[(Null,</span> <span class="pre">1),</span> <span class="pre">(1,</span> <span class="pre">2),</span> <span class="pre">(2,</span> <span class="pre">3)]</span></code>.</p>
+<p>Returns an empty list if the original list contains fewer than two items.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.indent">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">indent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">nb</span></em>, <em class="sig-param"><span class="n">tab</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#indent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of tokens, produces an equivalent list corresponding
+to a line of code with nb space characters inserted at the beginning.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">tab</span></code> is specified to be <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">nb</span></code> tab characters are inserted
+instead of spaces.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.print_tokens">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">print_tokens</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#print_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.print_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints tokens found in source, excluding spaces and comments.</p>
+<p><code class="docutils literal notranslate"><span class="pre">source</span></code> is either a string to be tokenized, or a list of Token objects.</p>
+<p>This is occasionally useful as a debugging tool.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.tokenize">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">tokenize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#tokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.tokenize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a source (string) into a list of Tokens.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="token_utils.untokenize">
+<code class="sig-prename descclassname">token_utils.</code><code class="sig-name descname">untokenize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#untokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#token_utils.untokenize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return source code based on tokens.</p>
+<p>Adapted from <a class="reference external" href="https://github.com/myint/untokenize">https://github.com/myint/untokenize</a>,
+Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).</p>
+<p>This is similar to Python’s own tokenize.untokenize(), except that it
+preserves spacing between tokens, by using the line
+information recorded by Python’s tokenize.generate_tokens.
+As a result, if the original soure code had multiple spaces between
+some tokens or if escaped newlines were used or if tab characters
+were present in the original source, those will also be present
+in the source code produced by untokenize.</p>
+<p>Thus <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">==</span> <span class="pre">untokenize(tokenize(source))</span></code>.</p>
+<p>Note: if you you modifying tokens from an original source:</p>
+<p>Instead of full token object, <code class="docutils literal notranslate"><span class="pre">untokenize</span></code> will accept simple
+strings; however, it will only insert them <em>as is</em> without taking them
+into account when it comes with figuring out spacing between tokens.</p>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -287,16 +513,33 @@ of its usage, done in an actual programming session using a Jupyter notebook.</p
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tokenize_notebook.html" class="btn btn-neutral float-right" title="Tokenizing notebook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, André Roberge
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -307,7 +550,6 @@ of its usage, done in an actual programming session using a Jupyter notebook.</p
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
