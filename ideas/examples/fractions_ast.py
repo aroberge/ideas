@@ -14,12 +14,34 @@ from ideas import import_hook
 
 
 class FractionWrapper(ast.NodeTransformer):
-    """Wraps all integers in a call to Integer()"""
-    def visit_Num(self, node):
-        if isinstance(node.n, int):
-            return ast.Call(func=ast.Name(id='Fraction', ctx=ast.Load()),
-                            args=[node], keywords=[])
-        return node
+    """Wrap all int divisions in a call to Fractions.
+
+    Adapted from https://github.com/diofant/diofant"""
+
+    def visit_BinOp(self, node):
+        def is_integer(x):
+            if isinstance(x, ast.Num) and isinstance(x.n, int):
+                return True
+            elif isinstance(x, ast.UnaryOp) and isinstance(x.op, (ast.USub, ast.UAdd)):
+                return is_integer(x.operand)
+            elif isinstance(x, ast.BinOp) and isinstance(
+                x.op, (ast.Add, ast.Sub, ast.Mult, ast.Pow)
+            ):
+                return is_integer(x.left) and is_integer(x.right)
+            else:
+                return False
+
+        if isinstance(node.op, ast.Div) and all(
+            is_integer(_) for _ in [node.left, node.right]
+        ):
+            return ast.Call(
+                func=ast.Name(id="Fraction", ctx=ast.Load()),
+                args=[node.left, node.right],
+                keywords=[],
+                starargs=None,
+                kwargs=None,
+            )
+        return self.generic_visit(node)
 
 
 def transform_ast(tree):
@@ -29,23 +51,10 @@ def transform_ast(tree):
     return tree
 
 
-new_range = """
-old_range = range
-def range(n, *args):
-    if len(args) == 0:
-        return old_range(int(n))
-    elif len(args) == 1:
-        return old_range(int(n), int(args[0]))
-    else:
-        return old_range(int(n), int(args[0]), int(args[1]))
-
-"""
-
-
 def source_init():
-    """Adds required imports and function redefinitions"""
+    """Adds required imports"""
     import_fraction = "from fractions import Fraction\n"
-    return import_fraction + new_range
+    return import_fraction
 
 
 def add_hook(verbose_finder=False):
