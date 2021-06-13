@@ -18,7 +18,7 @@ from ideas import import_hook
 __NAMES_MAP = {}
 
 
-def fix_names(source, **kwargs):
+def transform_names(source, **kwargs):
     """Transform names that would normally be 'normalized' by
     Python into different and unique variable names.
     """
@@ -26,9 +26,10 @@ def fix_names(source, **kwargs):
     g = tokenize.tokenize(io.BytesIO(source.encode()).readline)
     for toknum, tokval, _, _, _ in g:
         if toknum == tokenize.NAME:
-            if unicodedata.normalize("NFKC", tokval) != tokval:
+            normalized_name = unicodedata.normalize("NFKC", tokval)
+            if normalized_name != tokval:
                 if tokval not in __NAMES_MAP:
-                    __NAMES_MAP[tokval] = f"_{uuid.uuid4().hex!s}"
+                    __NAMES_MAP[tokval] = f"{normalized_name}_{uuid.uuid4().hex!s}"
                 tokval = __NAMES_MAP[tokval]
         result.append((toknum, tokval))
     return tokenize.untokenize(result).decode()
@@ -49,6 +50,6 @@ def ndir(obj=None):
 
 
 import_hook.create_hook(
-    transform_source=fix_names,
+    transform_source=transform_names,
     console_dict={"__NAMES_MAP": __NAMES_MAP, "ndir": ndir},
 )
