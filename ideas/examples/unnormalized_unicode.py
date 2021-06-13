@@ -46,11 +46,10 @@ def ndir(obj=None):
     for k, v in __NAMES_MAP.items():
         names = [_.replace(v, k) for _ in names]
     if obj is None:
-        # The following usually would not show in Python's dir()
-        if 'dir' in names:
-            names.remove('dir')
-        if 'true_dir' in names:  # Purposely hide this one as well. :-)
-            names.remove('true_dir')
+        # Purposely hide some names :-)
+        for name in ['dir', 'true_dir', '__NAMES_MAP']:
+            if name in names:
+                names.remove(name)
     return sorted(names)
 
 
