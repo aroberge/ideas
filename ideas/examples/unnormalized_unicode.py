@@ -42,13 +42,27 @@ def ndir(obj=None):
     if obj is not None:
         names = dir(obj)
     else:
-        names = inspect.currentframe().f_back.f_locals
+        names = list(inspect.currentframe().f_back.f_locals)
     for k, v in __NAMES_MAP.items():
         names = [_.replace(v, k) for _ in names]
+    if obj is None:
+        # The following usually would not show in Python's dir()
+        if 'dir' in names:
+            names.remove('dir')
+        if 'true_dir' in names:  # Purposely hide this one as well. :-)
+            names.remove('true_dir')
     return sorted(names)
 
 
+def source_init():
+    return """
+dir, true_dir = ndir, dir
+del ndir
+"""
+
+
 import_hook.create_hook(
+    source_init=source_init,
     transform_source=transform_names,
     console_dict={"__NAMES_MAP": __NAMES_MAP, "ndir": ndir},
 )
