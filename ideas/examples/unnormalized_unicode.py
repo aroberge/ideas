@@ -36,8 +36,7 @@ def transform_names(source, **kwargs):
 
 
 def ndir(obj=None):
-    """Similar to Python's dir, but shows only names that do not
-    start with double underscore, and shows the original name
+    """Similar to Python's dir, but shows the original name
     entered, not the transformed one."""
     import inspect
     if obj is not None:
