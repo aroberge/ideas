@@ -35,9 +35,13 @@ def transform_names(source, **kwargs):
     return tokenize.untokenize(result).decode()
 
 
-def ndir(obj=None):
+def new_dir(obj=None):
     """Similar to Python's dir, but shows the original name
-    entered, not the transformed one."""
+    entered, not the transformed one. It also filters out any variable
+    whose names starts with a double underscore.
+
+    Note: the real Python dir() should be available as true_dir().
+    """
     import inspect
     if obj is not None:
         names = dir(obj)
@@ -45,23 +49,16 @@ def ndir(obj=None):
         names = list(inspect.currentframe().f_back.f_locals)
     for k, v in __NAMES_MAP.items():
         names = [_.replace(v, k) for _ in names]
+    names = [name for name in names if not names.startswith("__")]
     if obj is None:
         # Purposely hide some names :-)
-        for name in ['dir', 'true_dir', '__NAMES_MAP']:
+        for name in ['dir', 'true_dir']:
             if name in names:
                 names.remove(name)
     return sorted(names)
 
 
-def source_init():
-    return """
-dir, true_dir = ndir, dir
-del ndir
-"""
-
-
 import_hook.create_hook(
-    source_init=source_init,
     transform_source=transform_names,
-    console_dict={"__NAMES_MAP": __NAMES_MAP, "ndir": ndir},
+    console_dict={"__NAMES_MAP": __NAMES_MAP, "dir": new_dir, "true_dir": dir},
 )

@@ -29,10 +29,11 @@ def configure(**kwargs):
 
 class IdeasConsole(InteractiveConsole):
     """An interactive console that works with source transformations,
-       AST transformations and Bytecode transformations.
+    AST transformations and Bytecode transformations.
 
-       It should not need to be instantiated directly.
+    It should not need to be instantiated directly.
     """
+
     def __init__(
         self,
         source_init=None,
@@ -164,15 +165,14 @@ class IdeasConsole(InteractiveConsole):
             self.showtraceback()
 
 
-def start():
+def start(banner=BANNER, show_config=False, prompt="~>> "):
     """Starts a special console that works with import hooks."""
-    global BANNER
-    sys.ps1 = "~>> "
-    if _CONFIG:
+    sys.ps1 = prompt
+    if _CONFIG and show_config:
         print("Configuration values for the console:")
         for key in _CONFIG:
             if _CONFIG[key] is not None:
-                if hasattr(_CONFIG[key], '_hook_name_'):
+                if hasattr(_CONFIG[key], "_hook_name_"):
                     print(f"    {key} from {_CONFIG[key]._hook_name_}")
                 else:
                     print(f"    {key}: {_CONFIG[key]}")
@@ -180,8 +180,8 @@ def start():
     console = IdeasConsole(**_CONFIG)
 
     if console.transform_ast is not None:
-        BANNER += """
+        banner += """
     AST transformations applied: you will need to explicitly
     call print() to see the result of a command.
     """
-    console.interact(banner=BANNER)
+    console.interact(banner=banner)
