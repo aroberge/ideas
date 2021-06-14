@@ -135,7 +135,15 @@ class IdeasConsole(InteractiveConsole):
             # recreate code object, this time, with ast transform
             tree = ast.parse(source, filename)
             tree = self.transform_ast(tree)
-            code_obj = compile(tree, filename, "exec")
+            if hasattr(ast, 'unparse'):
+                try:
+                    source = ast.unparse(tree)
+                except RecursionError:
+                    code_obj = compile(tree, filename, "exec")
+                else:
+                    code_obj = self.compile(source, filename, symbol)
+            else:
+                code_obj = compile(tree, filename, "exec")
 
         if self.transform_bytecode is not None:
             code_obj = self.transform_bytecode(code_obj)
@@ -179,9 +187,10 @@ def start(banner=BANNER, show_config=False, prompt="~>> "):
         print("-" * 50)
     console = IdeasConsole(**_CONFIG)
 
-    if console.transform_ast is not None:
+    if console.transform_ast is not None and not hasattr(ast, 'unparse'):
         banner += """
     AST transformations applied: you will need to explicitly
-    call print() to see the result of a command.
+    call print() to see the result of a command since ast.unparse
+    does not exist in your Python version.
     """
     console.interact(banner=banner)
