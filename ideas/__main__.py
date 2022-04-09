@@ -34,6 +34,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    help="""Shows the transformed code before it is executed.""",
+)
+
+parser.add_argument(
     "source",
     nargs="?",
     help="""Name of the main Python module (path.to.my_program) to be imported.
@@ -41,14 +48,14 @@ parser.add_argument(
 )
 
 
-def add_transform(transform):
+def add_transform(transform, show_transformed=False):
 	path = f"ideas.examples.{transform}"
 	try:
 		module = import_module(path)
 	except ImportError:
 		print(f"{path} is not a known transformer.")
 	else:
-		getattr(module, "add_hook")()
+		getattr(module, "add_hook")(show_transformed=show_transformed)
 
 
 
@@ -58,10 +65,9 @@ def main() -> None:
         print(f"\nideas version {ideas.__version__}")
         sys.exit()
 
-
     if args.transform:
     	for item in args.transform:
-    		add_transform(item)
+    		add_transform(item, show_transformed=bool(args.verbose))
 
     if args.source is not None:
         if args.source.endswith(".py"):
