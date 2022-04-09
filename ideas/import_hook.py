@@ -12,7 +12,7 @@ from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
 
 from . import console
-from .utils import shorten_path, PYTHON, IDEAS
+from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES
 
 
 class IdeasMetaFinder(MetaPathFinder):
@@ -213,7 +213,7 @@ def create_hook(
     if extensions is None:
         extensions = [".py"]
 
-    excluded_paths = [PYTHON, IDEAS]
+    excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
 
     if verbose_finder:
         print("Looking for files with extensions: ", extensions)

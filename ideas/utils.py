@@ -7,7 +7,10 @@ A few utility functions for this project.
 import os
 import uuid
 
+import token_utils  # to find the path of site-packages
+
 PYTHON = os.path.dirname(os.__file__).lower()
+SITE_PACKAGES = os.path.dirname(token_utils.__file__).lower()
 IDEAS = os.path.dirname(__file__).lower()
 TESTS = os.path.normpath(os.path.join(IDEAS, "..", "tests")).lower()
 HOME = os.path.expanduser("~").lower()
