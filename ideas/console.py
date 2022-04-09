@@ -24,7 +24,32 @@ CONSOLE_NAME = "IdeasConsole"
 
 def configure(**kwargs):
     """Configures various defaults to be used by the console"""
+    old_transform_ast = _CONFIG.get("transform_ast")
+    old_transform_bytecode = _CONFIG.get("transform_bytecode")
+    old_transform_source = _CONFIG.get("transform_source")
     _CONFIG.update(kwargs)
+
+    new_transform_ast = _CONFIG.get("transform_ast")
+    new_transform_bytecode = _CONFIG.get("transform_bytecode")
+    new_transform_source = _CONFIG.get("transform_source")
+
+    if old_transform_ast is not None and new_transform_ast is not None:
+        old_transform_ast.append(new_transform_ast)
+        _CONFIG["transform_ast"] = old_transform_ast
+    elif new_transform_ast is not None:
+        _CONFIG["transform_ast"] = [_CONFIG["transform_ast"]]
+
+    if old_transform_bytecode is not None and new_transform_bytecode is not None:
+        old_transform_bytecode.append(new_transform_bytecode)
+        _CONFIG["transform_bytecode"] = old_transform_bytecode
+    elif new_transform_bytecode is not None:
+        _CONFIG["transform_bytecode"] = [_CONFIG["transform_bytecode"]]
+
+    if old_transform_source is not None and new_transform_source is not None:
+        old_transform_source.append(new_transform_source)
+        _CONFIG["transform_source"] = old_transform_source
+    elif new_transform_source is not None:
+        _CONFIG["transform_source"] = [_CONFIG["transform_source"]]
 
 
 class IdeasConsole(InteractiveConsole):
@@ -83,13 +108,14 @@ class IdeasConsole(InteractiveConsole):
         source = "\n".join(self.buffer)
 
         if self.transform_source is not None:
-            last_line = source.endswith("\n")  # signals the end of a block
-            source = self.transform_source(
-                source, filename=CONSOLE_NAME, callback_params=self.callback_params
-            )
-            # Some transformations may add some extra "\n" (usually at most one)
-            if not last_line:
-                source = source.rstrip("\n")
+            for transform in self.transform_source:
+                last_line = source.endswith("\n")  # signals the end of a block
+                source = transform(
+                    source, filename=CONSOLE_NAME, callback_params=self.callback_params
+                )
+                # Some transformations may add some extra "\n" (usually at most one)
+                if not last_line:
+                    source = source.rstrip("\n")
         more = self.runsource(source, CONSOLE_NAME)
         if not more:
             self.resetbuffer()
@@ -137,7 +163,8 @@ class IdeasConsole(InteractiveConsole):
         if self.transform_ast is not None:
             # recreate code object, this time, with ast transform
             tree = ast.parse(source, filename)
-            tree = self.transform_ast(tree)
+            for transform in self.transform_ast:
+                tree = transform(tree)
             if hasattr(ast, 'unparse'):
                 try:
                     source = ast.unparse(tree)
@@ -149,7 +176,8 @@ class IdeasConsole(InteractiveConsole):
                 code_obj = compile(tree, filename, "exec")
 
         if self.transform_bytecode is not None:
-            code_obj = self.transform_bytecode(code_obj)
+            for transform in self.transform_bytecode:
+                code_obj = transform(code_obj)
 
         self.runcode(code_obj)
         return False
