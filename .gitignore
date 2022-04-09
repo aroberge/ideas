@@ -131,3 +131,7 @@ dmypy.json
 
 # logs for this project
 *log
+
+
+# the following are often used as quick tests
+ignore*.py

@@ -6,4 +6,4 @@ from experimental-syntax import decimal_literal
 assert 1 /3F == Fraction(1, 3)
 assert 0.33D == Decimal('0.33')
 
-print("simple_test.py ran successfully.")
+print("encoding_example.py ran successfully.")

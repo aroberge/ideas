@@ -42,6 +42,7 @@ class IdeasConsole(InteractiveConsole):
         transform_source=None,
         callback_params=None,
         console_dict=None,
+        locals=None,
     ):
         """This class builds upon Python's code.InteractiveConsole
         so as to work with import hooks.
@@ -53,6 +54,8 @@ class IdeasConsole(InteractiveConsole):
 
         if console_dict is None:
             console_dict = {}
+        if locals is not None:
+            console_dict.update(**locals)
 
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
@@ -173,7 +176,7 @@ class IdeasConsole(InteractiveConsole):
             self.showtraceback()
 
 
-def start(banner=BANNER, show_config=False, prompt="~>> "):
+def start(banner=BANNER, show_config=False, prompt="~>> ", locals=None):
     """Starts a special console that works with import hooks."""
     sys.ps1 = prompt
     if _CONFIG and show_config:
@@ -185,7 +188,7 @@ def start(banner=BANNER, show_config=False, prompt="~>> "):
                 else:
                     print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)
-    console = IdeasConsole(**_CONFIG)
+    console = IdeasConsole(**_CONFIG, locals=locals)
 
     if console.transform_ast is not None and not hasattr(ast, 'unparse'):
         banner += """
