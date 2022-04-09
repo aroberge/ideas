@@ -54,9 +54,15 @@ def transform_units(source):
     dividing_by_units = False
     prev_token = tokens[0]
     new_tokens = [prev_token]
+    prev_is_number = False
+    prev_is_identifier = False
 
     for token in tokens[1:]:
-        if converting_units and PREFIX and token.is_identifier():
+        # Take note of the token type before possibly changing its content
+        is_identifier = token.is_identifier()
+        is_number = token.is_number()
+
+        if converting_units and PREFIX and is_identifier:
             token.string = PREFIX + token.string
 
         if converting_units and token == "]":
@@ -67,7 +73,7 @@ def transform_units(source):
             else:
                 token.string = ""
 
-        elif prev_token.is_number() and token == "[":
+        elif prev_is_number and token == "[":
             converting_units = True
             token.string = " * "
 
@@ -75,7 +81,7 @@ def transform_units(source):
             dividing_by_units = True
             token.string ="/("
 
-        elif converting_units and token.is_identifier() and (prev_token.is_number() or prev_token.is_identifier()):
+        elif converting_units and is_identifier and (prev_is_number or prev_is_identifier):
             token.string = " * " + token.string
 
         elif converting_units and token == "^":
@@ -83,6 +89,8 @@ def transform_units(source):
 
         new_tokens.append(token)
         prev_token = token
+        prev_is_number = is_number
+        prev_is_identifier = is_identifier
     
     return token_utils.untokenize(new_tokens)
 
