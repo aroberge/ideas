@@ -84,8 +84,8 @@ def transform_units(source, prefix=""):
     dividing_by_units = False
     prev_token = tokens[0]
     new_tokens = [prev_token]
-    prev_is_number = False
-    prev_is_identifier = False
+    prev_is_number = prev_token.is_number()
+    prev_is_identifier = prev_token.is_identifier()
 
     for token in tokens[1:]:
         # Take note of the token type before possibly changing its
