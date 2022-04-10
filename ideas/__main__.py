@@ -75,7 +75,7 @@ def main() -> None:
         ideas.source_file = args.source
         module = import_module(args.source)
         if sys.flags.interactive:  # pragma: no cover
-            console.start(locals=module.__dict__)
+            console.start(locals=module.__dict__, prompt=">>> ")
     else:
 	    console.start()
 
