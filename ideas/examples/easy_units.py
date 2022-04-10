@@ -13,6 +13,7 @@ import ideas
 import token_utils
 
 PREFIX = {}
+PREFIX_SHOWN = False
 
 
 def transform_source(source, callback_params=None, filename=None, **kwargs):
@@ -26,6 +27,7 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
        transformations, we can combine the existing "inner" functions to
        create our new transformation.
     """
+    global PREFIX_SHOWN
     from ideas.console import CONSOLE_NAME
 
     lines = source.split("\n")
@@ -48,12 +50,18 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
             source = utils.hack_main(source)
             if prefix:
                 PREFIX["main"] = prefix
+                if callback_params["show_transformed"]:
+                    utils.print_source(prefix, "Prefix")
+                    PREFIX_SHOWN = True
     elif prefix and filename == CONSOLE_NAME:
         PREFIX["main"] = prefix
 
     if not prefix and filename == CONSOLE_NAME and "main" in PREFIX:
         prefix = PREFIX["main"]
 
+    if prefix and not PREFIX_SHOWN and filename == CONSOLE_NAME and callback_params["show_transformed"]:
+        utils.print_source(prefix, "Prefix")
+        PREFIX_SHOWN = True
 
     original = source
     if callback_params["show_original"]:
