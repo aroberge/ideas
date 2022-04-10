@@ -36,6 +36,10 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
             prefix = line.split("=pint.UnitRegistry")[0] + "."
         elif line.endswith("=UnitRegistry()"):
             prefix = line.split("=UnitRegistry()")[0] + "."
+        elif line.startswith("fromastropyimportunitsas"):
+            prefix = line.replace("fromastropyimportunitsas", "") + "."
+        elif line == "fromastropyimportunits":
+            prefix = "units."
 
     if ideas.source_file is not None:
         source_file = ideas.source_file
@@ -44,6 +48,8 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
             source = utils.hack_main(source)
             if prefix:
                 PREFIX["main"] = prefix
+    elif prefix and filename == CONSOLE_NAME:
+        PREFIX["main"] = prefix
 
     if not prefix and filename == CONSOLE_NAME and "main" in PREFIX:
         prefix = PREFIX["main"]
