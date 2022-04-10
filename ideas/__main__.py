@@ -77,6 +77,6 @@ def main() -> None:
         if sys.flags.interactive:  # pragma: no cover
             console.start(locals=module.__dict__, prompt=">>> ")
     else:
-	    console.start()
+	    console.start(prompt=">>> ")
 
 main()
