@@ -6,13 +6,16 @@ This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
+import sys
+
 from ideas import import_hook, utils
+import ideas
 import token_utils
 
-PREFIX = ""
+PREFIX = {}
 
 
-def transform_source(source, callback_params=None, **kwargs):
+def transform_source(source, callback_params=None, filename=None, **kwargs):
     """This function is called by the import hook loader with the named keyword
        that we specified when we created the import hook.
 
@@ -23,29 +26,42 @@ def transform_source(source, callback_params=None, **kwargs):
        transformations, we can combine the existing "inner" functions to
        create our new transformation.
     """
-    global PREFIX
+    from ideas.console import CONSOLE_NAME
+
     lines = source.split("\n")
+    prefix = ""
     for line in lines:
         line = line.replace(" ", "").replace("\n", "")
         if line.endswith("=pint.UnitRegistry()"):
-            PREFIX = line.split("=pint.UnitRegistry")[0] + "."
+            prefix = line.split("=pint.UnitRegistry")[0] + "."
         elif line.endswith("=UnitRegistry()"):
-            PREFIX = line.split("=UnitRegistry()")[0] + "."
+            prefix = line.split("=UnitRegistry()")[0] + "."
+
+    if ideas.source_file is not None:
+        source_file = ideas.source_file
+        ideas.source_file = None
+        if source_file in sys.modules and sys.modules[source_file].__file__ == filename:
+            source = utils.hack_main(source)
+            if prefix:
+                PREFIX["main"] = prefix
+
+    if not prefix and filename == CONSOLE_NAME and "main" in PREFIX:
+        prefix = PREFIX["main"]
+
 
     original = source
     if callback_params["show_original"]:
         utils.print_source(source, "Original")
 
-    source = transform_units(source)
+    source = transform_units(source, prefix)
 
     if callback_params["show_transformed"] and original != source:
         utils.print_source(source, "Transformed")
     
-
     return source
 
 
-def transform_units(source):
+def transform_units(source, prefix=""):
     tokens = token_utils.tokenize(source)
     if not tokens:
         return source
@@ -58,12 +74,12 @@ def transform_units(source):
     prev_is_identifier = False
 
     for token in tokens[1:]:
-        # Take note of the token type before possibly changing its content
+        # Take note of the token type before possibly changing its
         is_identifier = token.is_identifier()
         is_number = token.is_number()
 
-        if converting_units and PREFIX and is_identifier:
-            token.string = PREFIX + token.string
+        if converting_units and prefix and is_identifier:
+            token.string = prefix + token.string
 
         if converting_units and token == "]":
             converting_units = False

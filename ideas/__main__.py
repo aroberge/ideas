@@ -72,6 +72,7 @@ def main() -> None:
     if args.source is not None:
         if args.source.endswith(".py"):
             args.source = args.source[:-3]
+        ideas.source_file = args.source
         module = import_module(args.source)
         if sys.flags.interactive:  # pragma: no cover
             console.start(locals=module.__dict__)

@@ -81,3 +81,16 @@ def generate_predictable_names():
     while True:
         n += 1
         yield "_%s" % n
+
+
+def hack_main(source):
+    lines = source.split("\n")
+    new_lines = []
+    for line in lines:
+        condensed = line.replace(" ", "").replace('"', "'")
+        if condensed == "if__name__=='__main__':":
+            indent = len(line) - len(line.rstrip())
+            new_lines.append(" "*indent + "if True:")
+        else:
+            new_lines.append(line)
+    return "\n".join(new_lines)
