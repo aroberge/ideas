@@ -9,7 +9,7 @@ from importlib import import_module
 import sys
 
 import ideas
-from ideas import console
+from ideas import console, main_hack
 
 
 parser = argparse.ArgumentParser(
@@ -49,14 +49,13 @@ parser.add_argument(
 
 
 def add_transform(transform, show_transformed=False):
-	path = f"ideas.examples.{transform}"
-	try:
-		module = import_module(path)
-	except ImportError:
-		print(f"{path} is not a known transformer.")
-	else:
-		getattr(module, "add_hook")(show_transformed=show_transformed)
-
+    path = f"ideas.examples.{transform}"
+    try:
+        module = import_module(path)
+    except ImportError:
+        print(f"{path} is not a known transformer.")
+    else:
+        getattr(module, "add_hook")(show_transformed=show_transformed)
 
 
 def main() -> None:
@@ -66,17 +65,18 @@ def main() -> None:
         sys.exit()
 
     if args.transform:
-    	for item in args.transform:
-    		add_transform(item, show_transformed=bool(args.verbose))
+        for item in args.transform:
+            add_transform(item, show_transformed=bool(args.verbose))
 
     if args.source is not None:
         if args.source.endswith(".py"):
             args.source = args.source[:-3]
-        ideas.source_file = args.source
+        main_hack.main_name = args.source
         module = import_module(args.source)
         if sys.flags.interactive:  # pragma: no cover
             console.start(locals=module.__dict__, prompt=">>> ")
     else:
-	    console.start(prompt=">>> ")
+        console.start(prompt=">>> ")
+
 
 main()

@@ -6,26 +6,26 @@ This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
-import sys
 
 from ideas import import_hook, utils
-import ideas
 import token_utils
 
 PREFIX = {}
 PREFIX_SHOWN = False
 
 
-def transform_source(source, callback_params=None, filename=None, **kwargs):
+def transform_source(
+    source, callback_params=None, filename=None, module=None, **kwargs
+):
     """This function is called by the import hook loader with the named keyword
-       that we specified when we created the import hook.
+    that we specified when we created the import hook.
 
-       It gives us the option to compare the original source and the transformed
-       one. This type of additional option can be useful when debugging
-       a source transformer. Furthermore, if we wish to define a source
-       transformation that combines the effect of multiple existing
-       transformations, we can combine the existing "inner" functions to
-       create our new transformation.
+    It gives us the option to compare the original source and the transformed
+    one. This type of additional option can be useful when debugging
+    a source transformer. Furthermore, if we wish to define a source
+    transformation that combines the effect of multiple existing
+    transformations, we can combine the existing "inner" functions to
+    create our new transformation.
     """
     global PREFIX_SHOWN
     from ideas.console import CONSOLE_NAME
@@ -43,23 +43,23 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
         elif line == "fromastropyimportunits":
             prefix = "units."
 
-    if ideas.source_file is not None:
-        source_file = ideas.source_file
-        ideas.source_file = None
-        if source_file in sys.modules and sys.modules[source_file].__file__ == filename:
-            source = utils.hack_main(source)
-            if prefix:
-                PREFIX["main"] = prefix
-                if callback_params["show_transformed"]:
-                    utils.print_source(prefix, "Prefix")
-                    PREFIX_SHOWN = True
+    if prefix and hasattr(module, "__name__") and module.__name__ == "__main__":
+        PREFIX["main"] = prefix
+        if callback_params["show_transformed"]:
+            utils.print_source(prefix, "Prefix")
+            PREFIX_SHOWN = True
     elif prefix and filename == CONSOLE_NAME:
         PREFIX["main"] = prefix
 
     if not prefix and filename == CONSOLE_NAME and "main" in PREFIX:
         prefix = PREFIX["main"]
 
-    if prefix and not PREFIX_SHOWN and filename == CONSOLE_NAME and callback_params["show_transformed"]:
+    if (
+        prefix
+        and not PREFIX_SHOWN
+        and filename == CONSOLE_NAME
+        and callback_params["show_transformed"]
+    ):
         utils.print_source(prefix, "Prefix")
         PREFIX_SHOWN = True
 
@@ -71,7 +71,7 @@ def transform_source(source, callback_params=None, filename=None, **kwargs):
 
     if callback_params["show_transformed"] and original != source:
         utils.print_source(source, "Transformed")
-    
+
     return source
 
 
@@ -109,9 +109,13 @@ def transform_units(source, prefix=""):
 
         elif converting_units and token == "/":
             dividing_by_units = True
-            token.string ="/("
+            token.string = "/("
 
-        elif converting_units and is_identifier and (prev_is_number or prev_is_identifier):
+        elif (
+            converting_units
+            and is_identifier
+            and (prev_is_number or prev_is_identifier)
+        ):
             token.string = " * " + token.string
 
         elif converting_units and token == "^":
@@ -121,7 +125,7 @@ def transform_units(source, prefix=""):
         prev_token = token
         prev_is_number = is_number
         prev_is_identifier = is_identifier
-    
+
     return token_utils.untokenize(new_tokens)
 
 

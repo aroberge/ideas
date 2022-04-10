@@ -11,14 +11,14 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
 
-from . import console
+from . import console, main_hack
 from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES
 
 
 class IdeasMetaFinder(MetaPathFinder):
     """A custom finder to locate modules. The main reason for this code
-       is to ensure that our custom loader, which does the code transformations,
-       is used."""
+    is to ensure that our custom loader, which does the code transformations,
+    is used."""
 
     def __init__(
         self,
@@ -48,7 +48,7 @@ class IdeasMetaFinder(MetaPathFinder):
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
-           its loader."""
+        its loader."""
         if not path:
             path = [os.getcwd()]
 
@@ -136,8 +136,11 @@ class IdeasLoader(Loader):
 
     def exec_module(self, module):
         """Import the source code, transform it before executing it so that
-           it is known to Python.
+        it is known to Python.
         """
+        if module.__name__ is not None and module.__name__ == main_hack.main_name:
+            module.__name__ = "__main__"
+            main_hack.main_name = None
         if self.module_class is not None:
             module.__class__ = self.module_class
 
@@ -207,8 +210,8 @@ def create_hook(
 ):
     """Function to facilitate the creation of an import hook.
 
-       It sets the parameters to be used by the import hook, and also
-       does so for the interactive console.
+    It sets the parameters to be used by the import hook, and also
+    does so for the interactive console.
     """
     if extensions is None:
         extensions = [".py"]

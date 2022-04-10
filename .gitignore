@@ -121,6 +121,9 @@ venv*
 # mkdocs documentation
 /site
 
+# Pycharm settings
+.idea/*
+
 # mypy
 .mypy_cache/
 .dmypy.json
