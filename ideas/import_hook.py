@@ -6,13 +6,22 @@ This module contains the core functions required to create an import hook.
 
 import ast
 import os
+import pathlib
 import sys
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
 
-from . import console, main_hack
+from . import console
 from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES
+
+
+# Identify the main script assuming that it has been called from
+# the command line using something like
+# python -m ideas main_script[.py] -some_flag
+MAIN_NAME = sys.argv[1].rstrip(".py")
+if MAIN_NAME.startswith("-"):
+    MAIN_NAME = None
 
 
 class IdeasMetaFinder(MetaPathFinder):
@@ -138,9 +147,14 @@ class IdeasLoader(Loader):
         """Import the source code, transform it before executing it so that
         it is known to Python.
         """
-        if module.__name__ is not None and module.__name__ == main_hack.main_name:
+        # The main script should be the very first one imported.
+        # To avoid potential named conflicts, we ensure that the potential
+        # identification is only done once.
+        global MAIN_NAME
+        if module.__name__ is not None and module.__name__ == MAIN_NAME:
             module.__name__ = "__main__"
-            main_hack.main_name = None
+        MAIN_NAME = None
+
         if self.module_class is not None:
             module.__class__ = self.module_class
 

@@ -9,7 +9,7 @@ from importlib import import_module
 import sys
 
 import ideas
-from ideas import console, main_hack
+from ideas import console
 
 
 parser = argparse.ArgumentParser(
@@ -71,7 +71,6 @@ def main() -> None:
     if args.source is not None:
         if args.source.endswith(".py"):
             args.source = args.source[:-3]
-        main_hack.main_name = args.source
         module = import_module(args.source)
         if sys.flags.interactive:  # pragma: no cover
             console.start(locals=module.__dict__, prompt=">>> ")
