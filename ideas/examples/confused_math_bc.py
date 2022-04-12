@@ -9,10 +9,7 @@ a and b are integer literals (e.g. 2 + 4), the operations are
 done prior to the creation of a code object and thus are
 not captured by this transformation.
 
-Requires Python version >= 3.6 as it assumed that bytecode
-instructions are "wordcode" i.e. that instructions like
-BINARY_ADD and BINARY_MULTIPLY will fall on even-index values
-of the bytecode.
+Requires Python version 3.6 or 3.7.
 """
 import dis
 import sys
@@ -21,7 +18,7 @@ from types import CodeType
 
 from ideas import import_hook
 
-assert sys.version_info >= (3, 6)
+assert sys.version_info.minor in (6, 7)
 
 ADD = dis.opmap["BINARY_ADD"]
 MUL = dis.opmap["BINARY_MULTIPLY"]

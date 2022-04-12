@@ -4,7 +4,8 @@ import sys
 import pytest
 
 
-@pytest.mark.skipif(sys.version_info.minor != 7, reason="requires python 3.7")
+@pytest.mark.skipif(sys.version_info.minor not in (6, 7, 8),
+                    reason="requires python 3.6, 3.7 or 3.8")
 def test_import():
     try:
         import short_program  # for testing only this file

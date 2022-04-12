@@ -15,18 +15,16 @@
 python -m pip install ideas
 ```
 
+Depending on your OS, you might need to write `python3` or `py` instead of `python` in the above.
+
 ## Dependencies
 
-Python 3.6+ and [token-utils](https://github.com/aroberge/token-utils).
-token-utils used to be included with ideas but has since been made into
-its own (single module) package.
+ - [token-utils](https://github.com/aroberge/token-utils)
+ - Python 3.6+
 
-
-## Alternatives
-
-Reading Andrew Barnert's post [Hacking Python without hacking Python](http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html)
-is a quick way to find out about various ways to use import hooks to
-change Python's syntax.
+Some examples, using custom encoding, bytecode transformations or
+AST transformations do not work with Python 3.8 and/or later versions.
+However, they could be adapted to work with these later versions.
 
 ## Usage
 
@@ -38,9 +36,13 @@ the same thing as `lambda`, enabling you to write
 
 square = function x: x**2
 print(f"{square(4)} is the square of 4.")
+
+if __name__ == "__main__":
+    print("This is run as the main module.")
 ```
 
 You can do this using an import hook.
+
 The simplest (but flawed) way to create such an import hook with `ideas`
 would be as follows:
 
@@ -55,11 +57,14 @@ import_hook.create_hook(transform_source=transform)
 
 Then, you'd need to use it. Since there is already an example import hook
 that does this, we'll use it instead.  All you have to do
-is instruct Python to add your import hook and it will be used
-from that point on. Something like the following.
+is instruct Python to add the import hook, and it will be used
+from that point on. There are two ways to do so.
+
+The first method would be to create a second file which adds the
+required import hook and then imports your program.
 
 ```python
-# Lets's call this 'loader.py'
+# Let's call this 'loader.py'
 
 from ideas.examples import function_keyword
 function_keyword.add_hook()
@@ -67,7 +72,7 @@ function_keyword.add_hook()
 import my_program
 ```
 
-and then run
+You could then run this second file the normal way.
 
 ```
 python loader.py
@@ -75,6 +80,17 @@ python loader.py
 
 So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
+However, using this method, `loader` would be the `__main__` script, and
+the code block defined by `if __name__ == "__main__":` in `my_program`
+would be ignored.
+
+The second way is to skip the creation of a loader, and run `my_program` directly
+using `ideas`:
+
+```
+python -m ideas my_program -t function_keyword
+```
+This method will ensure that `my_program` is the `__main__` module.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/),
 including a better way to create such an import hook and information about
@@ -112,7 +128,7 @@ which contains a longer, and possibly more serious answer.
 
 > _Is it safe to use in production code?_
 
-No.
+Most probably not.
 
 > _But your example works perfectly well in my code; can I use it in my
 > project?_
@@ -142,7 +158,7 @@ Please tell me more by filing an issue first and possibly creating a pull-reques
 
 > _I have an idea for a new example, but do not know how to write the code for it._
 
-First, make sure you go through all of the existing examples to confirm that
+First, make sure you go through all the existing examples to confirm that
 none can easily be adapted to do what you want.
 If that is the case, file an issue ...
 but please don't be offended if I don't write code for it
@@ -159,7 +175,7 @@ That being said, I do like tinkering with import hooks ...
 to Python's syntax, some of which are downright crazy, and you complain
 about a PEP-8 violation? ...
 
-Ok, perhaps you can tell me and it might make sense to change what I wrote.
+Ok, perhaps you can tell me, and I will see if it makes sense to change what I wrote.
 
 > _People from the Python-ideas mailing lists mentioned that I should look
 > at this project for my idea, but I don't know where to start._
