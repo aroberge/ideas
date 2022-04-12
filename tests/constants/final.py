@@ -2,8 +2,10 @@
 try:
     from typing import Final
 except ImportError:
+
     class Final:
         pass
+
 
 const: Final = 1
 const = 2

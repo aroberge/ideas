@@ -15,9 +15,7 @@ from . import console
 utf8 = encodings.search_function("utf8")
 
 
-def register_encoding(
-    encoding_name=None, transform_source=None, hook_name=None
-):
+def register_encoding(encoding_name=None, transform_source=None, hook_name=None):
     if encoding_name is None:
         raise TypeError("You must supply a name for your encoding")
     if transform_source is None or not callable(transform_source):

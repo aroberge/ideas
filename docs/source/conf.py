@@ -38,10 +38,10 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
-    'nbsphinx',
-    'sphinx.ext.mathjax',
+    "nbsphinx",
+    "sphinx.ext.mathjax",
 ]
-exclude_patterns = ['_build', '**.ipynb_checkpoints']
+exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 nbsphinx_allow_errors = True
 
 # Add any paths that contain templates here, relative to this directory.
@@ -102,8 +102,8 @@ html_theme = "sphinx_rtd_theme"  # installed separately
 # documentation.
 #
 html_theme_options = {
-    'prev_next_buttons_location': 'both',
-    'style_external_links': True,
+    "prev_next_buttons_location": "both",
+    "style_external_links": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -112,7 +112,7 @@ html_theme_options = {
 html_static_path = ["_static"]
 
 html_css_files = [
-    'custom.css',
+    "custom.css",
 ]
 
 

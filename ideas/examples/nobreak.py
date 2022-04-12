@@ -9,16 +9,16 @@ from ideas import import_hook, utils
 import token_utils
 
 
-def transform_source(source, callback_params=None, **kwargs):
+def transform_source(source, callback_params=None, **_kwargs):
     """This function is called by the import hook loader with the named keyword
-       that we specified when we created the import hook.
+    that we specified when we created the import hook.
 
-       It gives us the option to compare the original source and the transformed
-       one. This type of additional option can be useful when debugging
-       a source transformer. Furthermore, if we wish to define a source
-       transformation that combines the effect of multiple existing
-       transformations, we can combine the existing "inner" functions to
-       create our new transformation.
+    It gives us the option to compare the original source and the transformed
+    one. This type of additional option can be useful when debugging
+    a source transformer. Furthermore, if we wish to define a source
+    transformation that combines the effect of multiple existing
+    transformations, we can combine the existing "inner" functions to
+    create our new transformation.
     """
     if callback_params["show_original"]:
         utils.print_source(source, "Original")
@@ -53,7 +53,9 @@ def nobreak_as_a_keyword(source):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
+def add_hook(
+    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
+):
     """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,

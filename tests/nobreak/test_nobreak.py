@@ -1,4 +1,5 @@
 from ideas.examples import nobreak
+
 # from ideas.import_hook import remove_hook
 
 
@@ -30,6 +31,6 @@ def test_while():
     assert result == expected, "nobreak with while"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_for()
     print("test_nobreak was run successfully.")

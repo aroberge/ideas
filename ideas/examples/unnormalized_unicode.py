@@ -18,7 +18,7 @@ from ideas import import_hook
 __NAMES_MAP = {}
 
 
-def transform_names(source, **kwargs):
+def transform_names(source, **_kwargs):
     """Transform names that would normally be 'normalized' by
     Python into different and unique variable names.
     """
@@ -43,6 +43,7 @@ def new_dir(obj=None):
     Note: the real Python dir() should be available as true_dir().
     """
     import inspect
+
     if obj is not None:
         names = dir(obj)
     else:
@@ -52,7 +53,7 @@ def new_dir(obj=None):
     names = [name for name in names if not names.startswith("__")]
     if obj is None:
         # Purposely hide some names :-)
-        for name in ['dir', 'true_dir']:
+        for name in ["dir", "true_dir"]:
             if name in names:
                 names.remove(name)
     return sorted(names)

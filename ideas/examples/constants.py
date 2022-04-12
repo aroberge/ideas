@@ -29,15 +29,15 @@ DECLARED_FINAL = {}
 def make_class(on_prevent_change=True):
     class ModuleWithConstants(types.ModuleType):
         """Special module type that prevents variables identified as constants
-           to have their value changed.
+        to have their value changed.
 
-           This is used to replace a module __class__ from the default as follows:
+        This is used to replace a module __class__ from the default as follows:
 
-               module.__class__ = ModuleWithConstants
+            module.__class__ = ModuleWithConstants
 
-           This example only prints a message when an attempt is made to change
-           the value of a constant. Alternatively, this could be logged or an
-           exception could be raised.
+        This example only prints a message when an attempt is made to change
+        the value of a constant. Alternatively, this could be logged or an
+        exception could be raised.
         """
 
         def __setattr__(self, key, value):
@@ -90,8 +90,8 @@ class FinalDict(dict):
     def __setitem__(self, key, value):
         """Sets self[key] to value.
 
-           If key is identified as a constant, it prevents changing
-           its value after initial assignment.
+        If key is identified as a constant, it prevents changing
+        its value after initial assignment.
         """
         if key in CONSTANTS[self.__file__]:
             if self.on_prevent_change:
@@ -119,7 +119,7 @@ class FinalDict(dict):
     def setdefault(self, key, default=None):
         """Insert key with a value of default if key is not in the dictionary.
 
-           Prevents changes if the key is identified as a constant.
+        Prevents changes if the key is identified as a constant.
         """
         if key in CONSTANTS[self.__file__]:
             if self.on_prevent_change:
@@ -134,9 +134,9 @@ class FinalDict(dict):
 
     def pop(self, key):
         """D.pop(key) -> value, remove specified key and return the corresponding value,
-            unless the key is identifed as a constant.
+        unless the key is identifed as a constant.
 
-            If key is not found, d is returned if given, otherwise KeyError is raised
+        If key is not found, d is returned if given, otherwise KeyError is raised
         """
         if key in CONSTANTS[self.__file__]:
             if self.on_prevent_change:
@@ -149,9 +149,9 @@ class FinalDict(dict):
 
     def update(self, mapping_or_iterable=(), **kwargs):
         """Updates the content of the dict from a mapping or an iterable,
-            or from a list of keywords arguments.
+        or from a list of keywords arguments.
 
-            Keys identified as constants are prevented from changing.
+        Keys identified as constants are prevented from changing.
         """
         if hasattr(mapping_or_iterable, "keys"):
             for key in mapping_or_iterable:
@@ -164,7 +164,7 @@ class FinalDict(dict):
             self.__setitem__(key, kwargs[key])
 
 
-def transform_source(source, filename=None, **kwargs):
+def transform_source(source, filename=None, **_kwargs):
     """Identifies simple assignments with a Final type hint, returning
     the source unchanged.
 
@@ -231,7 +231,7 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
         raise NotImplementedError
 
 
-def add_hook(on_prevent_change=None, verbose_finder=False):
+def add_hook(on_prevent_change=None, verbose_finder=False, **_kwargs):
     """Creates and adds the import hook in sys.meta_path
 
     When an attempt is made to change the value of a constant, ``on_prevent_change``

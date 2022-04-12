@@ -13,8 +13,7 @@ def test_import_with_hook():
     remove_hook(hook)
 
 
-@pytest.mark.skipif(sys.version_info.minor !=7 ,
-                    reason="requires python 3.7")
+@pytest.mark.skipif(sys.version_info.minor != 7, reason="requires python 3.7")
 def test_import_with_encoding():
     decimal_math.register()
     try:
@@ -23,7 +22,7 @@ def test_import_with_encoding():
         from . import use_encoding  # for testing as part of a suite with pytest
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_import_with_hook()
     test_import_with_encoding()
     print("Done")

@@ -29,7 +29,7 @@ parser.add_argument(
     "--transform",
     nargs="*",
     help="""Transformations to apply. Currently, only transformations found in
-    ideas.examples are allowed. You do not need to include the 'ideas.examples' 
+    ideas.examples are allowed. You do not need to include the 'ideas.examples'
     prefix.""",
 )
 
@@ -55,11 +55,7 @@ def add_transform(transform, show_transformed=False):
     except ImportError:
         print(f"{path} is not a known transformer.")
     else:
-        try:
-            getattr(module, "add_hook")(show_transformed=show_transformed)
-        except TypeError:
-            # some transformations do not allow this flag.
-            getattr(module, "add_hook")()
+        getattr(module, "add_hook")(show_transformed=show_transformed)
 
 
 def main() -> None:

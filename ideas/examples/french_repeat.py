@@ -17,7 +17,7 @@ additional_vocab = {
 french.fr_to_py.update(additional_vocab)
 
 
-def transform_source(source, callback_params=None, **kwargs):
+def transform_source(source, callback_params=None, **_kwargs):
     """This function is called by the import hook loader and uses
     transformations from two other examples.
     """
@@ -33,7 +33,9 @@ def transform_source(source, callback_params=None, **kwargs):
     return source
 
 
-def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
+def add_hook(
+    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
+):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,

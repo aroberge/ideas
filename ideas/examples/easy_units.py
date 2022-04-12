@@ -15,7 +15,7 @@ PREFIX_SHOWN = False
 
 
 def transform_source(
-    source, callback_params=None, filename=None, module=None, **kwargs
+    source, callback_params=None, filename=None, module=None, **_kwargs
 ):
     """This function is called by the import hook loader with the named keyword
     that we specified when we created the import hook.
@@ -129,7 +129,9 @@ def transform_units(source, prefix=""):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(show_original=False, show_transformed=False, verbose_finder=False):
+def add_hook(
+    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
+):
     """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,

@@ -17,7 +17,7 @@ def source_init():
     return "from decimal import Decimal\n"
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, **_kwargs):
     """Simple transformation: replaces any explicit float by a Decimal.
 
     By defining this function, we can also make use of Ideas' console.
@@ -38,7 +38,7 @@ def register():
     )
 
 
-def add_hook(verbose_finder=False):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

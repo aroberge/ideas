@@ -40,7 +40,7 @@ class RepeatSyntaxError(Exception):
     pass
 
 
-def transform_source(source, callback_params=None, **kwargs):
+def transform_source(source, callback_params=None, **_kwargs):
     """This function is called by the import hook loader and is used as a
     wrapper for the function where the real transformation is performed.
     """
@@ -112,6 +112,7 @@ def add_hook(
     show_transformed=False,
     predictable_names=False,
     verbose_finder=False,
+    **_kwargs,
 ):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {

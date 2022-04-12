@@ -3,7 +3,7 @@
 XX = 36
 XX = 44
 XX += 2
-globals()['XX'] = "Sneaky"
+globals()["XX"] = "Sneaky"
 assert XX == 36, "Uppercase constant did not change value"
 
 a_b = 1

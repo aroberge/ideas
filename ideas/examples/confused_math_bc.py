@@ -23,8 +23,8 @@ from ideas import import_hook
 
 assert sys.version_info >= (3, 6)
 
-ADD = dis.opmap['BINARY_ADD']
-MUL = dis.opmap['BINARY_MULTIPLY']
+ADD = dis.opmap["BINARY_ADD"]
+MUL = dis.opmap["BINARY_MULTIPLY"]
 
 
 def swap_add_mul(bytecode):
@@ -71,13 +71,13 @@ def create_new_co(code_object):
     return new_code_object
 
 
-def transform_bytecode(code_object):
+def transform_bytecode(code_object, **_kwargs):
     """Transforms the code object into a new code object"""
     new_code_object = create_new_co(code_object)
     return new_code_object
 
 
-def add_hook(verbose_finder=False):
+def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

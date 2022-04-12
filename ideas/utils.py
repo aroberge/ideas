@@ -18,16 +18,16 @@ HOME = os.path.expanduser("~").lower()
 
 def shorten_path(path):
     """Utility function used to reduce the length of the path shown
-       to a user, including removing the extension.
-       For example, a path for a module in the Python
-       standard library might be shown as::
+    to a user, including removing the extension.
+    For example, a path for a module in the Python
+    standard library might be shown as::
 
-           PYTHON:/module
+        PYTHON:/module
 
-       whereas a file found in the user's root directory might be shown
-       as::
+    whereas a file found in the user's root directory might be shown
+    as::
 
-            ~/file
+         ~/file
     """
     # On windows, the filenames are not case sensitive
     # and the way Python displays filenames may vary.

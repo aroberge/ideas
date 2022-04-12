@@ -15,7 +15,7 @@ def source_init():
     return "from decimal import Decimal\n"
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, **_kwargs):
     """Does the following transformation::
 
         with float_as_Decimal:
@@ -39,7 +39,7 @@ def transform_source(source, **kwargs):
         if first is None:
             new_tokens.extend(line)
             continue
-        elif first == "with" :
+        elif first == "with":
             first_index = token_utils.get_first_index(line)
             if len(line) > first_index + 1:
                 second = line[first_index + 1]
@@ -60,7 +60,7 @@ def transform_source(source, **kwargs):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(verbose_finder=False):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

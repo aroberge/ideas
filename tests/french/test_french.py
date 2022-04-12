@@ -15,6 +15,6 @@ def test_french():
     remove_hook(hook)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_french()
     print("Test completed succesfully")

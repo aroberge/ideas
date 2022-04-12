@@ -1,6 +1,6 @@
 # my_program.py
 
-square = function x: x**2
+square = function x: x**2  # noqa
 print(f"{square(4)} is the square of 4.")
 
 if __name__ == '__main__':

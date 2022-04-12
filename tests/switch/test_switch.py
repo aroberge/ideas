@@ -44,7 +44,7 @@ def test_switch1():
     remove_hook(hook)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_transform()
     test_switch1()
     print("Done.")

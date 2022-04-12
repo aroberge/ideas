@@ -12,7 +12,7 @@ from ideas import import_hook
 import token_utils
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, **_kwargs):
     """Replace integers by Fraction objects"""
     tokens = token_utils.tokenize(source)
     for token in tokens:
@@ -41,7 +41,7 @@ def source_init():
     return import_fraction + new_range
 
 
-def add_hook(verbose_finder=False):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

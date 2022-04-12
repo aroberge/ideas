@@ -14,7 +14,7 @@ def source_init():
     return "from decimal import Decimal\n"
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, **_kwargs):
     """Simple transformation: replaces any explicit float followed by ``D``
     by a Decimal.
     """
@@ -27,7 +27,7 @@ def transform_source(source, **kwargs):
     return token_utils.untokenize(tokens)
 
 
-def add_hook(verbose_finder=False):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

@@ -13,7 +13,7 @@ from ideas import lambda_encoding
 import token_utils
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, **_kwargs):
     """Simple transformation: replaces any single token λ by lambda.
 
     By defining this function, we can also make use of Ideas' console.

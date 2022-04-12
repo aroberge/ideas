@@ -21,7 +21,7 @@ def test_multiply_after_paren():
     assert add_mul("(a+b)8") == "(a+b)*8", "Multiply paren by 8"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_multiply_by_number()
     test_multiply_two_identifiers()
     print("Done.")

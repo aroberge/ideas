@@ -22,8 +22,6 @@ def transform_source(source, **kwargs):
     to use. Apply each transformer in turn to the original source
     and returns a transformed source.
     """
-    modules = []
-
     # Scan for special import statements
     pattern = re.compile("from experimental-syntax import (.*)")
     lines = source.split("\n")

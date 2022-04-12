@@ -44,7 +44,7 @@ class FractionWrapper(ast.NodeTransformer):
         return self.generic_visit(node)
 
 
-def transform_ast(tree):
+def transform_ast(tree, **_kwargs):
     """Transforms the Abstract Syntax Tree"""
     tree = FractionWrapper().visit(tree)
     ast.fix_missing_locations(tree)
@@ -57,7 +57,7 @@ def source_init():
     return import_fraction
 
 
-def add_hook(verbose_finder=False):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,

@@ -28,6 +28,6 @@ def test_function_simplest():
     print("test_function_simplest() ran successfully.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_function()
     test_function_simplest()

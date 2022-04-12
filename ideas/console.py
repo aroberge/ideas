@@ -165,7 +165,7 @@ class IdeasConsole(InteractiveConsole):
             tree = ast.parse(source, filename)
             for transform in self.transform_ast:
                 tree = transform(tree)
-            if hasattr(ast, 'unparse'):
+            if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
                 except RecursionError:
@@ -218,7 +218,7 @@ def start(banner=BANNER, show_config=False, prompt="~>> ", locals=None):
         print("-" * 50)
     console = IdeasConsole(**_CONFIG, locals=locals)
 
-    if console.transform_ast is not None and not hasattr(ast, 'unparse'):
+    if console.transform_ast is not None and not hasattr(ast, "unparse"):
         banner += """
     AST transformations applied: you will need to explicitly
     call print() to see the result of a command since ast.unparse
