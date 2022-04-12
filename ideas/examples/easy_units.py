@@ -88,7 +88,8 @@ def transform_units(source, prefix=""):
     prev_is_identifier = prev_token.is_identifier()
 
     for token in tokens[1:]:
-        # Take note of the token type before possibly changing its
+        # Take note of the token type before possibly changing its nature
+        # by modifying its string value.
         is_identifier = token.is_identifier()
         is_number = token.is_number()
 
@@ -122,7 +123,6 @@ def transform_units(source, prefix=""):
             token.string = "**"
 
         new_tokens.append(token)
-        prev_token = token
         prev_is_number = is_number
         prev_is_identifier = is_identifier
 

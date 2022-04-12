@@ -55,7 +55,11 @@ def add_transform(transform, show_transformed=False):
     except ImportError:
         print(f"{path} is not a known transformer.")
     else:
-        getattr(module, "add_hook")(show_transformed=show_transformed)
+        try:
+            getattr(module, "add_hook")(show_transformed=show_transformed)
+        except TypeError:
+            # some transformations do not allow this flag.
+            getattr(module, "add_hook")()
 
 
 def main() -> None:

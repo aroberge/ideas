@@ -6,7 +6,6 @@ This module contains the core functions required to create an import hook.
 
 import ast
 import os
-import pathlib
 import sys
 
 from importlib.abc import Loader, MetaPathFinder
@@ -19,9 +18,9 @@ from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES
 # Identify the main script assuming that it has been called from
 # the command line using something like
 # python -m ideas main_script[.py] -some_flag
-MAIN_NAME = sys.argv[1].rstrip(".py")
-if MAIN_NAME.startswith("-"):
-    MAIN_NAME = None
+MAIN_NAME = None
+if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
+    MAIN_NAME = sys.argv[1].rstrip(".py")
 
 
 class IdeasMetaFinder(MetaPathFinder):

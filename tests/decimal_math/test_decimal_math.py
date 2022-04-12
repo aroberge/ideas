@@ -1,5 +1,7 @@
 from ideas.import_hook import remove_hook
 from ideas.examples import decimal_math
+import sys
+import pytest
 
 
 def test_import_with_hook():
@@ -11,6 +13,8 @@ def test_import_with_hook():
     remove_hook(hook)
 
 
+@pytest.mark.skipif(sys.version_info.minor !=7 ,
+                    reason="requires python 3.7")
 def test_import_with_encoding():
     decimal_math.register()
     try:

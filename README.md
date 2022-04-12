@@ -76,7 +76,8 @@ python loader.py
 So, `my_program.py` , and any other module that could be
 loaded by it would recognize that `function` is a valid alternative to `lambda`.
 
-Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/), including a better way to create such an import hook and information about
+Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/),
+including a better way to create such an import hook and information about
 a console (REPL) that supports code transformations.
 
 
