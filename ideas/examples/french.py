@@ -56,7 +56,7 @@ fr_to_py = {
 def print_info(kind, source):
     """Prints the source code.
 
-    ``kind`` is usually either ``"Original"`` or ``"Transformed"``
+    ``kind`` is usually either ``"Original"`` or ``"New"``
     """
     print(f"==========={kind}============")
     print(source)
@@ -75,7 +75,7 @@ def transform_source(source, callback_params=None, **_kwargs):
 
     if callback_params is not None:
         if callback_params["show_transformed"]:
-            print_info("Transformed", source)
+            print_info("New", source)
 
     return source
 

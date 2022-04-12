@@ -26,7 +26,7 @@ def transform_source(source, callback_params=None, **_kwargs):
     source = nobreak_as_a_keyword(source)
 
     if callback_params["show_transformed"]:
-        utils.print_source(source, "Transformed")
+        utils.print_source(source, "New")
     return source
 
 

@@ -149,7 +149,7 @@ an overview of what you wish to accomplish.
 > _I found a cool use of import hooks in another project, different from
 > all of your examples. Could you include it?_
 
-Please, give me the details and I will see if I can **easily** include
+Please, give me the details, and I will see if I can **easily** include
 a similar example and if I think it is worthwhile to do so.
 
 > _I think that the explanation you have written for X could be improved upon._

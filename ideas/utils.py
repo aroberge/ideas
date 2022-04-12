@@ -61,11 +61,15 @@ def print_paths():
 def print_source(source, header="Source"):
     """Prints the source code.
 
-    ``header`` is usually either ``"Original"`` or ``"Transformed"``
+    ``header`` is usually either ``"Original"`` or ``"New"``
     """
-    print(f"==========={header}============")
-    print(source)
-    print("-----------------------------")
+    lines = source.split("\n")
+    if len(lines) > 1:
+        print(f"==========={header}============")
+        print(source)
+        print("-----------------------------")
+    else:
+        print(f"{header}: {source}")
 
 
 def generate_variable_names():

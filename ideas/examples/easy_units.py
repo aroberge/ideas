@@ -70,7 +70,7 @@ def transform_source(
     source = transform_units(source, prefix)
 
     if callback_params["show_transformed"] and original != source:
-        utils.print_source(source, "Transformed")
+        utils.print_source(source, "New")
 
     return source
 
