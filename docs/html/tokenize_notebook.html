@@ -1,74 +1,41 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Tokenizing notebook &mdash; ideas 0.0.17 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
-  
-  
-  
-  
-
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tokenizing notebook &mdash; ideas 0.0.30 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="import_hook.py" href="import_hook.html" />
+    <link rel="next" title="&lt;no title&gt;" href="import_hook.html" />
     <link rel="prev" title="About tokens" href="tokenize.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ideas
-          
-
-          
+            <a href="index.html" class="icon icon-home"> ideas
           </a>
-
-          
-            
-            
               <div class="version">
-                0.0.17
+                0.0.30
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,18 +43,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
@@ -95,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
@@ -113,7 +69,7 @@
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> </a><ul>
@@ -129,82 +85,36 @@
 <li class="toctree-l2"><a class="reference internal" href="#Changing-indentation">Changing indentation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ideas</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Tokenizing notebook</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/tokenize_notebook.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
-  </ul>
-
-  
-  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
-      
-        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="import_hook.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -415,7 +325,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -475,8 +385,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Tokenizing-notebook">
-<h1>Tokenizing notebook<a class="headerlink" href="#Tokenizing-notebook" title="Permalink to this headline">¶</a></h1>
+<section id="Tokenizing-notebook">
+<h1>Tokenizing notebook<a class="headerlink" href="#Tokenizing-notebook" title="Permalink to this headline"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This is from a Jupyter notebook used to demonstrate some usage of the tokenizing utility functions.
@@ -489,20 +399,18 @@ done, we demonstrate how to change the content in a reliable way.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>from ideas import token_utils
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from ideas import token_utils
 </pre></div>
 </div>
 </div>
-<div class="section" id="Getting-information">
-<h2>Getting information<a class="headerlink" href="#Getting-information" title="Permalink to this headline">¶</a></h2>
+<section id="Getting-information">
+<h2>Getting information<a class="headerlink" href="#Getting-information" title="Permalink to this headline"></a></h2>
 <p>We start with a very simple example, where we have a repeated token, <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>source = &quot;a = a&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;a = a&quot;
 tokens = token_utils.tokenize(source)
 for token in tokens:
     print(token)
@@ -522,15 +430,14 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(2, 0)  end=(2, 0)  line=&#39;&#39;
 </pre></div></div>
 </div>
 <p>Notice how the <code class="docutils literal notranslate"><span class="pre">NEWLINE</span></code> token here, in spite of its name, does not correpond to <code class="docutils literal notranslate"><span class="pre">\n</span></code>.</p>
-<div class="section" id="Comparing-tokens">
-<h3>Comparing tokens<a class="headerlink" href="#Comparing-tokens" title="Permalink to this headline">¶</a></h3>
+<section id="Comparing-tokens">
+<h3>Comparing tokens<a class="headerlink" href="#Comparing-tokens" title="Permalink to this headline"></a></h3>
 <p>Tokens are considered equals if they have the same <code class="docutils literal notranslate"><span class="pre">string</span></code> attribute. Given this notion of equality, we make things even simpler by allowing to compare a token directly to a string as shown below.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(tokens[0] == tokens[2])
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tokens[0] == tokens[2])
 print(tokens[0] == tokens[2].string)
 print(tokens[0] == &#39;a&#39;)  #  &lt;--  Our normal choice
 </pre></div>
@@ -546,16 +453,15 @@ True
 True
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Printing-tokens-by-line-of-code">
-<h3>Printing tokens by line of code<a class="headerlink" href="#Printing-tokens-by-line-of-code" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Printing-tokens-by-line-of-code">
+<h3>Printing tokens by line of code<a class="headerlink" href="#Printing-tokens-by-line-of-code" title="Permalink to this headline"></a></h3>
 <p>If we simply want to tokenize a source and print the result, or simply print a list of tokens, we can use <code class="docutils literal notranslate"><span class="pre">print_tokens</span></code> to do it in a single instruction, with the added benefit of separating tokens from different lines of code.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>source = &quot;&quot;&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
 if True:
     pass
 &quot;&quot;&quot;
@@ -584,16 +490,15 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(4, 0)  end=(4, 0)  line=&#39;&#39;
 
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Getting-tokens-by-line-of-code">
-<h3>Getting tokens by line of code<a class="headerlink" href="#Getting-tokens-by-line-of-code" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Getting-tokens-by-line-of-code">
+<h3>Getting tokens by line of code<a class="headerlink" href="#Getting-tokens-by-line-of-code" title="Permalink to this headline"></a></h3>
 <p>Once a source is broken down into token, it might be difficult to find some particular tokens of interest if we print the entire content. Instead, using <code class="docutils literal notranslate"><span class="pre">get_lines</span></code>, we can tokenize by line of code , and just focus on a few lines of interest.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>source = &quot;&quot;&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
 if True:
     if False:
         pass
@@ -628,16 +533,15 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 26)  end=(6, 27)  line=&#39;   
 
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Getting-particular-tokens">
-<h3>Getting particular tokens<a class="headerlink" href="#Getting-particular-tokens" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Getting-particular-tokens">
+<h3>Getting particular tokens<a class="headerlink" href="#Getting-particular-tokens" title="Permalink to this headline"></a></h3>
 <p>Let’s focus on the sixth line.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>line = lines[5]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>line = lines[5]
 print( token_utils.untokenize(line) )
 </pre></div>
 </div>
@@ -656,8 +560,7 @@ print( token_utils.untokenize(line) )
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(&quot;The first useful token is:\n   &quot;, token_utils.get_first(line))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;The first useful token is:\n   &quot;, token_utils.get_first(line))
 print(&quot;The index of the first token is: &quot;, token_utils.get_first_index(line))
 print()
 print(&quot;The last useful token on that line is:\n  &quot;, token_utils.get_last(line))
@@ -684,8 +587,7 @@ Its index is 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print( token_utils.get_last(line, exclude_comment=False))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print( token_utils.get_last(line, exclude_comment=False))
 </pre></div>
 </div>
 </div>
@@ -697,16 +599,15 @@ Its index is 3
 type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 15)  end=(6, 26)  line=&#39;        a = 42 # a comment\n&#39;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Getting-the-indentation-of-a-line">
-<h3>Getting the indentation of a line<a class="headerlink" href="#Getting-the-indentation-of-a-line" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Getting-the-indentation-of-a-line">
+<h3>Getting the indentation of a line<a class="headerlink" href="#Getting-the-indentation-of-a-line" title="Permalink to this headline"></a></h3>
 <p>The sixth line starts with an <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token. We can get the indentation of that line, either by printing the length of the <code class="docutils literal notranslate"><span class="pre">INDENT</span></code> token string, or by looking at the <code class="docutils literal notranslate"><span class="pre">start_col</span></code> attribute of the first “useful” token. The attribute <code class="docutils literal notranslate"><span class="pre">start_col</span></code> is part of the two-tuple <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">=</span> <span class="pre">(start_row,</span> <span class="pre">start_col)</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(len(line[0].string))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(len(line[0].string))
 first = token_utils.get_first(line)
 print(first.start_col)
 </pre></div>
@@ -726,8 +627,7 @@ print(first.start_col)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>for token in lines[4]:
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for token in lines[4]:
     print(token)
 print(&quot;-&quot; * 50)
 
@@ -752,12 +652,12 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(5, 9)  end=(5, 10)  line=&#39;    
 indentation =  4
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="Changing-information">
-<h2>Changing information<a class="headerlink" href="#Changing-information" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="Changing-information">
+<h2>Changing information<a class="headerlink" href="#Changing-information" title="Permalink to this headline"></a></h2>
 <p>Suppose we wish to do the following replacement</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span> <span class="o">--&gt;</span> <span class="k">for</span> <span class="n">some_variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>repeat n: --&gt; for some_variable in range(n):
 </pre></div>
 </div>
 <p>Here <code class="docutils literal notranslate"><span class="pre">n</span></code> might be anything that evaluates as an integer. Let’s see a couple of different ways to do this.</p>
@@ -766,8 +666,7 @@ indentation =  4
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>source = &quot;repeat 2 * 3 : &quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;repeat 2 * 3 : &quot;
 
 tokens = token_utils.tokenize(source)
 repeat = token_utils.get_first(tokens)
@@ -777,8 +676,7 @@ repeat.string = &quot;for some_variable in range(&quot;
 colon.string = &quot;):&quot;
 
 print(token_utils.untokenize(tokens))
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -794,8 +692,7 @@ for some_variable in range( 2 * 3 ):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>colon.string = &quot;:&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>colon.string = &quot;:&quot;
 print(token_utils.untokenize(tokens))
 </pre></div>
 </div>
@@ -813,8 +710,7 @@ for some_variable in range( 2 * 3 :
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>colon_index = token_utils.get_last_index(tokens)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>colon_index = token_utils.get_last_index(tokens)
 tokens.insert(colon_index, &quot;)&quot;)
 for token in tokens:
     print(token)
@@ -841,8 +737,7 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(2, 0)  end=(2, 0)  line=&#39;&#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>print(token_utils.untokenize(tokens))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(token_utils.untokenize(tokens))
 </pre></div>
 </div>
 </div>
@@ -855,16 +750,15 @@ for some_variable in range( 2 * 3) :
 </pre></div></div>
 </div>
 <p>Thus, unlike Python’s own untokenize function, we do not have to worry about token types when we wish to insert extra tokens.</p>
-</div>
-<div class="section" id="Changing-indentation">
-<h2>Changing indentation<a class="headerlink" href="#Changing-indentation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Changing-indentation">
+<h2>Changing indentation<a class="headerlink" href="#Changing-indentation" title="Permalink to this headline"></a></h2>
 <p>We can easily change the indentation of a given line using either the <code class="docutils literal notranslate"><span class="pre">indent</span></code> or <code class="docutils literal notranslate"><span class="pre">dedent</span></code> function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>source = &quot;&quot;&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
 if True:
     a = 1
       b = 2
@@ -882,8 +776,7 @@ lines[3] = token_utils.dedent(b_line, b.start_col - a.start_col)
 
 print(token_utils.untokenize(a_line))
 print(token_utils.untokenize(lines[3]))
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -902,8 +795,7 @@ print(token_utils.untokenize(lines[3]))
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>lines = token_utils.get_lines(source)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lines = token_utils.get_lines(source)
 a_line = lines[2]
 a = token_utils.get_first(a_line)
 assert a == &quot;a&quot;
@@ -932,8 +824,7 @@ print(token_utils.untokenize(b_line))
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>new_tokens = []
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>new_tokens = []
 for line in lines:
     new_tokens.extend(line)
 
@@ -953,63 +844,38 @@ if True:
 
 </pre></div></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="import_hook.html" class="btn btn-neutral float-right" title="import_hook.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tokenize.html" class="btn btn-neutral float-left" title="About tokens" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="import_hook.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2020, André Roberge
-
-    </p>
+    <p>&#169; Copyright 2020, André Roberge.</p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
