@@ -13,11 +13,6 @@ Decimal math
     `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math.py>`_
 
 
-.. warning::
-
-    The following is just a quick first draft.
-
-
 On Python-ideas, the `following question was recently asked <https://mail.python.org/archives/list/python-ideas@python.org/thread/7EF5MOJK5GOQZZEZXQ7DKM2N52JZ7VNB/>`_
 
     Wouldn't it be possible to have something along the lines of::
@@ -31,26 +26,21 @@ On Python-ideas, the `following question was recently asked <https://mail.python
 
 
 The answer is yes, using either an import hook or a custom encoding already
-implemented as an example. Here we show it in action using a REPL::
+implemented as an example. Here we show it in action using the ideas repl::
 
 
-    >>> from ideas.examples import decimal_math
-    >>> hook = decimal_math.add_hook()
-    >>> from ideas import console
-    >>> console.start()
-    Configuration values for the console:
-        source_init from ideas.examples.decimal_math
-        transform_source from ideas.examples.decimal_math
-    --------------------------------------------------
-    Ideas Console version 0.0.15. [Python version: 3.7.3]
+    > python -m ideas -t decimal_math
+    from decimal import Decimal
 
-    ~>> 0.1 + 0.2 == 0.3
+    Ideas Console version 0.0.30. [Python version: 3.7.9]
+
+    >>> 0.1 + 0.2 == 0.3
     True
-    ~>> 0.1 * 10 == 1
+    >>> 0.1 * 10 == 1
     True
-    ~>> 0.1
+    >>> 0.1
     Decimal('0.1')
-    ~>> 0.1 + 0.100
+    >>> 0.1 + 0.100
     Decimal('0.200')
 
 .. warning::

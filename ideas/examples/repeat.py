@@ -44,20 +44,6 @@ def transform_source(source, callback_params=None, **_kwargs):
     """This function is called by the import hook loader and is used as a
     wrapper for the function where the real transformation is performed.
     """
-    if callback_params["show_original"]:
-        utils.print_source(source, "Original")
-
-    source = convert_repeat(
-        source, predictable_names=callback_params["predictable_names"]
-    )
-
-    if callback_params["show_transformed"]:
-        utils.print_source(source, "New")
-
-    return source
-
-
-def convert_repeat(source, predictable_names=False):
     """Replaces instances of::
 
         repeat forever: -> while True:
@@ -69,7 +55,11 @@ def convert_repeat(source, predictable_names=False):
     with a colon (optionally followed by a comment). If the colon is
     missing, a ``RepeatSyntaxError`` is raised.
     """
-
+    print(f"callback_params={callback_params}")
+    if callback_params is None or "predictable_names" not in callback_params:
+        predictable_names = False
+    else:
+        predictable_names = callback_params["predictable_names"]
     new_tokens = []
     if predictable_names:
         variable_name = utils.generate_predictable_names()
@@ -107,23 +97,12 @@ def convert_repeat(source, predictable_names=False):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(
-    show_original=False,
-    show_transformed=False,
-    predictable_names=False,
-    verbose_finder=False,
-    **_kwargs,
-):
+def add_hook(predictable_names=False, **_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
-    callback_params = {
-        "show_original": show_original,
-        "show_transformed": show_transformed,
-        "predictable_names": predictable_names,
-    }
+    callback_params = {"predictable_names": predictable_names}
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
         hook_name=__name__,
-        verbose_finder=verbose_finder,
     )
     return hook

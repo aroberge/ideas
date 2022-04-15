@@ -6,33 +6,11 @@ This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
-from ideas import import_hook, utils
+from ideas import import_hook
 import token_utils
 
 
-def transform_source(source, callback_params=None, **_kwargs):
-    """This function is called by the import hook loader with the named keyword
-    that we specified when we created the import hook.
-
-    It gives us the option to compare the original source and the transformed
-    one. This type of additional option can be useful when debugging
-    a source transformer. Furthermore, if we wish to define a source
-    transformation that combines the effect of multiple existing
-    transformations, we can combine the existing "inner" functions to
-    create our new transformation.
-    """
-    if callback_params["show_original"]:
-        utils.print_source(source, "Original")
-
-    source = add_multiplication_symbol(source)
-
-    if callback_params["show_transformed"]:
-        utils.print_source(source, "New")
-
-    return source
-
-
-def add_multiplication_symbol(source):
+def transform_source(source, **_kwargs):
     """This adds a multiplication symbol where it would be understood as
     being implicit by the normal way algebraic equations are written but would
     be a SyntaxError in Python. Thus we have::
@@ -77,18 +55,10 @@ def add_multiplication_symbol(source):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(
-    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
-):
+def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
-    callback_params = {
-        "show_original": show_original,
-        "show_transformed": show_transformed,
-    }
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        callback_params=callback_params,
         hook_name=__name__,
-        verbose_finder=verbose_finder,
     )
     return hook

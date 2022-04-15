@@ -1,6 +1,6 @@
 from ideas.examples import implicit_multiplication
 
-add_mul = implicit_multiplication.add_multiplication_symbol
+add_mul = implicit_multiplication.transform_source
 
 
 def test_multiply_by_number():

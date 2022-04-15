@@ -55,8 +55,8 @@ for _1 in range( 3):
 
 
 def test_predictable():
-    assert converted == repeat.convert_repeat(
-        source, predictable_names=True
+    assert converted == repeat.transform_source(
+        source, callback_params={'predictable_names':True}
     ), "Testing predicted conversion."
 
 
@@ -75,18 +75,18 @@ def test_predictable2():
 
 def test_repeat_forever():
     source = "   repeat  forever:"
-    assert repeat.convert_repeat(source) == "   while  True:", "repeat forever test"
+    assert repeat.transform_source(source) == "   while  True:", "repeat forever test"
 
 
 def test_repeat_until():
     source = "repeat until condition: # a comment"
-    assert repeat.convert_repeat(source) == "while not condition: # a comment"
+    assert repeat.transform_source(source) == "while not condition: # a comment"
 
 
 def test_repeat_while():
     source = "repeat while condition:"
     # note extra space between while and condition as we removed a keyword
-    assert repeat.convert_repeat(source) == "while  condition:"
+    assert repeat.transform_source(source) == "while  condition:"
 
 
 if __name__ == "__main__":

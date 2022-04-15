@@ -4,26 +4,11 @@
 Helps to reduce the amount of typing required and increases readability
 when assigning attributes in a class's ``__init__()`` method.
 """
-from ideas import import_hook, utils
+from ideas import import_hook
 import token_utils
 
 
-def transform_source(source, callback_params=None, **_kwargs):
-    """This function is called by the import hook loader and is used as a
-    wrapper for the function where the real transformation is performed.
-    """
-    if callback_params["show_original"]:
-        utils.print_source(source, "Original")
-
-    source = automatic_self(source)
-
-    if callback_params["show_transformed"]:
-        utils.print_source(source, "New")
-
-    return source
-
-
-def automatic_self(source):
+def transform_source(source, **_kwargs):
     """Replaces code like::
 
         self .= :
@@ -82,18 +67,10 @@ def automatic_self(source):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(
-    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
-):
+def add_hook(**_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
-    callback_params = {
-        "show_original": show_original,
-        "show_transformed": show_transformed,
-    }
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        callback_params=callback_params,
         hook_name=__name__,
-        verbose_finder=verbose_finder,
     )
     return hook

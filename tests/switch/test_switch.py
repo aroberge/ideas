@@ -29,7 +29,7 @@ def test_transform():
         del _1
         other_code"""
 
-    result = switch.convert_switch(source, predictable_names=True)
+    result = switch.transform_source(source, callback_params={"predictable_names": True})
     assert result == expected, "Switch conversion test"
 
 

@@ -63,24 +63,7 @@ def print_info(kind, source):
     print("-----------------------------")
 
 
-def transform_source(source, callback_params=None, **_kwargs):
-    """This function is called by the import hook loader and is used as a
-    wrapper for the function where the real transformation is performed.
-    """
-    if callback_params is not None:
-        if callback_params["show_original"]:
-            print_info("Original", source)
-
-    source = french_to_english(source)
-
-    if callback_params is not None:
-        if callback_params["show_transformed"]:
-            print_info("New", source)
-
-    return source
-
-
-def french_to_english(source):
+def transform_source(source, **_kwargs):
     """A simple replacement of 'French Python keyword' by their normal
     English version.
     """
@@ -94,19 +77,11 @@ def french_to_english(source):
     return new_source
 
 
-def add_hook(
-    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
-):
+def add_hook(**_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
-    callback_params = {
-        "show_original": show_original,
-        "show_transformed": show_transformed,
-    }
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        callback_params=callback_params,
         hook_name=__name__,
         extensions=[".pyfr"],
-        verbose_finder=verbose_finder,
     )
     return hook

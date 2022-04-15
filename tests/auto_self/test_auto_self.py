@@ -95,7 +95,7 @@ class Application:
 
 def test_barebone():
     hook = auto_self.add_hook()
-    result = auto_self.automatic_self(cls_source)
+    result = auto_self.transform_source(cls_source)
 
     assert result == cls_expected, "auto_self test"
 
@@ -104,11 +104,11 @@ def test_barebone():
 
 def test_pep_557():
     hook = auto_self.add_hook()
-    result = auto_self.automatic_self(pep_557_source)
+    result = auto_self.transform_source(pep_557_source)
 
     assert result == pep_557_expected, "PEP 557 auto_self test"
 
-    result_other = auto_self.automatic_self(pep_557_source_other)
+    result_other = auto_self.transform_source(pep_557_source_other)
     result_other = result_other.replace("cls", "self")
 
     assert result_other == pep_557_expected, "PEP 557 auto_self test other"

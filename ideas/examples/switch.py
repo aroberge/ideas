@@ -9,23 +9,6 @@ import token_utils
 
 
 def transform_source(source, callback_params=None, **_kwargs):
-    """This function is called by the import hook loader and is used as a
-    wrapper for the function where the real transformation is performed.
-    """
-    if callback_params["show_original"]:
-        utils.print_source(source, "Original")
-
-    source = convert_switch(
-        source, predictable_names=callback_params["predictable_names"]
-    )
-
-    if callback_params["show_transformed"]:
-        utils.print_source(source, "New")
-
-    return source
-
-
-def convert_switch(source, predictable_names=False):
     """Replaces code like::
 
         switch EXPR:
@@ -54,6 +37,10 @@ def convert_switch(source, predictable_names=False):
 
     Limitation: switch blocks cannot be part of a SUITE of another switch block.
     """
+    if callback_params is None or "predictable_names" not in callback_params:
+        predictable_names = False
+    else:
+        predictable_names = callback_params["predictable_names"]
     new_tokens = []
     switch_block = False
     first_case = False
@@ -108,18 +95,12 @@ def convert_switch(source, predictable_names=False):
 
 
 def add_hook(
-    show_original=False,
-    show_transformed=False,
     predictable_names=False,
     verbose_finder=False,
     **_kwargs,
 ):
     """Creates and adds the import hook in sys.meta_path"""
-    callback_params = {
-        "show_original": show_original,
-        "show_transformed": show_transformed,
-        "predictable_names": predictable_names,
-    }
+    callback_params = {"predictable_names": predictable_names}
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
