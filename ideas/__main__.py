@@ -10,6 +10,7 @@ import sys
 
 import ideas
 from ideas import console
+from ideas.session import config
 
 
 parser = argparse.ArgumentParser(
@@ -27,7 +28,7 @@ parser.add_argument(
 parser.add_argument(
     "-t",
     "--transform",
-    nargs="*",
+    nargs=1,
     help="""Transformations to apply. Currently, only transformations found in
     ideas.examples are allowed. You do not need to include the 'ideas.examples'
     prefix.""",
@@ -48,14 +49,14 @@ parser.add_argument(
 )
 
 
-def add_transform(transform, show_transformed=False):
+def add_transform(transform):
     path = f"ideas.examples.{transform}"
     try:
         module = import_module(path)
     except ImportError:
         print(f"{path} is not a known transformer.")
     else:
-        getattr(module, "add_hook")(show_transformed=show_transformed)
+        getattr(module, "add_hook")()
 
 
 def main() -> None:
@@ -64,9 +65,11 @@ def main() -> None:
         print(f"\nideas version {ideas.__version__}")
         sys.exit()
 
+    config.show_transformed = bool(args.verbose)
+
     if args.transform:
         for item in args.transform:
-            add_transform(item, show_transformed=bool(args.verbose))
+            add_transform(item)
 
     if args.source is not None:
         if args.source.endswith(".py"):

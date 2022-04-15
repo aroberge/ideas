@@ -13,43 +13,19 @@ import sys
 from code import InteractiveConsole
 
 from . import __version__
+from .session import config
 
 
 BANNER = "Ideas Console version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 _CONFIG = {}
-CONSOLE_NAME = "IdeasConsole"
+CONSOLE_NAME = config.console_name
 
 
 def configure(**kwargs):
     """Configures various defaults to be used by the console"""
-    old_transform_ast = _CONFIG.get("transform_ast")
-    old_transform_bytecode = _CONFIG.get("transform_bytecode")
-    old_transform_source = _CONFIG.get("transform_source")
     _CONFIG.update(kwargs)
-
-    new_transform_ast = _CONFIG.get("transform_ast")
-    new_transform_bytecode = _CONFIG.get("transform_bytecode")
-    new_transform_source = _CONFIG.get("transform_source")
-
-    if old_transform_ast is not None and new_transform_ast is not None:
-        old_transform_ast.append(new_transform_ast)
-        _CONFIG["transform_ast"] = old_transform_ast
-    elif new_transform_ast is not None:
-        _CONFIG["transform_ast"] = [_CONFIG["transform_ast"]]
-
-    if old_transform_bytecode is not None and new_transform_bytecode is not None:
-        old_transform_bytecode.append(new_transform_bytecode)
-        _CONFIG["transform_bytecode"] = old_transform_bytecode
-    elif new_transform_bytecode is not None:
-        _CONFIG["transform_bytecode"] = [_CONFIG["transform_bytecode"]]
-
-    if old_transform_source is not None and new_transform_source is not None:
-        old_transform_source.append(new_transform_source)
-        _CONFIG["transform_source"] = old_transform_source
-    elif new_transform_source is not None:
-        _CONFIG["transform_source"] = [_CONFIG["transform_source"]]
 
 
 class IdeasConsole(InteractiveConsole):
@@ -70,7 +46,7 @@ class IdeasConsole(InteractiveConsole):
         locals=None,
     ):
         """This class builds upon Python's code.InteractiveConsole
-        so as to work with import hooks.
+        to work with import hooks.
         """
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
@@ -90,6 +66,8 @@ class IdeasConsole(InteractiveConsole):
                 exec(source_init(), self.locals)
             except Exception:
                 self.showtraceback()
+            else:
+                print(source_init())
 
     def push(self, line):
         """Push a line to the interpreter.
@@ -106,16 +84,16 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
+        config.print_original(source)
 
         if self.transform_source is not None:
-            for transform in self.transform_source:
-                last_line = source.endswith("\n")  # signals the end of a block
-                source = transform(
-                    source, filename=CONSOLE_NAME, callback_params=self.callback_params
-                )
-                # Some transformations may add some extra "\n" (usually at most one)
-                if not last_line:
-                    source = source.rstrip("\n")
+            last_line = source.endswith("\n")  # signals the end of a block
+            source = self.transform_source(
+                source, filename=CONSOLE_NAME, callback_params=self.callback_params
+            )
+            # Some transformations may add some extra "\n" (usually at most one)
+            if not last_line:
+                source = source.rstrip("\n")
         more = self.runsource(source, CONSOLE_NAME)
         if not more:
             self.resetbuffer()
@@ -138,7 +116,7 @@ class IdeasConsole(InteractiveConsole):
         3) The input is complete; compile_command() returned a code
         object.  The code is executed by calling self.runcode() (which
         also handles run-time exceptions, except for SystemExit).
-        However, if we an AST transformation is performed, we go back
+        However, if an AST transformation is performed, we go back
         to the source and recompile in two steps so that we can
         perform an AST transformation.
 
@@ -151,13 +129,14 @@ class IdeasConsole(InteractiveConsole):
             code_obj = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
+            config.print_transformed(source)
             self.showsyntaxerror(filename)
             return False
 
         if code_obj is None:
             # Case 2
             return True
-
+        config.print_transformed(source)
         # Case 3
 
         if self.transform_ast is not None:
@@ -185,13 +164,6 @@ class IdeasConsole(InteractiveConsole):
     def runcode(self, code_obj):
         """Execute a code object.
 
-        When an exception occurs, friendly_traceback.explain() is called to
-        display a traceback.  All exceptions are caught except
-        SystemExit, which, unlike the case for the original version in the
-        standard library, cleanly exists the program. This is done
-        so as to avoid our Friendly-traceback's exception hook to intercept
-        it and confuse the users.
-
         A note about KeyboardInterrupt: this exception may occur
         elsewhere in this code, and may not always be caught.  The
         caller should be prepared to deal with it.
@@ -199,7 +171,7 @@ class IdeasConsole(InteractiveConsole):
         try:
             exec(code_obj, self.locals)
         except SystemExit:
-            os._exit(1)
+            os._exit(1)  # noqa -pycharm
         except Exception:
             self.showtraceback()
 
@@ -216,6 +188,16 @@ def start(banner=BANNER, show_config=False, prompt="~>> ", locals=None):
                 else:
                     print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)
+    if locals is None:
+        locals = {"config": config}
+    elif "Ideas" in locals:
+        if "ideas_config" in locals:
+            print("Ideas' configuration object is not available.")
+        else:
+            print("Ideas' configuration object is available as ideas_config")
+            locals["ideas_config"] = config
+    else:
+        locals["config"] = config
     console = IdeasConsole(**_CONFIG, locals=locals)
 
     if console.transform_ast is not None and not hasattr(ast, "unparse"):

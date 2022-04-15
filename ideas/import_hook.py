@@ -273,7 +273,7 @@ def create_hook(
 
 
 def remove_hook(hook):
-    """Function used to remove a previously import hook inserted in sys.meta_path"""
+    """Function used to remove a previously imported hook inserted in sys.meta_path"""
     for index, h in enumerate(sys.meta_path):
         if h == hook:
             break
