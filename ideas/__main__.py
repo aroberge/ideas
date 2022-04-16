@@ -26,12 +26,12 @@ parser.add_argument(
 
 
 parser.add_argument(
-    "-t",
-    "--transform",
+    "-a",
+    "--add_hook",
     nargs=1,
-    help="""Transformations to apply. Currently, only transformations found in
-    ideas.examples are allowed. You do not need to include the 'ideas.examples'
-    prefix.""",
+    help="""Execute add_hook() from module ADD_HOOK. The specified module
+    is either found in the current directory or, if not found,
+    from ideas.examples.""",
 )
 
 parser.add_argument(
@@ -50,6 +50,17 @@ parser.add_argument(
 
 
 def add_transform(transform):
+    try:
+        module = import_module(transform)
+    except (ImportError, ModuleNotFoundError):
+        pass
+    else:
+        try:
+            getattr(module, "add_hook")()
+        except AttributeError:
+            print(f"Module {transform} does not contain a function named add_hook")
+            return
+
     path = f"ideas.examples.{transform}"
     try:
         module = import_module(path)
@@ -67,9 +78,8 @@ def main() -> None:
 
     config.show_transformed = bool(args.verbose)
 
-    if args.transform:
-        for item in args.transform:
-            add_transform(item)
+    if args.add_hook:
+        add_transform(args.add_hook[0])
 
     if args.source is not None:
         if args.source.endswith(".py"):
