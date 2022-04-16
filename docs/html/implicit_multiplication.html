@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Implicit multiplication &mdash; ideas 0.0.30 documentation</title>
+  <title>Implicit multiplication &mdash; ideas 0.0.32 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.30
+                0.0.32
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -237,13 +237,13 @@ to allow someone to write equations as they would on paper
 and have Python interpret them properly.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.implicit_multiplication.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.implicit_multiplication.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_original</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_transformed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.implicit_multiplication.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.implicit_multiplication.add_multiplication_symbol">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.implicit_multiplication.</span></span><span class="sig-name descname"><span class="pre">add_multiplication_symbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#add_multiplication_symbol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.add_multiplication_symbol" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.examples.implicit_multiplication.transform_source">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.implicit_multiplication.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.transform_source" title="Permalink to this definition"></a></dt>
 <dd><p>This adds a multiplication symbol where it would be understood as
 being implicit by the normal way algebraic equations are written but would
 be a SyntaxError in Python. Thus we have:</p>
@@ -258,19 +258,6 @@ be a SyntaxError in Python. Thus we have:</p>
 </div>
 <p>The obvious one (in algebra) being left out is something like <code class="docutils literal notranslate"><span class="pre">n(...)</span></code>
 which is a function call - and thus valid Python syntax.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.implicit_multiplication.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.implicit_multiplication.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/implicit_multiplication.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.implicit_multiplication.transform_source" title="Permalink to this definition"></a></dt>
-<dd><p>This function is called by the import hook loader with the named keyword
-that we specified when we created the import hook.</p>
-<p>It gives us the option to compare the original source and the transformed
-one. This type of additional option can be useful when debugging
-a source transformer. Furthermore, if we wish to define a source
-transformation that combines the effect of multiple existing
-transformations, we can combine the existing “inner” functions to
-create our new transformation.</p>
 </dd></dl>
 
 </section>

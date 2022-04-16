@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decimal math &mdash; ideas 0.0.30 documentation</title>
+  <title>Decimal math &mdash; ideas 0.0.32 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.30
+                0.0.32
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -142,10 +142,6 @@
 <p>Can be used either as an import hook or as a custom codec.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math.py">Source code</a></p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The following is just a quick first draft.</p>
-</div>
 <p>On Python-ideas, the <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/thread/7EF5MOJK5GOQZZEZXQ7DKM2N52JZ7VNB/">following question was recently asked</a></p>
 <blockquote>
 <div><p>Wouldn’t it be possible to have something along the lines of:</p>
@@ -159,25 +155,20 @@
 </div>
 </div></blockquote>
 <p>The answer is yes, using either an import hook or a custom encoding already
-implemented as an example. Here we show it in action using a REPL:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">decimal_math</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">decimal_math</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Configuration values for the console:</span>
-<span class="go">    source_init from ideas.examples.decimal_math</span>
-<span class="go">    transform_source from ideas.examples.decimal_math</span>
-<span class="go">--------------------------------------------------</span>
-<span class="go">Ideas Console version 0.0.15. [Python version: 3.7.3]</span>
+implemented as an example. Here we show it in action using the ideas repl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">t</span> <span class="n">decimal_math</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 
-<span class="go">~&gt;&gt; 0.1 + 0.2 == 0.3</span>
-<span class="go">True</span>
-<span class="go">~&gt;&gt; 0.1 * 10 == 1</span>
-<span class="go">True</span>
-<span class="go">~&gt;&gt; 0.1</span>
-<span class="go">Decimal(&#39;0.1&#39;)</span>
-<span class="go">~&gt;&gt; 0.1 + 0.100</span>
-<span class="go">Decimal(&#39;0.200&#39;)</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.30</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">==</span> <span class="mf">0.3</span>
+<span class="kc">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="kc">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span>
+<span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;0.1&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.100</span>
+<span class="n">Decimal</span><span class="p">(</span><span class="s1">&#39;0.200&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -237,11 +228,11 @@ add the following two lines:</p>
 <span class="target" id="module-ideas.examples.decimal_math"></span><section id="decimal-math-py">
 <h3>decimal_math.py<a class="headerlink" href="#decimal-math-py" title="Permalink to this headline"></a></h3>
 <p>This replaces any explicit float by a Decimal.
-It can be used either as an custom codec or import hook.</p>
+It can be used either as a custom codec or import hook.</p>
 <p>The source is assumed to be actually encoded in utf-8.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.decimal_math.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.decimal_math.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/decimal_math.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.decimal_math.add_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.decimal_math.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/decimal_math.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.decimal_math.add_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 

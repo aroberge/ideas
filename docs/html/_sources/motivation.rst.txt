@@ -40,12 +40,12 @@ Original motivation
 
 Programming in Python is my main hobby.
 As an amateur, I like to explore various ideas, learning along the way.
-As I find myself doing a lot of copy-paste-modify on the various import
+As I found myself doing a lot of copy-paste-modify on the various import
 hooks experiments, including on some published projects such as
 `AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_
 as well as `various experiments I wrote about <https://duckduckgo.com/?q=experimental+site%3Aaroberge.blogspot.com>`_,
 I thought it would make sense to create a versatile projects which I could
-use as the basis of other projects.  An obvious benefit is that I will
+use as the basis of other projects.  An obvious benefit is that I now
 need to fix bugs in a single project.  Furthermore, if this project gets
 enough visibility, some programmers much more qualified than I am might
 take the time to make concrete suggestions as to how to improve it.

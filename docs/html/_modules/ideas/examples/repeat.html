@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.repeat &mdash; ideas 0.0.30 documentation</title>
+  <title>ideas.examples.repeat &mdash; ideas 0.0.32 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.30
+                0.0.32
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -143,20 +143,6 @@
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
 <span class="sd">    wrapper for the function where the real transformation is performed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_original&quot;</span><span class="p">]:</span>
-        <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;Original&quot;</span><span class="p">)</span>
-
-    <span class="n">source</span> <span class="o">=</span> <span class="n">convert_repeat</span><span class="p">(</span>
-        <span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;show_transformed&quot;</span><span class="p">]:</span>
-        <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;New&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">source</span></div>
-
-
-<div class="viewcode-block" id="convert_repeat"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.convert_repeat">[docs]</a><span class="k">def</span> <span class="nf">convert_repeat</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Replaces instances of::</span>
 
 <span class="sd">        repeat forever: -&gt; while True:</span>
@@ -168,7 +154,11 @@
 <span class="sd">    with a colon (optionally followed by a comment). If the colon is</span>
 <span class="sd">    missing, a ``RepeatSyntaxError`` is raised.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;callback_params=</span><span class="si">{</span><span class="n">callback_params</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s2">&quot;predictable_names&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">callback_params</span><span class="p">:</span>
+        <span class="n">predictable_names</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">predictable_names</span> <span class="o">=</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">]</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">predictable_names</span><span class="p">:</span>
         <span class="n">variable_name</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_predictable_names</span><span class="p">()</span>
@@ -206,24 +196,13 @@
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span>
-    <span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">_kwargs</span><span class="p">,</span>
-<span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;show_original&quot;</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
-        <span class="s2">&quot;show_transformed&quot;</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
-        <span class="s2">&quot;predictable_names&quot;</span><span class="p">:</span> <span class="n">predictable_names</span><span class="p">,</span>
-    <span class="p">}</span>
+    <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">:</span> <span class="n">predictable_names</span><span class="p">}</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>

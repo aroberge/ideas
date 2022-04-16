@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>repeat as a keyword &mdash; ideas 0.0.30 documentation</title>
+  <title>repeat as a keyword &mdash; ideas 0.0.32 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.30
+                0.0.32
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -352,23 +352,8 @@ are:</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.repeat.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.repeat.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_original</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_transformed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.repeat.add_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.repeat.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.repeat.add_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.repeat.convert_repeat">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.repeat.</span></span><span class="sig-name descname"><span class="pre">convert_repeat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/repeat.html#convert_repeat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.repeat.convert_repeat" title="Permalink to this definition"></a></dt>
-<dd><p>Replaces instances of:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span>  <span class="n">condition</span><span class="p">:</span>
-<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
-<span class="n">repeat</span> <span class="n">n</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="k">for</span> <span class="n">_uid</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</pre></div>
-</div>
-<p>A complete repeat statement is restricted to be on a single line ending
-with a colon (optionally followed by a comment). If the colon is
-missing, a <code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code> is raised.</p>
 </dd></dl>
 
 <dl class="py function">
