@@ -207,6 +207,7 @@ class IdeasLoader(Loader):
 
 
 def create_hook(
+    ipython_ast_node_transformer=None,
     callback_params=None,
     create_module=None,
     console_dict=None,
@@ -268,8 +269,34 @@ def create_hook(
         transform_bytecode=transform_bytecode,
         transform_source=transform_source,
     )
+    if transform_source is not None:
+        try:
+            ip = get_ipython()  # noqa
+            ipython_source_transformer = make_ipython_source_transformer(
+                transform_source
+            )
+            ip.input_transformers_post.append(ipython_source_transformer)
+        except NameError:
+            pass
+
+    if ipython_ast_node_transformer is not None:
+        try:
+            ip = get_ipython()  # noqa
+            ip.ast_transformers.append(ipython_ast_node_transformer)
+        except NameError:
+            pass
 
     return hook
+
+
+def make_ipython_source_transformer(transform_source):
+    def ipython_source_transformer(lines):
+        source = "".join(lines)
+        source = transform_source(source)
+        lines = source.splitlines(keepends=True)
+        return lines
+
+    return ipython_source_transformer
 
 
 def remove_hook(hook):

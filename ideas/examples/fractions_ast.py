@@ -41,7 +41,11 @@ class FractionWrapper(ast.NodeTransformer):
                 starargs=None,
                 kwargs=None,
             )
-        return self.generic_visit(node)
+        try:
+            get_python()  # noqa
+            return node
+        except NameError:
+            return self.generic_visit(node)
 
 
 def transform_ast(tree, **_kwargs):
@@ -57,12 +61,12 @@ def source_init():
     return import_fraction
 
 
-def add_hook(verbose_finder=False, **_kwargs):
+def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,
         source_init=source_init,
         transform_ast=transform_ast,
-        verbose_finder=verbose_finder,
+        ipython_ast_node_transformer=FractionWrapper(),
     )
     return hook

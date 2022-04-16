@@ -142,8 +142,7 @@ class IdeasConsole(InteractiveConsole):
         if self.transform_ast is not None:
             # recreate code object, this time, with ast transform
             tree = ast.parse(source, filename)
-            for transform in self.transform_ast:
-                tree = transform(tree)
+            tree = self.transform_ast(tree)
             if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
