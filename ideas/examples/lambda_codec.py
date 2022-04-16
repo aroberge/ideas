@@ -9,7 +9,7 @@ The source is assumed to be actually encoded in utf-8.
 """
 
 
-from ideas import lambda_encoding
+from ideas import custom_encoding
 import token_utils
 
 
@@ -25,10 +25,10 @@ def transform_source(source, **_kwargs):
     return token_utils.untokenize(tokens)
 
 
-lambda_encoding.register_encoding(
-    encoding_name="lambda_encoding",
+encoding_name = "lambda_encoding"
+
+custom_encoding.register_encoding(
+    encoding_name=encoding_name,
     transform_source=transform_source,
     hook_name=__name__,
 )
-
-print("end of lambda_codec")

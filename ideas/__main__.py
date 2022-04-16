@@ -1,5 +1,4 @@
-"""ideas makes it easy to experiment to experiment
-with alternatives to Python's syntax.
+"""ideas makes it easy to experiment with alternatives to Python's syntax.
 
 If no source is given, ideas will start an interactive console.
 """
@@ -19,11 +18,11 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument(
+    "-v",
     "--version",
     help="Only displays the current version.",
     action="store_true",
 )
-
 
 parser.add_argument(
     "-a",
@@ -35,8 +34,17 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "-v",
-    "--verbose",
+    "-r",
+    "--register_codec",
+    nargs=1,
+    help="""Execute the named module to register a codec. The specified module
+    is either found in the current directory or, if not found,
+    from ideas.examples.""",
+)
+
+parser.add_argument(
+    "-s",
+    "--show",
     action="store_true",
     help="""Shows the transformed code before it is executed.""",
 )
@@ -50,6 +58,7 @@ parser.add_argument(
 
 
 def add_transform(transform):
+    """Call the add_hook function for the named module."""
     try:
         module = import_module(transform)
     except (ImportError, ModuleNotFoundError):
@@ -70,22 +79,44 @@ def add_transform(transform):
         getattr(module, "add_hook")()
 
 
+def register_codec(encoding):
+    """Executes a module that is expected to register a custom encoding."""
+    try:
+        import_module(encoding)
+    except (ImportError, ModuleNotFoundError):
+        pass
+
+    path = f"ideas.examples.{encoding}"
+    try:
+        import_module(path)
+    except ImportError:
+        print(f"{path} is not a known codec.")
+
+
 def main() -> None:
     args = parser.parse_args()
-    if args.version:  # pragma: no cover
+    if args.version:
         print(f"\nideas version {ideas.__version__}")
-        sys.exit()
+        return
 
-    config.show_transformed = bool(args.verbose)
+    config.show_transformed = bool(args.show)
+
+    if args.add_hook and args.register_codec:
+        print("You can only use one option at a time:")
+        print("- either use a source transformation with -a (--add_hook); or")
+        print("- register a custom codec with -r (--register_codec),")
+        return
 
     if args.add_hook:
         add_transform(args.add_hook[0])
+    if args.register_codec:
+        register_codec(args.register_codec[0])
 
     if args.source is not None:
         if args.source.endswith(".py"):
             args.source = args.source[:-3]
         module = import_module(args.source)
-        if sys.flags.interactive:  # pragma: no cover
+        if sys.flags.interactive:
             console.start(locals=module.__dict__, prompt=">>> ")
     else:
         console.start(prompt=">>> ")

@@ -10,6 +10,7 @@ The source is assumed to be actually encoded in utf-8.
 
 import codecs
 import encodings
+
 from . import console
 
 utf8 = encodings.search_function("utf8")
@@ -29,7 +30,7 @@ def register_encoding(encoding_name=None, transform_source=None, hook_name=None)
         text = transform_source(text)
         return text, length
 
-    class LambdaIncrementalDecoder(encodings.utf_8.IncrementalDecoder):
+    class CustomIncrementalDecoder(encodings.utf_8.IncrementalDecoder):
         def decode(self, input, final=False):
             self.buffer += input
             if final:
@@ -50,12 +51,13 @@ def register_encoding(encoding_name=None, transform_source=None, hook_name=None)
             encode=utf8.encode,
             decode=ideas_decode,
             incrementalencoder=utf8.incrementalencoder,
-            incrementaldecoder=LambdaIncrementalDecoder,
+            incrementaldecoder=CustomIncrementalDecoder,
             streamreader=encodings.utf_8.StreamReader,
             streamwriter=utf8.streamwriter,
         )
 
     codecs.register(search_function)
+    print(f"{encoding_name} has been registered.")
 
     if hook_name is not None:
         transform_source._hook_name_ = hook_name
