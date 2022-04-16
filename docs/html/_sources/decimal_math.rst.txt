@@ -75,6 +75,17 @@ You can now invoke your module doing the following::
 Custom codec
 -------------
 
+.. warning::
+
+    Starting with Python 3.9, encodings cannot have an hyphen in their name
+    such as::
+
+        # coding: decimal-math
+
+    Instead, they need to be normalized to using an underscore, as in::
+
+        # coding: decimal_math
+
 To use and test it easily as a custom codec, you can do the following.
 
 1. Create a file named ``usercustomize.py`` containing the following:
@@ -92,7 +103,7 @@ To use and test it easily as a custom codec, you can do the following.
 3. At the top of the module you wish to be run with the special codec,
    add the following two lines::
 
-        # coding: decimal-math
+        # coding: decimal_math
         from decimal import Decimal
 
 You can now invoke your module doing the following::

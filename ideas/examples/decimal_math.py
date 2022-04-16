@@ -32,7 +32,7 @@ def transform_source(source, **_kwargs):
 
 def register():
     lambda_encoding.register_encoding(
-        encoding_name="decimal-math",
+        encoding_name="decimal_math",
         transform_source=transform_source,
         hook_name=__name__,
     )

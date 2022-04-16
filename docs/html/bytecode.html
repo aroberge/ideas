@@ -61,7 +61,10 @@
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#confused-math-bc-py">confused_math_bc.py</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
@@ -154,6 +157,40 @@ we interchange <code class="docutils literal notranslate"><span class="pre">BINA
 </div>
 <p>Yes, it is a silly example. However, I cannot come up with anything
 possibly useful. Feel free to submit a better example.</p>
+<span class="target" id="module-ideas.examples.confused_math_bc"></span><section id="confused-math-bc-py">
+<h2>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Permalink to this headline"></a></h2>
+<p>Import hook that performs bytecode changes,
+swapping BINARY_ADD and BINARY_MULTIPLY.</p>
+<p>Note: If code contains something like a + b, or a * b, where
+a and b are integer literals (e.g. 2 + 4), the operations are
+done prior to the creation of a code object and thus are
+not captured by this transformation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.create_new_co">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">create_new_co</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Permalink to this definition"></a></dt>
+<dd><p>Recursively creates new code objects from old ones, swapping
+BINARY_ADD and BINARY_MULTIPLY.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.swap_add_mul">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">swap_add_mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytecode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Permalink to this definition"></a></dt>
+<dd><p>Interchange BINARY_ADD and BINARY_MULTIPLY</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.transform_bytecode">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">transform_bytecode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms the code object into a new code object</p>
+</dd></dl>
+
+</section>
 </section>
 
 

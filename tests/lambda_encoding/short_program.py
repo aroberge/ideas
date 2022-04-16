@@ -1,4 +1,4 @@
-# coding: lambda-encoding
+# coding: lambda_encoding
 
 square = λ x: x**2
 

@@ -200,6 +200,18 @@ and typing: <code class="docutils literal notranslate"><span class="pre">set</sp
 </section>
 <section id="custom-codec">
 <h2>Custom codec<a class="headerlink" href="#custom-codec" title="Permalink to this headline"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Starting with Python 3.9, encodings cannot have an hyphen in their name
+such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal-math</span>
+</pre></div>
+</div>
+<p>Instead, they need to be normalized to using an underscore, as in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
+</pre></div>
+</div>
+</div>
 <p>To use and test it easily as a custom codec, you can do the following.</p>
 <ol class="arabic simple">
 <li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
@@ -215,7 +227,7 @@ On Windows, this is most done by navigating where this file is found
 and typing: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=%cd%</span></code></p></li>
 <li><p>At the top of the module you wish to be run with the special codec,
 add the following two lines:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal-math</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
 <span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 </pre></div>
 </div>
