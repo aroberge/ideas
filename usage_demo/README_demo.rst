@@ -13,7 +13,57 @@ the same thing as ``lambda``, enabling you to write::
         print(f"And the square of 5 is {square(5)}")
 
 
-You could do this by creating the following program::
+You can run this program in a terminal as follows::
+
+    > python -m ideas my_program -t function_keyword
+    16 is the square of 4.
+    And the square of 5 is 25
+
+
+The argument following ``-t`` is the name of a module that contains
+a function named ``add_hook``.  A search for such a module is first
+done in the current directory. If the module is not found in the
+current directory, it is assumed to exists in the ``ideas.examples``
+directory included with ``ideas``.
+
+You may have noticed in the above that ``my_program`` does not
+include a ``.py`` extension. This is because ``my_program`` is imported:
+Python **import hooks**, by definition, only work on modules that are
+imported. Yet, you may have also noticed that it is imported with
+the name ``'__main__'``, so that it is run as though it is the main script.
+
+.. sidebar:: .py extension?
+
+    Ideas is quite forgiving. If you invoke it adding a ``.py`` extension
+    to the main script, as in:
+
+    .. code-block:: none
+
+        > python -m ideas my_program.py -t function_keyword
+
+    it will work the same way as if you left out the ``.py`` extension.
+
+
+Using the ideas-enabled interactive console
+=============================================
+
+Ideas comes with its own interactive console.  Here's a sample session::
+
+
+    > python -m ideas -t function_keyword
+    Ideas Console version 0.0.31. [Python version: 3.10.2]
+
+    >>> cube = function x: x**3
+    >>> cube(3)
+    27
+
+
+Just like with the normal CPython console, you can run a main
+script and continue with the interactive console
+
+
+
+
 
     # loader_1.py
 
