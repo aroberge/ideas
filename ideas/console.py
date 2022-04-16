@@ -154,8 +154,7 @@ class IdeasConsole(InteractiveConsole):
                 code_obj = compile(tree, filename, "exec")
 
         if self.transform_bytecode is not None:
-            for transform in self.transform_bytecode:
-                code_obj = transform(code_obj)
+            code_obj = self.transform_bytecode(code_obj)
 
         self.runcode(code_obj)
         return False
