@@ -173,7 +173,6 @@ class IdeasLoader(Loader):
             source = self.transform_source(
                 source,
                 filename=self.filename,
-                # globals_=module.__dict__,
                 module=module,
                 callback_params=self.callback_params,
             )
