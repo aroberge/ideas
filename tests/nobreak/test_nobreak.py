@@ -26,8 +26,3 @@ def test_while():
     expected = source_while % "else"
 
     assert result == expected, "nobreak with while"
-
-
-if __name__ == "__main__":
-    test_for()
-    print("test_nobreak was run successfully.")

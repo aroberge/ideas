@@ -1,6 +1,4 @@
-"""constants.py
----------------
-
+"""
 This import hook makes it possible to define constants, that is variables
 which cannot have their initial value changed.
 
@@ -10,8 +8,6 @@ In this import hook, constants are identified in two ways:
 
 2. variables that were declared to be constant by the inclusion
    of a ``Final`` type hint.
-
-
 """
 
 

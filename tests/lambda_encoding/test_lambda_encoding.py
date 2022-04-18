@@ -2,5 +2,4 @@
 from ideas.examples import lambda_codec  # noqa
 
 def test_import():
-    from . import short_program
-
+    from . import short_program  # noqa
