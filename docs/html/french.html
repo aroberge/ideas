@@ -46,11 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
@@ -58,10 +54,8 @@
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.french">En français, svp !</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#french-py">french.py</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#importing-pyfr-files">Importing .pyfr files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.french">API for french.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
@@ -79,10 +73,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<p class="caption" role="heading"><span class="caption-text">More complex examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom encodings</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
@@ -143,15 +141,15 @@
     text-align: unset;
 }
 </style>
-<section id="french-python">
-<h1>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This example demonstrates the how to use a non-standard file
 extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>) as an indication that an import hook must
 be used.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/french.py">Source code</a></p>
+<p>It also demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">verbose_finder</span></code> paramter.</p>
 </div>
+<section id="french-python">
+<h1>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline"></a></h1>
 <p>Imagine you are a French beginner who has learned the basics
 of programming using a block-based environment such as Scratch
 or Blockly. All the text shown on these blocks was in French,
@@ -164,23 +162,75 @@ block-based environment.</p>
 <p>This is what this import hook example allows one to do.
 A more elaborate example is that given by
 <a class="reference external" href="https://aroberge.github.io/avantpy/docs/html/">AvantPy</a>.</p>
+<p>Let’s see it in action:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a french --show
+Ideas Console version 0.0.34. [Python version: 3.10.2]
+
+&gt;&gt;&gt; pourchaque lettre dans &#39;Bonjour&#39;:
+...    afficher(lettre)
+...
+===========Transformed============
+for lettre in &#39;Bonjour&#39;:
+   print(lettre)
+
+-----------------------------
+B
+o
+n
+j
+o
+u
+r
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<section id="importing-pyfr-files">
+<h2>Importing .pyfr files<a class="headerlink" href="#importing-pyfr-files" title="Permalink to this headline"></a></h2>
+<p>Suppose we have the following two files:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># my_program.py</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wrong one&quot;</span><span class="p">)</span>
+<span class="k">raise</span> <span class="ne">ImportError</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># my_program.pyfr
+
+afficher(&quot;Bonjour !&quot;)
+</pre></div>
+</div>
+<p>Let’s see if we attempt to import <code class="docutils literal notranslate"><span class="pre">my_program</span></code> after
+setting up the <code class="docutils literal notranslate"><span class="pre">french</span></code> import hook:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">french</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Looking for files with extensions:  [&#39;.pyfr&#39;]</span>
+<span class="go">The following paths will not be included in the search:</span>
+<span class="go">   PYTHON: c:\users\andre\appdata\local\programs\python\python310\lib</span>
+<span class="go">   IDEAS: c:\users\andre\github\ideas\ideas</span>
+<span class="go">   SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.10\lib\site-packages</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">my_program</span>
+<span class="go">    Searching for ~\github\ideas\my_program.pyfr</span>
+<span class="go">    Found: ~\github\ideas\my_program.pyfr</span>
+
+<span class="go">Bonjour !</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">math</span>
+<span class="go">    Searching for ~\github\ideas\math.pyfr</span>
+<span class="go">    IdeasMetaFinder did not find math.pyfr</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+<span class="go">3.141592653589793</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</section>
 <section id="module-ideas.examples.french">
-<span id="en-francais-svp"></span><h2>En français, svp !<a class="headerlink" href="#module-ideas.examples.french" title="Permalink to this headline"></a></h2>
-<section id="french-py">
-<h3>french.py<a class="headerlink" href="#french-py" title="Permalink to this headline"></a></h3>
+<span id="api-for-french-py"></span><h2>API for french.py<a class="headerlink" href="#module-ideas.examples.french" title="Permalink to this headline"></a></h2>
 <p>Keywords are translated from French to English/Python by a function in this file.</p>
 <p>A “French Python” file is recognize by its .pyfr extension.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.french.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.french.print_info">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">print_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#print_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.print_info" title="Permalink to this definition"></a></dt>
-<dd><p>Prints the source code.</p>
-<p><code class="docutils literal notranslate"><span class="pre">kind</span></code> is usually either <code class="docutils literal notranslate"><span class="pre">&quot;Original&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;New&quot;</span></code></p>
 </dd></dl>
 
 <dl class="py function">
@@ -190,7 +240,6 @@ A more elaborate example is that given by
 English version.</p>
 </dd></dl>
 
-</section>
 </section>
 </section>
 

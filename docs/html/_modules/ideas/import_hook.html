@@ -43,11 +43,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../function_keyword.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../possible.html"> A deep dive</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
@@ -70,10 +66,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../bytecode.html"> Confused math (Bytecode)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<p class="caption" role="heading"><span class="caption-text">More complex examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom encodings</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lambda.html"> Create your own codec</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
@@ -200,14 +200,20 @@
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Searching for </span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Searching for </span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
                     <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="s2">&quot;    IdeasMetaFinder did not find&quot;</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt;  Found: &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    Found:&quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span> <span class="n">extension</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">spec_from_file_location</span><span class="p">(</span>
                 <span class="n">fullname</span><span class="p">,</span>
                 <span class="n">filename</span><span class="p">,</span>
@@ -223,8 +229,6 @@
                     <span class="n">transform_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  IdeasMetaFinder did not find </span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># we don&#39;t know how to import this</span></div></div>
 
 
@@ -328,16 +332,16 @@
                 <span class="k">raise</span> <span class="n">e</span></div></div>
 
 
-<div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span>
-    <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../possible.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span>
     <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">hook_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">transform_bytecode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -346,8 +350,46 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to facilitate the creation of an import hook.</span>
 
-<span class="sd">    It sets the parameters to be used by the import hook, and also</span>
-<span class="sd">    does so for the interactive console.</span>
+<span class="sd">    Each of the following parameter is optional; most of these are</span>
+<span class="sd">    never needed except in some unusual import hooks.</span>
+
+<span class="sd">    Usually, at least one of ``transform_ast``, ``transform_bytecode``,</span>
+<span class="sd">    and ``transform_source`` should be specified.</span>
+
+<span class="sd">    * ``callback_params``: a dict containing keyword parameters</span>
+<span class="sd">      to be passed back to the ``transform_source`` function.</span>
+<span class="sd">    * ``create_module``: a custom function to create a module object</span>
+<span class="sd">      instead of using Python&#39;s default.</span>
+<span class="sd">    * ``console_dict``: a dict object used as &#39;locals&#39; with the Ideas console,</span>
+<span class="sd">      instead of its usual default.</span>
+<span class="sd">    * ``exec_``: a custom method used to execute the source code inside</span>
+<span class="sd">      a module&#39;s dict.</span>
+<span class="sd">    * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,</span>
+<span class="sd">      used to identify modules containing source code.</span>
+<span class="sd">    * ``first``: if ``True``, the custom hook will be used as the first</span>
+<span class="sd">      location in ``sys.meta_path``, to look for source files.</span>
+<span class="sd">    * ``hook_name``: used to give a more readable ``repr`` to the hook created.</span>
+<span class="sd">    * ``ipython_ast_node_transformer``: used to do AST transformations in an</span>
+<span class="sd">      IPython/Jupyter environment. It should be a class derived from</span>
+<span class="sd">      ``ast.NodeTransformer`` and return a ``node``.</span>
+<span class="sd">    * ``module_class``: custom class to use for the module created instead of</span>
+<span class="sd">      the default one assigned by Python.</span>
+<span class="sd">    * ``source_init``: custom code to be executed before any code from</span>
+<span class="sd">      a user is executed. For example, if one creates an import hook that</span>
+<span class="sd">      treats every ``float`` as a ``Decimal`` object, this custom code</span>
+<span class="sd">      could be::</span>
+
+<span class="sd">          from decimal import Decimal</span>
+
+<span class="sd">    * ``transform_ast``: used to do AST transformations in a Python</span>
+<span class="sd">      environment (excluding IPython/Jupyter).  It should be a class</span>
+<span class="sd">      derived from ``ast.NodeTransformer``, eventually returning a</span>
+<span class="sd">      tree object.</span>
+<span class="sd">    * ``transform_bytecode``: used to mutate a code object.</span>
+<span class="sd">    * ``transform_source``: used to transform some source code prior</span>
+<span class="sd">      to execution.</span>
+<span class="sd">    * ``verbose_finder``: if ``True``, provides some information about</span>
+<span class="sd">      the module that is being sought by Python prior to its execution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.py&quot;</span><span class="p">]</span>
@@ -358,7 +400,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Looking for files with extensions: &quot;</span><span class="p">,</span> <span class="n">extensions</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The following paths will not be included in the search:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">excluded_paths</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">sub_path</span><span class="p">),</span> <span class="s2">&quot;==&quot;</span><span class="p">,</span> <span class="n">sub_path</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">sub_path</span><span class="p">),</span> <span class="n">sub_path</span><span class="p">)</span>
 
     <span class="n">hook</span> <span class="o">=</span> <span class="n">IdeasMetaFinder</span><span class="p">(</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>

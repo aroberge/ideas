@@ -1,7 +1,4 @@
 """
-french.py
----------
-
 Keywords are translated from French to English/Python by a function in this file.
 
 A "French Python" file is recognize by its .pyfr extension.
@@ -53,16 +50,6 @@ fr_to_py = {
 }
 
 
-def print_info(kind, source):
-    """Prints the source code.
-
-    ``kind`` is usually either ``"Original"`` or ``"New"``
-    """
-    print(f"==========={kind}============")
-    print(source)
-    print("-----------------------------")
-
-
 def transform_source(source, **_kwargs):
     """A simple replacement of 'French Python keyword' by their normal
     English version.
@@ -77,11 +64,12 @@ def transform_source(source, **_kwargs):
     return new_source
 
 
-def add_hook(**_kwargs):
+def add_hook(verbose_finder=False, **_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         transform_source=transform_source,
         hook_name=__name__,
         extensions=[".pyfr"],
+        verbose_finder=verbose_finder,
     )
     return hook

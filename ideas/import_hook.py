@@ -90,14 +90,20 @@ class IdeasMetaFinder(MetaPathFinder):
                 filename = os.path.join(entry, name + extension)
 
                 if self.verbose_finder:
-                    print(f"    Searching for {shorten_path(filename)}.")
+                    print(f"    Searching for {shorten_path(filename)}{extension}")
                 if os.path.exists(filename):
                     break
+                else:
+                    if self.verbose_finder:
+                        print(
+                            "    IdeasMetaFinder did not find",
+                            f"{shorten_path(fullname)}{extension}\n",
+                        )
             else:
                 continue
 
             if self.verbose_finder:
-                print("->  Found: ", shorten_path(filename), "\n")
+                print("    Found:", shorten_path(filename) + extension, "\n")
             return spec_from_file_location(
                 fullname,
                 filename,
@@ -113,8 +119,6 @@ class IdeasMetaFinder(MetaPathFinder):
                     transform_source=self.transform_source,
                 ),
             )
-        if self.verbose_finder:
-            print(f"  IdeasMetaFinder did not find {shorten_path(fullname)}.\n")
         return None  # we don't know how to import this
 
 
@@ -219,15 +223,15 @@ class IdeasLoader(Loader):
 
 
 def create_hook(
-    ipython_ast_node_transformer=None,
     callback_params=None,
     create_module=None,
     console_dict=None,
     exec_=None,
     extensions=None,
     first=True,
-    module_class=None,
     hook_name=None,
+    ipython_ast_node_transformer=None,
+    module_class=None,
     source_init=None,
     transform_ast=None,
     transform_bytecode=None,
@@ -236,8 +240,46 @@ def create_hook(
 ):
     """Function to facilitate the creation of an import hook.
 
-    It sets the parameters to be used by the import hook, and also
-    does so for the interactive console.
+    Each of the following parameter is optional; most of these are
+    never needed except in some unusual import hooks.
+
+    Usually, at least one of ``transform_ast``, ``transform_bytecode``,
+    and ``transform_source`` should be specified.
+
+    * ``callback_params``: a dict containing keyword parameters
+      to be passed back to the ``transform_source`` function.
+    * ``create_module``: a custom function to create a module object
+      instead of using Python's default.
+    * ``console_dict``: a dict object used as 'locals' with the Ideas console,
+      instead of its usual default.
+    * ``exec_``: a custom method used to execute the source code inside
+      a module's dict.
+    * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,
+      used to identify modules containing source code.
+    * ``first``: if ``True``, the custom hook will be used as the first
+      location in ``sys.meta_path``, to look for source files.
+    * ``hook_name``: used to give a more readable ``repr`` to the hook created.
+    * ``ipython_ast_node_transformer``: used to do AST transformations in an
+      IPython/Jupyter environment. It should be a class derived from
+      ``ast.NodeTransformer`` and return a ``node``.
+    * ``module_class``: custom class to use for the module created instead of
+      the default one assigned by Python.
+    * ``source_init``: custom code to be executed before any code from
+      a user is executed. For example, if one creates an import hook that
+      treats every ``float`` as a ``Decimal`` object, this custom code
+      could be::
+
+          from decimal import Decimal
+
+    * ``transform_ast``: used to do AST transformations in a Python
+      environment (excluding IPython/Jupyter).  It should be a class
+      derived from ``ast.NodeTransformer``, eventually returning a
+      tree object.
+    * ``transform_bytecode``: used to mutate a code object.
+    * ``transform_source``: used to transform some source code prior
+      to execution.
+    * ``verbose_finder``: if ``True``, provides some information about
+      the module that is being sought by Python prior to its execution.
     """
     if extensions is None:
         extensions = [".py"]
@@ -248,7 +290,7 @@ def create_hook(
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in excluded_paths:
-            print("  ", shorten_path(sub_path), "==", sub_path)
+            print("  ", shorten_path(sub_path), sub_path)
 
     hook = IdeasMetaFinder(
         callback_params=callback_params,

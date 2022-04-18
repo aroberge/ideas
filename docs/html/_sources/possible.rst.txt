@@ -45,3 +45,18 @@ on various parts over which we can have control.
    :alt: ideas import hook possibilities
    :align: center
 
+Options to create a custom hook
+--------------------------------
+
+.. autofunction:: ideas.import_hook.create_hook
+   :noindex:
+
+About Decode
+------------
+
+In the last diagram shown above, there is a block labeled 'Decode'.
+Changing the way that Python processes code during this phase
+does not require the creation of an import hook; instead,
+it requires the use of a custom codec.
+
+An example is shown in a later section.

@@ -96,12 +96,7 @@ Quick links to topics
     Additional motivation <motivation>
     Usage  <usage>
     Create your own import hook <function_keyword>
-    Create your own codec <lambda>
     A deep dive <possible>
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Examples
 
     Guide to the examples <guide>
 
@@ -133,10 +128,16 @@ Quick links to topics
 
 .. toctree::
    :maxdepth: 1
-   :caption: Others
+   :caption: More complex examples
 
     True constants <constants>
     Examples never included - first draft <excluded>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Custom encodings
+
+    Create your own codec <lambda>
 
 .. toctree::
    :maxdepth: 1

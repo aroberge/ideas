@@ -46,11 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
@@ -73,10 +69,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<p class="caption" role="heading"><span class="caption-text">More complex examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom encodings</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul class="current">
@@ -179,10 +179,49 @@ its loader.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.import_hook.create_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">create_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">console_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">create_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">console_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Function to facilitate the creation of an import hook.</p>
-<p>It sets the parameters to be used by the import hook, and also
-does so for the interactive console.</p>
+<p>Each of the following parameter is optional; most of these are
+never needed except in some unusual import hooks.</p>
+<p>Usually, at least one of <code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>, <code class="docutils literal notranslate"><span class="pre">transform_bytecode</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> should be specified.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">callback_params</span></code>: a dict containing keyword parameters
+to be passed back to the <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_module</span></code>: a custom function to create a module object
+instead of using Python’s default.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">console_dict</span></code>: a dict object used as ‘locals’ with the Ideas console,
+instead of its usual default.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exec_</span></code>: a custom method used to execute the source code inside
+a module’s dict.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extensions</span></code>: a list of file extensions, other than the usual <cite>.py</cite>, etc.,
+used to identify modules containing source code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">first</span></code>: if <code class="docutils literal notranslate"><span class="pre">True</span></code>, the custom hook will be used as the first
+location in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>, to look for source files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hook_name</span></code>: used to give a more readable <code class="docutils literal notranslate"><span class="pre">repr</span></code> to the hook created.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipython_ast_node_transformer</span></code>: used to do AST transformations in an
+IPython/Jupyter environment. It should be a class derived from
+<code class="docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code> and return a <code class="docutils literal notranslate"><span class="pre">node</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">module_class</span></code>: custom class to use for the module created instead of
+the default one assigned by Python.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_init</span></code>: custom code to be executed before any code from
+a user is executed. For example, if one creates an import hook that
+treats every <code class="docutils literal notranslate"><span class="pre">float</span></code> as a <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> object, this custom code
+could be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>: used to do AST transformations in a Python
+environment (excluding IPython/Jupyter).  It should be a class
+derived from <code class="docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code>, eventually returning a
+tree object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform_bytecode</span></code>: used to mutate a code object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform_source</span></code>: used to transform some source code prior
+to execution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose_finder</span></code>: if <code class="docutils literal notranslate"><span class="pre">True</span></code>, provides some information about
+the module that is being sought by Python prior to its execution.</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py function">

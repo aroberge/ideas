@@ -29,7 +29,7 @@ def shorten_path(path):
 
          ~/file
     """
-    # On windows, the filenames are not case sensitive
+    # On Windows, the filenames are not case-sensitive
     # and the way Python displays filenames may vary.
     # To properly compare, we convert everything to lowercase
     # However, we ensure that the shortened path retains its cases
@@ -44,6 +44,8 @@ def shorten_path(path):
         path = "IDEAS:" + path[len(IDEAS) : -len(ext)]
     elif path_lower.startswith(TESTS):
         path = "TESTS:" + path[len(TESTS) : -len(ext)]
+    elif path_lower.startswith(SITE_PACKAGES):
+        path = "SITE-PACKAGES:" + path[len(SITE_PACKAGES) : -len(ext)]
     elif path_lower.startswith(HOME):
         path = "~" + path[len(HOME) : -len(ext)]
     return path
@@ -54,6 +56,7 @@ def print_paths():
     print(f"~: {HOME}")
     print(f"PYTHON: {PYTHON}")
     print(f"IDEAS: {IDEAS}")
+    print(f"SITE-PACKAGES {SITE_PACKAGES}")
     if os.path.exists(TESTS):
         print(f"TESTS: {TESTS}")
 

@@ -6,9 +6,7 @@
 repeat as a keyword
 =======================
 
-
-We begin by two demonstrations, before going into more details
-about the choices we made.
+Let's begin with an example.
 
 
 .. code-block::
@@ -43,7 +41,7 @@ function used to create the import hook.
 callback parameters to ``create_hook``, so that they
 can be passed back to the function used to transform the code.
 
-Here's an example using it.
+Here's a second example using it.
 
 .. code-block::
 
