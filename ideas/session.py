@@ -6,7 +6,7 @@ class State:
     def __init__(self):
         self.console_name = "Ideas Console"
         self.show_original = False
-        self.show_transformed = False
+        self.show_changes = False
         self.current_file = ""
         self.active_console = False
         self.original = ""
@@ -22,7 +22,7 @@ class State:
         print("-----------------------------")
 
     def print_transformed(self, source, header="Transformed"):
-        if not self.show_transformed:
+        if not self.show_changes:
             return
         if source == self.original:
             return

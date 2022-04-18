@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Confused math &mdash; ideas 0.0.32 documentation</title>
+  <title>Confused math &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,14 +45,16 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -60,14 +62,26 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#confused-math-bc-py">confused_math_bc.py</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.confused_math_bc">API for <code class="docutils literal notranslate"><span class="pre">confused_math_bc</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#confused-math-bc-py">confused_math_bc.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -129,36 +143,38 @@
     text-align: unset;
 }
 </style>
-<section id="confused-math">
-<h1>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>Demonstration of a simple bytecode transformation where
-we interchange <code class="docutils literal notranslate"><span class="pre">BINARY_ADD</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_MULTIPLY</span></code>.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py">Source code</a></p>
+<p>This example shows how to create an import hook that mutates a bytecode object.</p>
 </div>
-<p>Let’s start with a demo from the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">confused_math_bc</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">confused_math_bc</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;ideas.import_hook.IdeasMetaFinder object at 0x0317A590&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Configuration values for the console:</span>
-<span class="go">    transform_bytecode from ideas.examples.confused_math_bc</span>
-<span class="go">--------------------------------------------------</span>
-<span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
-
-<span class="go">~&gt;&gt; x = 3</span>
-<span class="go">~&gt;&gt; x + x</span>
-<span class="go">9</span>
-<span class="go">~&gt;&gt; x * x</span>
-<span class="go">6</span>
+<section id="confused-math">
+<h1>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline"></a></h1>
+<p>This demonstrates what happens if we swap the meaning of
+the <code class="docutils literal notranslate"><span class="pre">BINARY_ADD</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_MULTIPLY</span></code> bytecodes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a confused_math_bc
+Ideas Console version 0.0.34. [Python version: 3.10.2]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="go">21</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Python does simple mathematical operations *before*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generating bytecode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span>
+<span class="go">7</span>
 </pre></div>
 </div>
 <p>Yes, it is a silly example. However, I cannot come up with anything
-possibly useful. Feel free to submit a better example.</p>
-<span class="target" id="module-ideas.examples.confused_math_bc"></span><section id="confused-math-bc-py">
-<h2>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Permalink to this headline"></a></h2>
+possibly useful to demonstrate the value of changing bytecode.
+Feel free to submit a better example.</p>
+<section id="module-ideas.examples.confused_math_bc">
+<span id="api-for-confused-math-bc"></span><h2>API for <code class="docutils literal notranslate"><span class="pre">confused_math_bc</span></code><a class="headerlink" href="#module-ideas.examples.confused_math_bc" title="Permalink to this headline"></a></h2>
+<section id="confused-math-bc-py">
+<h3>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Permalink to this headline"></a></h3>
 <p>Import hook that performs bytecode changes,
 swapping BINARY_ADD and BINARY_MULTIPLY.</p>
 <p>Note: If code contains something like a + b, or a * b, where
@@ -190,6 +206,7 @@ BINARY_ADD and BINARY_MULTIPLY.</p>
 <dd><p>Transforms the code object into a new code object</p>
 </dd></dl>
 
+</section>
 </section>
 </section>
 

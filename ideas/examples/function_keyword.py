@@ -1,30 +1,16 @@
-"""
-function_keyword.py
--------------------
-
-This module enables someone to use ``function`` as a keyword
-   equivalent to ``lambda``.
-
-   It is slightly more complicated than ``function_simplest.py`` as it
-   demonstrates how we can pass parameters when adding an import hook;
-   these parameters will be passed back to our function
-   ``transform_source``.
+"""This module enables someone to use ``function`` as a keyword
+equivalent to ``lambda``.
 """
 from ideas import import_hook
 import token_utils
 
 
 def transform_source(source, **_kwargs):
-    """A simple replacement of ``function`` by ``lambda``.
-
-    Note that, while the string ``lambda`` is shorter than ``function``, we
-    do not adjust the information (start_col, end_col) about the position
-    of the token. ``untokenize`` uses that information together with the
-    information about each original line, to properly keep track of the
-    spacing between tokens.
-    """
+    """This performs a simple replacement of ``function`` by ``lambda``."""
     new_tokens = []
     for token in token_utils.tokenize(source):
+        # token_utils allows us to easily replace the string content
+        # of any token
         if token == "function":
             token.string = "lambda"
         new_tokens.append(token)
@@ -36,6 +22,6 @@ def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        hook_name=__name__,
+        hook_name=__name__,  # optional
     )
     return hook

@@ -1,6 +1,4 @@
-"""repeat.py
--------------
-
+"""
 Adds ``repeat`` as a keyword to write loops. The four constructs supported
 are::
 
@@ -35,7 +33,7 @@ import token_utils
 
 
 class RepeatSyntaxError(Exception):
-    """Currently, only raised when a repeat statement has a missing colon"""
+    """Currently, only raised when a repeat statement has a missing colon."""
 
     pass
 
@@ -55,7 +53,6 @@ def transform_source(source, callback_params=None, **_kwargs):
     with a colon (optionally followed by a comment). If the colon is
     missing, a ``RepeatSyntaxError`` is raised.
     """
-    print(f"callback_params={callback_params}")
     if callback_params is None or "predictable_names" not in callback_params:
         predictable_names = False
     else:

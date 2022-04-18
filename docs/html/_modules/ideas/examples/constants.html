@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.constants &mdash; ideas 0.0.30 documentation</title>
+  <title>ideas.examples.constants &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.30
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -42,14 +42,16 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
@@ -57,11 +59,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -147,7 +158,7 @@
             <span class="p">):</span>
                 <span class="k">if</span> <span class="n">on_prevent_change</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="p">):</span>
-                        <span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">on_prevent_change</span><span class="p">(</span>  <span class="c1"># noqa</span>
                             <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
                         <span class="p">)</span>
                     <span class="k">return</span>
@@ -157,7 +168,7 @@
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">on_prevent_change</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="p">):</span>
-                        <span class="n">on_prevent_change</span><span class="p">(</span>
+                        <span class="n">on_prevent_change</span><span class="p">(</span>  <span class="c1"># noqa</span>
                             <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span>
                         <span class="p">)</span>
                     <span class="k">return</span>
@@ -218,7 +229,7 @@
 <div class="viewcode-block" id="FinalDict.setdefault"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.FinalDict.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Insert key with a value of default if key is not in the dictionary.</span>
 
-<span class="sd">        Prevents changes if the key is identified as a constant.</span>
+<span class="sd">        It prevents changes if the key is identified as a constant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__file__</span><span class="p">]:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_prevent_change</span><span class="p">:</span>
@@ -233,7 +244,7 @@
 
 <div class="viewcode-block" id="FinalDict.pop"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.FinalDict.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;D.pop(key) -&gt; value, remove specified key and return the corresponding value,</span>
-<span class="sd">        unless the key is identifed as a constant.</span>
+<span class="sd">        unless the key is identified as a constant.</span>
 
 <span class="sd">        If key is not found, d is returned if given, otherwise KeyError is raised</span>
 <span class="sd">        &quot;&quot;&quot;</span>

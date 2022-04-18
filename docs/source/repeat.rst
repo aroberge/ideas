@@ -1,28 +1,118 @@
+.. admonition:: Summary
+
+    Demonstrates how to use a callback parameters.
+
+
 repeat as a keyword
 =======================
 
-.. admonition:: Summary
 
-    Adds a ``repeat`` keyword that can be used to indicate 4 different
-    versions of a loop.
+We begin by two demonstrations, before going into more details
+about the choices we made.
 
-    **Limitation**: ``repeat`` statements must be on a single line of
-    code ending with a colon [and an optional end of line comment].
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
+.. code-block::
 
-.. sidebar:: Why this is an important example to me?
+    > python -m ideas -a repeat --show
+    Ideas Console version 0.0.34. [Python version: 3.10.2]
 
-    Having a ``repeat`` keyword addition is something that I have wanted
-    (and included) for teaching young beginners. It was also my
-    `first attempt at writing an import hook <https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html>`_. Prior to that, I
-    had already implemented ``repeat`` using a different method
-    in `Reeborg's World <http://reeborg.ca>`_
+    >>> repeat 3:
+    ...    print('Hello')
+    ...
+    ===========Transformed============
+    for _efedbc8c9e0b4d0194b0568321b8429e in range( 3):
+       print('Hello')
 
-    I was not the only one: Tobias Kohn, who
-    created `TygerJython <http://jython.tobiaskohn.ch/>`_
+    -----------------------------
+    Hello
+    Hello
+    Hello
+    >>>
+
+As you can see, ``repeat n``, where ``n`` is an integer,
+is converted into a for loop, with a randomly named
+variable, guaranteed not to have a name used for another
+object in the program.  This works well in practice.
+
+However, suppose we wish to do some repeatable tests,
+ensuring that the variable names are always the same
+for all tests: we can do this using a 'callback parameter'.
+This is a parameter that is given to the ``add_hook``
+function used to create the import hook.
+``add_hook`` must use Python dict to pass all required
+callback parameters to ``create_hook``, so that they
+can be passed back to the function used to transform the code.
+
+Here's an example using it.
+
+.. code-block::
+
+    >>> from ideas.examples import repeat
+    >>> from ideas.console import start
+    >>> from ideas.session import config
+    >>> config.show_changes = True
+    >>> repeat.add_hook(predictable_names=True)
+    <IdeasMetaFinder object for ideas.examples.repeat>
+    >>> start()
+    Ideas Console version 0.0.34. [Python version: 3.10.2]
+
+    ~>> repeat 3:
+    ...     print('Hello')
+    ...
+    ===========Transformed============
+    for _1 in range( 3):
+        print('Hello')
+
+    -----------------------------
+    Hello
+    Hello
+    Hello
+    ~>>
+
+As you can see, the name of the for loop variable, ``_1``,
+is much simpler ... and predictable.
+
+You will need to have a look at the code for ``repeat.py`` to
+fully understand how to use such callback parameters in your 
+own import hooks.
+
+API for ``repeat``
+--------------------
+
+.. automodule:: ideas.examples.repeat
+   :members:
+
+
+.. note::
+
+    The following text goes into some details about the origin
+    of the ``repeat`` import hook. 
+    It contains no additional information relevant for
+    creating your own import hooks.
+
+
+.. sidebar:: Learning from other experts
+
+    The Quorum computing language has been designed based on evidence gathered
+    from `how human learn programming languages <https://quorumlanguage.com/evidence.html>`_.
+
+    It includes `three of the four repeat <https://quorumlanguage.com/tutorials/language/repeat.html>`_ choices mentioned above, with a slightly different syntax::
+
+        repeat 10 times
+            // code
+        end
+
+        repeat while condition
+            // code
+        end
+
+        repeat until condition
+            // code
+        end
+
+    In addition, Tobias Kohn, who created `TygerJython <http://jython.tobiaskohn.ch/>`_
     as part of his Ph.D. thesis, also found it useful to add such a keyword
-    to Python.
+    to Python as used in the TygerJython environment.
 
 
 From blocks to textual code
@@ -92,28 +182,7 @@ in a natural way::
     repeat forever:
         # code
 
-.. sidebar:: Learning from other experts
-
-   The Quorum computing language has been designed based on evidence gathered
-   from `how human learn programming languages <https://quorumlanguage.com/evidence.html>`_.
-
-   It includes `three of the four repeat <https://quorumlanguage.com/tutorials/language/repeat.html>`_ choices mentioned above, with a slightly different syntax::
-
-        repeat 10 times
-            // code
-        end
-
-        repeat while condition
-            // code
-        end
-
-        repeat until condition
-            // code
-        end
-
-
-
-A concrete example
+Some motivation
 -------------------
 
 .. admonition:: First, TygerJython's explanation
@@ -196,11 +265,3 @@ as found by Andreas Stefik and Susanna Siebert, and published
 "An Empirical Investigation into Programming Language Syntax."
 ACM Transactions on Computing Education, 13(4), Nov. 2013.
 
-Implementing repeat
---------------------
-
-From the following API generated by Sphinx, you can get access to the
-actual code which, by now, should be fairly straightforward to understand.
-
-.. automodule:: ideas.examples.repeat
-   :members:

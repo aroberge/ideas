@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.decimal_math &mdash; ideas 0.0.32 documentation</title>
+  <title>ideas.examples.decimal_math &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -49,6 +49,9 @@
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide.html"> Guide to the examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
@@ -57,11 +60,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -107,7 +119,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">lambda_encoding</span><span class="p">,</span> <span class="n">import_hook</span>
+<span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">custom_encoding</span><span class="p">,</span> <span class="n">import_hook</span>
 <span class="kn">import</span> <span class="nn">token_utils</span>
 
 
@@ -130,7 +142,7 @@
 
 
 <span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
-    <span class="n">lambda_encoding</span><span class="o">.</span><span class="n">register_encoding</span><span class="p">(</span>
+    <span class="n">custom_encoding</span><span class="o">.</span><span class="n">register_encoding</span><span class="p">(</span>
         <span class="n">encoding_name</span><span class="o">=</span><span class="s2">&quot;decimal_math&quot;</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>

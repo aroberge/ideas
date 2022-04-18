@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide to the examples &mdash; ideas 0.0.32 documentation</title>
+  <title>Guide to the examples &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Improving function as a keyword" href="function.html" />
+    <link rel="next" title="nobreak as a keyword" href="nobreak.html" />
     <link rel="prev" title="A deep dive" href="possible.html" /> 
 </head>
 
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,7 +45,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
@@ -60,12 +60,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#french-repeat">French repeat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#auto-self">Auto-self</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fractional-math-token">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switch-statement">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-multiplication">Implicit multiplication</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#abstract-syntax-tree-transformations">Abstract Syntax Tree transformations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fractional-math-ast">Fractional math (AST)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#switch-statement">Switch statement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#implicit-multiplication">Implicit multiplication</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#bytecode-transformations">Bytecode transformations</a><ul>
@@ -82,7 +82,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -90,11 +92,20 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -125,7 +136,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="possible.html" class="btn btn-neutral float-left" title="A deep dive" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -164,12 +175,8 @@
 <section id="improving-function-as-a-keyword">
 <h3>Improving function as a keyword<a class="headerlink" href="#improving-function-as-a-keyword" title="Permalink to this headline"></a></h3>
 <p>This example should be your starting point.
-We show how to use the tokenizer to transform a source and explain
-how to make use of some diagnostic “tools”. Admittedly, using
-these “tools” make the code more complicated than strictly needed.
-Since we incorporate such “tools” in later examples, you might want
-to be familiar with them so that you can learn to recognize and potentially
-ignore them while looking at the actual code.</p>
+It shows how to use the tokenizer to transform a source using the
+token-utils library.</p>
 </section>
 <section id="nobreak-as-a-keyword">
 <h3>nobreak as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline"></a></h3>
@@ -180,13 +187,16 @@ level and only replace a keyword when some conditions are met.</p>
 <h3>repeat as a keyword<a class="headerlink" href="#repeat-as-a-keyword" title="Permalink to this headline"></a></h3>
 <p>This includes four different transformations,
 one of which requires to add some extra variables to the original code.
-We do so in a way that avoid any conflict with existing variable names.</p>
+It is done in a way that avoid any conflict with existing variable names.</p>
+<p>It also shows how to include some parameters that are passed back to the
+source transformation.</p>
 </section>
 <section id="french-python">
 <h3>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline"></a></h3>
 <p>This is a source transformation that allows one
 to use French equivalent keywords to the existing ones.
-It shows how to make use of a different file extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>)</p>
+It shows how to make use of a different file extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>),
+loading such files as if they were regular Python files.</p>
 </section>
 <section id="french-repeat">
 <h3>French repeat<a class="headerlink" href="#french-repeat" title="Permalink to this headline"></a></h3>
@@ -205,10 +215,24 @@ include a change of indentation of an entire block of code.S</p>
 <h3>Fractional math (token)<a class="headerlink" href="#fractional-math-token" title="Permalink to this headline"></a></h3>
 <p>This is a functionally equivalent version to the AST proof of concept
 example [Fractional math (ast)] mentioned below.
-It demontrattes how to include
+It demonstrates how to include
 supplementary code, such as importing a module or defining a function,
 in addition to the user code, while ensuring that the console (REPL)
 can still work properly.</p>
+</section>
+<section id="switch-statement">
+<h3>Switch statement<a class="headerlink" href="#switch-statement" title="Permalink to this headline"></a></h3>
+<p>Implementing a switch statement as described in the rejected PEP 3103.
+This example was done quite a few years ago, well before the
+match statement was added to Python.</p>
+</section>
+<section id="implicit-multiplication">
+<h3>Implicit multiplication<a class="headerlink" href="#implicit-multiplication" title="Permalink to this headline"></a></h3>
+<p>Python’s syntax does not allow to write a number followed by an
+non-keyword identifier or by a parenthesis, nor does it allow to write two
+non-keyword identifiers in a row. However, when writing equations on
+paper, these constructs are recognized as indicating a multiplication.
+This transformation does the same.</p>
 </section>
 </section>
 <section id="abstract-syntax-tree-transformations">
@@ -221,24 +245,12 @@ supplementary code, such as importing a module or defining a function,
 in addition to the user code while ensuring that the console (REPL)
 can still work properly.</p>
 </section>
-<section id="switch-statement">
-<h3>Switch statement<a class="headerlink" href="#switch-statement" title="Permalink to this headline"></a></h3>
-<p>Implementing a switch statement as described in the rejected PEP 3103.</p>
-</section>
-<section id="implicit-multiplication">
-<h3>Implicit multiplication<a class="headerlink" href="#implicit-multiplication" title="Permalink to this headline"></a></h3>
-<p>Python’s syntax does not allow to write a number followed by an
-non-keyword identifier or by a parenthesis, nor does it allow to write two
-non-keyword identifiers in a row. However, when writing equations on
-paper, these constructs are recognized as indicating a multiplication.
-This transformation does the same.</p>
-</section>
 </section>
 <section id="bytecode-transformations">
 <h2>Bytecode transformations<a class="headerlink" href="#bytecode-transformations" title="Permalink to this headline"></a></h2>
 <section id="confused-math">
 <h3>Confused math<a class="headerlink" href="#confused-math" title="Permalink to this headline"></a></h3>
-<p>This is a proof-of-concept bytecode transformation.</p>
+<p>This is a proof-of-concept demonstrating bytecode transformation.</p>
 </section>
 </section>
 <section id="other-types">
@@ -267,7 +279,7 @@ source must be transformed.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="possible.html" class="btn btn-neutral float-left" title="A deep dive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

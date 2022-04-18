@@ -28,9 +28,11 @@ parser.add_argument(
     "-a",
     "--add_hook",
     nargs=1,
-    help="""Execute add_hook() from module ADD_HOOK. The specified module
-    is either found in the current directory or, if not found,
-    from ideas.examples.""",
+    help="""Execute add_hook() from the specified module.
+    An attempt is made to import the specified module from the
+    current directory; if it not found, it is then
+    imported from ideas.examples.""",
+    metavar="MODULE",
 )
 
 parser.add_argument(
@@ -40,11 +42,12 @@ parser.add_argument(
     help="""Execute the named module to register a codec. The specified module
     is either found in the current directory or, if not found,
     from ideas.examples.""",
+    metavar="MODULE",
 )
 
 parser.add_argument(
     "-s",
-    "--show",
+    "--show_changes",
     action="store_true",
     help="""Shows the transformed code before it is executed.""",
 )
@@ -99,7 +102,7 @@ def main() -> None:
         print(f"\nideas version {ideas.__version__}")
         return
 
-    config.show_transformed = bool(args.show)
+    config.show_changes = bool(args.show_changes)
 
     if args.add_hook and args.register_codec:
         print("You can only use one option at a time:")

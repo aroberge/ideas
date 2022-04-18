@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.32 documentation</title>
+  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="#" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,14 +44,16 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -59,11 +61,20 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -191,12 +202,12 @@ documentation for</em> importlib <em>under your pillow may be advisable.</em></d
 <div><p><strong>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</strong></p>
 </div></blockquote>
 </div></blockquote>
-<p><code class="docutils literal notranslate"><span class="pre">ideas</span></code> is designed to facilitate
+<p><strong>ideas</strong> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
-<p>Instead of figuring out how to write an import hook, using <code class="docutils literal notranslate"><span class="pre">ideas</span></code> you
+<p>Instead of figuring out how to write an import hook, using <strong>ideas</strong> you
 can focus exclusively on what what might be needed to convert your proposed new
-syntax into something that Python can understand – <code class="docutils literal notranslate"><span class="pre">ideas</span></code> will
+syntax into something that Python can understand – <strong>ideas</strong> will
 take care of the rest, including inserting it in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -205,64 +216,13 @@ is not recommended for production code.</p>
 <p>But it can be fun! ;-)</p>
 </div>
 </section>
-<section id="infrequently-asked-questions-and-comments">
-<h2>Infrequently asked questions and comments<a class="headerlink" href="#infrequently-asked-questions-and-comments" title="Permalink to this headline"></a></h2>
-<aside class="sidebar">
-<p class="sidebar-title">No FAQ</p>
-<p>In the absence of real questions having yet been asked,
-the following imaginary dialogue has been written before anyone else knew about
-this project.</p>
-</aside>
-<p><strong>Why?</strong></p>
-<p>Because it is fun. If this is not enough of a justification for you, have a look at
-the motivation section which contains a longer, and possibly more serious answer.</p>
-<p><strong>Is it safe to use in production code?</strong></p>
-<p>No.</p>
-<p><strong>But your example works perfectly well in my code; can I use it in my project?</strong></p>
-<p>I don’t think you should if your project is to be used by anyone else
-but yourself.</p>
-<p><strong>I found a bug.</strong></p>
-<p>Wonderful, please file an issue so that I can perhaps fix it. Note however
-that some examples are just proof of concepts and are known to not be robust.</p>
-<p><strong>Can I contribute code for a new example?</strong></p>
-<p>Yes, please, by all means. But I suggest that you first create an issue that gives
-an overview of what you wish to accomplish.</p>
-<p><strong>I found a cool use of import hooks in another project, different from all of your examples.</strong></p>
-<p>Please, give me the details and I will see if I can <em>easily</em> include
-a similar example and if I think it is worthwhile to do so.</p>
-<p><strong>I think that the explanation you have written for X could be improved upon.</strong></p>
-<p>Please tell me more by filing an issue first and possibly creating a pull-request afterwards.</p>
-<p><strong>I have an idea for a new example, but do not know how to write the code for it.</strong></p>
-<p>First, make sure you go through all of the existing examples to confirm that
-none can easily be adapted to do what you want.
-If that is the case, file an issue …
-but please don’t be offended if I don’t write code for it
-and end up closing the issue: I already have too many ideas of my own
-for this project, too many other projects, and not
-enough time to do all that I want.</p>
-<p><strong>What about something like</strong> <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">braces</span></code> <strong>?</strong></p>
-<p>No.</p>
-<p><strong>In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
-in a Python project.</strong></p>
-<p><em>Seriously?</em>  This project is all about exploring potential changes
-to Python’s syntax, some of which are downright crazy, and you complain
-about a PEP-8 violation? …</p>
-<p>Ok, perhaps you can tell me and it might make sense to change what I wrote.</p>
-<p><strong>People from the Python-ideas mailing lists mentioned that I should look
-at this project for my suggestion for a new syntax, but I don’t know where to start.</strong></p>
-<p>Just keep reading.</p>
-</section>
 <section id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline"></a></h2>
-<aside class="sidebar">
-<p class="sidebar-title">Work in progress</p>
-<p>Much more content will be added … <em>soon</em>.</p>
-</aside>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
@@ -271,7 +231,11 @@ at this project for my suggestion for a new syntax, but I don’t know where to 
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -279,11 +243,26 @@ at this project for my suggestion for a new syntax, but I don’t know where to 
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 </div>
@@ -301,11 +280,6 @@ at this project for my suggestion for a new syntax, but I don’t know where to 
 <h2>To do<a class="headerlink" href="#to-do" title="Permalink to this headline"></a></h2>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
-<p>Try to create a different module object.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\constants.rst, line 123.)</p>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
 <p><strong>Add these examples</strong></p>
 <p>I need to add some explanations and provide links to the following examples:</p>
 <ul class="simple">
@@ -315,6 +289,11 @@ at this project for my suggestion for a new syntax, but I don’t know where to 
 <p>etc.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="excluded.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\excluded.rst, line 26.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Try to create a different module object.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\constants.rst, line 123.)</p>
 </section>
 </section>
 

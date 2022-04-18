@@ -10,13 +10,8 @@ Improving function as a keyword
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This example should be your starting point.
-We show how to use the tokenizer to transform a source and explain
-how to make use of some diagnostic "tools". Admittedly, using
-these "tools" make the code more complicated than strictly needed.
-Since we incorporate such "tools" in later examples, you might want
-to be familiar with them so that you can learn to recognize and potentially
-ignore them while looking at the actual code.
-
+It shows how to use the tokenizer to transform a source using the
+token-utils library. 
 
 nobreak as a keyword
 ~~~~~~~~~~~~~~~~~~~~~
@@ -29,14 +24,18 @@ repeat as a keyword
 
 This includes four different transformations,
 one of which requires to add some extra variables to the original code.
-We do so in a way that avoid any conflict with existing variable names.
+It is done in a way that avoid any conflict with existing variable names.
+
+It also shows how to include some parameters that are passed back to the
+source transformation.
 
 French Python
 ~~~~~~~~~~~~~
 
 This is a source transformation that allows one
 to use French equivalent keywords to the existing ones.
-It shows how to make use of a different file extension (``.pyfr``)
+It shows how to make use of a different file extension (``.pyfr``),
+loading such files as if they were regular Python files.
 
 French repeat
 ~~~~~~~~~~~~~~
@@ -58,11 +57,26 @@ Fractional math (token)
 
 This is a functionally equivalent version to the AST proof of concept
 example [Fractional math (ast)] mentioned below.
-It demontrattes how to include
+It demonstrates how to include
 supplementary code, such as importing a module or defining a function,
 in addition to the user code, while ensuring that the console (REPL)
 can still work properly.
 
+Switch statement
+~~~~~~~~~~~~~~~~~
+
+Implementing a switch statement as described in the rejected PEP 3103.
+This example was done quite a few years ago, well before the
+match statement was added to Python.
+
+Implicit multiplication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python's syntax does not allow to write a number followed by an
+non-keyword identifier or by a parenthesis, nor does it allow to write two
+non-keyword identifiers in a row. However, when writing equations on
+paper, these constructs are recognized as indicating a multiplication.
+This transformation does the same.
 
 Abstract Syntax Tree transformations
 ------------------------------------
@@ -76,19 +90,6 @@ supplementary code, such as importing a module or defining a function,
 in addition to the user code while ensuring that the console (REPL)
 can still work properly.
 
-Switch statement
-~~~~~~~~~~~~~~~~~
-
-Implementing a switch statement as described in the rejected PEP 3103.
-
-Implicit multiplication
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Python's syntax does not allow to write a number followed by an
-non-keyword identifier or by a parenthesis, nor does it allow to write two
-non-keyword identifiers in a row. However, when writing equations on
-paper, these constructs are recognized as indicating a multiplication.
-This transformation does the same.
 
 Bytecode transformations
 -------------------------
@@ -96,13 +97,13 @@ Bytecode transformations
 Confused math
 ~~~~~~~~~~~~~~~~~
 
-This is a proof-of-concept bytecode transformation.
+This is a proof-of-concept demonstrating bytecode transformation.
 
 Other types
 ------------
 
 True constants
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 This is a fairly complex example that illustrates
 the use of a custom module dict and class.

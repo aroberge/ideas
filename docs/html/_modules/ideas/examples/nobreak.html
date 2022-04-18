@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.nobreak &mdash; ideas 0.0.32 documentation</title>
+  <title>ideas.examples.nobreak &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -42,14 +42,16 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
@@ -57,11 +59,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -97,12 +108,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ideas.examples.nobreak</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;nobreak.py</span>
-<span class="sd">-------------</span>
-
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module enables someone to use ``nobreak`` as a keyword</span>
-<span class="sd">   equivalent to ``else`` in ``for`` and ``while`` loops.</span>
-
+<span class="sd">equivalent to ``else`` in ``for`` and ``while`` loops.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span>
 <span class="kn">import</span> <span class="nn">token_utils</span>
@@ -116,6 +124,8 @@
     <span class="n">indentations</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># The following is not a proper parser, but it should work</span>
+    <span class="c1"># well enough in most cases, for well-formatted code.</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="n">first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -125,6 +135,7 @@
             <span class="k">if</span> <span class="n">first</span><span class="o">.</span><span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">indentations</span><span class="p">[</span><span class="n">first</span><span class="o">.</span><span class="n">start_col</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;while&quot;</span><span class="p">]:</span>
                     <span class="n">first</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;else&quot;</span>
+                    <span class="k">del</span> <span class="n">indentations</span><span class="p">[</span><span class="n">first</span><span class="o">.</span><span class="n">start_col</span><span class="p">]</span>
         <span class="n">indentations</span><span class="p">[</span><span class="n">first</span><span class="o">.</span><span class="n">start_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">string</span>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
@@ -133,11 +144,10 @@
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../nobreak.html#ideas.examples.nobreak.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">hook</span></div>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

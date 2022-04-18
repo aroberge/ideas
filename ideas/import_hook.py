@@ -12,7 +12,8 @@ from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
 
 from . import console
-from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES
+from .session import config
+from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES, print_source
 
 
 # Identify the main script assuming that it has been called from
@@ -35,6 +36,7 @@ class IdeasMetaFinder(MetaPathFinder):
         excluded_paths=None,
         exec_=None,
         extensions=None,
+        hook_name=None,
         module_class=None,
         source_init=None,
         transform_ast=None,
@@ -48,11 +50,17 @@ class IdeasMetaFinder(MetaPathFinder):
         self.excluded_paths = excluded_paths
         self.exec_ = exec_
         self.extensions = extensions
+        self.hook_name = hook_name
         self.module_class = module_class
         self.source_init = source_init
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
+
+    def __repr__(self):
+        if self.hook_name is None:
+            return "<IdeasMetaFinder object>"
+        return f"<IdeasMetaFinder object for {self.hook_name}>"
 
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
@@ -159,15 +167,20 @@ class IdeasLoader(Loader):
 
         with open(self.filename, mode="r+b") as f:
             source = decode_source(f.read())
+        original_source = source
 
         if self.transform_source is not None:
             source = self.transform_source(
                 source,
                 filename=self.filename,
-                globals_=module.__dict__,
+                # globals_=module.__dict__,
                 module=module,
                 callback_params=self.callback_params,
             )
+
+        if config.show_changes and original_source != source:
+            print_source(original_source, header="Original")
+            print_source(source, header="New")
 
         if self.source_init is not None:
             source = self.source_init() + source
@@ -244,6 +257,7 @@ def create_hook(
         excluded_paths=excluded_paths,
         exec_=exec_,
         extensions=extensions,
+        hook_name=hook_name,
         module_class=module_class,
         source_init=source_init,
         transform_ast=transform_ast,

@@ -45,7 +45,7 @@ def transform_source(
 
     if prefix and hasattr(module, "__name__") and module.__name__ == "__main__":
         PREFIX["main"] = prefix
-        if callback_params["show_transformed"]:
+        if callback_params["show_changes"]:
             utils.print_source(prefix, "Prefix")
             PREFIX_SHOWN = True
     elif prefix and filename == CONSOLE_NAME:
@@ -58,7 +58,7 @@ def transform_source(
         prefix
         and not PREFIX_SHOWN
         and filename == CONSOLE_NAME
-        and callback_params["show_transformed"]
+        and callback_params["show_changes"]
     ):
         utils.print_source(prefix, "Prefix")
         PREFIX_SHOWN = True
@@ -69,7 +69,7 @@ def transform_source(
 
     source = transform_units(source, prefix)
 
-    if callback_params["show_transformed"] and original != source:
+    if callback_params["show_changes"] and original != source:
         utils.print_source(source, "New")
 
     return source
@@ -129,13 +129,11 @@ def transform_units(source, prefix=""):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(
-    show_original=False, show_transformed=False, verbose_finder=False, **_kwargs
-):
+def add_hook(show_original=False, show_changes=False, verbose_finder=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
-        "show_transformed": show_transformed,
+        "show_changes": show_changes,
     }
     hook = import_hook.create_hook(
         transform_source=transform_source,

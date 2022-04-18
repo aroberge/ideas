@@ -1,34 +1,40 @@
-Confused math
-===============================
-
 .. admonition:: Summary
 
-    Demonstration of a simple bytecode transformation where
-    we interchange ``BINARY_ADD`` and ``BINARY_MULTIPLY``.
-
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/confused_math_bc.py>`_
+   This example shows how to create an import hook that mutates a bytecode object.
 
 
-Let's start with a demo from the console::
+Confused math
+===============
 
-    >>> from ideas.examples import confused_math_bc
-    >>> confused_math_bc.add_hook()
-    <ideas.import_hook.IdeasMetaFinder object at 0x0317A590>
-    >>> from ideas import console
-    >>> console.start()
-    Configuration values for the console:
-        transform_bytecode from ideas.examples.confused_math_bc
-    --------------------------------------------------
-    Ideas Console version 0.0.4. [Python version: 3.7.3]
+This demonstrates what happens if we swap the meaning of
+the ``BINARY_ADD`` and ``BINARY_MULTIPLY`` bytecodes.
 
-    ~>> x = 3
-    ~>> x + x
-    9
-    ~>> x * x
-    6
+.. code-block:: none
+
+    > python -m ideas -a confused_math_bc
+    Ideas Console version 0.0.34. [Python version: 3.10.2]
+    
+.. code-block::
+
+    >>> x = 3
+    >>> y = 7
+    >>> x + y
+    21
+    >>> x * y
+    10
+    >>> # Python does simple mathematical operations *before*
+    >>> # generating bytecode
+    >>> z = 3 + 4
+    >>> z
+    7
 
 Yes, it is a silly example. However, I cannot come up with anything
-possibly useful. Feel free to submit a better example.
+possibly useful to demonstrate the value of changing bytecode.
+Feel free to submit a better example.
+
+API for ``confused_math_bc``
+----------------------------
+
 
 .. automodule:: ideas.examples.confused_math_bc
    :members:

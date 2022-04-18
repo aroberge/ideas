@@ -37,7 +37,7 @@ The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the ``ideas.examples``
-directory included with ``ideas``.
+directory included with **ideas**.
 
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:
@@ -98,17 +98,15 @@ Here is an example using IPython in a terminal.
     In [1]: from ideas.examples import function_keyword
 
     In [2]: function_keyword.add_hook()
-    Out[2]: <ideas.import_hook.IdeasMetaFinder at 0x1e562eebf40>
+    Out[2]: <IdeasMetaFinder object for ideas.examples.function_keyword>
 
     In [3]: cube = function x: x** 3
 
     In [4]: cube(3)
     Out[4]: 27
 
-
 Starting from a standard CPython interpreter
 ----------------------------------------------
-
 
 Unlike the IPython interactive interpreter (aka 'shell'), the CPython
 interpreter does not support directly transformations done by ideas.
@@ -119,15 +117,14 @@ interactive interpreter.
 
     >>> from ideas.examples import function_keyword
     >>> function_keyword.add_hook()
-    <ideas.import_hook.IdeasMetaFinder object at 0x000001CBFB4E5130>
+    <IdeasMetaFinder object for ideas.examples.function_keyword>
     >>> from ideas import console
     >>> console.start()
-    Ideas Console version 0.0.31. [Python version: 3.8.10]
+    Ideas Console version 0.0.34. [Python version: 3.10.2]
 
     ~>> sq = function x: x**2
     ~>> sq(3)
     9
-    ~>>
 
 In this case, the ideas prompt ``~>>`` is different from the CPython one.
 
@@ -139,3 +136,10 @@ According to a few quick tests we did, **ideas** works with Pypy just
 as well as it does with CPython.
 
 
+Advanced usage
+--------------
+
+Information about more advanced usage can be found in this documentation.
+You can also do the following in a terminal::
+
+    python -m ideas -h

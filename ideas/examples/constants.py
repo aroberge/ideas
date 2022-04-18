@@ -48,7 +48,7 @@ def make_class(on_prevent_change=True):
             ):
                 if on_prevent_change:
                     if callable(on_prevent_change):
-                        on_prevent_change(
+                        on_prevent_change(  # noqa
                             filename=self.__file__, key=key, value=value, kind="set"
                         )
                     return
@@ -58,7 +58,7 @@ def make_class(on_prevent_change=True):
             if key in CONSTANTS[self.__file__]:
                 if on_prevent_change:
                     if callable(on_prevent_change):
-                        on_prevent_change(
+                        on_prevent_change(  # noqa
                             filename=self.__file__, key=key, kind="delete"
                         )
                     return
@@ -119,7 +119,7 @@ class FinalDict(dict):
     def setdefault(self, key, default=None):
         """Insert key with a value of default if key is not in the dictionary.
 
-        Prevents changes if the key is identified as a constant.
+        It prevents changes if the key is identified as a constant.
         """
         if key in CONSTANTS[self.__file__]:
             if self.on_prevent_change:
@@ -134,7 +134,7 @@ class FinalDict(dict):
 
     def pop(self, key):
         """D.pop(key) -> value, remove specified key and return the corresponding value,
-        unless the key is identifed as a constant.
+        unless the key is identified as a constant.
 
         If key is not found, d is returned if given, otherwise KeyError is raised
         """

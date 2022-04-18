@@ -24,7 +24,7 @@ The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the ``ideas.examples``
-directory included with ``ideas``.
+directory included with **ideas**.
 
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:

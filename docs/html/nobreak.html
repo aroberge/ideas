@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>nobreak as a keyword &mdash; ideas 0.0.32 documentation</title>
+  <title>nobreak as a keyword &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="repeat as a keyword" href="repeat.html" />
-    <link rel="prev" title="Improving function as a keyword" href="function.html" /> 
+    <link rel="prev" title="Guide to the examples" href="guide.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,21 +45,21 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> nobreak as a keyword</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#implementing-nobreak">Implementing nobreak</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#nobreak-py">nobreak.py</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful-function-from-token-utils">Useful function from <code class="docutils literal notranslate"><span class="pre">token_utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.nobreak">API for <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
@@ -68,11 +68,20 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -102,7 +111,7 @@
             <a href="_sources/nobreak.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="function.html" class="btn btn-neutral float-left" title="Improving function as a keyword" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide.html" class="btn btn-neutral float-left" title="Guide to the examples" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="repeat.html" class="btn btn-neutral float-right" title="repeat as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
@@ -134,16 +143,15 @@
     text-align: unset;
 }
 </style>
-<section id="nobreak-as-a-keyword">
-<h1><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>Somewhat similar to the function keyword example except
-that we keep track of the indentation level and
+that we must keep track of the indentation level and
 replace our new keyword (<code class="docutils literal notranslate"><span class="pre">nobreak</span></code>) only if
 some conditions are met.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/nobreak.py">Source code</a></p>
 </div>
+<section id="nobreak-as-a-keyword">
+<h1><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline"></a></h1>
 <p>Python’s <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loop include an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause
 whose meaning is not immediately obvious:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
@@ -198,16 +206,29 @@ From <a class="reference external" href="https://docs.python.org/3/reference/com
 it makes little sense in this case to use a different keyword such as
 <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>, that would point to a specific cause which would likely be wrong.</p>
 </section>
-<section id="implementing-nobreak">
-<h2>Implementing nobreak<a class="headerlink" href="#implementing-nobreak" title="Permalink to this headline"></a></h2>
-<p>From the following API generated by Sphinx, you can get access to the
-actual code which, by now, should be fairly straightforward to understand.</p>
-<span class="target" id="module-ideas.examples.nobreak"></span><section id="nobreak-py">
-<h3>nobreak.py<a class="headerlink" href="#nobreak-py" title="Permalink to this headline"></a></h3>
-<dl class="simple">
-<dt>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword</dt><dd><p>equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops.</p>
-</dd>
-</dl>
+<section id="useful-function-from-token-utils">
+<h2>Useful function from <code class="docutils literal notranslate"><span class="pre">token_utils</span></code><a class="headerlink" href="#useful-function-from-token-utils" title="Permalink to this headline"></a></h2>
+<p>The code for <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> makes use of the <code class="docutils literal notranslate"><span class="pre">get_first</span></code> function from
+<code class="docutils literal notranslate"><span class="pre">token_utils</span></code>. Here’s some useful information about it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">token_utils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">)</span>
+<span class="go">Help on function get_first in module token_utils:</span>
+
+<span class="go">get_first(tokens, exclude_comment=True)</span>
+<span class="go">    Given a list of tokens, find the first token which is not a space token</span>
+<span class="go">    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,</span>
+<span class="go">    by default, also not a ``COMMMENT``.</span>
+
+<span class="go">    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.</span>
+
+<span class="go">    Returns ``None`` if none is found.</span>
+</pre></div>
+</div>
+</section>
+<section id="module-ideas.examples.nobreak">
+<span id="api-for-nobreak"></span><h2>API for <code class="docutils literal notranslate"><span class="pre">nobreak</span></code><a class="headerlink" href="#module-ideas.examples.nobreak" title="Permalink to this headline"></a></h2>
+<p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword
+equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.nobreak.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.nobreak.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/nobreak.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.nobreak.add_hook" title="Permalink to this definition"></a></dt>
@@ -224,13 +245,12 @@ that of a <code class="docutils literal notranslate"><span class="pre">for</span
 
 </section>
 </section>
-</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="function.html" class="btn btn-neutral float-left" title="Improving function as a keyword" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guide.html" class="btn btn-neutral float-left" title="Guide to the examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="repeat.html" class="btn btn-neutral float-right" title="repeat as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

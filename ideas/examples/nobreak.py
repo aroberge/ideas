@@ -1,9 +1,6 @@
-"""nobreak.py
--------------
-
+"""
 This module enables someone to use ``nobreak`` as a keyword
-   equivalent to ``else`` in ``for`` and ``while`` loops.
-
+equivalent to ``else`` in ``for`` and ``while`` loops.
 """
 from ideas import import_hook
 import token_utils
@@ -17,6 +14,8 @@ def transform_source(source, **_kwargs):
     indentations = {}
     lines = token_utils.get_lines(source)
     new_tokens = []
+    # The following is not a proper parser, but it should work
+    # well enough in most cases, for well-formatted code.
     for line in lines:
         first = token_utils.get_first(line)
         if first is None:
@@ -26,6 +25,7 @@ def transform_source(source, **_kwargs):
             if first.start_col in indentations:
                 if indentations[first.start_col] in ["for", "while"]:
                     first.string = "else"
+                    del indentations[first.start_col]
         indentations[first.start_col] = first.string
         new_tokens.extend(line)
 
@@ -34,8 +34,7 @@ def transform_source(source, **_kwargs):
 
 def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    return import_hook.create_hook(
         transform_source=transform_source,
         hook_name=__name__,
     )
-    return hook

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; ideas 0.0.32 documentation</title>
+  <title>Usage &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Create your own import hook" href="function_simplest.html" />
+    <link rel="next" title="Create your first import hook" href="function_keyword.html" />
     <link rel="prev" title="Additional motivation for this project" href="motivation.html" /> 
 </head>
 
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.32
+                0.0.34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -50,16 +50,19 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-with-ipython-or-jupyter-notebook-lab">Using with IPython or Jupyter notebook/lab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#starting-from-a-standard-cpython-interpreter">Starting from a standard CPython interpreter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-with-pypy">Using with Pypy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -67,11 +70,20 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Others</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html"> True constants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="excluded.html"> Examples never included - first draft</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
@@ -102,7 +114,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Create your own import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function_keyword.html" class="btn btn-neutral float-right" title="Create your first import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -166,7 +178,7 @@ the same thing as <code class="docutils literal notranslate"><span class="pre">l
 a function named <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the <code class="docutils literal notranslate"><span class="pre">ideas.examples</span></code>
-directory included with <code class="docutils literal notranslate"><span class="pre">ideas</span></code>.</p>
+directory included with <strong>ideas</strong>.</p>
 <p>You may have noticed in the above that <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not
 include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension. This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
 Python <strong>import hooks</strong>, by definition, only work on modules that are
@@ -212,15 +224,15 @@ you can run a main script and continue with the interactive console:</p>
 <h2>Using with IPython or Jupyter notebook/lab<a class="headerlink" href="#using-with-ipython-or-jupyter-notebook-lab" title="Permalink to this headline"></a></h2>
 <p>You can also use it with IPython, either in a terminal or in a Jupyter environment.
 Here is an example using IPython in a terminal.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span>In [1]: from ideas.examples import function_keyword
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">function_keyword</span>
 
-In [2]: function_keyword.add_hook()
-Out[2]: &lt;ideas.import_hook.IdeasMetaFinder at 0x1e562eebf40&gt;
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">IdeasMetaFinder</span> <span class="nb">object</span> <span class="k">for</span> <span class="n">ideas</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
 
-In [3]: cube = function x: x** 3
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span> <span class="mi">3</span>
 
-In [4]: cube(3)
-Out[4]: 27
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">cube</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="mi">27</span>
 </pre></div>
 </div>
 </section>
@@ -232,15 +244,14 @@ It is however possible to start the ideas console from the CPython
 interactive interpreter.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;ideas.import_hook.IdeasMetaFinder object at 0x000001CBFB4E5130&gt;</span>
+<span class="go">&lt;IdeasMetaFinder object for ideas.examples.function_keyword&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Ideas Console version 0.0.31. [Python version: 3.8.10]</span>
+<span class="go">Ideas Console version 0.0.34. [Python version: 3.10.2]</span>
 
 <span class="go">~&gt;&gt; sq = function x: x**2</span>
 <span class="go">~&gt;&gt; sq(3)</span>
 <span class="go">9</span>
-<span class="go">~&gt;&gt;</span>
 </pre></div>
 </div>
 <p>In this case, the ideas prompt <code class="docutils literal notranslate"><span class="pre">~&gt;&gt;</span></code> is different from the CPython one.</p>
@@ -250,6 +261,14 @@ interactive interpreter.</p>
 <p>According to a few quick tests we did, <strong>ideas</strong> works with Pypy just
 as well as it does with CPython.</p>
 </section>
+<section id="advanced-usage">
+<h2>Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline"></a></h2>
+<p>Information about more advanced usage can be found in this documentation.
+You can also do the following in a terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -257,7 +276,7 @@ as well as it does with CPython.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function_simplest.html" class="btn btn-neutral float-right" title="Create your own import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function_keyword.html" class="btn btn-neutral float-right" title="Create your first import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

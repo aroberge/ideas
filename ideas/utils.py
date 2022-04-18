@@ -59,15 +59,24 @@ def print_paths():
 
 
 def print_source(source, header="Source"):
-    """Prints the source code.
+    """Prints a maximum of 10 lines of the source code.
+
+    If there is a single line, it is prefixed by ``header: `.
+    Otherwise, it is surrounded by dividers.
 
     ``header`` is usually either ``"Original"`` or ``"New"``
     """
     lines = source.split("\n")
     if len(lines) > 1:
-        print(f"==========={header}============")
+        shortened_source_indicator = "\n..." if len(lines) > 10 else ""
+        if len(lines) > 10:
+            lines = lines[:10]
+        while not lines[-1]:
+            lines.pop()
+        source = "\n".join(lines[:10]) + shortened_source_indicator
+        print(f"\n#========== {header} ====")
         print(source)
-        print("-----------------------------")
+        print(f"#=== End of {header} ====\n")
     else:
         print(f"{header}: {source}")
 

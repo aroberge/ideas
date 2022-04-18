@@ -89,7 +89,7 @@ For this project, I was thinking of using ``importhook`` (singular) or
 ``importhook`` on Pypi and I thought that using the plural form would
 likely be just too confusing.
 
-I settled on ``ideas`` as I am guessing that the main application would be
+I settled on **ideas** as I am guessing that the main application would be
 for people to try out suggestions from or for Python-ideas.
 
 As I was looking at including other examples than the ones
@@ -97,4 +97,4 @@ I mentioned previously, I came accross Andrew Barnert's
 `Stupid Python Ideas <http://stupidpythonideas.blogspot.com/>`_ blog,
 which includes an older post about `Hacking Python with import hooks <http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html>`_.
 I have been thinking about adopting some of his examples, which I would not describe
-as **stupid** but rather as **entertaining** ``ideas``.
+as **stupid** but rather as **entertaining** **ideas**.

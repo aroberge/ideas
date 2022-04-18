@@ -69,13 +69,13 @@ Still, writing import hooks can be rather difficult.
 
         **Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones**
 
-``ideas`` is designed to facilitate
+**ideas** is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.
 
-Instead of figuring out how to write an import hook, using ``ideas`` you
+Instead of figuring out how to write an import hook, using **ideas** you
 can focus exclusively on what what might be needed to convert your proposed new
-syntax into something that Python can understand -- ``ideas`` will
+syntax into something that Python can understand -- **ideas** will
 take care of the rest, including inserting it in ``sys.meta_path``.
 
 .. warning::
@@ -85,83 +85,9 @@ take care of the rest, including inserting it in ``sys.meta_path``.
 
     But it can be fun! ;-)
 
-Infrequently asked questions and comments
-------------------------------------------
-
-.. sidebar:: No FAQ
-
-    In the absence of real questions having yet been asked,
-    the following imaginary dialogue has been written before anyone else knew about
-    this project.
-
-**Why?**
-
-Because it is fun. If this is not enough of a justification for you, have a look at
-the motivation section which contains a longer, and possibly more serious answer.
-
-**Is it safe to use in production code?**
-
-No.
-
-**But your example works perfectly well in my code; can I use it in my project?**
-
-I don't think you should if your project is to be used by anyone else
-but yourself.
-
-**I found a bug.**
-
-Wonderful, please file an issue so that I can perhaps fix it. Note however
-that some examples are just proof of concepts and are known to not be robust.
-
-**Can I contribute code for a new example?**
-
-Yes, please, by all means. But I suggest that you first create an issue that gives
-an overview of what you wish to accomplish.
-
-**I found a cool use of import hooks in another project, different from all of your examples.**
-
-Please, give me the details and I will see if I can *easily* include
-a similar example and if I think it is worthwhile to do so.
-
-**I think that the explanation you have written for X could be improved upon.**
-
-Please tell me more by filing an issue first and possibly creating a pull-request afterwards.
-
-**I have an idea for a new example, but do not know how to write the code for it.**
-
-First, make sure you go through all of the existing examples to confirm that
-none can easily be adapted to do what you want.
-If that is the case, file an issue ...
-but please don't be offended if I don't write code for it
-and end up closing the issue: I already have too many ideas of my own
-for this project, too many other projects, and not
-enough time to do all that I want.
-
-**What about something like** ``from __future__ import braces`` **?**
-
-No.
-
-**In file X.py, you do not respect convention Y from PEP-8. This is unacceptable
-in a Python project.**
-
-*Seriously?*  This project is all about exploring potential changes
-to Python's syntax, some of which are downright crazy, and you complain
-about a PEP-8 violation? ...
-
-Ok, perhaps you can tell me and it might make sense to change what I wrote.
-
-**People from the Python-ideas mailing lists mentioned that I should look
-at this project for my suggestion for a new syntax, but I don't know where to start.**
-
-Just keep reading.
-
 
 Quick links to topics
 ---------------------
-
-.. sidebar:: Work in progress
-
-    Much more content will be added ... *soon*.
 
 
 .. toctree::
@@ -169,7 +95,7 @@ Quick links to topics
 
     Additional motivation <motivation>
     Usage  <usage>
-    Create your own import hook <function_simplest>
+    Create your own import hook <function_keyword>
     Create your own codec <lambda>
     A deep dive <possible>
 
@@ -178,7 +104,11 @@ Quick links to topics
    :caption: Examples
 
     Guide to the examples <guide>
-    Improving function as a keyword <function>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Source transformations
+
     nobreak as a keyword <nobreak>
     repeat as a keyword <repeat>
     French Python <french>
@@ -186,11 +116,26 @@ Quick links to topics
     Auto-self <auto_self>
     Decimal math <decimal_math>
     Fractional math (token) <fractional_math_tok>
-    Fractional math (AST) <fractional_math_ast>
-    Confused math (Bytecode) <bytecode>
-    True constants <constants>
     Switch statement <switch>
     Implicit multiplication <implicit_multiplication>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: AST transformations
+
+    Fractional math (AST) <fractional_math_ast>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Bytecode transformations
+
+    Confused math (Bytecode) <bytecode>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Others
+
+    True constants <constants>
     Examples never included - first draft <excluded>
 
 .. toctree::
@@ -201,7 +146,6 @@ Quick links to topics
     <tokenize_notebook.ipynb>
     import_hook.py <import_hook>
     console.py <console>
-
 
 
 To do

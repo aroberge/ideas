@@ -11,11 +11,12 @@ not captured by this transformation.
 """
 import dis
 import sys
-
 from types import CodeType
-
 from ideas import import_hook
 
+# The actual bytecode used can change with different Python version.
+# Instead of attempting to hard-code some actual bytecode values
+# we extract the actual value used in the current Python version.
 ADD = dis.opmap["BINARY_ADD"]
 MUL = dis.opmap["BINARY_MULTIPLY"]
 
@@ -66,7 +67,7 @@ def create_new_co(code_object):
     else:
         new_code_object = CodeType(
             code_object.co_argcount,
-            code_object.co_posonlyargcount,  # new
+            code_object.co_posonlyargcount,  # new in Python 3.8
             code_object.co_kwonlyargcount,
             code_object.co_nlocals,
             code_object.co_stacksize,
