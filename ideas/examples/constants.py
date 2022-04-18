@@ -195,7 +195,7 @@ def transform_source(source, filename=None, **_kwargs):
     return source
 
 
-def exec_(code_object, filename=None, globals_=None, callback_params=None, **kwargs):
+def exec_(code_object, filename=None, module=None, callback_params=None, **kwargs):
     """Executes a code_object in a local instance of a ``FinalDict``.
 
     The argument ``globals_`` is assumed to be the original module's ``__dict__``.
@@ -211,9 +211,9 @@ def exec_(code_object, filename=None, globals_=None, callback_params=None, **kwa
     locals_ = FinalDict(
         filename, on_prevent_change=callback_params["on_prevent_change"]
     )
-    locals_.update(globals_)
+    locals_.update(module.__dict__)
     exec(code_object, locals_)
-    globals_.update(locals_)
+    module.__dict__.update(locals_)
 
 
 def on_change_print(filename=None, key=None, value=None, kind=None):
