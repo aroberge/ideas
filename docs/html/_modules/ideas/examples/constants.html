@@ -305,7 +305,7 @@
     <span class="k">return</span> <span class="n">source</span></div>
 
 
-<div class="viewcode-block" id="exec_"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.exec_">[docs]</a><span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">globals_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="exec_"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.exec_">[docs]</a><span class="k">def</span> <span class="nf">exec_</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Executes a code_object in a local instance of a ``FinalDict``.</span>
 
 <span class="sd">    The argument ``globals_`` is assumed to be the original module&#39;s ``__dict__``.</span>
@@ -321,9 +321,9 @@
     <span class="n">locals_</span> <span class="o">=</span> <span class="n">FinalDict</span><span class="p">(</span>
         <span class="n">filename</span><span class="p">,</span> <span class="n">on_prevent_change</span><span class="o">=</span><span class="n">callback_params</span><span class="p">[</span><span class="s2">&quot;on_prevent_change&quot;</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="n">locals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">globals_</span><span class="p">)</span>
+    <span class="n">locals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
     <span class="n">exec</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">locals_</span><span class="p">)</span>
-    <span class="n">globals_</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locals_</span><span class="p">)</span></div>
+    <span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locals_</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="on_change_print"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.on_change_print">[docs]</a><span class="k">def</span> <span class="nf">on_change_print</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

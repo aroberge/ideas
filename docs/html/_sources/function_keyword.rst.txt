@@ -215,3 +215,21 @@ API for ``function_keyword``
 
 .. automodule:: ideas.examples.function_keyword
    :members:
+
+
+Complete argument list for ``transform_source``
+------------------------------------------------
+
+In the above example, we had some unspecified keywords arguments
+passed to ``transformed_source``.
+
+At present, the complete list of **possible** arguments is as follows::
+
+    def transform_source(source,
+        filename = full_path,
+        module = module_object,
+        callback_params = user_defined_dict):
+        ...
+
+``full_path`` can be simply the name of the ideas console.
+When using IPython or Jupyter, only the ``source`` is passed back to ``transform_source``.

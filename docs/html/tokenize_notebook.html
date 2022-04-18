@@ -47,7 +47,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
@@ -57,7 +57,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -412,7 +411,7 @@ done, we demonstrate how to change the content in a reliable way.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from ideas import token_utils
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">token_utils</span>
 </pre></div>
 </div>
 </div>
@@ -423,10 +422,10 @@ done, we demonstrate how to change the content in a reliable way.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;a = a&quot;
-tokens = token_utils.tokenize(source)
-for token in tokens:
-    print(token)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;a = a&quot;</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -450,9 +449,9 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(2, 0)  end=(2, 0)  line=&#39;&#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(tokens[0] == tokens[2])
-print(tokens[0] == tokens[2].string)
-print(tokens[0] == &#39;a&#39;)  #  &lt;--  Our normal choice
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>  <span class="c1">#  &lt;--  Our normal choice</span>
 </pre></div>
 </div>
 </div>
@@ -474,11 +473,11 @@ True
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
-if True:
-    pass
-&quot;&quot;&quot;
-token_utils.print_tokens(source)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">if True:</span>
+<span class="s2">    pass</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">token_utils</span><span class="o">.</span><span class="n">print_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -511,19 +510,19 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(4, 0)  end=(4, 0)  line=&#39;&#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
-if True:
-    if False:
-        pass
-    else:
-        a = 42 # a comment
-print(&#39;ok&#39;)
-&quot;&quot;&quot;
-lines = token_utils.get_lines(source)
-for line in lines[4:6]:
-    for token in line:
-        print(token)
-    print()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">if True:</span>
+<span class="s2">    if False:</span>
+<span class="s2">        pass</span>
+<span class="s2">    else:</span>
+<span class="s2">        a = 42 # a comment</span>
+<span class="s2">print(&#39;ok&#39;)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -554,8 +553,8 @@ type=4 (NEWLINE)  string=&#39;\n&#39;  start=(6, 26)  end=(6, 27)  line=&#39;   
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>line = lines[5]
-print( token_utils.untokenize(line) )
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -573,11 +572,11 @@ print( token_utils.untokenize(line) )
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;The first useful token is:\n   &quot;, token_utils.get_first(line))
-print(&quot;The index of the first token is: &quot;, token_utils.get_first_index(line))
-print()
-print(&quot;The last useful token on that line is:\n  &quot;, token_utils.get_last(line))
-print(&quot;Its index is&quot;, token_utils.get_last_index(line))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first useful token is:</span><span class="se">\n</span><span class="s2">   &quot;</span><span class="p">,</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The index of the first token is: &quot;</span><span class="p">,</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The last useful token on that line is:</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="p">,</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Its index is&quot;</span><span class="p">,</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last_index</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -600,7 +599,7 @@ Its index is 3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print( token_utils.get_last(line, exclude_comment=False))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -620,9 +619,9 @@ type=55 (COMMENT)  string=&#39;# a comment&#39;  start=(6, 15)  end=(6, 26)  lin
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(len(line[0].string))
-first = token_utils.get_first(line)
-print(first.start_col)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">string</span><span class="p">))</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -640,13 +639,13 @@ print(first.start_col)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for token in lines[4]:
-    print(token)
-print(&quot;-&quot; * 50)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
 
-print(token_utils.untokenize(lines[4]))
-first = token_utils.get_first(lines[4])
-print(&quot;indentation = &quot;, first.start_col)
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;indentation = &quot;</span><span class="p">,</span> <span class="n">first</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -679,16 +678,16 @@ indentation =  4
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;repeat 2 * 3 : &quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;repeat 2 * 3 : &quot;</span>
 
-tokens = token_utils.tokenize(source)
-repeat = token_utils.get_first(tokens)
-colon = token_utils.get_last(tokens)
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">repeat</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">colon</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 
-repeat.string = &quot;for some_variable in range(&quot;
-colon.string = &quot;):&quot;
+<span class="n">repeat</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;for some_variable in range(&quot;</span>
+<span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;):&quot;</span>
 
-print(token_utils.untokenize(tokens))
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
 <br/></pre></div>
 </div>
 </div>
@@ -705,8 +704,8 @@ for some_variable in range( 2 * 3 ):
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>colon.string = &quot;:&quot;
-print(token_utils.untokenize(tokens))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -723,10 +722,10 @@ for some_variable in range( 2 * 3 :
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>colon_index = token_utils.get_last_index(tokens)
-tokens.insert(colon_index, &quot;)&quot;)
-for token in tokens:
-    print(token)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colon_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">tokens</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">colon_index</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -750,7 +749,7 @@ type=0 (ENDMARKER)  string=&#39;&#39;  start=(2, 0)  end=(2, 0)  line=&#39;&#39;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(token_utils.untokenize(tokens))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -771,24 +770,24 @@ for some_variable in range( 2 * 3) :
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>source = &quot;&quot;&quot;
-if True:
-    a = 1
-      b = 2
-&quot;&quot;&quot;
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">if True:</span>
+<span class="s2">    a = 1</span>
+<span class="s2">      b = 2</span>
+<span class="s2">&quot;&quot;&quot;</span>
 
-# First, reducing the indentation of the &quot;b = 2&quot; line
+<span class="c1"># First, reducing the indentation of the &quot;b = 2&quot; line</span>
 
-lines = token_utils.get_lines(source)
-a_line = lines[2]
-a = token_utils.get_first(a_line)
-assert a == &quot;a&quot;
-b_line = lines[3]
-b = token_utils.get_first(b_line)
-lines[3] = token_utils.dedent(b_line, b.start_col - a.start_col)
+<span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">a_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">a_line</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+<span class="n">b_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">b_line</span><span class="p">)</span>
+<span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">b_line</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
 
-print(token_utils.untokenize(a_line))
-print(token_utils.untokenize(lines[3]))
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">a_line</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
 <br/></pre></div>
 </div>
 </div>
@@ -808,16 +807,16 @@ print(token_utils.untokenize(lines[3]))
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>lines = token_utils.get_lines(source)
-a_line = lines[2]
-a = token_utils.get_first(a_line)
-assert a == &quot;a&quot;
-b_line = lines[3]
-b = token_utils.get_first(b_line)
-lines[2] = token_utils.indent(a_line, b.start_col - a.start_col)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">a_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">a_line</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+<span class="n">b_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">b_line</span><span class="p">)</span>
+<span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">indent</span><span class="p">(</span><span class="n">a_line</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">a</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
 
-print(token_utils.untokenize(lines[2]))
-print(token_utils.untokenize(b_line))
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">b_line</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -837,11 +836,11 @@ print(token_utils.untokenize(b_line))
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>new_tokens = []
-for line in lines:
-    new_tokens.extend(line)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+    <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-print(token_utils.untokenize(new_tokens))
+<span class="nb">print</span><span class="p">(</span><span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

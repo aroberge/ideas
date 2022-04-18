@@ -45,7 +45,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function_simplest.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda.html"> Create your own codec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 </ul>
@@ -55,7 +55,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -162,9 +161,9 @@ I decided to implement it. PEP 3103 looks at various possible syntax,
 and I chose the one which seemed the most in line with normal Python syntax,
 namely version 1 B. The implementation meant to replace code like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
-    <span class="n">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
         <span class="n">SUITE</span>
-    <span class="n">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
         <span class="n">SUITE</span>
     <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
         <span class="n">SUITE</span>
@@ -215,9 +214,9 @@ which was the norm when the PEP was written.</p>
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Permalink to this definition"></a></dt>
 <dd><p>Replaces code like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
-    <span class="n">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
         <span class="n">SUITE</span>
-    <span class="n">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
         <span class="n">SUITE</span>
     <span class="n">case</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
         <span class="n">SUITE</span>

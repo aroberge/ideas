@@ -169,7 +169,7 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;IdeasMetaFinder object&gt;&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;&lt;IdeasMetaFinder object&gt;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;IdeasMetaFinder object for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hook_name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
 <div class="viewcode-block" id="IdeasMetaFinder.find_spec"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder.find_spec">[docs]</a>    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -283,7 +283,6 @@
             <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
                 <span class="n">source</span><span class="p">,</span>
                 <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
-                <span class="n">globals_</span><span class="o">=</span><span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span>
                 <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
                 <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
             <span class="p">)</span>
