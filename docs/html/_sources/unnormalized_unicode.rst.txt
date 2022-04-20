@@ -52,3 +52,8 @@ To understand why Python normally consider ``ℕ`` and ``N`` to be the
 same requires more knowledge about unicode than what is found in a typical
 tutorial.  But before we take a deeper dive into unicode land, let's
 take a detour and talk about Julia.
+
+
+More to come...
+----------------
+

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>French Python &mdash; ideas 0.0.34 documentation</title>
+  <title>French Python &mdash; ideas 0.0.36 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.34
+                0.0.36
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -147,7 +147,7 @@
 <p>This example demonstrates the how to use a non-standard file
 extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>) as an indication that an import hook must
 be used.</p>
-<p>It also demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">verbose_finder</span></code> paramter.</p>
+<p>It also demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">verbose_finder</span></code> configuration option.</p>
 </div>
 <section id="french-python">
 <h1>French Python<a class="headerlink" href="#french-python" title="Permalink to this headline"></a></h1>
@@ -201,14 +201,17 @@ afficher(&quot;Bonjour !&quot;)
 </pre></div>
 </div>
 <p>Let’s see if we attempt to import <code class="docutils literal notranslate"><span class="pre">my_program</span></code> after
-setting up the <code class="docutils literal notranslate"><span class="pre">french</span></code> import hook:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">french</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+setting up the <code class="docutils literal notranslate"><span class="pre">french</span></code> import hook and enabling the
+verbose finder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.session</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">french</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="go">Looking for files with extensions:  [&#39;.pyfr&#39;]</span>
 <span class="go">The following paths will not be included in the search:</span>
-<span class="go">   PYTHON: c:\users\andre\appdata\local\programs\python\python310\lib</span>
+<span class="go">   PYTHON: c:\users\andre\appdata\local\programs\python\python37\lib</span>
 <span class="go">   IDEAS: c:\users\andre\github\ideas\ideas</span>
-<span class="go">   SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.10\lib\site-packages</span>
+<span class="go">   SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.7\lib\site-packages</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">my_program</span>
 <span class="go">    Searching for ~\github\ideas\my_program.pyfr</span>
 <span class="go">    Found: ~\github\ideas\my_program.pyfr</span>
@@ -230,7 +233,7 @@ setting up the <code class="docutils literal notranslate"><span class="pre">fren
 <p>A “French Python” file is recognize by its .pyfr extension.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.french.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose_finder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition"></a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 

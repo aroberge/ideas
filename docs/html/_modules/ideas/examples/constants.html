@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.constants &mdash; ideas 0.0.34 documentation</title>
+  <title>ideas.examples.constants &mdash; ideas 0.0.36 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.34
+                0.0.36
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -338,7 +338,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../constants.html#ideas.examples.constants.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">on_prevent_change</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path</span>
 
 <span class="sd">    When an attempt is made to change the value of a constant, ``on_prevent_change``</span>
@@ -361,7 +361,6 @@
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">verbose_finder</span><span class="o">=</span><span class="n">verbose_finder</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
 </pre></div>
