@@ -96,7 +96,6 @@ def transform_source(source, callback_params=None, **_kwargs):
 
 def add_hook(
     predictable_names=False,
-    verbose_finder=False,
     **_kwargs,
 ):
     """Creates and adds the import hook in sys.meta_path"""
@@ -105,6 +104,5 @@ def add_hook(
         transform_source=transform_source,
         callback_params=callback_params,
         hook_name=__name__,
-        verbose_finder=verbose_finder,
     )
     return hook

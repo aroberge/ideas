@@ -129,7 +129,7 @@ def transform_units(source, prefix=""):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(show_original=False, show_changes=False, verbose_finder=False, **_kwargs):
+def add_hook(show_original=False, show_changes=False, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     callback_params = {
         "show_original": show_original,
@@ -139,6 +139,5 @@ def add_hook(show_original=False, show_changes=False, verbose_finder=False, **_k
         transform_source=transform_source,
         callback_params=callback_params,
         hook_name=__name__,
-        verbose_finder=verbose_finder,
     )
     return hook

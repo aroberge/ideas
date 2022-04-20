@@ -9,6 +9,7 @@ class State:
         self.current_file = ""
         self.active_console = False
         self.original = ""
+        self.verbose_finder = False
         self._show_changes = False
         try:
             self.in_ipython = get_ipython()  # noqa

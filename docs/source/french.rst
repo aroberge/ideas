@@ -4,7 +4,7 @@
     extension (``.pyfr``) as an indication that an import hook must
     be used.
 
-    It also demonstrates how to use the ``verbose_finder`` paramter.
+    It also demonstrates how to use the ``verbose_finder`` configuration option.
 
 French Python
 ==============
@@ -70,16 +70,19 @@ and
 
 
 Let's see if we attempt to import ``my_program`` after
-setting up the ``french`` import hook::
+setting up the ``french`` import hook and enabling the
+verbose finder::
 
 
+   >>> from ideas.session import config
+   >>> config.verbose_finder = True
    >>> from ideas.examples import french
-   >>> hook = french.add_hook(verbose_finder=True)
+   >>> hook = french.add_hook()
    Looking for files with extensions:  ['.pyfr']
    The following paths will not be included in the search:
-      PYTHON: c:\users\andre\appdata\local\programs\python\python310\lib
+      PYTHON: c:\users\andre\appdata\local\programs\python\python37\lib
       IDEAS: c:\users\andre\github\ideas\ideas
-      SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.10\lib\site-packages
+      SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.7\lib\site-packages
    >>> import my_program
        Searching for ~\github\ideas\my_program.pyfr
        Found: ~\github\ideas\my_program.pyfr

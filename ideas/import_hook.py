@@ -42,9 +42,7 @@ class IdeasMetaFinder(MetaPathFinder):
         transform_ast=None,
         transform_bytecode=None,
         transform_source=None,
-        verbose_finder=False,
     ):
-        self.verbose_finder = verbose_finder
         self.callback_params = callback_params
         self.custom_create_module = create_module
         self.excluded_paths = excluded_paths
@@ -78,7 +76,7 @@ class IdeasMetaFinder(MetaPathFinder):
             for sub_path in self.excluded_paths:
                 if sub_path in entry.lower():
                     skip = True
-                    if self.verbose_finder:
+                    if config.verbose_finder:
                         print("    Skipping over:", shorten_path(entry))
                     break
             if skip:
@@ -89,12 +87,12 @@ class IdeasMetaFinder(MetaPathFinder):
                     extension = "." + extension
                 filename = os.path.join(entry, name + extension)
 
-                if self.verbose_finder:
+                if config.verbose_finder:
                     print(f"    Searching for {shorten_path(filename)}{extension}")
                 if os.path.exists(filename):
                     break
                 else:
-                    if self.verbose_finder:
+                    if config.verbose_finder:
                         print(
                             "    IdeasMetaFinder did not find",
                             f"{shorten_path(fullname)}{extension}\n",
@@ -102,7 +100,7 @@ class IdeasMetaFinder(MetaPathFinder):
             else:
                 continue
 
-            if self.verbose_finder:
+            if config.verbose_finder:
                 print("    Found:", shorten_path(filename) + extension, "\n")
             return spec_from_file_location(
                 fullname,
@@ -236,7 +234,6 @@ def create_hook(
     transform_ast=None,
     transform_bytecode=None,
     transform_source=None,
-    verbose_finder=False,
 ):
     """Function to facilitate the creation of an import hook.
 
@@ -278,8 +275,6 @@ def create_hook(
     * ``transform_bytecode``: used to mutate a code object.
     * ``transform_source``: used to transform some source code prior
       to execution.
-    * ``verbose_finder``: if ``True``, provides some information about
-      the module that is being sought by Python prior to its execution.
     """
     global IPYTHON_INIT
     if extensions is None:
@@ -300,7 +295,7 @@ def create_hook(
 
     excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
 
-    if verbose_finder:
+    if config.verbose_finder:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in excluded_paths:
@@ -318,7 +313,6 @@ def create_hook(
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
         transform_source=transform_source,
-        verbose_finder=verbose_finder,
     )
 
     if first:

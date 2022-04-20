@@ -41,12 +41,11 @@ def source_init():
     return import_fraction + new_range
 
 
-def add_hook(verbose_finder=False, **_kwargs):
+def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         hook_name=__name__,
         source_init=source_init,
         transform_source=transform_source,
-        verbose_finder=verbose_finder,
     )
     return hook

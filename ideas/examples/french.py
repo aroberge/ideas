@@ -64,12 +64,11 @@ def transform_source(source, **_kwargs):
     return new_source
 
 
-def add_hook(verbose_finder=False, **_kwargs):
+def add_hook(**_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
     hook = import_hook.create_hook(
         transform_source=transform_source,
         hook_name=__name__,
         extensions=[".pyfr"],
-        verbose_finder=verbose_finder,
     )
     return hook
