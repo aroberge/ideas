@@ -30,7 +30,7 @@ parser.add_argument(
     nargs=1,
     help="""Execute add_hook() from the specified module.
     An attempt is made to import the specified module from the
-    current directory; if it not found, it is then
+    usual entries in sys.path; if it not found, it is then
     imported from ideas.examples.""",
     metavar="MODULE",
 )
@@ -70,7 +70,7 @@ def add_transform(transform):
         try:
             getattr(module, "add_hook")()
         except AttributeError:
-            print(f"Module {transform} does not contain a function named add_hook")
+            print(f"Module {module} does not contain a function named add_hook")
             return
 
     path = f"ideas.examples.{transform}"

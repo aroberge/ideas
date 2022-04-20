@@ -23,8 +23,6 @@ MAIN_NAME = None
 if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
     MAIN_NAME = sys.argv[1].rstrip(".py")
 
-IPYTHON_INIT = False
-
 
 class IdeasMetaFinder(MetaPathFinder):
     """A custom finder to locate modules. The main reason for this code
@@ -295,12 +293,8 @@ def create_hook(
     if source_init is not None and source_init().strip():
         print("   The following initializing code from ideas is included:\n")
         if ipython_shell is not None:
-            print(source_init())
-
-    if source_init is not None and ipython_shell is not None:
-        if not IPYTHON_INIT:
-            IPYTHON_INIT = True
-            lines = [line for line in source_init().splitlines() if line]
+            print(source_init().strip())
+            lines = [line for line in source_init().splitlines() if line.strip()]
             for line in lines:
                 ipython_shell.ex(line)
 
