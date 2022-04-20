@@ -344,8 +344,10 @@ def create_hook(
 
 def make_ipython_source_transformer(transform_source):
     def ipython_source_transformer(lines):
-        source = "".join(lines)
-        source = transform_source(source)
+        original_source = "".join(lines)
+        source = transform_source(original_source)
+        if config.show_changes and source != original_source:
+            config.print_transformed(source, header="New: ")
         lines = source.splitlines(keepends=True)
         return lines
 
