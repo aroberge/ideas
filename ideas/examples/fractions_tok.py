@@ -1,10 +1,6 @@
-"""fractions_tok.py
-----------------
-
-Converts integers literals into instances of the Fraction class in
-the source using the tokenizer.
-This works for doing using Python exclusively to do integer arithmetics but it
-fails miserably in other contexts that expect ``int``.
+"""
+Converts integers literals that are followed by the ``/`` operator
+into instances of the Fraction class in the source using the tokenizer.
 
 It is only meant as an alternative to the AST transformation demo.
 """
@@ -13,32 +9,25 @@ import token_utils
 
 
 def transform_source(source, **_kwargs):
-    """Replace integers by Fraction objects"""
+    """Replace integers (followed by /) by Fraction objects"""
     tokens = token_utils.tokenize(source)
-    for token in tokens:
-        if token.is_integer():
+    if len(tokens) < 3:
+        return source
+
+    new_tokens = []
+    for token, next_ in zip(tokens, tokens[1:]):
+        if token.is_integer() and next_ == "/":
             token.string = f"Fraction({token.string})"
+        new_tokens.append(token)
+    new_tokens.append(next_)  # noqa
 
-    return token_utils.untokenize(tokens)
-
-
-new_range = """
-old_range = range
-def range(n, *args):
-    if len(args) == 0:
-        return old_range(int(n))
-    elif len(args) == 1:
-        return old_range(int(n), int(args[0]))
-    else:
-        return old_range(int(n), int(args[0]), int(args[1]))
-
-"""
+    return token_utils.untokenize(new_tokens)
 
 
 def source_init():
     """Adds required imports and function redefinitions"""
     import_fraction = "from fractions import Fraction\n"
-    return import_fraction + new_range
+    return import_fraction
 
 
 def add_hook(**_kwargs):
