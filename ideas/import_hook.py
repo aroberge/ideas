@@ -23,6 +23,8 @@ MAIN_NAME = None
 if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
     MAIN_NAME = sys.argv[1].rstrip(".py")
 
+IPYTHON_INIT = False
+
 
 class IdeasMetaFinder(MetaPathFinder):
     """A custom finder to locate modules. The main reason for this code
@@ -281,8 +283,21 @@ def create_hook(
     * ``verbose_finder``: if ``True``, provides some information about
       the module that is being sought by Python prior to its execution.
     """
+    global IPYTHON_INIT
     if extensions is None:
         extensions = [".py"]
+
+    if source_init is not None:
+        if not IPYTHON_INIT:
+            IPYTHON_INIT = True
+            try:
+                ip = get_ipython()  # noqa
+            except NameError:
+                pass
+            else:
+                lines = source_init().splitlines()
+                for line in lines:
+                    ip.ex(line)
 
     excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
 
