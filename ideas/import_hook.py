@@ -295,8 +295,11 @@ def create_hook(
     if source_init is not None and ipython_shell is not None:
         if not IPYTHON_INIT:
             IPYTHON_INIT = True
-            lines = source_init().splitlines()
+            lines = [line for line in source_init().splitlines() if line]
+            if lines:
+                print("   The following initializing code from ideas is included:\n")
             for line in lines:
+                print(line)
                 ipython_shell.ex(line)
 
     excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
