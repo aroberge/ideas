@@ -8,7 +8,8 @@ from being 'normalized'.
 Original idea from Sergey B. Kirpichev.
 See https://github.com/aroberge/ideas/issues/13 for a reference.
 """
-import token_utils
+import io
+import tokenize
 import unicodedata
 import uuid
 
@@ -21,18 +22,18 @@ def transform_source(source, **_kwargs):
     """Transform names that would normally be 'normalized' by
     Python into different and unique variable names.
     """
-    new_tokens = []
-    tokens = token_utils.tokenize(source)
-    for token in tokens:
-        if token.is_identifier():
-            # NFKC is the normalization used by Python
-            normalized_name = unicodedata.normalize("NFKC", token.string)
-            if normalized_name != token.string:
-                if token.string not in _NAMES_MAP:
-                    _NAMES_MAP[token.string] = f"{normalized_name}_{uuid.uuid4().hex!s}"
-                    token.string = _NAMES_MAP[token.string]
-        new_tokens.append(token)
-    return token_utils.untokenize(new_tokens)
+    # Note: we cannot use token_utils as it does the NKFC normalization
+    result = []
+    g = tokenize.tokenize(io.BytesIO(source.encode()).readline)
+    for token_type, token_string, _, _, _ in g:
+        if token_type == tokenize.NAME:
+            normalized_name = unicodedata.normalize("NFKC", token_string)
+            if normalized_name != token_string:
+                if token_string not in _NAMES_MAP:
+                    _NAMES_MAP[token_string] = f"{normalized_name}_{uuid.uuid4().hex!s}"
+                token_string = _NAMES_MAP[token_string]
+        result.append((token_type, token_string))
+    return tokenize.untokenize(result).decode()
 
 
 def new_dir(obj=None):
