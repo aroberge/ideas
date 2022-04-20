@@ -8,33 +8,31 @@ from being 'normalized'.
 Original idea from Sergey B. Kirpichev.
 See https://github.com/aroberge/ideas/issues/13 for a reference.
 """
-import io
-import tokenize
+import token_utils
 import unicodedata
 import uuid
 
 from ideas import import_hook
 
-__NAMES_MAP = {}
+_NAMES_MAP = {}
 
 
 def transform_source(source, **_kwargs):
     """Transform names that would normally be 'normalized' by
     Python into different and unique variable names.
     """
-    result = []
-    g = tokenize.tokenize(io.BytesIO(source.encode()).readline)
-    for token_type, token_string, _, _, _ in g:
-        if token_type == tokenize.NAME:
-            normalized_name = unicodedata.normalize("NFKC", token_string)
-            if normalized_name != token_string:
-                if token_string not in __NAMES_MAP:
-                    __NAMES_MAP[
-                        token_string
-                    ] = f"{normalized_name}_{uuid.uuid4().hex!s}"
-                token_string = __NAMES_MAP[token_string]
-        result.append((token_type, token_string))
-    return tokenize.untokenize(result).decode()
+    new_tokens = []
+    tokens = token_utils.tokenize(source)
+    for token in tokens:
+        if token.is_identifier():
+            # NFKC is the normalization used by Python
+            normalized_name = unicodedata.normalize("NFKC", token.string)
+            if normalized_name != token.string:
+                if token.string not in _NAMES_MAP:
+                    _NAMES_MAP[token.string] = f"{normalized_name}_{uuid.uuid4().hex!s}"
+                    token.string = _NAMES_MAP[token.string]
+        new_tokens.append(token)
+    return token_utils.untokenize(new_tokens)
 
 
 def new_dir(obj=None):
@@ -49,8 +47,8 @@ def new_dir(obj=None):
         names = dir(obj)
     else:
         names = list(inspect.currentframe().f_back.f_locals)
-    for k, v in __NAMES_MAP.items():
-        names = [_.replace(v, k) for _ in names]
+    for k, v in _NAMES_MAP.items():
+        names = [name.replace(v, k) for name in names]
     return sorted(names)
 
 
