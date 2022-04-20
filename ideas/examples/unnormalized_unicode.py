@@ -18,27 +18,28 @@ from ideas import import_hook
 __NAMES_MAP = {}
 
 
-def transform_names(source, **_kwargs):
+def transform_source(source, **_kwargs):
     """Transform names that would normally be 'normalized' by
     Python into different and unique variable names.
     """
     result = []
     g = tokenize.tokenize(io.BytesIO(source.encode()).readline)
-    for toknum, tokval, _, _, _ in g:
-        if toknum == tokenize.NAME:
-            normalized_name = unicodedata.normalize("NFKC", tokval)
-            if normalized_name != tokval:
-                if tokval not in __NAMES_MAP:
-                    __NAMES_MAP[tokval] = f"{normalized_name}_{uuid.uuid4().hex!s}"
-                tokval = __NAMES_MAP[tokval]
-        result.append((toknum, tokval))
+    for token_type, token_string, _, _, _ in g:
+        if token_type == tokenize.NAME:
+            normalized_name = unicodedata.normalize("NFKC", token_string)
+            if normalized_name != token_string:
+                if token_string not in __NAMES_MAP:
+                    __NAMES_MAP[
+                        token_string
+                    ] = f"{normalized_name}_{uuid.uuid4().hex!s}"
+                token_string = __NAMES_MAP[token_string]
+        result.append((token_type, token_string))
     return tokenize.untokenize(result).decode()
 
 
 def new_dir(obj=None):
     """Similar to Python's dir, but shows the original name
-    entered, not the transformed one. It also filters out any variable
-    whose names starts with a double underscore.
+    entered, not the transformed one.
 
     Note: the real Python dir() should be available as true_dir().
     """
@@ -50,16 +51,18 @@ def new_dir(obj=None):
         names = list(inspect.currentframe().f_back.f_locals)
     for k, v in __NAMES_MAP.items():
         names = [_.replace(v, k) for _ in names]
-    names = [name for name in names if not names.startswith("__")]
-    if obj is None:
-        # Purposely hide some names :-)
-        for name in ["dir", "true_dir"]:
-            if name in names:
-                names.remove(name)
     return sorted(names)
 
 
-import_hook.create_hook(
-    transform_source=transform_names,
-    console_dict={"__NAMES_MAP": __NAMES_MAP, "dir": new_dir, "true_dir": dir},
-)
+def source_init():
+    return """
+true_dir = dir
+from ideas.examples.unnormalized_unicode import new_dir as dir
+"""
+
+
+def add_hook(**_kwargs):
+    """Creates and automatically adds the import hook in sys.meta_path"""
+    return import_hook.create_hook(
+        transform_source=transform_source, source_init=source_init, hook_name=__name__
+    )
