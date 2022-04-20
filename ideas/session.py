@@ -6,10 +6,25 @@ class State:
     def __init__(self):
         self.console_name = "Ideas Console"
         self.show_original = False
-        self.show_changes = False
         self.current_file = ""
         self.active_console = False
         self.original = ""
+        self._show_changes = False
+        try:
+            self.in_ipython = get_ipython()  # noqa
+        except NameError:
+            self.in_ipython = False
+
+    @property
+    def show_changes(self):
+        return self._show_changes
+
+    @show_changes.setter
+    def show_changes(self, value):
+        if self.in_ipython:
+            print("Showing source changes is not implemented for IPython")
+            return
+        self._show_changes = value
 
     def print_original(self, source, header="Original"):
         self.original = source
