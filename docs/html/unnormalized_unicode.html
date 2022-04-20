@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search &mdash; ideas 0.0.34 documentation</title>
+  <title>Unnormalized unicode &mdash; ideas 0.0.34 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,10 +18,10 @@
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
+    <link rel="prev" title="Implicit multiplication" href="implicit_multiplication.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +35,7 @@
                 0.0.34
               </div>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
@@ -60,7 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Unnormalized unicode</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -101,31 +101,98 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Search</li>
+      <li>Unnormalized unicode</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/unnormalized_unicode.rst.txt" rel="nofollow"> View page source</a>
       </li>
-  </ul>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
 
-  
-  <div id="search-results">
-  
-  </div>
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="unnormalized-unicode">
+<h1>Unnormalized unicode<a class="headerlink" href="#unnormalized-unicode" title="Permalink to this headline"></a></h1>
+<blockquote class="epigraph">
+<div><p><em>The idea for this example came from Sergey B. Kirpichev, who also
+wrote the first implementation.</em></p>
+</div></blockquote>
+<p>Consider the following examples from Julia’s repl.</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">ℕ</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="mi">1</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="mi">2</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">N</span><span class="p">,</span> <span class="n">ℕ</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s attempt to do the same thing with Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ℕ</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">ℕ</span>
+<span class="go">(2, 2)</span>
+</pre></div>
+</div>
+<p>Clearly, something is very different between these two programming
+environments, both used heavily by scientists. It is possible to make
+Python’s output look similar to that of Julian.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a unnormalized_unicode
+   The following initializing code from ideas is included:
+
+true_dir = dir
+from ideas.examples.unnormalized_unicode import new_dir as dir
+
+Ideas Console version 0.0.34. [Python version: 3.8.10]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ℕ</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">ℕ</span>
+<span class="go">(2, 1)</span>
+</pre></div>
+</div>
+<p>To understand why Python normally consider <code class="docutils literal notranslate"><span class="pre">ℕ</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code> to be the
+same requires more knowledge about unicode than what is found in a typical
+tutorial.  But before we take a deeper dive into unicode land, let’s
+take a detour and talk about Julia.</p>
+</section>
+
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
@@ -147,14 +214,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>

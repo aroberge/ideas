@@ -75,7 +75,7 @@ class IdeasConsole(InteractiveConsole):
         The line should not have a trailing newline; it may have
         internal newlines.  The line is appended to a buffer and the
         interpreter's runsource() method is called with the
-        concatenated contents of the buffer as source.  If this
+        concatenated contents of the buffer as the source.  If this
         indicates that the command was executed or invalid, the buffer
         is reset; otherwise, the command is incomplete, and the buffer
         is left as it was after the line was appended.  The return

@@ -113,6 +113,7 @@ Quick links to topics
     Fractional math (token) <fractional_math_tok>
     Switch statement <switch>
     Implicit multiplication <implicit_multiplication>
+    Unnormalized unicode <unnormalized_unicode>
 
 .. toctree::
    :maxdepth: 1
