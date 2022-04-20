@@ -55,8 +55,7 @@ def new_dir(obj=None):
 
 
 def source_init():
-    return """
-true_dir = dir
+    return """true_dir = dir
 from ideas.examples.unnormalized_unicode import new_dir as dir
 """
 

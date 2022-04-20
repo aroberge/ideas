@@ -287,17 +287,17 @@ def create_hook(
     if extensions is None:
         extensions = [".py"]
 
-    if source_init is not None:
+    try:
+        ipython_shell = get_ipython()  # noqa
+    except NameError:
+        ipython_shell = None
+
+    if source_init is not None and ipython_shell is not None:
         if not IPYTHON_INIT:
             IPYTHON_INIT = True
-            try:
-                ip = get_ipython()  # noqa
-            except NameError:
-                pass
-            else:
-                lines = source_init().splitlines()
-                for line in lines:
-                    ip.ex(line)
+            lines = source_init().splitlines()
+            for line in lines:
+                ipython_shell.ex(line)
 
     excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
 
@@ -339,22 +339,12 @@ def create_hook(
         transform_bytecode=transform_bytecode,
         transform_source=transform_source,
     )
-    if transform_source is not None:
-        try:
-            ip = get_ipython()  # noqa
-            ipython_source_transformer = make_ipython_source_transformer(
-                transform_source
-            )
-            ip.input_transformers_post.append(ipython_source_transformer)
-        except NameError:
-            pass
+    if transform_source is not None and ipython_shell is not None:
+        ipython_source_transformer = make_ipython_source_transformer(transform_source)
+        ipython_shell.input_transformers_post.append(ipython_source_transformer)
 
-    if ipython_ast_node_transformer is not None:
-        try:
-            ip = get_ipython()  # noqa
-            ip.ast_transformers.append(ipython_ast_node_transformer)
-        except NameError:
-            pass
+    if ipython_ast_node_transformer is not None and ipython_shell is not None:
+        ipython_shell.ast_transformers.append(ipython_ast_node_transformer)
 
     return hook
 
