@@ -84,7 +84,7 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
-        config.print_original(source)
+        config.original = source
 
         if self.transform_source is not None:
             last_line = source.endswith("\n")  # signals the end of a block
@@ -146,12 +146,16 @@ class IdeasConsole(InteractiveConsole):
             if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
+                    config.print_transformed(source)
+                    source += "\n"
                 except RecursionError:
                     code_obj = compile(tree, filename, "exec")
                 else:
                     code_obj = self.compile(source, filename, symbol)
             else:
                 code_obj = compile(tree, filename, "exec")
+            if code_obj is None:
+                return True
 
         if self.transform_bytecode is not None:
             code_obj = self.transform_bytecode(code_obj)
