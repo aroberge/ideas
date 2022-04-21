@@ -346,7 +346,7 @@ def create_hook(
 
 
 def make_ipython_source_transformer(transform_source):
-    def ipython_source_transformer(lines):
+    def ipython_source_transformer(lines, has_side_effects=True):
         original_source = "".join(lines)
         source = transform_source(original_source)
         if config.show_changes and source != original_source:
