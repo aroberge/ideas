@@ -189,8 +189,8 @@ def start(banner=BANNER, show_config=False, prompt="~>> ", locals=None):
         print("Configuration values for the console:")
         for key in _CONFIG:
             if _CONFIG[key] is not None:
-                if hasattr(_CONFIG[key], "_hook_name_"):
-                    print(f"    {key} from {_CONFIG[key]._hook_name_}")
+                if hasattr(_CONFIG[key], "hook_name"):
+                    print(f"    {key} from {_CONFIG[key].hook_name}")
                 else:
                     print(f"    {key}: {_CONFIG[key]}")
         print("-" * 50)

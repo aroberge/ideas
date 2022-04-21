@@ -276,7 +276,6 @@ def create_hook(
     * ``transform_source``: used to transform some source code prior
       to execution.
     """
-    global IPYTHON_INIT
     if extensions is None:
         extensions = [".py"]
 
@@ -322,7 +321,7 @@ def create_hook(
 
     for obj in [transform_source, transform_ast, transform_bytecode, source_init]:
         if obj is not None and isinstance(hook_name, str):
-            obj._hook_name_ = hook_name
+            obj.hook_name = hook_name
 
     console.configure(
         callback_params=callback_params,
@@ -346,7 +345,7 @@ def create_hook(
 
 
 def make_ipython_source_transformer(transform_source):
-    def ipython_source_transformer(lines, has_side_effects=True):
+    def ipython_source_transformer(lines, has_side_effects=True):  # noqa
         original_source = "".join(lines)
         source = transform_source(original_source)
         if config.show_changes and source != original_source:

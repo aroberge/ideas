@@ -60,5 +60,5 @@ def register_encoding(encoding_name=None, transform_source=None, hook_name=None)
     print(f"{encoding_name} has been registered.")
 
     if hook_name is not None:
-        transform_source._hook_name_ = hook_name
+        transform_source.hook_name = hook_name
     console.configure(transform_source=transform_source)
