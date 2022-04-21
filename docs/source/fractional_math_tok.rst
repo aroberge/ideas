@@ -1,12 +1,12 @@
-Fractional math (token)
-==========================
-
 .. admonition:: Summary
 
-    - Demonstrates how to add code to initialize a module or the console
-      with necessary imports and/or function definitions.
+   This is another example of a source transformation.
+   In a later section, we will do essentially the same but using an
+   Abstract Syntax Tree (AST) transformation, which is a more robust
+   approach for this type of example.
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_tok.py>`_
+Fractional math (token)
+==========================
 
 
 Consider the following standard Python code::
@@ -31,21 +31,18 @@ This is quite surprising for beginners, not familiar with the
 limitations of representing floating point numbers.
 
 However, we can "fix" this using an import hook that wraps
-integer into a ``Fraction`` instance::
+integer, which are followed by a ``/``, into a ``Fraction`` instance::
 
-    >>> from ideas.examples import fractions_tok
-    >>> hook = fractions_tok.add_hook()
-    >>> from ideas import console
-    >>> console.start()
-    Configuration values for the console:
-        source_init from ideas.examples.fractions_tok
-        transform_source from ideas.examples.fractions_tok
-    --------------------------------------------------
-    Ideas Console version 0.0.4. [Python version: 3.7.3]
+    > python -m ideas -a fractions_tok
+       The following initializing code from ideas is included:
 
-    ~>> x = 1 / 10
-    ~>> for i in range(11):
-    ...    print(i * x)
+    from fractions import Fraction
+
+    Ideas Console version 0.0.36. [Python version: 3.7.9]
+
+    >>> x =  1 / 10
+    >>> for i in range(11):
+    ...     print(i * x)
     ...
     0
     1/10
@@ -58,6 +55,11 @@ integer into a ``Fraction`` instance::
     4/5
     9/10
     1
+    >>> from ideas.session import config
+    >>> config.show_changes = True
+    >>> x = 1 / 10
+    new: x = Fraction(1) / 10
+    >>>
 
 This example was created after a similar example using AST transformation
 was created as a proof of concept. For more details about the
