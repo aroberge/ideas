@@ -149,6 +149,10 @@ class IdeasConsole(InteractiveConsole):
                     config.print_transformed(source)
                     source += "\n"
                 except RecursionError:
+                    if config.show_changes:
+                        print(
+                            "Warning: cannot unparse the code sample to show changes."
+                        )
                     code_obj = compile(tree, filename, "exec")
                 else:
                     code_obj = self.compile(source, filename, symbol)

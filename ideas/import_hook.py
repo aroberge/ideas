@@ -337,7 +337,10 @@ def create_hook(
         ipython_shell.input_transformers_post.append(ipython_source_transformer)
 
     if ipython_ast_node_transformer is not None and ipython_shell is not None:
-        ipython_shell.ast_transformers.append(ipython_ast_node_transformer)
+        wrapped_ipython_ast_node_transformer = make_ipython_ast_node_transformer(
+            ipython_ast_node_transformer
+        )
+        ipython_shell.ast_transformers.append(wrapped_ipython_ast_node_transformer())
 
     return hook
 
@@ -352,6 +355,18 @@ def make_ipython_source_transformer(transform_source):
         return lines
 
     return ipython_source_transformer
+
+
+def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
+    def wrapped_ipython_ast_node_transformer():
+        if config.show_changes:
+            print(
+                "Cannot show the changed source for AST transform in IPython/Jupyter."
+            )
+            config.show_changes = False
+        return ipython_ast_node_transformer
+
+    return wrapped_ipython_ast_node_transformer
 
 
 def remove_hook(hook):
