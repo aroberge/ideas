@@ -284,13 +284,12 @@ def create_hook(
     except NameError:
         ipython_shell = None
 
-    if source_init is not None and source_init().strip():
+    if source_init is not None and source_init().strip() and ipython_shell is not None:
         print("   The following initializing code from ideas is included:\n")
-        if ipython_shell is not None:
-            print(source_init().strip())
-            lines = [line for line in source_init().splitlines() if line.strip()]
-            for line in lines:
-                ipython_shell.ex(line)
+        print(source_init().strip())
+        lines = [line for line in source_init().splitlines() if line.strip()]
+        for line in lines:
+            ipython_shell.ex(line)
 
     excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
 

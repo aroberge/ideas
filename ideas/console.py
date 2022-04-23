@@ -67,6 +67,7 @@ class IdeasConsole(InteractiveConsole):
             except Exception:
                 self.showtraceback()
             else:
+                print("   The following initializing code from ideas is included:\n")
                 print(source_init())
 
     def push(self, line):
