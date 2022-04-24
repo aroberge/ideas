@@ -120,9 +120,9 @@ def main() -> None:
             args.source = args.source[:-3]
         module = import_module(args.source)
         if sys.flags.interactive:
-            console.start(locals=module.__dict__, prompt=">>> ")
+            console.start(locals=module.__dict__)
     else:
-        console.start(prompt=">>> ")
+        console.start()
 
 
 main()

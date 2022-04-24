@@ -16,7 +16,7 @@ from . import __version__
 from .session import config
 
 
-BANNER = "Ideas Console version {}. [Python version: {}]\n".format(
+BANNER = "Ideas Console version {}. [Python version: {}]".format(
     __version__, platform.python_version()
 )
 _CONFIG = {}
@@ -183,9 +183,11 @@ class IdeasConsole(InteractiveConsole):
             self.showtraceback()
 
 
-def start(banner=BANNER, show_config=False, prompt="~>> ", locals=None):
+def start(banner=BANNER, show_config=False, prompt="ideas> ", locals=None):
     """Starts a special console that works with import hooks."""
-    sys.ps1 = prompt
+    if len(prompt) >= 4:
+        sys.ps2 = (len(prompt) - 4) * " " + "... "
+    sys.ps1 = "\n" + prompt
     if _CONFIG and show_config:
         print("Configuration values for the console:")
         for key in _CONFIG:
