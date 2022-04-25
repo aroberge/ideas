@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide to the examples &mdash; ideas 0.0.37 documentation</title>
+  <title>Guide to the examples &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -49,7 +49,6 @@
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Guide to the examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#source-transformations">Source transformations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#improving-function-as-a-keyword">Improving function as a keyword</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nobreak-as-a-keyword">nobreak as a keyword</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#repeat-as-a-keyword">repeat as a keyword</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#french-python">French Python</a></li>
@@ -170,18 +169,16 @@
 </style>
 <section id="guide-to-the-examples">
 <h1>Guide to the examples<a class="headerlink" href="#guide-to-the-examples" title="Permalink to this headline"></a></h1>
-<p>The examples included are listed roughly in increasing level of complexity.</p>
+<p>The examples included are listed roughly in increasing level of complexity.
+Source transformations and AST transformations can be used interactively
+in IPython/Jupyter environments;  bytecode transformations and custom
+encoding cannot.</p>
 <section id="source-transformations">
 <h2>Source transformations<a class="headerlink" href="#source-transformations" title="Permalink to this headline"></a></h2>
-<section id="improving-function-as-a-keyword">
-<h3>Improving function as a keyword<a class="headerlink" href="#improving-function-as-a-keyword" title="Permalink to this headline"></a></h3>
-<p>This example should be your starting point.
-It shows how to use the tokenizer to transform a source using the
-token-utils library.</p>
-</section>
 <section id="nobreak-as-a-keyword">
 <h3>nobreak as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline"></a></h3>
-<p>This shows how to keep track of indentation
+<p>This is a sligthly more complex example than ‘function as a keyword’,
+as it shows how to keep track of indentation
 level and only replace a keyword when some conditions are met.</p>
 </section>
 <section id="repeat-as-a-keyword">
@@ -210,7 +207,7 @@ a single transformation.</p>
 <p>This is an example of a syntax that is intended to reduce
 boilerplate code when initializing a class instance.
 The code transformation is more complex than the previous ones and
-include a change of indentation of an entire block of code.S</p>
+include a change of indentation of an entire block of code.</p>
 </section>
 <section id="fractional-math-token">
 <h3>Fractional math (token)<a class="headerlink" href="#fractional-math-token" title="Permalink to this headline"></a></h3>

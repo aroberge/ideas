@@ -1,10 +1,6 @@
-"""decimal_math.py
-------------------------
-
+"""
 This replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.
-
-The source is assumed to be actually encoded in utf-8.
 """
 
 

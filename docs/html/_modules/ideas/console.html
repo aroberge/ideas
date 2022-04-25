@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.console &mdash; ideas 0.0.37 documentation</title>
+  <title>ideas.console &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -127,7 +127,7 @@
 <span class="kn">from</span> <span class="nn">.session</span> <span class="kn">import</span> <span class="n">config</span>
 
 
-<span class="n">BANNER</span> <span class="o">=</span> <span class="s2">&quot;Ideas Console version </span><span class="si">{}</span><span class="s2">. [Python version: </span><span class="si">{}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">BANNER</span> <span class="o">=</span> <span class="s2">&quot;Ideas Console version </span><span class="si">{}</span><span class="s2">. [Python version: </span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="n">__version__</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span>
 <span class="p">)</span>
 <span class="n">_CONFIG</span> <span class="o">=</span> <span class="p">{}</span>
@@ -178,6 +178,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   The following initializing code from ideas is included:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">source_init</span><span class="p">())</span>
 
 <div class="viewcode-block" id="IdeasConsole.push"><a class="viewcode-back" href="../../console.html#ideas.console.IdeasConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
@@ -260,6 +261,10 @@
                     <span class="n">config</span><span class="o">.</span><span class="n">print_transformed</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
                     <span class="n">source</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="k">except</span> <span class="ne">RecursionError</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="s2">&quot;Warning: cannot unparse the code sample to show changes.&quot;</span>
+                        <span class="p">)</span>
                     <span class="n">code_obj</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">code_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
@@ -289,15 +294,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">BANNER</span><span class="p">,</span> <span class="n">show_config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;~&gt;&gt; &quot;</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="start"><a class="viewcode-back" href="../../console.html#ideas.console.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">BANNER</span><span class="p">,</span> <span class="n">show_config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;ideas&gt; &quot;</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Starts a special console that works with import hooks.&quot;&quot;&quot;</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="n">prompt</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">ps2</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;... &quot;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">prompt</span>
     <span class="k">if</span> <span class="n">_CONFIG</span> <span class="ow">and</span> <span class="n">show_config</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration values for the console:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_CONFIG</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s2">&quot;_hook_name_&quot;</span><span class="p">):</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">_hook_name_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s2">&quot;hook_name&quot;</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">hook_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">_CONFIG</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>

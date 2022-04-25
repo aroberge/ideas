@@ -2,22 +2,21 @@ Guide to the examples
 ======================
 
 The examples included are listed roughly in increasing level of complexity.
+Source transformations and AST transformations can be used interactively
+in IPython/Jupyter environments;  bytecode transformations and custom
+encoding cannot.
 
 Source transformations
 ----------------------
 
-Improving function as a keyword
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This example should be your starting point.
-It shows how to use the tokenizer to transform a source using the
-token-utils library. 
 
 nobreak as a keyword
 ~~~~~~~~~~~~~~~~~~~~~
 
-This shows how to keep track of indentation
+This is a sligthly more complex example than 'function as a keyword',
+as it shows how to keep track of indentation
 level and only replace a keyword when some conditions are met.
+
 
 repeat as a keyword
 ~~~~~~~~~~~~~~~~~~~~
@@ -50,7 +49,7 @@ Auto-self
 This is an example of a syntax that is intended to reduce
 boilerplate code when initializing a class instance.
 The code transformation is more complex than the previous ones and
-include a change of indentation of an entire block of code.S
+include a change of indentation of an entire block of code.
 
 Fractional math (token)
 ~~~~~~~~~~~~~~~~~~~~~~~~

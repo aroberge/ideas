@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Decimal math &mdash; ideas 0.0.37 documentation</title>
+  <title>Decimal math &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -58,10 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Decimal math</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#import-hook">Import hook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-codec">Custom codec</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#decimal-math-py">decimal_math.py</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-codec">Custom codec</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
@@ -249,11 +246,8 @@ add the following two lines:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">my_script</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-<span class="target" id="module-ideas.examples.decimal_math"></span><section id="decimal-math-py">
-<h3>decimal_math.py<a class="headerlink" href="#decimal-math-py" title="Permalink to this headline"></a></h3>
-<p>This replaces any explicit float by a Decimal.
+<span class="target" id="module-ideas.examples.decimal_math"></span><p>This replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.</p>
-<p>The source is assumed to be actually encoded in utf-8.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.decimal_math.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.decimal_math.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/decimal_math.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.decimal_math.add_hook" title="Permalink to this definition"></a></dt>
@@ -273,7 +267,6 @@ It can be used either as a custom codec or import hook.</p>
 <p>By defining this function, we can also make use of Ideas’ console.</p>
 </dd></dl>
 
-</section>
 </section>
 </section>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fractional math (token) &mdash; ideas 0.0.37 documentation</title>
+  <title>Fractional math (token based) &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -101,7 +101,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Fractional math (token)</li>
+      <li>Fractional math (token based)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/fractional_math_tok.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -138,15 +138,18 @@
     text-align: unset;
 }
 </style>
+<span class="target" id="module-ideas.examples.fractions_tok"></span><section id="fractional-math-token-based">
+<h1>Fractional math (token based)<a class="headerlink" href="#fractional-math-token-based" title="Permalink to this headline"></a></h1>
+<p>It is only meant as an alternative to the AST transformation demo.</p>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>This is another example of a source transformation.
-In a later section, we will do essentially the same but using an
+<p>This is another example of a source transformation that converts
+integers literals that are followed by the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator
+into instances of the Fraction class in the source using the tokenizer.</p>
+<p>In a later section, we do something similar but using an
 Abstract Syntax Tree (AST) transformation, which is a more robust
 approach for this type of example.</p>
 </div>
-<section id="fractional-math-token">
-<h1>Fractional math (token)<a class="headerlink" href="#fractional-math-token" title="Permalink to this headline"></a></h1>
 <p>Consider the following standard Python code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
@@ -174,12 +177,13 @@ integer, which are followed by a <code class="docutils literal notranslate"><spa
 
 <span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
 
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.36</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.38</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span>  <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
-<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-<span class="o">...</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span>  <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+  <span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+  <span class="o">...</span>
 <span class="mi">0</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
@@ -191,29 +195,30 @@ integer, which are followed by a <code class="docutils literal notranslate"><spa
 <span class="mi">4</span><span class="o">/</span><span class="mi">5</span>
 <span class="mi">9</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">ideas.session</span> <span class="kn">import</span> <span class="n">config</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span> <span class="nn">ideas.session</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
 <span class="n">new</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
-<span class="o">&gt;&gt;&gt;</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>This example was created after a similar example using AST transformation
 was created as a proof of concept. For more details about the
 difference, please have a look at the AST-based example.</p>
-<span class="target" id="module-ideas.examples.fractions_tok"></span><p>Converts integers literals that are followed by the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator
-into instances of the Fraction class in the source using the tokenizer.</p>
-<p>It is only meant as an alternative to the AST transformation demo.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.fractions_tok.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.fractions_tok.source_init">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Permalink to this definition"></a></dt>
-<dd><p>Adds required imports and function redefinitions</p>
+<dd><p>Adds required import so that <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> is a known object.</p>
 </dd></dl>
 
 <dl class="py function">

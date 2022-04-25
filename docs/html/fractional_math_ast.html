@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fractional math (AST) &mdash; ideas 0.0.37 documentation</title>
+  <title>Fractional math (AST) &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -64,10 +64,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Fractional math (AST)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#fractions-ast-py">fractions_ast.py</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Fractional math (AST)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
 <ul>
@@ -141,7 +138,8 @@
     text-align: unset;
 }
 </style>
-<div class="admonition-summary admonition">
+<p>.</p>
+<span class="target" id="module-ideas.examples.fractions_ast"></span><div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <ul class="simple">
 <li><p>Demonstrates how to use an import hook that does an AST transformation</p></li>
@@ -176,12 +174,13 @@ and Abstract Syntax Tree (AST) transformation:</p>
 
 <span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>
 
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.36</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.9.10</span><span class="p">]</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.38</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.10.2</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
-<span class="o">...</span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-<span class="o">...</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+   <span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+   <span class="o">...</span>
 <span class="mi">0</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
@@ -193,20 +192,17 @@ and Abstract Syntax Tree (AST) transformation:</p>
 <span class="mi">4</span><span class="o">/</span><span class="mi">5</span>
 <span class="mi">9</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">ideas.session</span> <span class="kn">import</span> <span class="n">config</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span> <span class="nn">ideas.session</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="n">new</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<span class="target" id="module-ideas.examples.fractions_ast"></span><section id="fractions-ast-py">
-<h2>fractions_ast.py<a class="headerlink" href="#fractions-ast-py" title="Permalink to this headline"></a></h2>
-<p>Converts integers literals into instances of the Fraction class at the
-Abstract Syntax Tree level.
-This works for doing using Python exclusively to do integer arithmetics but it
-fails miserably in other contexts that expect <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
-<p>It is only meant as a demo of AST transformations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ideas.examples.fractions_ast.FractionWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">FractionWrapper</span></span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#FractionWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.FractionWrapper" title="Permalink to this definition"></a></dt>
@@ -223,16 +219,15 @@ fails miserably in other contexts that expect <code class="docutils literal notr
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.fractions_ast.source_init">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.source_init" title="Permalink to this definition"></a></dt>
-<dd><p>Adds required imports</p>
+<dd><p>Adds required import so that <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> is a known object.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.fractions_ast.transform_ast">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">transform_ast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/fractions_ast.html#transform_ast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.transform_ast" title="Permalink to this definition"></a></dt>
-<dd><p>Transforms the Abstract Syntax Tree</p>
+<dd><p>Transforms the Abstract Syntax Tree or a single node</p>
 </dd></dl>
 
-</section>
 </section>
 
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.import_hook &mdash; ideas 0.0.37 documentation</title>
+  <title>ideas.import_hook &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.37
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -387,7 +387,6 @@
 <span class="sd">    * ``transform_source``: used to transform some source code prior</span>
 <span class="sd">      to execution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">IPYTHON_INIT</span>
     <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.py&quot;</span><span class="p">]</span>
 
@@ -396,13 +395,12 @@
     <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
         <span class="n">ipython_shell</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">if</span> <span class="n">source_init</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">source_init</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   The following initializing code from ideas is included:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-                <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
     <span class="n">excluded_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">PYTHON</span><span class="p">,</span> <span class="n">IDEAS</span><span class="p">,</span> <span class="n">SITE_PACKAGES</span><span class="p">]</span>
 
@@ -433,7 +431,7 @@
 
     <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="p">[</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">transform_ast</span><span class="p">,</span> <span class="n">transform_bytecode</span><span class="p">,</span> <span class="n">source_init</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hook_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">_hook_name_</span> <span class="o">=</span> <span class="n">hook_name</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">hook_name</span> <span class="o">=</span> <span class="n">hook_name</span>
 
     <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
@@ -448,13 +446,16 @@
         <span class="n">ipython_shell</span><span class="o">.</span><span class="n">input_transformers_post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ipython_source_transformer</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">ipython_ast_node_transformer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ast_transformers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ipython_ast_node_transformer</span><span class="p">)</span>
+        <span class="n">wrapped_ipython_ast_node_transformer</span> <span class="o">=</span> <span class="n">make_ipython_ast_node_transformer</span><span class="p">(</span>
+            <span class="n">ipython_ast_node_transformer</span>
+        <span class="p">)</span>
+        <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ast_transformers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapped_ipython_ast_node_transformer</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">hook</span></div>
 
 
 <span class="k">def</span> <span class="nf">make_ipython_source_transformer</span><span class="p">(</span><span class="n">transform_source</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">ipython_source_transformer</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ipython_source_transformer</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">has_side_effects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="n">original_source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">transform_source</span><span class="p">(</span><span class="n">original_source</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="ow">and</span> <span class="n">source</span> <span class="o">!=</span> <span class="n">original_source</span><span class="p">:</span>
@@ -463,6 +464,18 @@
         <span class="k">return</span> <span class="n">lines</span>
 
     <span class="k">return</span> <span class="n">ipython_source_transformer</span>
+
+
+<span class="k">def</span> <span class="nf">make_ipython_ast_node_transformer</span><span class="p">(</span><span class="n">ipython_ast_node_transformer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapped_ipython_ast_node_transformer</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot show the changed source for AST transform in IPython/Jupyter.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">ipython_ast_node_transformer</span>
+
+    <span class="k">return</span> <span class="n">wrapped_ipython_ast_node_transformer</span>
 
 
 <div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>
