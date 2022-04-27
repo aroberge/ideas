@@ -55,7 +55,6 @@
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> French Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#importing-pyfr-files">Importing .pyfr files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.french">API for french.py</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
@@ -142,7 +141,7 @@
     text-align: unset;
 }
 </style>
-<div class="admonition-summary admonition">
+<span class="target" id="module-ideas.examples.french"></span><div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This example demonstrates the how to use a non-standard file
 extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>) as an indication that an import hook must
@@ -159,20 +158,20 @@ to actually writing code in an editor, instead of putting
 predefined blocks together. It would be so much easier if
 you could use a version of Python where the keywords were in French,
 with most of them being identical to what you were using in the
-block-based environment.</p>
-<p>This is what this import hook example allows one to do.
-A more elaborate example is that given by
+block-based environment.
+This is what this import hook example allows one to do.</p>
+<p>A more elaborate example is that given by
 <a class="reference external" href="https://aroberge.github.io/avantpy/docs/html/">AvantPy</a>.</p>
 <p>Let’s see it in action:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a french --show
-Ideas Console version 0.0.34. [Python version: 3.10.2]
+Ideas Console version 0.0.38. [Python version: 3.9.10]
 
-&gt;&gt;&gt; pourchaque lettre dans &#39;Bonjour&#39;:
-...    afficher(lettre)
-...
+ideas&gt; pourchaque lettre dans &#39;Bonjour&#39;:
+   ...     afficher(lettre)
+   ...
 ===========Transformed============
 for lettre in &#39;Bonjour&#39;:
-   print(lettre)
+    print(lettre)
 
 -----------------------------
 B
@@ -182,7 +181,8 @@ j
 o
 u
 r
-&gt;&gt;&gt;
+
+ideas&gt;
 </pre></div>
 </div>
 <section id="importing-pyfr-files">
@@ -226,15 +226,11 @@ verbose finder:</p>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-</section>
-<section id="module-ideas.examples.french">
-<span id="api-for-french-py"></span><h2>API for french.py<a class="headerlink" href="#module-ideas.examples.french" title="Permalink to this headline"></a></h2>
-<p>Keywords are translated from French to English/Python by a function in this file.</p>
-<p>A “French Python” file is recognize by its .pyfr extension.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.french.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.french.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/french.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french.add_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Creates and adds the import hook in sys.meta_path</p>
+<dd><p>Creates and adds the import hook in sys.meta_path.
+Uses a custom extension for the exception hook.</p>
 </dd></dl>
 
 <dl class="py function">

@@ -55,7 +55,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#useful-function-from-token-utils">Useful function from <code class="docutils literal notranslate"><span class="pre">token_utils</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.nobreak">API for <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
@@ -144,12 +143,10 @@
     text-align: unset;
 }
 </style>
-<div class="admonition-summary admonition">
+<span class="target" id="module-ideas.examples.nobreak"></span><div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>Somewhat similar to the function keyword example except
-that we must keep track of the indentation level and
-replace our new keyword (<code class="docutils literal notranslate"><span class="pre">nobreak</span></code>) only if
-some conditions are met.</p>
+<p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword
+equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops.</p>
 </div>
 <section id="nobreak-as-a-keyword">
 <h1><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword<a class="headerlink" href="#nobreak-as-a-keyword" title="Permalink to this headline"></a></h1>
@@ -201,7 +198,9 @@ the code will raise a <code class="docutils literal notranslate"><span class="pr
 <p>The <code class="docutils literal notranslate"><span class="pre">else</span></code> keyword can also be used in a <code class="docutils literal notranslate"><span class="pre">try/except/else/finally</span></code> block.
 From <a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#the-try-statement">Python’s documentation</a>:</p>
 <blockquote>
-<div><p><em>The optional else clause is executed if the control flow leaves the try suite,</em> <strong>no exception was raised</strong>, <em>and no</em> <code class="docutils literal notranslate"><span class="pre">return</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code>, <em>or</em> <code class="docutils literal notranslate"><span class="pre">break</span></code> <em>statement was executed.</em></p>
+<div><p><em>The optional else clause is executed if the control flow leaves the try suite,</em>
+<strong>no exception was raised</strong>,
+<em>and no</em> <code class="docutils literal notranslate"><span class="pre">return</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code>, <em>or</em> <code class="docutils literal notranslate"><span class="pre">break</span></code> <em>statement was executed.</em></p>
 </div></blockquote>
 <p>Since multiple causes can prevent the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause from being executed,
 it makes little sense in this case to use a different keyword such as
@@ -225,11 +224,6 @@ it makes little sense in this case to use a different keyword such as
 <span class="go">    Returns ``None`` if none is found.</span>
 </pre></div>
 </div>
-</section>
-<section id="module-ideas.examples.nobreak">
-<span id="api-for-nobreak"></span><h2>API for <code class="docutils literal notranslate"><span class="pre">nobreak</span></code><a class="headerlink" href="#module-ideas.examples.nobreak" title="Permalink to this headline"></a></h2>
-<p>This module enables someone to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword
-equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.nobreak.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.nobreak.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/nobreak.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.nobreak.add_hook" title="Permalink to this definition"></a></dt>

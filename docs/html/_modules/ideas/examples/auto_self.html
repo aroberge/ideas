@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.auto_self &mdash; ideas 0.0.34 documentation</title>
+  <title>ideas.examples.auto_self &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.34
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -109,11 +109,173 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ideas.examples.auto_self</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;auto_self.py</span>
-<span class="sd">-----------------</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">Helps to reduce the amount of typing required and increases readability</span>
-<span class="sd">when assigning attributes in a class&#39;s ``__init__()`` method.</span>
+<span class="sd">.. admonition:: Summary</span>
+
+<span class="sd">   This example illustrates how one can change the indentation</span>
+<span class="sd">   of an entire block of code, eliminate lines, and change the</span>
+<span class="sd">   content much more drastically than what the previous</span>
+<span class="sd">   examples have done.</span>
+
+<span class="sd">   The idea behind this example is to help reduce the amount of typing</span>
+<span class="sd">   required and increases readability when assigning attributes in a</span>
+<span class="sd">   class&#39;s ``__init__()`` method.</span>
+
+<span class="sd">Auto self</span>
+<span class="sd">==========</span>
+
+<span class="sd">Python is known for its concise and readable syntax. One exception</span>
+<span class="sd">about the concisiveness is the boiler plate code that has to be</span>
+<span class="sd">written when defining one&#39;s own class, especially if it has</span>
+<span class="sd">many attributes, like::</span>
+
+<span class="sd">    self.this_variable = this_variable</span>
+<span class="sd">    self.that_variable = that_variable</span>
+<span class="sd">    self.this_other_variable = this_other_variable</span>
+<span class="sd">    self.foo = foo</span>
+<span class="sd">    self.bar = bar</span>
+
+<span class="sd">    self.baz = [] if baz is None else baz</span>
+<span class="sd">    self.spam = bread + ham</span>
+
+
+<span class="sd">This leads people to ask on various forums, such as</span>
+<span class="sd">`this question on StackOverflow &lt;https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a&gt;`_,</span>
+<span class="sd">how to do automatic assignment of attributes.  The answers most often given</span>
+<span class="sd">are:</span>
+
+<span class="sd">  - Don&#39;t do it; learn to live with the explicit ``self``.</span>
+<span class="sd">  - Use a decorator, with various examples provided.</span>
+
+
+<span class="sd">As programmers create more classes, they find the need to add their own</span>
+<span class="sd">dunder methods, such as ``__eq__(self, other)``, ``__repr__(self)``, etc.</span>
+<span class="sd">Eventually, they might get annoyed enough at having to re-create these methods</span>
+<span class="sd">too often, with the occasional typo causing bugs that they jump with</span>
+<span class="sd">joy when discovering `attrs: Classes Without Boilerplate &lt;https://www.attrs.org/en/stable/&gt;`_.</span>
+
+<span class="sd">Starting with Python 3.7, the standard library includes</span>
+<span class="sd">`dataclasses &lt;https://docs.python.org/3/library/dataclasses.html&gt;`_ which shares some</span>
+<span class="sd">similarity with ``attrs``. However, it does require to use type hints which,</span>
+<span class="sd">in my opinion, reduces readability; note that many programmers find that</span>
+<span class="sd">type hints increase readability.</span>
+
+<span class="sd">As a concrete example of using traditional Python notation and</span>
+<span class="sd">dataclasses, let&#39;s consider the code given in</span>
+<span class="sd">`PEP 557  &lt;https://www.python.org/dev/peps/pep-0557/&gt;`_ but reformatted with Black::</span>
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            self,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path=&quot;&quot;,</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            self.name = name</span>
+<span class="sd">            self.requirements = requirements</span>
+<span class="sd">            self.constraints = {} if constraints is None else constraints</span>
+<span class="sd">            self.path = path</span>
+<span class="sd">            self.executable_links = [] if executable_links is None else executable_links</span>
+<span class="sd">            self.executables_dir = executables_dir</span>
+<span class="sd">            self.additional_items = []</span>
+
+<span class="sd">From the same PEP document, this is the proposed code</span>
+<span class="sd">which gives the same initialization, but using the ``@dataclass``</span>
+<span class="sd">decorator::</span>
+
+<span class="sd">    from dataclasses import dataclass</span>
+
+<span class="sd">    @dataclass</span>
+<span class="sd">    class Application:</span>
+<span class="sd">        name: str</span>
+<span class="sd">        requirements: List[Requirement]</span>
+<span class="sd">        constraints: Dict[str, str] = field(default_factory=dict)</span>
+<span class="sd">        path: str = &#39;&#39;</span>
+<span class="sd">        executable_links: List[str] = field(default_factory=list)</span>
+<span class="sd">        executable_dir: Tuple[str] = ()</span>
+<span class="sd">        additional_items: List[str] = field(init=False, default_factory=list)</span>
+
+
+<span class="sd">This code does more than simply initializing the variables, but I</span>
+<span class="sd">do not find it particularly readable.</span>
+
+<span class="sd">So, I was wondering if it might be possible to imagine a simpler syntax.</span>
+<span class="sd">``auto_self`` is what I came up with.</span>
+
+<span class="sd">.. admonition:: That ship has sailed ...</span>
+
+<span class="sd">    I realize that there is zero chance that the following syntax would</span>
+<span class="sd">    be adopted, especially now that the ``dataclasses`` module has been added to</span>
+<span class="sd">    the Python standard library. Still, you can try it out using</span>
+<span class="sd">    ``auto_self`` hook.</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            self,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path=&quot;&quot;,</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            self .= :</span>
+<span class="sd">                name</span>
+<span class="sd">                requirements</span>
+<span class="sd">                constraints = {} if __ is None else __</span>
+<span class="sd">                path</span>
+<span class="sd">                executable_links = [] if __ is None else __</span>
+<span class="sd">                executables_dir</span>
+<span class="sd">                additional_items = []</span>
+
+<span class="sd">Here, I am using a new operator, ``.=``, which is meant to represent</span>
+<span class="sd">the automatic assignment of a variable to the name that precedes</span>
+<span class="sd">it (``self`` in this example).  I have seen this idea for such an operator before on</span>
+<span class="sd">**python-ideas** but never for introducing a code block as I do here.</span>
+
+<span class="sd">By design, any *dunder* (double underscore), ``__``, is taken to be equivalent to the variable</span>
+<span class="sd">being initialized.  I chose a dunder instead of a single underscore ``_``</span>
+<span class="sd">so that it could be used in a REPL without creating conflicts with the</span>
+<span class="sd">existing use of a single underscore in Python&#39;s REPL.  I also find that it</span>
+<span class="sd">makes it more readable.</span>
+
+<span class="sd">Of course, one is not restricted to using ``self``, or having to use ``__``</span>
+<span class="sd">everywhere. The following is completely equivalent - although I now</span>
+<span class="sd">find it less readable, having been used to seeing ``__`` as easy to scan</span>
+<span class="sd">placeholder::</span>
+
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            cls,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path=&quot;&quot;,</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            cls .= :</span>
+<span class="sd">                name</span>
+<span class="sd">                requirements</span>
+<span class="sd">                constraints = {} if constraints is None else constraints</span>
+<span class="sd">                path</span>
+<span class="sd">                executable_links = [] if __ is None else executable_links</span>
+<span class="sd">                executables_dir</span>
+
+<span class="sd">            cls.additional_items = []</span>
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    Unlike ``@dataclass`` or ``attrs``, no additional method is</span>
+<span class="sd">    created by ``auto_self``.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span>
 <span class="kn">import</span> <span class="nn">token_utils</span>

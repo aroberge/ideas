@@ -146,6 +146,7 @@ class IdeasLoader(Loader):
         self.transform_source = transform_source
 
     def create_module(self, spec):
+        """Potential replacement for the default create_module method."""
         # Note: I do not have an example of custom module creation yet.
         if self.custom_create_module is not None:
             return self.custom_create_module(spec, callback_params=self.callback_params)
@@ -344,7 +345,12 @@ def create_hook(
 
 
 def make_ipython_source_transformer(transform_source):
+    """Takes a source transform and makes returns an IPython compatible
+    source transformer.
+    """
+
     def ipython_source_transformer(lines, has_side_effects=True):  # noqa
+        # In IPython, the source transformation operates on a list of lines
         original_source = "".join(lines)
         source = transform_source(original_source)
         if config.show_changes and source != original_source:
@@ -356,6 +362,12 @@ def make_ipython_source_transformer(transform_source):
 
 
 def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
+    """Takes an AST transformer designed to work with IPython,
+    and wraps it to add a warning in case the user would like to
+    see how the code is actually transformed, since this is not
+    possible when using IPython.
+    """
+
     def wrapped_ipython_ast_node_transformer():
         if config.show_changes:
             print(

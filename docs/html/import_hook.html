@@ -148,10 +148,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="ideas.import_hook.IdeasLoader.create_module">
 <span class="sig-name descname"><span class="pre">create_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader.create_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader.create_module" title="Permalink to this definition"></a></dt>
-<dd><p>Return a module to initialize and into which to load.</p>
-<p>This method should raise ImportError if anything prevents it
-from creating a new module.  It may return None to indicate
-that the spec should create the new module.</p>
+<dd><p>Potential replacement for the default create_module method.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -221,6 +218,22 @@ tree object.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transform_source</span></code>: used to transform some source code prior
 to execution.</p></li>
 </ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.import_hook.make_ipython_ast_node_transformer">
+<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">make_ipython_ast_node_transformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#make_ipython_ast_node_transformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.make_ipython_ast_node_transformer" title="Permalink to this definition"></a></dt>
+<dd><p>Takes an AST transformer designed to work with IPython,
+and wraps it to add a warning in case the user would like to
+see how the code is actually transformed, since this is not
+possible when using IPython.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.import_hook.make_ipython_source_transformer">
+<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">make_ipython_source_transformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transform_source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#make_ipython_source_transformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.make_ipython_source_transformer" title="Permalink to this definition"></a></dt>
+<dd><p>Takes a source transform and makes returns an IPython compatible
+source transformer.</p>
 </dd></dl>
 
 <dl class="py function">

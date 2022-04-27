@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.nobreak &mdash; ideas 0.0.34 documentation</title>
+  <title>ideas.examples.nobreak &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.34
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -110,8 +110,96 @@
              
   <h1>Source code for ideas.examples.nobreak</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module enables someone to use ``nobreak`` as a keyword</span>
-<span class="sd">equivalent to ``else`` in ``for`` and ``while`` loops.</span>
+<span class="sd">.. admonition:: Summary</span>
+
+<span class="sd">    This module enables someone to use ``nobreak`` as a keyword</span>
+<span class="sd">    equivalent to ``else`` in ``for`` and ``while`` loops.</span>
+
+<span class="sd">``nobreak`` as a keyword</span>
+<span class="sd">========================</span>
+
+<span class="sd">Python&#39;s ``for`` and ``while`` loop include an ``else`` clause</span>
+<span class="sd">whose meaning is not immediately obvious::</span>
+
+<span class="sd">    while condition:</span>
+<span class="sd">        # some</span>
+<span class="sd">        # code</span>
+<span class="sd">        # here</span>
+<span class="sd">    else:</span>
+<span class="sd">        # will be executed only if no</span>
+<span class="sd">        # break statement occurred above</span>
+
+<span class="sd">When I first understood this, I thought *wouldn&#39;t it be nice if, instead</span>
+<span class="sd">of using* ``else:``, *one could write something like* ``if not break:`` which</span>
+<span class="sd">uses only existing Python keywords.</span>
+<span class="sd">For this example, I decided instead that a suggestion made by Raymond Hettinger</span>
+<span class="sd">to have ``nobreak`` as a keyword made the most sense.</span>
+<span class="sd">It can be used instead of ``else`` in the above example::</span>
+
+<span class="sd">    while condition:</span>
+<span class="sd">        # some</span>
+<span class="sd">        # code</span>
+<span class="sd">        # here</span>
+<span class="sd">    nobreak:</span>
+<span class="sd">        # will be executed only if no</span>
+<span class="sd">        # break statement occurred above</span>
+
+
+<span class="sd">``nobreak`` instead of ``else`` in ``if/else``</span>
+<span class="sd">-------------------------------------------------------</span>
+
+<span class="sd">The ``else`` keyword has a very different meaning when used as part</span>
+<span class="sd">of an ``if`` statement.  In this situation, ``nobreak``, or its</span>
+<span class="sd">translation in some other language would make no sense.</span>
+
+<span class="sd">As a result, if one attempts to write the following::</span>
+
+<span class="sd">    if condition:</span>
+<span class="sd">        # some</span>
+<span class="sd">        # code</span>
+<span class="sd">        # here</span>
+<span class="sd">    nobreak:</span>
+<span class="sd">        # more code</span>
+
+<span class="sd">``nobreak`` will **not** be replaced by ``else`` and</span>
+<span class="sd">the code will raise a ``SyntaxError``.</span>
+
+
+<span class="sd">What about try/except?</span>
+<span class="sd">-----------------------</span>
+
+<span class="sd">The ``else`` keyword can also be used in a ``try/except/else/finally`` block.</span>
+<span class="sd">From `Python&#39;s documentation &lt;https://docs.python.org/3/reference/compound_stmts.html#the-try-statement&gt;`_:</span>
+
+<span class="sd">   *The optional else clause is executed if the control flow leaves the try suite,*</span>
+<span class="sd">   **no exception was raised**,</span>
+<span class="sd">   *and no* ``return``, ``continue``, *or* ``break`` *statement was executed.*</span>
+
+<span class="sd">Since multiple causes can prevent the ``else`` clause from being executed,</span>
+<span class="sd">it makes little sense in this case to use a different keyword such as</span>
+<span class="sd">``nobreak``, that would point to a specific cause which would likely be wrong.</span>
+
+<span class="sd">Useful function from ``token_utils``</span>
+<span class="sd">-------------------------------------</span>
+
+<span class="sd">The code for ``nobreak`` makes use of the ``get_first`` function from</span>
+<span class="sd">``token_utils``. Here&#39;s some useful information about it.</span>
+
+<span class="sd">.. code-block::</span>
+
+<span class="sd">    &gt;&gt;&gt; import token_utils</span>
+<span class="sd">    &gt;&gt;&gt; help(token_utils.get_first)</span>
+<span class="sd">    Help on function get_first in module token_utils:</span>
+
+<span class="sd">    get_first(tokens, exclude_comment=True)</span>
+<span class="sd">        Given a list of tokens, find the first token which is not a space token</span>
+<span class="sd">        (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,</span>
+<span class="sd">        by default, also not a ``COMMMENT``.</span>
+
+<span class="sd">        ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.</span>
+
+<span class="sd">        Returns ``None`` if none is found.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span>
 <span class="kn">import</span> <span class="nn">token_utils</span>

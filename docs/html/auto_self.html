@@ -55,13 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Auto-self</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ideas.examples.auto_self">Try it out!</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#auto-self-py">auto_self.py</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Auto-self</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
@@ -144,18 +138,18 @@
     text-align: unset;
 }
 </style>
-<section id="auto-self">
-<h1>Auto self<a class="headerlink" href="#auto-self" title="Permalink to this headline"></a></h1>
-<div class="admonition-summary admonition">
+<span class="target" id="module-ideas.examples.auto_self"></span><div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This example illustrates how one can change the indentation
 of an entire block of code, eliminate lines, and change the
 content much more drastically than what the previous
 examples have done.</p>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/auto_self.py">Source code</a></p>
-</div></blockquote>
+<p>The idea behind this example is to help reduce the amount of typing
+required and increases readability when assigning attributes in a
+class’s <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method.</p>
 </div>
+<section id="auto-self">
+<h1>Auto self<a class="headerlink" href="#auto-self" title="Permalink to this headline"></a></h1>
 <p>Python is known for its concise and readable syntax. One exception
 about the concisiveness is the boiler plate code that has to be
 written when defining one’s own class, especially if it has
@@ -183,14 +177,16 @@ are:</p>
 <p>As programmers create more classes, they find the need to add their own
 dunder methods, such as <code class="docutils literal notranslate"><span class="pre">__eq__(self,</span> <span class="pre">other)</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__(self)</span></code>, etc.
 Eventually, they might get annoyed enough at having to re-create these methods
-too often, with the occasionnal typo causing bugs that they jump with
+too often, with the occasional typo causing bugs that they jump with
 joy when discovering <a class="reference external" href="https://www.attrs.org/en/stable/">attrs: Classes Without Boilerplate</a>.</p>
 <p>Starting with Python 3.7, the standard library includes
 <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a> which shares some
 similarity with <code class="docutils literal notranslate"><span class="pre">attrs</span></code>. However, it does require to use type hints which,
-in my opinion, reduces readability.</p>
+in my opinion, reduces readability; note that many programmers find that
+type hints increase readability.</p>
 <p>As a concrete example of using traditional Python notation and
-dataclasses, let’s consider the code given in <a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
+dataclasses, let’s consider the code given in
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -227,7 +223,7 @@ decorator:</p>
 </pre></div>
 </div>
 <p>This code does more than simply initializing the variables, but I
-do not find it particulary readable.</p>
+do not find it particularly readable.</p>
 <p>So, I was wondering if it might be possible to imagine a simpler syntax.
 <code class="docutils literal notranslate"><span class="pre">auto_self</span></code> is what I came up with.</p>
 <div class="admonition-that-ship-has-sailed admonition">
@@ -296,12 +292,6 @@ placeholder:</p>
 <p>Unlike <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code> or <code class="docutils literal notranslate"><span class="pre">attrs</span></code>, no additional method is
 created by <code class="docutils literal notranslate"><span class="pre">auto_self</span></code>.</p>
 </div>
-<section id="module-ideas.examples.auto_self">
-<span id="try-it-out"></span><h2>Try it out!<a class="headerlink" href="#module-ideas.examples.auto_self" title="Permalink to this headline"></a></h2>
-<section id="auto-self-py">
-<h3>auto_self.py<a class="headerlink" href="#auto-self-py" title="Permalink to this headline"></a></h3>
-<p>Helps to reduce the amount of typing required and increases readability
-when assigning attributes in a class’s <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ideas.examples.auto_self.add_hook">
 <span class="sig-prename descclassname"><span class="pre">ideas.examples.auto_self.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Permalink to this definition"></a></dt>
@@ -326,8 +316,6 @@ when assigning attributes in a class’s <code class="docutils literal notransla
 </div>
 </dd></dl>
 
-</section>
-</section>
 </section>
 
 

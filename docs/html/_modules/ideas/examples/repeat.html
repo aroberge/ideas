@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.repeat &mdash; ideas 0.0.34 documentation</title>
+  <title>ideas.examples.repeat &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.34
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -110,6 +110,86 @@
              
   <h1>Source code for ideas.examples.repeat</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. admonition:: Summary</span>
+
+<span class="sd">    Introduces four different forms using a ``repeat`` keyword.</span>
+<span class="sd">    It also demonstrates how to use a callback parameters.</span>
+
+
+<span class="sd">repeat as a keyword</span>
+<span class="sd">=======================</span>
+
+<span class="sd">Let&#39;s begin with an example.</span>
+
+
+<span class="sd">.. code-block::</span>
+
+<span class="sd">    &gt; python -m ideas -a repeat --show</span>
+<span class="sd">    Ideas Console version 0.0.38. [Python version: 3.9.10]</span>
+
+<span class="sd">    ideas&gt; repeat 3:</span>
+<span class="sd">       ...     print(&#39;Hello&#39;)</span>
+<span class="sd">       ...</span>
+<span class="sd">    ===========Transformed============</span>
+<span class="sd">    for _9e4a6946f8d44ffca90dc9475537d39a in range( 3):</span>
+<span class="sd">        print(&#39;Hello&#39;)</span>
+
+<span class="sd">    -----------------------------</span>
+<span class="sd">    Hello</span>
+<span class="sd">    Hello</span>
+<span class="sd">    Hello</span>
+
+<span class="sd">    ideas&gt;</span>
+
+<span class="sd">As you can see, ``repeat n``, where ``n`` is an integer,</span>
+<span class="sd">is converted into a for loop, with a randomly named</span>
+<span class="sd">variable, guaranteed not to have a name used for another</span>
+<span class="sd">object in the program.  This works well in practice.</span>
+
+<span class="sd">However, suppose we wish to do some repeatable tests,</span>
+<span class="sd">ensuring that the variable names are always the same</span>
+<span class="sd">for all tests: we can do this using a &#39;callback parameter&#39;.</span>
+<span class="sd">This is a parameter that is given to the ``add_hook``</span>
+<span class="sd">function used to create the import hook.</span>
+<span class="sd">``add_hook`` must use Python dict to pass all required</span>
+<span class="sd">callback parameters to ``create_hook``, so that they</span>
+<span class="sd">can be passed back to the function used to transform the code.</span>
+
+<span class="sd">Here&#39;s a second example using it.</span>
+
+<span class="sd">.. code-block::</span>
+
+<span class="sd">    &gt;&gt;&gt; from ideas.examples import repeat</span>
+<span class="sd">    &gt;&gt;&gt; from ideas.console import start</span>
+<span class="sd">    &gt;&gt;&gt; from ideas.session import config</span>
+<span class="sd">    &gt;&gt;&gt; config.show_changes = True</span>
+<span class="sd">    &gt;&gt;&gt; repeat.add_hook(predictable_names=True)</span>
+<span class="sd">    &lt;IdeasMetaFinder object for ideas.examples.repeat&gt;</span>
+<span class="sd">    &gt;&gt;&gt; start()</span>
+<span class="sd">    Ideas Console version 0.0.38. [Python version: 3.9.10]</span>
+
+<span class="sd">    ideas&gt; repeat 3:</span>
+<span class="sd">       ...     print(&#39;Hello&#39;)</span>
+<span class="sd">       ...</span>
+<span class="sd">    ===========Transformed============</span>
+<span class="sd">    for _1 in range( 3):</span>
+<span class="sd">        print(&#39;Hello&#39;)</span>
+
+<span class="sd">    -----------------------------</span>
+<span class="sd">    Hello</span>
+<span class="sd">    Hello</span>
+<span class="sd">    Hello</span>
+
+<span class="sd">    ideas&gt;</span>
+
+<span class="sd">As you can see, the name of the for loop variable, ``_1``,</span>
+<span class="sd">is much simpler ... and predictable.</span>
+
+<span class="sd">You will need to have a look at the code for ``repeat.py`` to</span>
+<span class="sd">fully understand how to use such callback parameters in your</span>
+<span class="sd">own import hooks.</span>
+
+
 <span class="sd">Adds ``repeat`` as a keyword to write loops. The four constructs supported</span>
 <span class="sd">are::</span>
 
@@ -152,6 +232,10 @@
 <div class="viewcode-block" id="transform_source"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.transform_source">[docs]</a><span class="k">def</span> <span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function is called by the import hook loader and is used as a</span>
 <span class="sd">    wrapper for the function where the real transformation is performed.</span>
+
+<span class="sd">    It can use an optional parameter, ``callback_params``, which is</span>
+<span class="sd">    a dict that can contain a key, ``&quot;predictable_names&quot;``, to indicate</span>
+<span class="sd">    that variables created as loop counters should take a predictable form.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="sd">&quot;&quot;&quot;Replaces instances of::</span>
 
@@ -206,7 +290,11 @@
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../repeat.html#ideas.examples.repeat.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path.</span>
+
+<span class="sd">    If ``predictable_names`` is set to ``True``, a callback parameter</span>
+<span class="sd">    passed to the source transformation function will be used to</span>
+<span class="sd">    create variable loops with predictable names.&quot;&quot;&quot;</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;predictable_names&quot;</span><span class="p">:</span> <span class="n">predictable_names</span><span class="p">}</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>

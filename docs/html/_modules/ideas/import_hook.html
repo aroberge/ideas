@@ -257,6 +257,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
 
 <div class="viewcode-block" id="IdeasLoader.create_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.create_module">[docs]</a>    <span class="k">def</span> <span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Potential replacement for the default create_module method.&quot;&quot;&quot;</span>
         <span class="c1"># Note: I do not have an example of custom module creation yet.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">)</span>
@@ -454,8 +455,12 @@
     <span class="k">return</span> <span class="n">hook</span></div>
 
 
-<span class="k">def</span> <span class="nf">make_ipython_source_transformer</span><span class="p">(</span><span class="n">transform_source</span><span class="p">):</span>
+<div class="viewcode-block" id="make_ipython_source_transformer"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.make_ipython_source_transformer">[docs]</a><span class="k">def</span> <span class="nf">make_ipython_source_transformer</span><span class="p">(</span><span class="n">transform_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes a source transform and makes returns an IPython compatible</span>
+<span class="sd">    source transformer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">ipython_source_transformer</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">has_side_effects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># noqa</span>
+        <span class="c1"># In IPython, the source transformation operates on a list of lines</span>
         <span class="n">original_source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">transform_source</span><span class="p">(</span><span class="n">original_source</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="ow">and</span> <span class="n">source</span> <span class="o">!=</span> <span class="n">original_source</span><span class="p">:</span>
@@ -463,10 +468,15 @@
         <span class="n">lines</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="n">keepends</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lines</span>
 
-    <span class="k">return</span> <span class="n">ipython_source_transformer</span>
+    <span class="k">return</span> <span class="n">ipython_source_transformer</span></div>
 
 
-<span class="k">def</span> <span class="nf">make_ipython_ast_node_transformer</span><span class="p">(</span><span class="n">ipython_ast_node_transformer</span><span class="p">):</span>
+<div class="viewcode-block" id="make_ipython_ast_node_transformer"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.make_ipython_ast_node_transformer">[docs]</a><span class="k">def</span> <span class="nf">make_ipython_ast_node_transformer</span><span class="p">(</span><span class="n">ipython_ast_node_transformer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes an AST transformer designed to work with IPython,</span>
+<span class="sd">    and wraps it to add a warning in case the user would like to</span>
+<span class="sd">    see how the code is actually transformed, since this is not</span>
+<span class="sd">    possible when using IPython.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">wrapped_ipython_ast_node_transformer</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
@@ -475,7 +485,7 @@
             <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">ipython_ast_node_transformer</span>
 
-    <span class="k">return</span> <span class="n">wrapped_ipython_ast_node_transformer</span>
+    <span class="k">return</span> <span class="n">wrapped_ipython_ast_node_transformer</span></div>
 
 
 <div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>

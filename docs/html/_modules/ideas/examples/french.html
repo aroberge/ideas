@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.french &mdash; ideas 0.0.36 documentation</title>
+  <title>ideas.examples.french &mdash; ideas 0.0.38 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> ideas
           </a>
               <div class="version">
-                0.0.36
+                0.0.38
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -110,9 +110,105 @@
              
   <h1>Source code for ideas.examples.french</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Keywords are translated from French to English/Python by a function in this file.</span>
+<span class="sd">.. admonition:: Summary</span>
 
-<span class="sd">A &quot;French Python&quot; file is recognize by its .pyfr extension.</span>
+<span class="sd">    This example demonstrates the how to use a non-standard file</span>
+<span class="sd">    extension (``.pyfr``) as an indication that an import hook must</span>
+<span class="sd">    be used.</span>
+
+<span class="sd">    It also demonstrates how to use the ``verbose_finder`` configuration option.</span>
+
+<span class="sd">French Python</span>
+<span class="sd">==============</span>
+
+<span class="sd">Imagine you are a French beginner who has learned the basics</span>
+<span class="sd">of programming using a block-based environment such as Scratch</span>
+<span class="sd">or Blockly. All the text shown on these blocks was in French,</span>
+<span class="sd">the only language you know.  You now want to do a transition</span>
+<span class="sd">to actually writing code in an editor, instead of putting</span>
+<span class="sd">predefined blocks together. It would be so much easier if</span>
+<span class="sd">you could use a version of Python where the keywords were in French,</span>
+<span class="sd">with most of them being identical to what you were using in the</span>
+<span class="sd">block-based environment.</span>
+<span class="sd">This is what this import hook example allows one to do.</span>
+
+<span class="sd">A more elaborate example is that given by</span>
+<span class="sd">`AvantPy &lt;https://aroberge.github.io/avantpy/docs/html/&gt;`_.</span>
+
+<span class="sd">Let&#39;s see it in action:</span>
+
+<span class="sd">.. code-block:: none</span>
+
+<span class="sd">    &gt; python -m ideas -a french --show</span>
+<span class="sd">    Ideas Console version 0.0.38. [Python version: 3.9.10]</span>
+
+<span class="sd">    ideas&gt; pourchaque lettre dans &#39;Bonjour&#39;:</span>
+<span class="sd">       ...     afficher(lettre)</span>
+<span class="sd">       ...</span>
+<span class="sd">    ===========Transformed============</span>
+<span class="sd">    for lettre in &#39;Bonjour&#39;:</span>
+<span class="sd">        print(lettre)</span>
+
+<span class="sd">    -----------------------------</span>
+<span class="sd">    B</span>
+<span class="sd">    o</span>
+<span class="sd">    n</span>
+<span class="sd">    j</span>
+<span class="sd">    o</span>
+<span class="sd">    u</span>
+<span class="sd">    r</span>
+
+<span class="sd">    ideas&gt;</span>
+
+
+<span class="sd">Importing .pyfr files</span>
+<span class="sd">----------------------</span>
+
+<span class="sd">Suppose we have the following two files:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">   # my_program.py</span>
+
+<span class="sd">   print(&quot;Wrong one&quot;)</span>
+<span class="sd">   raise ImportError</span>
+
+<span class="sd">and</span>
+
+<span class="sd">.. code-block:: none</span>
+
+
+<span class="sd">   # my_program.pyfr</span>
+
+<span class="sd">   afficher(&quot;Bonjour !&quot;)</span>
+
+
+<span class="sd">Let&#39;s see if we attempt to import ``my_program`` after</span>
+<span class="sd">setting up the ``french`` import hook and enabling the</span>
+<span class="sd">verbose finder::</span>
+
+
+<span class="sd">   &gt;&gt;&gt; from ideas.session import config</span>
+<span class="sd">   &gt;&gt;&gt; config.verbose_finder = True</span>
+<span class="sd">   &gt;&gt;&gt; from ideas.examples import french</span>
+<span class="sd">   &gt;&gt;&gt; hook = french.add_hook()</span>
+<span class="sd">   Looking for files with extensions:  [&#39;.pyfr&#39;]</span>
+<span class="sd">   The following paths will not be included in the search:</span>
+<span class="sd">      PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python37\\lib</span>
+<span class="sd">      IDEAS: c:\\users\\andre\\github\\ideas\\ideas</span>
+<span class="sd">      SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.7\\lib\\site-packages</span>
+<span class="sd">   &gt;&gt;&gt; import my_program</span>
+<span class="sd">       Searching for ~\\github\\ideas\\my_program.pyfr</span>
+<span class="sd">       Found: ~\\github\\ideas\\my_program.pyfr</span>
+
+<span class="sd">   Bonjour !</span>
+<span class="sd">   &gt;&gt;&gt; import math</span>
+<span class="sd">       Searching for ~\\github\\ideas\\math.pyfr</span>
+<span class="sd">       IdeasMetaFinder did not find math.pyfr</span>
+
+<span class="sd">   &gt;&gt;&gt; math.pi</span>
+<span class="sd">   3.141592653589793</span>
+<span class="sd">   &gt;&gt;&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span>
 <span class="kn">import</span> <span class="nn">token_utils</span>
@@ -176,7 +272,8 @@
 
 
 <div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../french.html#ideas.examples.french.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Creates and adds the import hook in sys.meta_path.</span>
+<span class="sd">    Uses a custom extension for the exception hook.&quot;&quot;&quot;</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>

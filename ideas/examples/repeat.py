@@ -1,4 +1,84 @@
 """
+.. admonition:: Summary
+
+    Introduces four different forms using a ``repeat`` keyword.
+    It also demonstrates how to use a callback parameters.
+
+
+repeat as a keyword
+=======================
+
+Let's begin with an example.
+
+
+.. code-block::
+
+    > python -m ideas -a repeat --show
+    Ideas Console version 0.0.38. [Python version: 3.9.10]
+
+    ideas> repeat 3:
+       ...     print('Hello')
+       ...
+    ===========Transformed============
+    for _9e4a6946f8d44ffca90dc9475537d39a in range( 3):
+        print('Hello')
+
+    -----------------------------
+    Hello
+    Hello
+    Hello
+
+    ideas>
+
+As you can see, ``repeat n``, where ``n`` is an integer,
+is converted into a for loop, with a randomly named
+variable, guaranteed not to have a name used for another
+object in the program.  This works well in practice.
+
+However, suppose we wish to do some repeatable tests,
+ensuring that the variable names are always the same
+for all tests: we can do this using a 'callback parameter'.
+This is a parameter that is given to the ``add_hook``
+function used to create the import hook.
+``add_hook`` must use Python dict to pass all required
+callback parameters to ``create_hook``, so that they
+can be passed back to the function used to transform the code.
+
+Here's a second example using it.
+
+.. code-block::
+
+    >>> from ideas.examples import repeat
+    >>> from ideas.console import start
+    >>> from ideas.session import config
+    >>> config.show_changes = True
+    >>> repeat.add_hook(predictable_names=True)
+    <IdeasMetaFinder object for ideas.examples.repeat>
+    >>> start()
+    Ideas Console version 0.0.38. [Python version: 3.9.10]
+
+    ideas> repeat 3:
+       ...     print('Hello')
+       ...
+    ===========Transformed============
+    for _1 in range( 3):
+        print('Hello')
+
+    -----------------------------
+    Hello
+    Hello
+    Hello
+
+    ideas>
+
+As you can see, the name of the for loop variable, ``_1``,
+is much simpler ... and predictable.
+
+You will need to have a look at the code for ``repeat.py`` to
+fully understand how to use such callback parameters in your
+own import hooks.
+
+
 Adds ``repeat`` as a keyword to write loops. The four constructs supported
 are::
 
@@ -41,6 +121,10 @@ class RepeatSyntaxError(Exception):
 def transform_source(source, callback_params=None, **_kwargs):
     """This function is called by the import hook loader and is used as a
     wrapper for the function where the real transformation is performed.
+
+    It can use an optional parameter, ``callback_params``, which is
+    a dict that can contain a key, ``"predictable_names"``, to indicate
+    that variables created as loop counters should take a predictable form.
     """
     """Replaces instances of::
 
@@ -95,7 +179,11 @@ def transform_source(source, callback_params=None, **_kwargs):
 
 
 def add_hook(predictable_names=False, **_kwargs):
-    """Creates and adds the import hook in sys.meta_path"""
+    """Creates and adds the import hook in sys.meta_path.
+
+    If ``predictable_names`` is set to ``True``, a callback parameter
+    passed to the source transformation function will be used to
+    create variable loops with predictable names."""
     callback_params = {"predictable_names": predictable_names}
     hook = import_hook.create_hook(
         transform_source=transform_source,
