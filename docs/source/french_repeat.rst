@@ -1,6 +1,3 @@
-French repeat
-==============
-
 .. admonition:: Summary
 
     This example re-uses two existing transformations:
@@ -9,8 +6,8 @@ French repeat
       as an indication that an import hook must be used.
     - **repeat as a keyword**
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/french_repeat.py>`_
-
+French repeat
+==============
 
 .. image:: _static/turtle_demo.png
    :scale: 40 %

@@ -1,7 +1,5 @@
-"""french_repeat.py
---------------------
-
-Combining transformations from two other examples.
+"""
+Demonstrates how we can simply combine source transformations.
 """
 
 from ideas import import_hook
