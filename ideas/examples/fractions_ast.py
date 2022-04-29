@@ -107,6 +107,9 @@ class FractionWrapper(ast.NodeTransformer):
             return self.generic_visit(node)
 
 
+ipython_ast_node_transformer = FractionWrapper()
+
+
 def transform_ast(tree, **_kwargs):
     """Transforms the Abstract Syntax Tree or a single node"""
     tree_or_node = FractionWrapper().visit(tree)
@@ -126,6 +129,6 @@ def add_hook(**_kwargs):
         hook_name=__name__,
         source_init=source_init,
         transform_ast=transform_ast,
-        ipython_ast_node_transformer=FractionWrapper(),
+        ipython_ast_node_transformer=ipython_ast_node_transformer,
     )
     return hook

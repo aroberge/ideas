@@ -7,8 +7,8 @@
 
 
 
-Create your first import hook
-==============================
+Create your first import hook: the basics
+=========================================
 
 You've seen how to use **ideas** import hooks; now it is time to
 create your first one.  Se use our ``"Hello world"`` example,
