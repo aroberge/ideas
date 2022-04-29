@@ -333,7 +333,7 @@ def create_hook(
     )
     if transform_source is not None and ipython_shell is not None:
         ipython_source_transformer = make_ipython_source_transformer(transform_source)
-        ipython_shell.input_transformers_post.append(ipython_source_transformer)
+        ipython_shell.input_transformers_cleanup.append(ipython_source_transformer)
 
     if ipython_ast_node_transformer is not None and ipython_shell is not None:
         wrapped_ipython_ast_node_transformer = make_ipython_ast_node_transformer(
@@ -348,8 +348,12 @@ def make_ipython_source_transformer(transform_source):
     """Takes a source transform and makes returns an IPython compatible
     source transformer.
     """
-
-    def ipython_source_transformer(lines, has_side_effects=True):  # noqa
+    # This is done as during the cleanup phase
+    # (``ipython_shell.input_transformers_cleanup``), as opposed to the
+    # post phase (``ipython_shell.input_transformers_post``) so that
+    # transformations that work on code blocks (such as ``repeat``)
+    # can work properly.
+    def ipython_source_transformer(lines, has_side_effects=False):  # noqa
         # In IPython, the source transformation operates on a list of lines
         original_source = "".join(lines)
         source = transform_source(original_source)

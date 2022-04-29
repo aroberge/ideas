@@ -10,7 +10,6 @@ repeat as a keyword
 
 Let's begin with an example.
 
-
 .. code-block::
 
     > python -m ideas -a repeat --show
