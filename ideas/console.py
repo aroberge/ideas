@@ -7,7 +7,6 @@ used with import hooks.
 
 import ast
 import platform
-import os
 import sys
 
 from code import InteractiveConsole
@@ -16,8 +15,9 @@ from . import __version__
 from .session import config
 
 
-BANNER = "Ideas Console version {}. [Python version: {}]".format(
-    __version__, platform.python_version()
+BANNER = (
+    f"Ideas Console version {__version__}. "
+    + f"[Python version: {platform.python_version()}]"
 )
 _CONFIG = {}
 CONSOLE_NAME = config.console_name
@@ -35,7 +35,7 @@ class IdeasConsole(InteractiveConsole):
     It should not need to be instantiated directly.
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=R0913
         self,
         source_init=None,
         transform_ast=None,
@@ -43,7 +43,7 @@ class IdeasConsole(InteractiveConsole):
         transform_source=None,
         callback_params=None,
         console_dict=None,
-        locals=None,
+        locals_=None,
     ):
         """This class builds upon Python's code.InteractiveConsole
         to work with import hooks.
@@ -53,18 +53,20 @@ class IdeasConsole(InteractiveConsole):
         self.transform_source = transform_source
         self.callback_params = callback_params
 
+        # console_dict can be a custom dict-like object.
+        # See ideas.examples.constants.py for an example.
         if console_dict is None:
             console_dict = {}
-        if locals is not None:
-            console_dict.update(**locals)
+        if locals_ is not None:
+            console_dict.update(**locals_)
 
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
         if source_init is not None:
             try:
-                exec(source_init(), self.locals)
-            except Exception:
+                exec(source_init(), self.locals)  # pylint: disable=W0122
+            except Exception:  # pylint: disable=W0703
                 self.showtraceback()
             else:
                 print("   The following initializing code from ideas is included:\n")
@@ -168,46 +170,23 @@ class IdeasConsole(InteractiveConsole):
         self.runcode(code_obj)
         return False
 
-    def runcode(self, code_obj):
-        """Execute a code object.
 
-        A note about KeyboardInterrupt: this exception may occur
-        elsewhere in this code, and may not always be caught.  The
-        caller should be prepared to deal with it.
-        """
-        try:
-            exec(code_obj, self.locals)
-        except SystemExit:
-            os._exit(1)  # noqa -pycharm
-        except Exception:
-            self.showtraceback()
-
-
-def start(banner=BANNER, show_config=False, prompt="ideas> ", locals=None):
+def start(banner=BANNER, prompt="ideas> ", locals_=None):
     """Starts a special console that works with import hooks."""
     if len(prompt) >= 4:
         sys.ps2 = (len(prompt) - 4) * " " + "... "
     sys.ps1 = "\n" + prompt
-    if _CONFIG and show_config:
-        print("Configuration values for the console:")
-        for key in _CONFIG:
-            if _CONFIG[key] is not None:
-                if hasattr(_CONFIG[key], "hook_name"):
-                    print(f"    {key} from {_CONFIG[key].hook_name}")
-                else:
-                    print(f"    {key}: {_CONFIG[key]}")
-        print("-" * 50)
-    if locals is None:
-        locals = {"config": config}
-    elif "Ideas" in locals:
-        if "ideas_config" in locals:
+    if locals_ is None:
+        locals_ = {"config": config}
+    elif "Ideas" in locals_:
+        if "ideas_config" in locals_:
             print("Ideas' configuration object is not available.")
         else:
             print("Ideas' configuration object is available as ideas_config")
-            locals["ideas_config"] = config
+            locals_["ideas_config"] = config
     else:
-        locals["config"] = config
-    console = IdeasConsole(**_CONFIG, locals=locals)
+        locals_["config"] = config
+    console = IdeasConsole(**_CONFIG, locals_=locals_)
 
     if console.transform_ast is not None and not hasattr(ast, "unparse"):
         banner += """

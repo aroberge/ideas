@@ -43,12 +43,13 @@ BYTECODE_TRANSFORMERS = []
 IPYTHON_AST_NODE_TRANSFORMERS = []
 
 try:
-    ipython_shell = get_ipython()  # noqa
+    IPYTHON_SHELL = get_ipython()  # noqa
 except NameError:
-    ipython_shell = None
+    IPYTHON_SHELL = None
 
 
 def find_module(module_name):
+    """Finds and import a module based on its name."""
     # First, try to import from current working directory
     try:
         module = import_module(module_name)
@@ -95,11 +96,11 @@ def add_ipython_ast_node_transformer(module):
     in ``module``; if found, adds it to the list of AST transformers
     for IPython.
     """
-    if ipython_shell is None:
+    if IPYTHON_SHELL is None:
         return
     if hasattr(module, "ipython_ast_node_transformer"):
         transform = getattr(module, "ipython_ast_node_transformer")
-        ipython_shell.ast_transformers.append(transform)
+        IPYTHON_SHELL.ast_transformers.append(transform)
 
 
 def add_bytecode_transformer(module):
@@ -132,8 +133,8 @@ def identify_experimental_import_statements(source):
                 continue
             add_source_transformer(module)
             source_init = add_source_init(module)
-            for line in source_init.splitlines():
-                new_lines.append(line)
+            for init_line in source_init.splitlines():
+                new_lines.append(init_line)
             add_ast_transformer(module)
             add_ipython_ast_node_transformer(module)
             add_bytecode_transformer(module)
@@ -164,7 +165,7 @@ def ipython_ast_node_transformer(node):
     for transform in IPYTHON_AST_NODE_TRANSFORMERS:
         try:
             node = transform(node)
-        except Exception:
+        except Exception:  # pylint: disable=W0703
             pass
     return node
 

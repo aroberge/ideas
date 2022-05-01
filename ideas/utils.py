@@ -88,12 +88,12 @@ def generate_variable_names():
     """Generator that yields random variable names"""
     while True:
         name = uuid.uuid4()
-        yield "_%s" % name.hex
+        yield f"_{name.hex}"
 
 
 def generate_predictable_names():
     """Generator that yields predictable variable names - useful for testing"""
-    n = 0
+    index = 0
     while True:
-        n += 1
-        yield "_%s" % n
+        index += 1
+        yield f"_{index}"

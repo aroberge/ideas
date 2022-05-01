@@ -16,15 +16,13 @@ from .session import config
 from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES, print_source
 
 
-# Identify the main script assuming that it has been called from
-# the command line using something like
-# python -m ideas main_script[.py] -some_flag
-MAIN_NAME = None
-if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
-    MAIN_NAME = sys.argv[1].rstrip(".py")
+def finder_inform(text):
+    """Print some informative text when verbose finder is set"""
+    if config.verbose_finder:
+        print(text)
 
 
-class IdeasMetaFinder(MetaPathFinder):
+class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
     """A custom finder to locate modules. The main reason for this code
     is to ensure that our custom loader, which does the code transformations,
     is used."""
@@ -42,7 +40,7 @@ class IdeasMetaFinder(MetaPathFinder):
         transform_ast=None,
         transform_bytecode=None,
         transform_source=None,
-    ):
+    ):  # pylint: disable=R0913
         self.callback_params = callback_params
         self.custom_create_module = create_module
         self.excluded_paths = excluded_paths
@@ -60,7 +58,7 @@ class IdeasMetaFinder(MetaPathFinder):
             return "<IdeasMetaFinder object>"
         return f"<IdeasMetaFinder object for {self.hook_name}>"
 
-    def find_spec(self, fullname, path, target=None):
+    def find_spec(self, fullname, path, target=None):  # pylint: disable=W0613
         """finds the appropriate properties (spec) of a module, and sets
         its loader."""
         if not path:
@@ -87,21 +85,17 @@ class IdeasMetaFinder(MetaPathFinder):
                     extension = "." + extension
                 filename = os.path.join(entry, name + extension)
 
-                if config.verbose_finder:
-                    print(f"    Searching for {shorten_path(filename)}{extension}")
+                finder_inform(f"    Searching for {shorten_path(filename)}{extension}")
                 if os.path.exists(filename):
+                    finder_inform(f"    Found: {shorten_path(filename) + extension}\n")
                     break
-                else:
-                    if config.verbose_finder:
-                        print(
-                            "    IdeasMetaFinder did not find",
-                            f"{shorten_path(fullname)}{extension}\n",
-                        )
+                finder_inform(
+                    "    IdeasMetaFinder did not find"
+                    + f"{shorten_path(fullname)}{extension}\n",
+                )
             else:
                 continue
 
-            if config.verbose_finder:
-                print("    Found:", shorten_path(filename) + extension, "\n")
             return spec_from_file_location(
                 fullname,
                 filename,
@@ -120,7 +114,7 @@ class IdeasMetaFinder(MetaPathFinder):
         return None  # we don't know how to import this
 
 
-class IdeasLoader(Loader):
+class IdeasLoader(Loader):  # pylint: disable=R0902
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(
@@ -134,7 +128,7 @@ class IdeasLoader(Loader):
         transform_ast=None,
         transform_bytecode=None,
         transform_source=None,
-    ):
+    ):  # pylint: disable=R0913
         self.filename = filename
         self.exec_ = exec_
         self.callback_params = callback_params
@@ -144,14 +138,19 @@ class IdeasLoader(Loader):
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
+        # Identify the main script assuming that it has been called from
+        # the command line using something like
+        # python -m ideas main_script[.py] -some_flag
+        self.main_name = None
+        if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
+            self.main_name = sys.argv[1].rstrip(".py")
 
     def create_module(self, spec):
         """Potential replacement for the default create_module method."""
         # Note: I do not have an example of custom module creation yet.
         if self.custom_create_module is not None:
             return self.custom_create_module(spec, callback_params=self.callback_params)
-        else:
-            return None  # use default module creation semantics
+        return None  # use default module creation semantics
 
     def exec_module(self, module):
         """Import the source code, transform it before executing it so that
@@ -160,16 +159,15 @@ class IdeasLoader(Loader):
         # The main script should be the very first one imported.
         # To avoid potential named conflicts, we ensure that the potential
         # identification is only done once.
-        global MAIN_NAME
-        if module.__name__ is not None and module.__name__ == MAIN_NAME:
+        if module.__name__ is not None and module.__name__ == self.main_name:
             module.__name__ = "__main__"
-        MAIN_NAME = None
+        self.main_name = None
 
         if self.module_class is not None:
-            module.__class__ = self.module_class
+            module.__class__ = self.module_class  # pylint: disable=E0243
 
-        with open(self.filename, mode="r+b") as f:
-            source = decode_source(f.read())
+        with open(self.filename, mode="r+b") as file:
+            source = decode_source(file.read())
         original_source = source
 
         if self.transform_source is not None:
@@ -189,18 +187,18 @@ class IdeasLoader(Loader):
 
         try:
             tree = ast.parse(source, self.filename)
-        except Exception as e:
+        except Exception as exc:
             print("Exception raised while parsing source.")
-            raise e
+            raise exc
 
         if self.transform_ast is not None:
             tree = self.transform_ast(tree)
 
         try:
             code_object = compile(tree, self.filename, "exec")
-        except Exception as e:
+        except Exception as exc:
             print("Exception raised while compiling tree.")
-            raise e
+            raise exc
 
         if self.transform_bytecode is not None:
             code_object = self.transform_bytecode(code_object)
@@ -215,10 +213,10 @@ class IdeasLoader(Loader):
             )
         else:
             try:
-                exec(code_object, module.__dict__)
-            except Exception as e:
+                exec(code_object, module.__dict__)  # pylint: disable=W0122
+            except Exception as exc:
                 print("Exception raised while executing code object.")
-                raise e
+                raise exc
 
 
 def create_hook(
@@ -235,7 +233,7 @@ def create_hook(
     transform_ast=None,
     transform_bytecode=None,
     transform_source=None,
-):
+):  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
     Each of the following parameter is optional; most of these are
@@ -353,7 +351,7 @@ def make_ipython_source_transformer(transform_source):
     # post phase (``ipython_shell.input_transformers_post``) so that
     # transformations that work on code blocks (such as ``repeat``)
     # can work properly.
-    def ipython_source_transformer(lines, has_side_effects=False):  # noqa
+    def ipython_source_transformer(lines):  # noqa
         # In IPython, the source transformation operates on a list of lines
         original_source = "".join(lines)
         source = transform_source(original_source)
@@ -385,11 +383,10 @@ def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
 
 def remove_hook(hook):
     """Function used to remove a previously imported hook inserted in sys.meta_path"""
-    for index, h in enumerate(sys.meta_path):
-        if h == hook:
+    for index, meta_finder in enumerate(sys.meta_path):
+        if meta_finder == hook:
+            del sys.meta_path[index]
             break
     else:
         print("Import hook not found in remove_hook.")
         return
-    del sys.meta_path[index]
-    console.configure()
