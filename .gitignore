@@ -139,3 +139,4 @@ dmypy.json
 
 # the following are often used as quick tests
 ignore*.py
+example.*
