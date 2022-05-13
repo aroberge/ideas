@@ -1,4 +1,8 @@
-"""Enabling emojis as normal characters"""
+"""Enabling emojis as normal characters.
+
+Adapted from https://github.com/gahjelle/pythonji
+MIT license; author: Geir Arne Hjelle
+"""
 import ast
 import sys
 
