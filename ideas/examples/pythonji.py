@@ -15,10 +15,13 @@ DELIMITERS = ("__pythonji__", "__")
 
 
 def transform_source(source, **_kwargs):
+    """Transform emojis into valid strings for Python"""
     return emoji.demojize(source, delimiters=DELIMITERS)
 
 
 class EmojiTransformer(ast.NodeTransformer):
+    """Transform strings intended to represent emojis back into emojis"""
+
     def visit_Str(self, node):
         return ast.copy_location(
             ast.Str(s=emoji.emojize(node.s, delimiters=DELIMITERS)), node
