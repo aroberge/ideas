@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ideas"
+version = "0.0.40"
+description = "Easy creation of custom import hooks to experiment on alternatives to Python's syntax."
+authors = ["André Roberge <andre.roberge@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+token-utils = "^0.1.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+black = "^22.3.0"
+pre-commit = "^2.19.0"
+flake8 = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
