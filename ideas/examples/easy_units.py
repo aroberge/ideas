@@ -1,10 +1,12 @@
 """
-implicit_multiplication.py
----------------------------
+easy_units
+----------
 
-This module is intended to demonstrate some unusual transformations
-to allow someone to write equations as they would on paper
-and have Python interpret them properly.
+To be documented.
+
+
+In the meantime, see
+https://aroberge.blogspot.com/2022/04/natural-syntax-for-units-in-python.html
 """
 
 from ideas import import_hook, utils
