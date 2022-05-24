@@ -6,7 +6,7 @@ authors = ["André Roberge <andre.roberge@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 token-utils = "^0.1.8"
 
 [tool.poetry.dev-dependencies]
