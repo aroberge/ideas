@@ -10,6 +10,8 @@ import sys
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
+from types import CodeType, ModuleType
+from typing import Callable, Dict, Sequence, Optional, Any
 
 from . import console
 from .session import config
@@ -220,20 +222,20 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
 
 def create_hook(
-    callback_params=None,
-    create_module=None,
-    console_dict=None,
-    exec_=None,
-    extensions=None,
-    first=True,
-    hook_name=None,
-    ipython_ast_node_transformer=None,
-    module_class=None,
-    source_init=None,
-    transform_ast=None,
-    transform_bytecode=None,
-    transform_source=None,
-):  # pylint: disable=R0913,R0914
+    callback_params: Optional[Dict[str, Any]] = None,
+    create_module: Optional[Callable[..., ModuleType]] = None,
+    console_dict: Optional[Dict[str, Any]] = None,
+    exec_: Optional[Callable[..., None]] = None,
+    extensions: Optional[Sequence[str]] = None,
+    first: bool = True,
+    hook_name: Optional[str] = None,
+    ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
+    module_class: Optional[type] = None,
+    source_init: Optional[str] = None,
+    transform_ast: Optional[ast.NodeTransformer] = None,
+    transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
+    transform_source: Optional[Callable[[str], str]] = None,
+) -> IdeasMetaFinder:  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
     Each of the following parameter is optional; most of these are
