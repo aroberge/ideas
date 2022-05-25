@@ -5,11 +5,8 @@ This module contains the core functions required to create an import hook.
 """
 
 import ast
-import logging
 import os
 import sys
-from types import CodeType, ModuleType
-from typing import Callable, Dict, Sequence, Optional, Any
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
@@ -17,9 +14,6 @@ from importlib.util import spec_from_file_location, decode_source
 from . import console
 from .session import config
 from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES, print_source
-
-
-logger = logging.getLogger(__name__)
 
 
 def finder_inform(text):
@@ -193,18 +187,18 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
         try:
             tree = ast.parse(source, self.filename)
-        except Exception:
-            logger.debug("Exception raised while parsing source.")
-            raise
+        except Exception as exc:
+            print("Exception raised while parsing source.")
+            raise exc
 
         if self.transform_ast is not None:
             tree = self.transform_ast(tree)
 
         try:
             code_object = compile(tree, self.filename, "exec")
-        except Exception:
-            logger.debug("Exception raised while compiling tree.")
-            raise
+        except Exception as exc:
+            print("Exception raised while compiling tree.")
+            raise exc
 
         if self.transform_bytecode is not None:
             code_object = self.transform_bytecode(code_object)
@@ -220,26 +214,26 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         else:
             try:
                 exec(code_object, module.__dict__)  # pylint: disable=W0122
-            except Exception:
-                logger.debug("Exception raised while executing code object.")
-                raise
+            except Exception as exc:
+                print("Exception raised while executing code object.")
+                raise exc
 
 
 def create_hook(
-    callback_params: Optional[Dict[str, Any]] = None,
-    create_module: Optional[Callable[..., ModuleType]] = None,
-    console_dict: Optional[Dict[str, Any]] = None,
-    exec_: Optional[Callable[..., None]] = None,
-    extensions: Optional[Sequence[str]] = None,
-    first: bool = True,
-    hook_name: Optional[str] = None,
-    ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
-    module_class: Optional[type] = None,
-    source_init: Optional[str] = None,
-    transform_ast: Optional[ast.NodeTransformer] = None,
-    transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
-    transform_source: Optional[Callable[[str], str]] = None,
-) -> IdeasMetaFinder:  # pylint: disable=R0913,R0914
+    callback_params=None,
+    create_module=None,
+    console_dict=None,
+    exec_=None,
+    extensions=None,
+    first=True,
+    hook_name=None,
+    ipython_ast_node_transformer=None,
+    module_class=None,
+    source_init=None,
+    transform_ast=None,
+    transform_bytecode=None,
+    transform_source=None,
+):  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
     Each of the following parameter is optional; most of these are

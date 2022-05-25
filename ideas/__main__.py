@@ -5,16 +5,12 @@ If no source is given, ideas will start an interactive console.
 
 import argparse
 from importlib import import_module
-import logging
 import sys
 
 import ideas
 from ideas import console
 from ideas.session import config
 
-
-logger = logging.getLogger("ideas")
-logging.basicConfig(level=logging.WARNING)
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -25,13 +21,6 @@ parser.add_argument(
     "-v",
     "--version",
     help="Only displays the current version.",
-    action="store_true",
-)
-
-parser.add_argument(
-    "-V",
-    "--verbose",
-    help="Print debugging messages during runtime.",
     action="store_true",
 )
 
@@ -112,8 +101,6 @@ def main() -> None:
     if args.version:
         print(f"\nideas version {ideas.__version__}")
         return
-    elif not args.verbose:
-        logger.setLevel(logging.INFO)
 
     config.show_changes = bool(args.show_changes)
 
