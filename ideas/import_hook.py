@@ -189,18 +189,18 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
         try:
             tree = ast.parse(source, self.filename)
-        except Exception as exc:
+        except Exception:
             print("Exception raised while parsing source.")
-            raise exc
+            raise
 
         if self.transform_ast is not None:
             tree = self.transform_ast(tree)
 
         try:
             code_object = compile(tree, self.filename, "exec")
-        except Exception as exc:
+        except Exception:
             print("Exception raised while compiling tree.")
-            raise exc
+            raise
 
         if self.transform_bytecode is not None:
             code_object = self.transform_bytecode(code_object)
@@ -216,9 +216,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         else:
             try:
                 exec(code_object, module.__dict__)  # pylint: disable=W0122
-            except Exception as exc:
+            except Exception:
                 print("Exception raised while executing code object.")
-                raise exc
+                raise
 
 
 def create_hook(
