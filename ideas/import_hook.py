@@ -7,7 +7,6 @@ This module contains the core functions required to create an import hook.
 import ast
 import os
 import sys
-import traceback
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location, decode_source
@@ -174,17 +173,12 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         original_source = source
 
         if self.transform_source is not None:
-            try:
-                source = self.transform_source(
-                    source,
-                    filename=self.filename,
-                    module=module,
-                    callback_params=self.callback_params,
-                )
-            except Exception as exc:
-                print("Error when executing transform_source:")
-                print("   ", traceback.format_exception_only(type(exc), exc)[0].strip())
-                return
+            source = self.transform_source(
+                source,
+                filename=self.filename,
+                module=module,
+                callback_params=self.callback_params,
+            )
 
         if config.show_changes and original_source != source:
             print_source(original_source, header="Original")
