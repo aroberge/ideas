@@ -71,13 +71,21 @@ def new_dir(obj=None):
     else:
         names = list(inspect.currentframe().f_back.f_locals)
     for k, v in _NAMES_MAP.items():
-        names = [name.replace(v, k) for name in names]
+        names = [
+            name.replace(v, k)
+            for name in names
+            if not (name.startswith("__") and name.endswith("__"))
+        ]
     return sorted(names)
 
 
+true_dir = dir
+
+
 def source_init():
-    return """true_dir = dir
-from ideas.examples.unnormalized_unicode import new_dir as dir
+    name = "ideas.examples.unnormalized_unicode"
+    return f"""from {name} import true_dir
+from {name} import new_dir as dir
 """
 
 
