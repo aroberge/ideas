@@ -30,6 +30,6 @@ setup(
     ),
     python_requires=">=3.6",
     entry_points={
-        "console_scripts": ["ideas = ideas:main"],
+        "console_scripts": ["ideas = ideas.__main__:main"],
     },
 )
