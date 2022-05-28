@@ -29,4 +29,7 @@ setup(
         exclude=["dist", "build", "tools", "tests", "examples", "docs"]
     ),
     python_requires=">=3.6",
+    entry_points={
+        "console_scripts": ["ideas = ideas:main"],
+    },
 )

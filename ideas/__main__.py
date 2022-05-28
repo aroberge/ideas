@@ -59,6 +59,10 @@ parser.add_argument(
     """,
 )
 
+parser.add_argument(
+    "-i", help="""Starts the console after executing a source""", action="store_true"
+)
+
 
 def add_transform(transform):
     """Call the add_hook function for the named module."""
@@ -119,7 +123,7 @@ def main() -> None:
         if args.source.endswith(".py"):
             args.source = args.source[:-3]
         module = import_module(args.source)
-        if sys.flags.interactive:
+        if sys.flags.interactive or args.i:
             console.start(locals_=module.__dict__)
     else:
         console.start()
