@@ -7,7 +7,10 @@ used with import hooks.
 
 import ast
 import platform
+import os
 import sys
+import traceback
+import tokenize
 
 from code import InteractiveConsole
 
@@ -91,9 +94,23 @@ class IdeasConsole(InteractiveConsole):
 
         if self.transform_source is not None:
             last_line = source.endswith("\n")  # signals the end of a block
-            source = self.transform_source(
-                source, filename=CONSOLE_NAME, callback_params=self.callback_params
-            )
+            try:
+                source = self.transform_source(
+                    source, filename=CONSOLE_NAME, callback_params=self.callback_params
+                )
+            except tokenize.TokenError:
+                # Pass on the original source so that open (, or additional)
+                # can be handled correctly as either SyntaxErrors or indication
+                # that more code is needed.
+                more = self.runsource(source, CONSOLE_NAME)
+                if not more:
+                    self.resetbuffer()
+                return more
+            except Exception as exc:
+                print("Error when executing transform_source:")
+                print("   ", traceback.format_exception_only(type(exc), exc)[0].strip())
+                self.resetbuffer()
+                return
             # Some transformations may add some extra "\n" (usually at most one)
             if not last_line:
                 source = source.rstrip("\n")
@@ -157,6 +174,10 @@ class IdeasConsole(InteractiveConsole):
                             "Warning: cannot unparse the code sample to show changes."
                         )
                     code_obj = compile(tree, filename, "exec")
+                except Exception as e:
+                    print("Error when executing transform_ast:")
+                    print("   ", traceback.format_exception_only(type(e), e)[0].strip())
+                    return False
                 else:
                     code_obj = self.compile(source, filename, symbol)
             else:
@@ -165,9 +186,17 @@ class IdeasConsole(InteractiveConsole):
                 return True
 
         if self.transform_bytecode is not None:
-            code_obj = self.transform_bytecode(code_obj)
+            try:
+                code_obj = self.transform_bytecode(code_obj)
+            except Exception as e:
+                print("Error when executing transform_bytecode:")
+                print("   ", traceback.format_exception_only(type(e), e)[0].strip())
+                return False
 
-        self.runcode(code_obj)
+        try:
+            self.runcode(code_obj)
+        except SystemExit:
+            os._exit(0)
         return False
 
 
