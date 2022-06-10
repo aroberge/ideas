@@ -25,6 +25,8 @@ def finder_inform(text):
 
 
 DEFAULT = object()
+# The following can be set from __main__.py
+SOURCE_ARGUMENT = None
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -146,9 +148,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         # Identify the main script assuming that it has been called from
         # the command line using something like
         # python -m ideas main_script[.py] -some_flag
-        self.main_name = None
-        if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
-            self.main_name = sys.argv[1].rstrip(".py")
+        self.main_name = SOURCE_ARGUMENT
 
     def create_module(self, spec):
         """Potential replacement for the default create_module method."""
@@ -166,7 +166,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         # identification is only done once.
         if module.__name__ is not None and module.__name__ == self.main_name:
             module.__name__ = "__main__"
-        self.main_name = None
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243

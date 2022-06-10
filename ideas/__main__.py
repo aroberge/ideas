@@ -8,7 +8,7 @@ from importlib import import_module
 import sys
 
 import ideas
-from ideas import console
+from ideas import console, import_hook
 from ideas.session import config
 
 
@@ -56,6 +56,7 @@ parser.add_argument(
     "source",
     nargs="?",
     help="""Name of the main Python module (path.to.my_program) to be imported.
+    The extension (.py) must not be included.
     """,
 )
 
@@ -120,9 +121,22 @@ def main() -> None:
         register_codec(args.register_codec[0])
 
     if args.source is not None:
-        if args.source.endswith(".py"):
-            args.source = args.source[:-3]
-        module = import_module(args.source)
+        import_hook.SOURCE_ARGUMENT = args.source
+        try:
+            module = import_module(args.source)
+        except ModuleNotFoundError as exc:
+            print(f"{exc.__class__.__name__}: {exc.msg}")
+            if args.source.endswith(".py"):
+                print(
+                    f"The source argument '{args.source}' must not include the '.py' extension."
+                )
+                return
+            if "." in args.source:
+                print(
+                    f"The source argument '{args.source}' must be a module name without an extension."
+                )
+                return
+            raise
         if sys.flags.interactive or args.i:
             console.start(locals_=module.__dict__)
     else:
