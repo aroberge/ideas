@@ -24,6 +24,9 @@ def finder_inform(text):
         print(text)
 
 
+DEFAULT = object()
+
+
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
     """A custom finder to locate modules. The main reason for this code
     is to ensure that our custom loader, which does the code transformations,
@@ -45,7 +48,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
     ):  # pylint: disable=R0913
         self.callback_params = callback_params
         self.custom_create_module = create_module
-        self.excluded_paths = excluded_paths
+        self.excluded_paths = excluded_paths if excluded_paths is not None else []
         self.exec_ = exec_
         self.extensions = extensions
         self.hook_name = hook_name
@@ -227,6 +230,7 @@ def create_hook(
     console_dict: Optional[Dict[str, Any]] = None,
     exec_: Optional[Callable[..., None]] = None,
     extensions: Optional[Sequence[str]] = None,
+    excluded_paths: Optional[Sequence[str]] = DEFAULT,
     first: bool = True,
     hook_name: Optional[str] = None,
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
@@ -241,7 +245,7 @@ def create_hook(
     Each of the following parameter is optional; most of these are
     never needed except in some unusual import hooks.
 
-    Usually, at least one of ``transform_ast``, ``transform_bytecode``,
+    Usually, at least one of ``transform_ast``, ``transform_bytecode``s,
     and ``transform_source`` should be specified.
 
     * ``callback_params``: a dict containing keyword parameters
@@ -254,6 +258,9 @@ def create_hook(
       a module's dict.
     * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,
       used to identify modules containing source code.
+    * ``excluded_paths``: a list of paths to be excluded for consideration.
+      If not specified, excluded paths include the location of the standard
+      library, the site packages, as well as files from this project.
     * ``first``: if ``True``, the custom hook will be used as the first
       location in ``sys.meta_path``, to look for source files.
     * ``hook_name``: used to give a more readable ``repr`` to the hook created.
@@ -292,7 +299,10 @@ def create_hook(
         for line in lines:
             ipython_shell.ex(line)
 
-    excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
+    if excluded_paths is DEFAULT:
+        excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
+    elif excluded_paths is None:
+        excluded_paths = []
 
     if config.verbose_finder:
         print("Looking for files with extensions: ", extensions)
