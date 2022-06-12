@@ -8,7 +8,7 @@ from importlib import import_module
 import sys
 
 import ideas
-from ideas import console, import_hook
+from ideas import console
 from ideas.session import config
 
 
@@ -121,7 +121,7 @@ def main() -> None:
         register_codec(args.register_codec[0])
 
     if args.source is not None:
-        import_hook.SOURCE_ARGUMENT = args.source
+        config.source_argument = args.source
         try:
             module = import_module(args.source)
         except ModuleNotFoundError as exc:

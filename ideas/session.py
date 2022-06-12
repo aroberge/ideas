@@ -13,6 +13,8 @@ class State:
         self.original = ""
         self.verbose_finder = False
         self.show_changes = False
+        # The following is the source argument passed to __main__.py
+        self.source_argument = None
 
     def print_original(self, source, header="Original"):
         """Depending on configuration, can print the original source

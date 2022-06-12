@@ -25,8 +25,6 @@ def finder_inform(text):
 
 
 DEFAULT = object()
-# The following can be set from __main__.py
-SOURCE_ARGUMENT = None
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -145,10 +143,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
-        # Identify the main script assuming that it has been called from
-        # the command line using something like
-        # python -m ideas main_script[.py] -some_flag
-        self.main_name = SOURCE_ARGUMENT
 
     def create_module(self, spec):
         """Potential replacement for the default create_module method."""
@@ -161,10 +155,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         """Import the source code, transform it before executing it so that
         it is known to Python.
         """
-        # The main script should be the very first one imported.
-        # To avoid potential named conflicts, we ensure that the potential
-        # identification is only done once.
-        if module.__name__ is not None and module.__name__ == self.main_name:
+        if module.__name__ == config.source_argument:
             module.__name__ = "__main__"
 
         if self.module_class is not None:
