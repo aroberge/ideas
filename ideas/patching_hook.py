@@ -29,15 +29,22 @@ class PatchingLoader:
     def __init__(self, finder):
         self._finder = finder
 
-    def load_module(self, fullname):
-        """Loads a module and potentially apply patches"""
+    def create_module(self, spec):
+        return None
+
+    def exec_module(self, module):
+        """Import the source code, transform it before executing it so that
+        it is known to Python.
+        """
+        fullname = module.__name__
         # Use the normal importing machinery. This time, PatchingFinder
-        # will skip over the module as it will already been found.
+        # will skip over the module creation and execution
+        # as it will already been found.
         importlib.import_module(fullname)
         module = sys.modules[fullname]
         for patch in PATCHES[fullname]:
             module = patch(module)
-        return module
+        sys.modules[fullname] = module
 
 
 def add_patch(module_name, func):
