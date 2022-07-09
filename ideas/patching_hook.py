@@ -33,9 +33,7 @@ class PatchingLoader:
         return None
 
     def exec_module(self, module):
-        """Import the source code, transform it before executing it so that
-        it is known to Python.
-        """
+        """Patches the module."""
         fullname = module.__name__
         # Use the normal importing machinery. This time, PatchingFinder
         # will skip over the module creation and execution
