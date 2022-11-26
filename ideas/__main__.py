@@ -73,10 +73,12 @@ def add_transform(transform):
         pass
     else:
         try:
-            getattr(module, "add_hook")()
+            add_hook = getattr(module, "add_hook")
         except AttributeError:
             print(f"Module {module} does not contain a function named add_hook")
             return
+        add_hook()
+        return
 
     path = f"ideas.examples.{transform}"
     try:

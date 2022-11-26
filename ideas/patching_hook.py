@@ -30,15 +30,19 @@ class PatchingLoader:
         self._finder = finder
 
     def create_module(self, spec):
+        # create_module is required if we define exec_module.
+        # However, by returning None, we let the normal import
+        # machinery take care of the module creation.
         return None
 
     def exec_module(self, module):
-        """Patches the module."""
+        """Custom method that patches a module."""
         fullname = module.__name__
         # Use the normal importing machinery. This time, PatchingFinder
-        # will skip over the module creation and execution
+        # will skip over the custom module creation and execution
         # as it will already been found.
         importlib.import_module(fullname)
+        # Now that the module has been fully created, we can patch it.
         module = sys.modules[fullname]
         for patch in PATCHES[fullname]:
             module = patch(module)
