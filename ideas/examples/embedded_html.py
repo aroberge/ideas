@@ -5,7 +5,7 @@ embedded_html
 This transform allows you to embed HTML in Python in a manner reminiscent of JSX
 in JavaScript.
 
-Embedded HTML is surrounded with the new operators `:(` and `):`.  Embedded HTML
+Embedded HTML is surrounded with the new operators `>>|` and `|<<`.  Embedded HTML
 is converted to a series of calls to `el(...)` which you must make sure is defined
 in the context where your HTML appears.  An example is:
 
@@ -14,20 +14,23 @@ def el(name: str, attrs: dict[str, Union[str, bool]], *children):
     pass
 
 def html(title:str, link_text:str, link_url:str):
-    my_html = :(
+    my_html = >>|
         <div class="grid-3">
             <h1>{title}</h1>
             <p><a href="#top">Back to top</a></p>
             <p><a href={link_url}>{link_text}</a></p>
             <p>Some text - with an embedded value {title} - goes here</p>
         </div>
-    ):
+    |<<
 
     return my_html
 ```
 
 Whitespace within HTML text nodes is not exactly preserved but should be good
 enough to preserve the same rendering.
+
+The delimiters can be changed by changing the `HTML_START` and `HTML_END`
+constants below.
 """
 import logging
 import tokenize
@@ -40,6 +43,8 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 PARENS = {"(": ")", "{": "}", "[": "]"}
+HTML_START = [">>", "|"]
+HTML_END = ["|", "<<"]
 
 Token = tuple[token_utils.Token, str]
 
@@ -60,9 +65,7 @@ def index_of(
     return None
 
 
-def index_of_seq(
-    tokens: list[Token], pattern: list[Token], start=0, limit: Optional[int] = None
-) -> Optional[int]:
+def index_of_seq(tokens: list[Token], pattern: list[Token], start=0) -> Optional[int]:
     """
     Find the index of the first occurence of a sequence of tokens, starting at
     `start` in the list and looking no further than `limit`.  If `limit is None`
@@ -157,11 +160,11 @@ def extract_string(
     """
 
     start_line, start_col = prev_token.end
-    start_tok = tokens[0]
+    start_tok = prev_token
     text = ""
 
-    for ii, token in enumerate(tokens):
-        current_line, current_col = token.start
+    for token in tokens:
+        current_line, _ = token.start
         if current_line != start_line:
             text += start_tok.line[start_col:]
             start_line, start_col = token.start
@@ -173,7 +176,7 @@ def extract_string(
     if start_line != end_line:
         text += start_tok.line[start_col:]
     else:
-        text += start_tok.line[start_col : end_col]
+        text += start_tok.line[start_col:end_col]
     log.warning("Text: %s", text)
     text = text.replace("\n", " ")
     if lstrip:
@@ -383,15 +386,26 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
     indents = [""]
 
     for line in lines:
-        for token in line:
+        for ii, token in enumerate(line):
             if token.type == tokenize.INDENT:
                 indents.append(token.string)
             if token.type == tokenize.DEDENT:
                 indents.pop()
             if token.string in PARENS:
                 parens.append(token)
-            if parens and token.string == PARENS[str(parens[-1])]:
+            if parens and token.string == PARENS.get(str(parens[-1])):
                 parens.pop()
+            if (
+                ii < len(line) - len(HTML_START)
+                and line[ii : ii + len(HTML_START)] == HTML_START
+            ):
+                parens.append(HTML_START)
+            if (
+                ii < len(line) - len(HTML_END)
+                and line[ii : ii + len(HTML_END)] == HTML_END
+                and parens[-1] == HTML_START
+            ):
+                parens.pop
         in_process += line
         if not parens:
             content = list(remove_newlines(remove_indents(in_process)))
@@ -436,7 +450,9 @@ def extract_html(tokens: Iterable[Token], indent: str = "") -> Iterator[Token]:
         if ii == 0:
             new_tokens += simple_tokens(tokens[ii:], False)
         else:
-            new_tokens += list(filter(lambda x: x != "\n", simple_tokens(tokens[ii:], False)))
+            new_tokens += list(
+                filter(lambda x: x != "\n", simple_tokens(tokens[ii:], False))
+            )
         break
 
     return new_tokens
@@ -446,7 +462,7 @@ def transform_source(source: str, **_kwargs) -> str:
     """
     Transform HTML elements in source code into valid Python.
 
-    HTML elements are surrounded by grouping operators `:(` and `):`.  The resemblance
+    HTML elements are surrounded by grouping operators `>>|` and `|<<`.  The resemblance
     to sad and happy faces may not be entirely co-incidental.
 
     Each such group must contain exactly one top-level HTML tag.
@@ -465,27 +481,30 @@ def transform_source(source: str, **_kwargs) -> str:
     for line in group_split_statements(it):
         ii = 0
         while ii < len(line):
-            html_start = index_of_seq(line, [":", "("], ii)
+            html_start = index_of_seq(line, HTML_START, ii)
             if html_start is None:
                 log.warning("Simple line %s", line[ii:])
-                pre_tokens = list(filter(lambda x: x != '\n', line[ii:]))
+                pre_tokens = list(filter(lambda x: x != "\n", line[ii:]))
                 pre_tokens = simple_tokens(pre_tokens)
                 new_tokens += pre_tokens
                 break
 
-            html_end = index_of_seq(line, [")", ":"], html_start)
+            html_end = index_of_seq(line, HTML_END, html_start)
             if html_end is None:
-                raise SyntaxError("HTML start :( does not have matching end ):")
+                raise SyntaxError(
+                    f"HTML start {HTML_START} does not have matching end {HTML_END}"
+                )
 
             html_tokens = extract_html(
-                line[html_start + 2 : html_end], line[0] if line[0].isspace() else ""
+                line[html_start + len(HTML_START) : html_end],
+                line[0] if line[0].isspace() else "",
             )
 
             new_tokens += simple_tokens(line[:html_start], False)
             new_tokens.append(" (\n")
             new_tokens += simple_tokens(html_tokens, False)
             new_tokens += [")", "\n"]
-            ii = html_end + 2
+            ii = html_end + len(HTML_END)
 
     new_source = token_utils.untokenize(new_tokens)
     log.debug("Transformed source:\n%s", new_source)
