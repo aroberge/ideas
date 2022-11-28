@@ -179,7 +179,6 @@ def extract_string(
         text += start_tok.line[start_col:]
     else:
         text += start_tok.line[start_col:end_col]
-    log.warning("Text: %s", text)
     text = text.replace("\n", " ")
     if lstrip:
         text = text.lstrip()
@@ -258,8 +257,8 @@ def attr_str(attrs: dict) -> str:
 
 
 def extract_tag(
-    tokens: list[Token], idx: int, tag_stack: list[Token]
-) -> tuple[int, list[token_utils.Token]]:
+    tokens: list[Token], idx: int
+) -> tuple[int, tuple[int, str, dict]]:
     """
     Read an HTML element (start, end or self-closing) where one is expected.
 
@@ -267,7 +266,7 @@ def extract_tag(
     """
     start_index = index_of(tokens, "<", idx)
     if start_index is None:
-        return idx, []
+        return idx, (0, None, None)
 
     end_index = index_of(tokens, ">", start_index)
     if not end_index:
@@ -283,10 +282,7 @@ def extract_tag(
         if len(tag_content) != 2:
             raise SyntaxError("Ill-formed HTML tag")
         name = tag_tokens[1]
-        if tag_stack[-1] != name:
-            raise SyntaxError(f"Tag </{name}> cannot close <{tag_stack[-1]}>")
-        tag_stack.pop()
-        return end_index, ["    ),"]
+        return end_index, (2, name.string, None)
 
     name = tag_content[0]
     attr_end = None
@@ -294,15 +290,8 @@ def extract_tag(
     if tag_content[-1] == "/":
         attr_end = -1
         closed = True
-    else:
-        tag_stack.append(name)
     attrs = dict(extract_attrs(tag_content[1:attr_end]))
-    new = ["el", "(", f'"{name}"', ",", attr_str(attrs), ","]
-    if closed:
-        new.append("),")
-
-    log.debug("Found tag with content: %s", new)
-    return end_index, new
+    return end_index, (1 if not closed else 3, name.string, attrs)
 
 
 def space(tokens: Iterable[Token]) -> Iterator[Token]:
@@ -435,43 +424,61 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
         yield [indents[-1]] + list(remove_newlines(remove_indents(in_process)))
 
 
-def extract_html(tokens: Iterable[Token], indent: str = "") -> Iterator[Token]:
+html = Union[str, tuple[int, tuple[str, dict], list['html']]]
+
+def extract_html(tokens: Iterable[Token], indent: str = "") -> html:
     """
     Convert a list of tokens into HTML.  The tokens should not include the HTML
     delimiters.
     """
-    tag_stack = []
-    new_tokens = []
     idx = token_utils.get_first_index(tokens)
+    # Opening tag
+    idx, (typ, name, attrs) = extract_tag(tokens, idx)
+
+    if typ == 3:
+        # Self-closing tag
+        return idx, (name, attrs), []
+
+    if typ != 1:
+        raise SyntaxError(f"Unexpected opening tag: <{name}>")
+
+    # Children
+    children = []
     while idx < len(tokens):
-        if tag_stack:
+        next_tag_idx = index_of(tokens, "<", idx)
+
+        if idx != next_tag_idx:
             idx, string = extract_text(tokens, idx)
             if string:
-                new_tokens.append(indent + "    " * (len(tag_stack) + 1))
-                new_tokens += string
-                new_tokens.append(",")
-                new_tokens.append("\n")
-                continue
-        else:
-            start_idx = index_of(tokens, "<", idx)
-            if start_idx is not None and start_idx != idx:
-                new_tokens += simple_tokens(tokens[idx:start_idx])
-
-        idx, tag_tokens = extract_tag(tokens, idx, tag_stack)
-        if tag_tokens:
-            new_tokens.append(indent + "    " * len(tag_stack))
-            new_tokens += simple_tokens(tag_tokens)
+                children.append(string)
             continue
 
-        if idx == 0:
-            new_tokens += simple_tokens(tokens[idx:], False)
-        else:
-            new_tokens += list(
-                filter(lambda x: x != "\n", simple_tokens(tokens[idx:], False))
-            )
-        break
+        next_idx, (next_typ, next_name, _) = extract_tag(tokens, idx)
+        if next_typ == 2:
+            if next_name != name:
+                raise SyntaxError(f"Closing tag </{next_name}> can't close tag <{name}>")
+            # Closing tag
+            return next_idx, (name, attrs), children
 
-    return new_tokens
+        if next_typ == 0:
+            continue
+
+        next_idx, tag, next_children = extract_html(tokens[idx:], indent)
+        children.append((idx, tag, next_children))
+        idx += next_idx
+
+    raise SyntaxError(f"Tag <{name}> is not closed")
+
+def write_html(html: html) -> str:
+    if isinstance(html, str):
+        return html
+    elif isinstance(html, token_utils.Token):
+        return html.string
+    elif isinstance(html, list):
+        return "".join(str(x) for x in html)
+
+    _, (tag, attrs), children = html
+    return f'el("{tag}", {attr_str(attrs)}, ' + ", ".join(write_html(child) for child in children) + ")"
 
 
 def transform_source(source: str, **_kwargs) -> str:
@@ -497,7 +504,6 @@ def transform_source(source: str, **_kwargs) -> str:
         while idx < len(line):
             html_start = index_of_seq(line, HTML_START, idx)
             if html_start is None:
-                log.warning("Simple line %s", line[idx:])
                 pre_tokens = list(filter(lambda x: x != "\n", line[idx:]))
                 pre_tokens = simple_tokens(pre_tokens)
                 new_tokens += pre_tokens
@@ -509,10 +515,11 @@ def transform_source(source: str, **_kwargs) -> str:
                     f"HTML start {HTML_START} does not have matching end {HTML_END}"
                 )
 
-            html_tokens = extract_html(
-                line[html_start + len(HTML_START) : html_end],
-                line[0] if line[0].isspace() else "",
+            html = extract_html(
+                line[html_start + len(HTML_START) : html_end], ""
             )
+
+            html_tokens = write_html(html)
 
             new_tokens += simple_tokens(line[:html_start], False)
             new_tokens.append(" (\n")
