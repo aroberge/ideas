@@ -7,7 +7,7 @@ def test_single_element():
 def el(*args, **kwargs):
     pass
 
-test_html = :(<div>A Div</div>):
+test_html = >>|<div>A Div</div>|<<
 """)
     assert result == """
 def el ( * args , ** kwargs ) :
@@ -29,13 +29,13 @@ def test_nested():
 def el(*args, **kwargs):
     pass
 
-test_html = :(
+test_html = >>|
     <div>
         A Div
         with a
         <a href="http://google.com">Link</a>
     </div>
-):
+|<<
 """)
     assert result == """
 def el ( * args , ** kwargs ) :
@@ -62,10 +62,10 @@ def el(*args, **kwargs):
 
 x = "abcd"
 
-test_html = :(
+test_html = >>|
     <div class={x}>
     </div>
-):
+|<<
 """)
     assert result == """
 def el ( * args , ** kwargs ) :
@@ -90,11 +90,11 @@ def el(*args, **kwargs):
 
 x = "abcd"
 
-test_html = :(
+test_html = >>|
     <div>
     Some text with {x} in it.
     </div>
-):
+|<<
 """)
     assert result == """
 def el ( * args , ** kwargs ) :
