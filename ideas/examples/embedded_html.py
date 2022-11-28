@@ -252,7 +252,7 @@ def attr_str(attrs: dict) -> str:
     Note that this is different to a standard dict rendering because the quoting
     of the value is different.
     """
-    return "{{{}}}".format( #pylint: disable=consider-using-f-string
+    return "{{{}}}".format(  # pylint: disable=consider-using-f-string
         ", ".join(f'"{key}": {value}' for key, value in attrs.items())
     )
 
