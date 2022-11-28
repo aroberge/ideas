@@ -1,34 +1,26 @@
+import types
 from ideas.examples import embedded_html
 from ideas.import_hook import remove_hook
 
-def test_single_element():
-    hook = embedded_html.add_hook()
-    result = embedded_html.transform_source("""
-def el(*args, **kwargs):
-    pass
+def el(name, attrs, *children):
+    return [(name, attrs), *children]
 
+def import_result(result):
+    mod = types.ModuleType("test_module")
+    mod.el = el
+    exec(result, mod.__dict__)
+    return mod
+
+def test_single_element():
+    result = embedded_html.transform_source("""
 test_html = >>|<div>A Div</div>|<<
 """)
-    assert result == """
-def el ( * args , ** kwargs ) :
-    pass
-
-test_html = (
-    el("div",{},
-        "A Div",
-    ),
-)
-
-"""
     print(result)
-    remove_hook(hook)
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {}, "A Div")
 
 def test_nested():
-    hook = embedded_html.add_hook()
     result = embedded_html.transform_source("""
-def el(*args, **kwargs):
-    pass
-
 test_html = >>|
     <div>
         A Div
@@ -37,29 +29,11 @@ test_html = >>|
     </div>
 |<<
 """)
-    assert result == """
-def el ( * args , ** kwargs ) :
-    pass
-
-test_html = (
-    el("div",{},
-        "A Div with a ",
-        el("a",{"href": "http://google.com"},
-            "Link",
-        ),
-    ),
-)
-
-"""
-    print(result)
-    remove_hook(hook)
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {}, "A Div with a ", el("a", {"href":"http://google.com"}, "Link"))
 
 def test_py_attr():
-    hook = embedded_html.add_hook()
     result = embedded_html.transform_source("""
-def el(*args, **kwargs):
-    pass
-
 x = "abcd"
 
 test_html = >>|
@@ -67,27 +41,11 @@ test_html = >>|
     </div>
 |<<
 """)
-    assert result == """
-def el ( * args , ** kwargs ) :
-    pass
-
-x = "abcd"
-
-test_html = (
-    el("div",{"class": x},
-    ),
-)
-
-"""
-    print(result)
-    remove_hook(hook)
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {"class":"abcd"},)
 
 def test_py_text():
-    hook = embedded_html.add_hook()
     result = embedded_html.transform_source("""
-def el(*args, **kwargs):
-    pass
-
 x = "abcd"
 
 test_html = >>|
@@ -96,19 +54,33 @@ test_html = >>|
     </div>
 |<<
 """)
-    assert result == """
-def el ( * args , ** kwargs ) :
-    pass
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {}, "Some text with abcd in it. ")
 
+def test_deeper_indent():
+    result = embedded_html.transform_source("""
 x = "abcd"
 
-test_html = (
-    el("div",{},
-        "Some text with " + str( x ) + " in it. ",
-    ),
-)
+def some_html():
+    def f():
+        return >>|
+            <div class={x}>
+            </div>
+        |<<
+    return f
+test_html = some_html()()
+    """)
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {"class":"abcd"},)
 
-"""
-    print(result)
-    remove_hook(hook)
-
+def test_multiple_tags():
+    result = embedded_html.transform_source("""
+test_html = >>|
+    <div>
+        <p/>
+        <br/>
+    </div>
+|<<
+    """)
+    new_module = import_result(result)
+    assert new_module.test_html == el("div", {}, el("p", {}), el("br", {}))
