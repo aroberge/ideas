@@ -70,6 +70,7 @@ def some_html():
     return f
 test_html = some_html()()
     """)
+    print(result)
     new_module = import_result(result)
     assert new_module.test_html == el("div", {"class":"abcd"},)
 
@@ -84,3 +85,25 @@ test_html = >>|
     """)
     new_module = import_result(result)
     assert new_module.test_html == el("div", {}, el("p", {}), el("br", {}))
+
+def test_with_comments():
+    result = embedded_html.transform_source("""
+def foo():
+    #__pragma__(skip)
+    test_html = >>|<div/>|<<
+    return test_html
+""")
+    new_module = import_result(result)
+    assert new_module.foo() == el("div", {})
+
+def test_class_def():
+    result = embedded_html.transform_source("""
+class Foo:
+    #__pragma__ ('skip')
+
+    def __init__(self):
+        self.y = 1
+        self.x = >>|<div/>|<<
+""")
+    new_module = import_result(result)
+    assert new_module.Foo().x == el("div", {})

@@ -34,7 +34,6 @@ constants below.
 """
 import logging
 import tokenize
-from pprint import pformat
 from typing import Optional, Union, Iterator, Iterable
 
 import token_utils
@@ -98,7 +97,6 @@ def stringify(tokens: list[Union[token_utils.Token, str]]) -> Optional[str]:
 
     Returns `None` if it would otherwise return an empty string.
     """
-    log.debug("Stringifying %s", tokens)
     if tokens:
         str_val = "".join(f"{str(x)}" for x in tokens)
         if str_val.strip():
@@ -205,7 +203,6 @@ def extract_text(
     """
     new_tokens = []
     end_index = index_of(tokens, "<", start) or len(tokens)
-    log.debug("Considering tokens %s", tokens[start:end_index])
     idx = start
     while idx < end_index:
         expr_start = index_of(tokens, "{", idx, end_index)
@@ -240,7 +237,6 @@ def extract_text(
             )
             idx = end_index
 
-    log.debug("Found string with content: %s", new_tokens)
     return idx, list(filter(lambda x: x is not None, new_tokens))
 
 
@@ -256,9 +252,7 @@ def attr_str(attrs: dict) -> str:
     )
 
 
-def extract_tag(
-    tokens: list[Token], idx: int
-) -> tuple[int, tuple[int, str, dict]]:
+def extract_tag(tokens: list[Token], idx: int) -> tuple[int, tuple[int, str, dict]]:
     """
     Read an HTML element (start, end or self-closing) where one is expected.
 
@@ -411,9 +405,9 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
         if not parens:
             content = list(remove_newlines(remove_indents(in_process)))
             if not all(c.string.isspace() for c in content):
-                yield [indents[-1]] + content
+                yield indents[-1], content + ["\n"]
             else:
-                yield ["\n"]
+                yield "", ["\n"]
             in_process = []
         else:
             # There are unclosed groups, keep looking for closing tokens
@@ -421,12 +415,13 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
     if in_process:
         # We finished the stream with unclosed groups.  Return what we have and
         # let the Python interpreter report the error.
-        yield [indents[-1]] + list(remove_newlines(remove_indents(in_process)))
+        yield indents[-1], list(remove_newlines(remove_indents(in_process)))
 
 
-html = Union[str, tuple[int, tuple[str, dict], list['html']]]
+HTML = Union[str, tuple[int, tuple[str, dict], list["html"]]]
 
-def extract_html(tokens: Iterable[Token], indent: str = "") -> html:
+
+def extract_html(tokens: Iterable[Token], indent: str = "") -> HTML:
     """
     Convert a list of tokens into HTML.  The tokens should not include the HTML
     delimiters.
@@ -456,7 +451,9 @@ def extract_html(tokens: Iterable[Token], indent: str = "") -> html:
         next_idx, (next_typ, next_name, _) = extract_tag(tokens, idx)
         if next_typ == 2:
             if next_name != name:
-                raise SyntaxError(f"Closing tag </{next_name}> can't close tag <{name}>")
+                raise SyntaxError(
+                    f"Closing tag </{next_name}> can't close tag <{name}>"
+                )
             # Closing tag
             return next_idx, (name, attrs), children
 
@@ -469,16 +466,24 @@ def extract_html(tokens: Iterable[Token], indent: str = "") -> html:
 
     raise SyntaxError(f"Tag <{name}> is not closed")
 
-def write_html(html: html) -> str:
+
+def write_html(html: HTML) -> str:
+    """
+    Write embedded HTML as a series of function calls.
+    """
     if isinstance(html, str):
         return html
-    elif isinstance(html, token_utils.Token):
+    if isinstance(html, token_utils.Token):
         return html.string
-    elif isinstance(html, list):
+    if isinstance(html, list):
         return "".join(str(x) for x in html)
 
     _, (tag, attrs), children = html
-    return f'el("{tag}", {attr_str(attrs)}, ' + ", ".join(write_html(child) for child in children) + ")"
+    return (
+        f'el("{tag}", {attr_str(attrs)}, '
+        + ", ".join(write_html(child) for child in children)
+        + ")"
+    )
 
 
 def transform_source(source: str, **_kwargs) -> str:
@@ -491,22 +496,22 @@ def transform_source(source: str, **_kwargs) -> str:
     Each such group must contain exactly one top-level HTML tag.
     """
 
-    log.debug(
-        "Initial lines:\n%s",
-        pformat(list(group_split_statements(token_utils.get_lines(source)))),
-    )
     lines_iter = token_utils.get_lines(source)
 
     new_tokens = []
 
-    for line in group_split_statements(lines_iter):
+    for indent, line in group_split_statements(lines_iter):
+        line_contains_html = index_of_seq(line, HTML_START, 0) is not None
         idx = 0
         while idx < len(line):
             html_start = index_of_seq(line, HTML_START, idx)
             if html_start is None:
-                pre_tokens = list(filter(lambda x: x != "\n", line[idx:]))
-                pre_tokens = simple_tokens(pre_tokens)
-                new_tokens += pre_tokens
+                if not line_contains_html:
+                    new_tokens += line
+                else:
+                    pre_tokens = list(filter(lambda x: x != "\n", line[idx:]))
+                    pre_tokens = simple_tokens(pre_tokens)
+                    new_tokens += pre_tokens
                 break
 
             html_end = index_of_seq(line, HTML_END, html_start)
@@ -515,12 +520,11 @@ def transform_source(source: str, **_kwargs) -> str:
                     f"HTML start {HTML_START} does not have matching end {HTML_END}"
                 )
 
-            html = extract_html(
-                line[html_start + len(HTML_START) : html_end], ""
-            )
+            html = extract_html(line[html_start + len(HTML_START) : html_end], "")
 
             html_tokens = write_html(html)
 
+            new_tokens.append(indent)
             new_tokens += simple_tokens(line[:html_start], False)
             new_tokens.append(" (\n")
             new_tokens += simple_tokens(html_tokens, False)
@@ -528,7 +532,6 @@ def transform_source(source: str, **_kwargs) -> str:
             idx = html_end + len(HTML_END)
 
     new_source = token_utils.untokenize(new_tokens)
-    log.debug("Transformed source:\n%s", new_source)
     return new_source
 
 
