@@ -226,7 +226,7 @@ def create_hook(
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
     module_class: Optional[type] = None,
     source_init: Optional[Callable[[], str]] = None,
-    transform_ast: Optional[ast.NodeTransformer] = None,
+    transform_ast: Optional[Callable[[ast.AST], ast.AST]] = None,
     transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
     transform_source: Optional[Callable[[str], str]] = None,
 ) -> IdeasMetaFinder:  # pylint: disable=R0913,R0914
