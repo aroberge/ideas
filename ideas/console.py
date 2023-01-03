@@ -47,6 +47,7 @@ class IdeasConsole(InteractiveConsole):
         callback_params=None,
         console_dict=None,
         locals_=None,
+        parse_source=None,
     ):
         """This class builds upon Python's code.InteractiveConsole
         to work with import hooks.
@@ -54,6 +55,7 @@ class IdeasConsole(InteractiveConsole):
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
+        self.parse_source = parse_source
         self.callback_params = callback_params
 
         # console_dict can be a custom dict-like object.
@@ -145,13 +147,26 @@ class IdeasConsole(InteractiveConsole):
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
         """
-        try:
-            code_obj = self.compile(source, filename, symbol)
-        except (OverflowError, SyntaxError, ValueError):
-            # Case 1
-            config.print_transformed(source)
-            self.showsyntaxerror(filename)
-            return False
+        if self.parse_source is not None:
+            try:
+                tree = self.parse_source(source, filename, symbol)
+                if tree is None:
+                    code_obj = None
+                else:
+                    code_obj = compile(tree, filename, symbol)
+            except (OverflowError, SyntaxError, ValueError):
+                # Case 1
+                config.print_transformed(source)
+                self.showsyntaxerror(filename)
+                return False
+        else:
+            try:
+                code_obj = self.compile(source, filename, symbol)
+            except (OverflowError, SyntaxError, ValueError):
+                # Case 1
+                config.print_transformed(source)
+                self.showsyntaxerror(filename)
+                return False
 
         if code_obj is None:
             # Case 2

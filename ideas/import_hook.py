@@ -45,6 +45,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
         transform_ast=None,
         transform_bytecode=None,
         transform_source=None,
+        parse_source=None,
     ):  # pylint: disable=R0913
         self.callback_params = callback_params
         self.custom_create_module = create_module
@@ -57,6 +58,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
+        self.parse_source = parse_source
 
     def __repr__(self):
         if self.hook_name is None:
@@ -114,6 +116,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
                     transform_ast=self.transform_ast,
                     transform_bytecode=self.transform_bytecode,
                     transform_source=self.transform_source,
+                    parse_source=self.parse_source,
                 ),
             )
         return None  # we don't know how to import this
@@ -133,6 +136,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         transform_ast=None,
         transform_bytecode=None,
         transform_source=None,
+        parse_source=None,
     ):  # pylint: disable=R0913
         self.filename = filename
         self.exec_ = exec_
@@ -143,6 +147,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
         self.transform_source = transform_source
+        self.parse_source = parse_source
 
     def create_module(self, spec):
         """Potential replacement for the default create_module method."""
@@ -180,8 +185,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         if self.source_init is not None:
             source = self.source_init() + source
 
+        parse_source = self.parse_source or ast.parse
         try:
-            tree = ast.parse(source, self.filename)
+            tree = parse_source(source, self.filename, "exec")
         except Exception:
             print("Exception raised while parsing source.")
             raise
@@ -229,6 +235,7 @@ def create_hook(
     transform_ast: Optional[ast.NodeTransformer] = None,
     transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
     transform_source: Optional[Callable[[str], str]] = None,
+    parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
 ) -> IdeasMetaFinder:  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
@@ -312,6 +319,7 @@ def create_hook(
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
         transform_source=transform_source,
+        parse_source=parse_source,
     )
 
     if first:
@@ -330,6 +338,7 @@ def create_hook(
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
         transform_source=transform_source,
+        parse_source=parse_source,
     )
     if transform_source is not None and ipython_shell is not None:
         ipython_source_transformer = make_ipython_source_transformer(transform_source)
