@@ -147,26 +147,17 @@ class IdeasConsole(InteractiveConsole):
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
         """
-        if self.parse_source is not None:
-            try:
+        try:
+            if self.parse_source is not None:
                 tree = self.parse_source(source, filename, symbol)
-                if tree is None:
-                    code_obj = None
-                else:
-                    code_obj = compile(tree, filename, symbol)
-            except (OverflowError, SyntaxError, ValueError):
-                # Case 1
-                config.print_transformed(source)
-                self.showsyntaxerror(filename)
-                return False
-        else:
-            try:
+                code_obj = tree and compile(tree, filename, symbol)
+            else:
                 code_obj = self.compile(source, filename, symbol)
-            except (OverflowError, SyntaxError, ValueError):
-                # Case 1
-                config.print_transformed(source)
-                self.showsyntaxerror(filename)
-                return False
+        except (OverflowError, SyntaxError, ValueError):
+            # Case 1
+            config.print_transformed(source)
+            self.showsyntaxerror(filename)
+            return False
 
         if code_obj is None:
             # Case 2
