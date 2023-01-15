@@ -59,7 +59,7 @@ from ideas import import_hook
 
 class Parser:
     """
-    Simple recursive descent parser for the following grammar:
+    Simple recursive descent parser for the following grammar::
 
         file:        a=stmt* ENDMARKER
         interactive: a=stmt ENDMARKER

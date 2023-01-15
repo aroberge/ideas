@@ -117,6 +117,12 @@ Quick links to topics
 
 .. toctree::
    :maxdepth: 1
+   :caption: Custom parsing
+
+    Polish expressions <polish_expr>
+
+.. toctree::
+   :maxdepth: 1
    :caption: AST transformations
 
     Fractional math (AST) <fractional_math_ast>
