@@ -7,6 +7,7 @@ used with import hooks.
 
 import ast
 import platform
+import readline
 import os
 import sys
 import traceback
@@ -64,6 +65,8 @@ class IdeasConsole(InteractiveConsole):
             console_dict = {}
         if locals_ is not None:
             console_dict.update(**locals_)
+
+        readline.parse_and_bind('tab: complete')
 
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
