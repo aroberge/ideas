@@ -166,8 +166,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
 
-        with open(self.filename, mode="r+b") as file:
-            source = decode_source(file.read())
+        with open(self.filename, mode="rb") as file:
+            encoded_source = file.read()
+        source = decode_source(encoded_source)
         original_source = source
 
         if self.transform_source is not None:
