@@ -29,10 +29,10 @@
         parsed by Python.
     end note
     partition AST {
-        note right #LightBlue
+        note right #White
            Substitution of this entire block
-           as a single unit could be done.
-           No example exists yet.
+           as a single unit is possible. See
+           example **polish_expr.py**.
         end note
         :Convert the source into a series of tokens;
         :Transform into a Concrete Parse Tree (CPT);

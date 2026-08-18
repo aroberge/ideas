@@ -5,7 +5,7 @@ embedded_html
 This transform allows you to embed HTML in Python in a manner reminiscent of JSX
 in JavaScript.
 
-Embedded HTML is surrounded with the new operators `:(` and `):`.  Embedded HTML
+Embedded HTML is surrounded with the new operators `>>|` and `|<<`.  Embedded HTML
 is converted to a series of calls to `el(...)` which you must make sure is defined
 in the context where your HTML appears.  An example is:
 
@@ -14,32 +14,38 @@ def el(name: str, attrs: dict[str, Union[str, bool]], *children):
     pass
 
 def html(title:str, link_text:str, link_url:str):
-    my_html = :(
+    my_html = >>|
         <div class="grid-3">
             <h1>{title}</h1>
             <p><a href="#top">Back to top</a></p>
             <p><a href={link_url}>{link_text}</a></p>
             <p>Some text - with an embedded value {title} - goes here</p>
         </div>
-    ):
+    |<<
 
     return my_html
 ```
 
 Whitespace within HTML text nodes is not exactly preserved but should be good
 enough to preserve the same rendering.
+
+The delimiters can be changed by changing the `HTML_START` and `HTML_END`
+constants below.
 """
 import logging
 import tokenize
 from typing import Optional, Union, Iterator, Iterable
 
-from ideas import import_hook
 import token_utils
+
+from ideas import import_hook
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 PARENS = {"(": ")", "{": "}", "[": "]"}
+HTML_START = [">>", "|"]
+HTML_END = ["|", "<<"]
 
 Token = tuple[token_utils.Token, str]
 
@@ -54,15 +60,13 @@ def index_of(
 
     Returns the index or `None` if no match.
     """
-    for ii, tok in enumerate(tokens[start:limit]):
+    for idx, tok in enumerate(tokens[start:limit]):
         if tok.string == token:
-            return start + ii
+            return start + idx
     return None
 
 
-def index_of_seq(
-    tokens: list[Token], pattern: list[Token], start=0, limit: Optional[int] = None
-) -> Optional[int]:
+def index_of_seq(tokens: list[Token], pattern: list[Token], start=0) -> Optional[int]:
     """
     Find the index of the first occurence of a sequence of tokens, starting at
     `start` in the list and looking no further than `limit`.  If `limit is None`
@@ -71,9 +75,9 @@ def index_of_seq(
     Returns the index, or `None` if no match.
     """
     pat_len = len(pattern)
-    for ii in range(start, len(tokens) - pat_len + 1):
-        if tokens[ii : ii + pat_len] == pattern:
-            return ii
+    for idx in range(start, len(tokens) - pat_len + 1):
+        if tokens[idx : idx + pat_len] == pattern:
+            return idx
     return None
 
 
@@ -93,11 +97,10 @@ def stringify(tokens: list[Union[token_utils.Token, str]]) -> Optional[str]:
 
     Returns `None` if it would otherwise return an empty string.
     """
-    log.debug("Stringifying %s", tokens)
     if tokens:
         str_val = "".join(f"{str(x)}" for x in tokens)
         if str_val.strip():
-            return '"{}"'.format(str_val)
+            return f'"{str_val}"'
     return None
 
 
@@ -105,30 +108,30 @@ def extract_attrs(tokens: list[Token]) -> dict[str, Union[str, bool]]:
     """
     Read a list of HTML attributes and return them as a `dict`.
     """
-    ii = 0
-    while ii < len(tokens):
-        name = tokens[ii]
-        if ii + 1 == len(tokens):
-            ii += 1
+    idx = 0
+    while idx < len(tokens):
+        name = tokens[idx]
+        if idx + 1 == len(tokens):
+            idx += 1
             yield name.string, True
             continue
-        if tokens[ii + 1] == "=":
-            if ii + 2 == len(tokens):
+        if tokens[idx + 1] == "=":
+            if idx + 2 == len(tokens):
                 raise SyntaxError(
                     f"Mal-formed HTML: {' '.join(str(t) for t in tokens)}"
                 )
-            elif tokens[ii + 2].string == "{":
-                end_index = find_matching_paren(tokens, ii + 2)
+            if tokens[idx + 2].string == "{":
+                end_index = find_matching_paren(tokens, idx + 2)
                 yield name.string, "".join(
-                    token.string for token in tokens[ii + 3 : end_index]
+                    token.string for token in tokens[idx + 3 : end_index]
                 )
-                ii = end_index + 1
+                idx = end_index + 1
             else:
-                value = tokens[ii + 2]
-                ii += 3
+                value = tokens[idx + 2]
+                idx += 3
                 yield name.string, value.string
             continue
-        ii += 1
+        idx += 1
         yield name.string, True
 
 
@@ -157,11 +160,11 @@ def extract_string(
     """
 
     start_line, start_col = prev_token.end
-    start_tok = tokens[0]
+    start_tok = prev_token
     text = ""
 
-    for ii, token in enumerate(tokens):
-        current_line, current_col = token.start
+    for token in tokens:
+        current_line, _ = token.start
         if current_line != start_line:
             text += start_tok.line[start_col:]
             start_line, start_col = token.start
@@ -173,8 +176,7 @@ def extract_string(
     if start_line != end_line:
         text += start_tok.line[start_col:]
     else:
-        text += start_tok.line[start_col : end_col]
-    log.warning("Text: %s", text)
+        text += start_tok.line[start_col:end_col]
     text = text.replace("\n", " ")
     if lstrip:
         text = text.lstrip()
@@ -192,7 +194,7 @@ def extract_text(
     Read an HTML text node, possibly including Python expressions surrounded with
     braces (`{}`).
 
-    Reads from `tokens`, starting at index `ii`.
+    Reads from `tokens`, starting at index `idx`.
 
     Note that it is never valid for such a string to end a piece of HTML so we don't need
     to worry about the HTML end delimiter.
@@ -201,43 +203,41 @@ def extract_text(
     """
     new_tokens = []
     end_index = index_of(tokens, "<", start) or len(tokens)
-    log.debug("Considering tokens %s", tokens[start:end_index])
-    ii = start
-    while ii < end_index:
-        expr_start = index_of(tokens, "{", ii, end_index)
+    idx = start
+    while idx < end_index:
+        expr_start = index_of(tokens, "{", idx, end_index)
         if expr_start is not None:
             expr_end = find_matching_paren(tokens, expr_start)
-            if ii > start:
+            if idx > start:
                 new_tokens.append(" + ")
-            if expr_start > ii:
+            if expr_start > idx:
                 new_tokens += [
                     extract_string(
-                        tokens[ii:expr_start],
-                        tokens[ii - 1],
+                        tokens[idx:expr_start],
+                        tokens[idx - 1],
                         tokens[expr_start],
                         "",
-                        ii == start,
+                        idx == start,
                     ),
                     " + ",
                 ]
             new_tokens += ["str( "] + tokens[expr_start + 1 : expr_end] + [")"]
-            ii = expr_end + 1
+            idx = expr_end + 1
         else:
-            if ii > start:
+            if idx > start:
                 new_tokens.append(" + ")
             new_tokens.append(
                 extract_string(
-                    tokens[ii:end_index],
-                    tokens[ii - 1],
+                    tokens[idx:end_index],
+                    tokens[idx - 1],
                     tokens[end_index],
                     "",
-                    ii == start,
+                    idx == start,
                 )
             )
-            ii = end_index
+            idx = end_index
 
-    log.debug("Found string with content: %s", new_tokens)
-    return ii, list(filter(lambda x: x is not None, new_tokens))
+    return idx, list(filter(lambda x: x is not None, new_tokens))
 
 
 def attr_str(attrs: dict) -> str:
@@ -247,22 +247,20 @@ def attr_str(attrs: dict) -> str:
     Note that this is different to a standard dict rendering because the quoting
     of the value is different.
     """
-    return "{{{}}}".format(
+    return "{{{}}}".format(  # pylint: disable=consider-using-f-string
         ", ".join(f'"{key}": {value}' for key, value in attrs.items())
     )
 
 
-def extract_tag(
-    tokens: list[Token], ii: int, tag_stack: list[Token]
-) -> tuple[int, list[token_utils.Token]]:
+def extract_tag(tokens: list[Token], idx: int) -> tuple[int, tuple[int, str, dict]]:
     """
     Read an HTML element (start, end or self-closing) where one is expected.
 
-    Reads from `tokens`, starting at index `ii`.
+    Reads from `tokens`, starting at index `idx`.
     """
-    start_index = index_of(tokens, "<", ii)
+    start_index = index_of(tokens, "<", idx)
     if start_index is None:
-        return ii, []
+        return idx, (0, None, None)
 
     end_index = index_of(tokens, ">", start_index)
     if not end_index:
@@ -278,26 +276,16 @@ def extract_tag(
         if len(tag_content) != 2:
             raise SyntaxError("Ill-formed HTML tag")
         name = tag_tokens[1]
-        if tag_stack[-1] != name:
-            raise SyntaxError(f"Tag </{name}> cannot close <{tag_stack[-1]}>")
-        tag_stack.pop()
-        return end_index, ["    ),"]
-    else:
-        name = tag_content[0]
-        attr_end = None
-        closed = False
-        if tag_content[-1] == "/":
-            attr_end = -1
-            closed = True
-        else:
-            tag_stack.append(name)
-        attrs = {x: y for x, y in extract_attrs(tag_content[1:attr_end])}
-        new = ["el", "(", f'"{name}"', ",", attr_str(attrs), ","]
-        if closed:
-            new.append("),")
+        return end_index, (2, name.string, None)
 
-        log.debug("Found tag with content: %s", new)
-        return end_index, new
+    name = tag_content[0]
+    attr_end = None
+    closed = False
+    if tag_content[-1] == "/":
+        attr_end = -1
+        closed = True
+    attrs = dict(extract_attrs(tag_content[1:attr_end]))
+    return end_index, (1 if not closed else 3, name.string, attrs)
 
 
 def space(tokens: Iterable[Token]) -> Iterator[Token]:
@@ -307,13 +295,13 @@ def space(tokens: Iterable[Token]) -> Iterator[Token]:
     """
     tokens = list(tokens)
     list_len = len(tokens)
-    for ii, token in enumerate(tokens):
+    for idx, token in enumerate(tokens):
         if isinstance(token, token_utils.Token):
             yield token.string
             if (
                 not token.is_space()
                 and token.type != tokenize.INDENT
-                and ii != list_len - 1
+                and idx != list_len - 1
             ):
                 yield " "
             continue
@@ -351,6 +339,9 @@ def remove_newlines(tokens: Iterable[Token]) -> Iterator[Token]:
 
 
 def remove_indents(tokens: Iterable[Token]) -> Iterator[Token]:
+    """
+    Yield tokens, skipping any that are indents.
+    """
     for token in tokens:
         if isinstance(token, token_utils.Token):
             if token.type == tokenize.INDENT:
@@ -364,14 +355,15 @@ def find_matching_paren(tokens: Iterable[Token], start: int) -> int:
     `start`.  `start` must point to an opening parenthesis.
     """
     parens = []
-    for ii, token in enumerate(tokens[start:]):
+    for idx, token in enumerate(tokens[start:]):
         if token.string in PARENS:
             parens.append(token)
         if parens and token.string == PARENS[str(parens[-1])]:
             parens.pop()
         if not parens:
-            return start + ii
-    raise SyntaxError("Opening paren at %s has no matching close.", token.start)
+            return start + idx
+    assert tokens
+    raise SyntaxError(f"Opening paren at {tokens[0].start} has no matching close.")
 
 
 def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[Token]]:
@@ -382,23 +374,40 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
     in_process = []
     indents = [""]
 
+    def handle_indents(token):
+        if token.type == tokenize.INDENT:
+            indents.append(token.string)
+        elif token.type == tokenize.DEDENT:
+            indents.pop()
+
+    def handle_parens(idx, token, line):
+        if token.string in PARENS:
+            parens.append(token)
+        elif parens and token.string == PARENS.get(str(parens[-1])):
+            parens.pop()
+        elif (
+            idx < len(line) - len(HTML_START)
+            and line[idx : idx + len(HTML_START)] == HTML_START
+        ):
+            parens.append(HTML_START)
+        elif (
+            idx < len(line) - len(HTML_END)
+            and line[idx : idx + len(HTML_END)] == HTML_END
+            and parens[-1] == HTML_START
+        ):
+            parens.pop()
+
     for line in lines:
-        for token in line:
-            if token.type == tokenize.INDENT:
-                indents.append(token.string)
-            if token.type == tokenize.DEDENT:
-                indents.pop()
-            if token.string in PARENS:
-                parens.append(token)
-            if parens and token.string == PARENS[str(parens[-1])]:
-                parens.pop()
+        for idx, token in enumerate(line):
+            handle_indents(token)
+            handle_parens(idx, token, line)
         in_process += line
         if not parens:
             content = list(remove_newlines(remove_indents(in_process)))
             if not all(c.string.isspace() for c in content):
-                yield [indents[-1]] + content
+                yield indents[-1], content + ["\n"]
             else:
-                yield ["\n"]
+                yield "", ["\n"]
             in_process = []
         else:
             # There are unclosed groups, keep looking for closing tokens
@@ -406,93 +415,130 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
     if in_process:
         # We finished the stream with unclosed groups.  Return what we have and
         # let the Python interpreter report the error.
-        yield [indents[-1]] + list(remove_newlines(remove_indents(in_process)))
+        yield indents[-1], list(remove_newlines(remove_indents(in_process)))
 
 
-def extract_html(tokens: Iterable[Token], indent: str = "") -> Iterator[Token]:
-    tag_stack = []
-    new_tokens = []
-    ii = token_utils.get_first_index(tokens)
-    while ii < len(tokens):
-        if tag_stack:
-            ii, string = extract_text(tokens, ii)
+HTML = Union[str, tuple[int, tuple[str, dict], list["html"]]]
+
+
+def extract_html(tokens: Iterable[Token], indent: str = "") -> HTML:
+    """
+    Convert a list of tokens into HTML.  The tokens should not include the HTML
+    delimiters.
+    """
+    idx = token_utils.get_first_index(tokens)
+    # Opening tag
+    idx, (typ, name, attrs) = extract_tag(tokens, idx)
+
+    if typ == 3:
+        # Self-closing tag
+        return idx, (name, attrs), []
+
+    if typ != 1:
+        raise SyntaxError(f"Unexpected opening tag: <{name}>")
+
+    # Children
+    children = []
+    while idx < len(tokens):
+        next_tag_idx = index_of(tokens, "<", idx)
+
+        if idx != next_tag_idx:
+            idx, string = extract_text(tokens, idx)
             if string:
-                new_tokens.append(indent + "    " * (len(tag_stack) + 1))
-                new_tokens += string
-                new_tokens.append(",")
-                new_tokens.append("\n")
-                continue
-        else:
-            start_idx = index_of(tokens, "<", ii)
-            if start_idx is not None and start_idx != ii:
-                new_tokens += simple_tokens(tokens[ii:start_idx])
-
-        ii, tag_tokens = extract_tag(tokens, ii, tag_stack)
-        if tag_tokens:
-            new_tokens.append(indent + "    " * len(tag_stack))
-            new_tokens += simple_tokens(tag_tokens)
+                children.append(string)
             continue
 
-        if ii == 0:
-            new_tokens += simple_tokens(tokens[ii:], False)
-        else:
-            new_tokens += list(filter(lambda x: x != "\n", simple_tokens(tokens[ii:], False)))
-        break
+        next_idx, (next_typ, next_name, _) = extract_tag(tokens, idx)
+        if next_typ == 2:
+            if next_name != name:
+                raise SyntaxError(
+                    f"Closing tag </{next_name}> can't close tag <{name}>"
+                )
+            # Closing tag
+            return next_idx, (name, attrs), children
 
-    return new_tokens
+        if next_typ == 0:
+            continue
+
+        next_idx, tag, next_children = extract_html(tokens[idx:], indent)
+        children.append((idx, tag, next_children))
+        idx += next_idx
+
+    raise SyntaxError(f"Tag <{name}> is not closed")
+
+
+def write_html(html: HTML) -> str:
+    """
+    Write embedded HTML as a series of function calls.
+    """
+    if isinstance(html, str):
+        return html
+    if isinstance(html, token_utils.Token):
+        return html.string
+    if isinstance(html, list):
+        return "".join(str(x) for x in html)
+
+    _, (tag, attrs), children = html
+    return (
+        f'el("{tag}", {attr_str(attrs)}, '
+        + ", ".join(write_html(child) for child in children)
+        + ")"
+    )
 
 
 def transform_source(source: str, **_kwargs) -> str:
     """
     Transform HTML elements in source code into valid Python.
 
-    HTML elements are surrounded by grouping operators `:(` and `):`.  The resemblance
+    HTML elements are surrounded by grouping operators `>>|` and `|<<`.  The resemblance
     to sad and happy faces may not be entirely co-incidental.
 
     Each such group must contain exactly one top-level HTML tag.
     """
 
-    from pprint import pformat
-
-    log.debug(
-        "Initial lines:\n%s",
-        pformat(list(group_split_statements(token_utils.get_lines(source)))),
-    )
-    it = token_utils.get_lines(source)
+    lines_iter = token_utils.get_lines(source)
 
     new_tokens = []
 
-    for line in group_split_statements(it):
-        ii = 0
-        while ii < len(line):
-            html_start = index_of_seq(line, [":", "("], ii)
+    for indent, line in group_split_statements(lines_iter):
+        line_contains_html = index_of_seq(line, HTML_START, 0) is not None
+        idx = 0
+        while idx < len(line):
+            html_start = index_of_seq(line, HTML_START, idx)
             if html_start is None:
-                log.warning("Simple line %s", line[ii:])
-                pre_tokens = list(filter(lambda x: x != '\n', line[ii:]))
-                pre_tokens = simple_tokens(pre_tokens)
-                new_tokens += pre_tokens
+                if not line_contains_html:
+                    new_tokens += line
+                else:
+                    pre_tokens = list(filter(lambda x: x != "\n", line[idx:]))
+                    pre_tokens = simple_tokens(pre_tokens)
+                    new_tokens += pre_tokens
                 break
 
-            html_end = index_of_seq(line, [")", ":"], html_start)
+            html_end = index_of_seq(line, HTML_END, html_start)
             if html_end is None:
-                raise SyntaxError("HTML start :( does not have matching end ):")
+                raise SyntaxError(
+                    f"HTML start {HTML_START} does not have matching end {HTML_END}"
+                )
 
-            html_tokens = extract_html(
-                line[html_start + 2 : html_end], line[0] if line[0].isspace() else ""
-            )
+            html = extract_html(line[html_start + len(HTML_START) : html_end], "")
 
+            html_tokens = write_html(html)
+
+            new_tokens.append(indent)
             new_tokens += simple_tokens(line[:html_start], False)
             new_tokens.append(" (\n")
             new_tokens += simple_tokens(html_tokens, False)
             new_tokens += [")", "\n"]
-            ii = html_end + 2
+            idx = html_end + len(HTML_END)
 
     new_source = token_utils.untokenize(new_tokens)
-    log.debug("Transformed source:\n%s", new_source)
     return new_source
 
 
 def add_hook(**_kwargs):
+    """
+    Install the embedded_html transform.
+    """
     hook = import_hook.create_hook(
         transform_source=transform_source, hook_name=__name__
     )
