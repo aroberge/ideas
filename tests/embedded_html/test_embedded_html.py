@@ -1,6 +1,11 @@
+import sys
 import types
-from ideas.examples import embedded_html
+
+if sys.version_info >= (3, 9):
+    from ideas.examples import embedded_html
 from ideas.import_hook import remove_hook
+
+import pytest
 
 def el(name, attrs, *children):
     return [(name, attrs), *children]
@@ -11,6 +16,7 @@ def import_result(result):
     exec(result, mod.__dict__)
     return mod
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_single_element():
     result = embedded_html.transform_source("""
 test_html = >>|<div>A Div</div>|<<
@@ -19,6 +25,7 @@ test_html = >>|<div>A Div</div>|<<
     new_module = import_result(result)
     assert new_module.test_html == el("div", {}, "A Div")
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_nested():
     result = embedded_html.transform_source("""
 test_html = >>|
@@ -32,6 +39,7 @@ test_html = >>|
     new_module = import_result(result)
     assert new_module.test_html == el("div", {}, "A Div with a ", el("a", {"href":"http://google.com"}, "Link"))
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_py_attr():
     result = embedded_html.transform_source("""
 x = "abcd"
@@ -44,6 +52,7 @@ test_html = >>|
     new_module = import_result(result)
     assert new_module.test_html == el("div", {"class":"abcd"},)
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_py_text():
     result = embedded_html.transform_source("""
 x = "abcd"
@@ -57,6 +66,7 @@ test_html = >>|
     new_module = import_result(result)
     assert new_module.test_html == el("div", {}, "Some text with abcd in it. ")
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_deeper_indent():
     result = embedded_html.transform_source("""
 x = "abcd"
@@ -74,6 +84,7 @@ test_html = some_html()()
     new_module = import_result(result)
     assert new_module.test_html == el("div", {"class":"abcd"},)
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_multiple_tags():
     result = embedded_html.transform_source("""
 test_html = >>|
@@ -86,6 +97,7 @@ test_html = >>|
     new_module = import_result(result)
     assert new_module.test_html == el("div", {}, el("p", {}), el("br", {}))
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_with_comments():
     result = embedded_html.transform_source("""
 def foo():
@@ -96,6 +108,7 @@ def foo():
     new_module = import_result(result)
     assert new_module.foo() == el("div", {})
 
+@pytest.mark.skipif(sys.version_info < (3, 9), reason="requires python3.9 or higher")
 def test_class_def():
     result = embedded_html.transform_source("""
 class Foo:

@@ -66,6 +66,7 @@ and Abstract Syntax Tree (AST) transformation::
     ideas>
 """
 import ast
+import sys
 
 from ideas import import_hook
 
@@ -77,7 +78,18 @@ class FractionWrapper(ast.NodeTransformer):
 
     def visit_BinOp(self, node):
         def is_integer(x):
-            if isinstance(x, ast.Num) and isinstance(x.n, int):
+            if (
+                sys.version_info.minor <= 11
+                and isinstance(x, ast.Num)
+                and isinstance(x.n, int)
+            ):
+                return True
+            # Python version change
+            elif (
+                sys.version_info.minor > 11
+                and isinstance(x, ast.Constant)
+                and isinstance(x.value, int)
+            ):
                 return True
             elif isinstance(x, ast.UnaryOp) and isinstance(x.op, (ast.USub, ast.UAdd)):
                 return is_integer(x.operand)
@@ -95,8 +107,8 @@ class FractionWrapper(ast.NodeTransformer):
                 func=ast.Name(id="Fraction", ctx=ast.Load()),
                 args=[node.left, node.right],
                 keywords=[],
-                starargs=None,
-                kwargs=None,
+                # starargs=None,
+                # kwargs=None,
             )
         # IPython requires transformations that return a single node
         # whereas ideas works with entire trees. We can check if iPython we

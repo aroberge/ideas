@@ -122,7 +122,7 @@ def create_new_co(code_object):
             code_object.co_name,
             code_object.co_qualname,  # new in 3.11
             code_object.co_firstlineno,
-            code_object.co_lnotab,
+            code_object.co_lnotab,  # deprecated in 3.12
             code_object.co_exceptiontable,  # new in 3.11
             code_object.co_freevars,
             code_object.co_cellvars,
