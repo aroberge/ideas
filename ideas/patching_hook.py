@@ -1,52 +1,70 @@
 """This module defines a utility for patching modules.
 
-It is based on the recipe found in section 10.12 of the third
-edition of the Python Cookbook."""
+It was originally based on the recipe found in section 10.12 of the third
+edition of the Python Cookbook but has been modified to work
+with later Python versions."""
 
-import importlib
-import sys
 from collections import defaultdict
+from importlib.abc import Loader, MetaPathFinder
+from importlib.util import spec_from_file_location
+import os.path
+import sys
 
 PATCHES = defaultdict(list)
+FOUND_ONCE = set()
 
 
-class PatchingFinder:
-    def __init__(self):
-        self.found_once = set()
-
-    def find_module(self, fullname, path=None):
-        if fullname in self.found_once:
+class PatchingFinder(MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        if fullname not in PATCHES:
             return None
+        if fullname in FOUND_ONCE:
+            return None
+        if path is None or path == "":
+            path = sys.path
+        if "." in fullname:
+            *parents, name = fullname.split(".")
+        else:
+            name = fullname
+        for entry in path:
+            if os.path.isdir(os.path.join(entry, name)):
+                # this module has child modules
+                filename = os.path.join(entry, name, "__init__.py")
+                submodule_locations = [os.path.join(entry, name)]
+            else:
+                filename = os.path.join(entry, name + ".py")
+                submodule_locations = None
+            if not os.path.exists(filename):
+                continue
 
-        self.found_once.add(fullname)
-        return PatchingLoader(self)
+            spec = spec_from_file_location(
+                fullname,
+                filename,
+                loader=PatchingLoader(filename),
+                submodule_search_locations=submodule_locations,
+            )
+            FOUND_ONCE.add(fullname)
+            return spec
+
+        return None  # we don't know how to import this
 
 
 sys.meta_path.insert(0, PatchingFinder())
 
 
-class PatchingLoader:
-    def __init__(self, finder):
-        self._finder = finder
+class PatchingLoader(Loader):
+    def __init__(self, filename):
+        self.filename = filename
 
     def create_module(self, spec):
-        # create_module is required if we define exec_module.
-        # However, by returning None, we let the normal import
-        # machinery take care of the module creation.
-        return None
+        return None  # use default module creation semantics
 
     def exec_module(self, module):
-        """Custom method that patches a module."""
-        fullname = module.__name__
-        # Use the normal importing machinery. This time, PatchingFinder
-        # will skip over the custom module creation and execution
-        # as it will already been found.
-        importlib.import_module(fullname)
-        # Now that the module has been fully created, we can patch it.
-        module = sys.modules[fullname]
-        for patch in PATCHES[fullname]:
+        with open(self.filename) as f:
+            data = f.read()
+        exec(data, vars(module))
+        for patch in PATCHES[module.__name__]:
             module = patch(module)
-        sys.modules[fullname] = module
 
 
 def add_patch(module_name, func):

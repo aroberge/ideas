@@ -99,12 +99,13 @@ class FractionWrapper(ast.NodeTransformer):
                 kwargs=None,
             )
         # IPython requires transformations that return a single node
-        # whereas ideas works with entire trees.
+        # whereas ideas works with entire trees. We can check if iPython we
+        # are running iPython using __IPYTHON__
         try:
-            get_python()  # noqa
-            return node
+            __IPYTHON__  # noqa
         except NameError:
             return self.generic_visit(node)
+        return node
 
 
 ipython_ast_node_transformer = FractionWrapper()
