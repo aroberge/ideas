@@ -10,8 +10,10 @@ import sys
 
 import ideas
 from ideas import console
-from ideas.session import config
+from ideas.session import current_state
 
+
+transforming_modules = []
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -67,7 +69,9 @@ parser.add_argument(
 
 
 def add_transform(transform):
-    """Call the add_hook function for the named module."""
+    """Call the add_hook function for the named module.
+    Returns the module object.
+    """
     try:
         module = import_module(transform)
     except (ImportError, ModuleNotFoundError):
@@ -79,7 +83,7 @@ def add_transform(transform):
             print(f"Module {module} does not contain a function named add_hook")
             return
         add_hook()
-        return
+        return module
 
     path = f"ideas.examples.{transform}"
     try:
@@ -88,6 +92,7 @@ def add_transform(transform):
         print(f"{path} is not a known transformer.")
     else:
         getattr(module, "add_hook")()
+        return module
 
 
 def register_codec(encoding):
@@ -111,8 +116,8 @@ def main() -> None:
         print(f"\nideas version {ideas.__version__}")
         return
 
-    config.show_changes = bool(args.show_changes)
-    if config.show_changes:
+    current_state.show_changes = bool(args.show_changes)
+    if current_state.show_changes:
         ideas_does_something = True
 
     if args.add_hook and args.register_codec:
@@ -124,7 +129,7 @@ def main() -> None:
 
     if args.add_hook:
         for hook in args.add_hook:
-            add_transform(hook)
+            transforming_modules.append(add_transform(hook))
         ideas_does_something = True
 
     if args.register_codec:
@@ -151,7 +156,7 @@ def main() -> None:
         runpy.run_module(args.source, run_name="__main__")
         return
 
-    config.source_argument = args.source
+    current_state.source_argument = args.source
     try:
         module = import_module(args.source)
     except ModuleNotFoundError as exc:
@@ -168,10 +173,12 @@ def main() -> None:
             return
         raise
     finally:
-        config.source_argument = None
+        current_state.source_argument = None
 
     if sys.flags.interactive or args.i:
-        console.start(locals_=module.__dict__)
+        console.start(
+            locals_=module.__dict__, transforming_modules=transforming_modules
+        )
 
 
 main()

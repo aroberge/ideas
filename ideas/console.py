@@ -15,7 +15,7 @@ import tokenize
 from code import InteractiveConsole
 
 from . import __version__
-from .session import config
+from .session import current_state
 
 
 BANNER = (
@@ -23,7 +23,7 @@ BANNER = (
     + f"[Python version: {platform.python_version()}]"
 )
 _CONFIG = {}
-CONSOLE_NAME = config.console_name
+CONSOLE_NAME = current_state.console_name
 
 
 def configure(**kwargs):
@@ -92,7 +92,7 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
-        config.original = source
+        current_state.original = source
 
         if self.transform_source is not None:
             last_line = source.endswith("\n")  # signals the end of a block
@@ -155,14 +155,14 @@ class IdeasConsole(InteractiveConsole):
                 code_obj = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            config.print_transformed(source)
+            current_state.print_transformed(source)
             self.showsyntaxerror(filename)
             return False
 
         if code_obj is None:
             # Case 2
             return True
-        config.print_transformed(source)
+        current_state.print_transformed(source)
         # Case 3
 
         if self.transform_ast is not None:
@@ -172,10 +172,10 @@ class IdeasConsole(InteractiveConsole):
             if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
-                    config.print_transformed(source)
+                    current_state.print_transformed(source)
                     source += "\n"
                 except RecursionError:
-                    if config.show_changes:
+                    if current_state.show_changes:
                         print(
                             "Warning: cannot unparse the code sample to show changes."
                         )
@@ -206,21 +206,27 @@ class IdeasConsole(InteractiveConsole):
         return False
 
 
-def start(banner=BANNER, prompt="ideas> ", locals_=None):
+def start(banner=BANNER, prompt="ideas> ", locals_=None, transforming_modules=None):
     """Starts a special console that works with import hooks."""
     if len(prompt) >= 4:
         sys.ps2 = (len(prompt) - 4) * " " + "... "
-    sys.ps1 = "\n" + prompt
+    sys.ps1 = prompt
     if locals_ is None:
-        locals_ = {"config": config}
+        locals_ = {"config": current_state}
     elif "Ideas" in locals_:
         if "ideas_config" in locals_:
             print("Ideas' configuration object is not available.")
         else:
             print("Ideas' configuration object is available as ideas_config")
-            locals_["ideas_config"] = config
+            locals_["ideas_config"] = current_state
     else:
-        locals_["config"] = config
+        locals_["config"] = current_state
+
+    for mod in current_state.transforming_modules:
+        print(f"line 226: {mod.__file__}: {mod.__name__}")
+        if hasattr(mod, "update_before_console_start"):
+            mod.update_before_console_start(mod)
+
     console = IdeasConsole(**_CONFIG, locals_=locals_)
 
     if console.transform_ast is not None and not hasattr(ast, "unparse"):

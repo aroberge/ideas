@@ -14,13 +14,13 @@ from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
 from . import console
-from .session import config
+from .session import current_state
 from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES, print_source
 
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
-    if config.verbose_finder:
+    if current_state.verbose_finder:
         print(text)
 
 
@@ -81,7 +81,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             for sub_path in self.excluded_paths:
                 if sub_path in entry.lower():
                     skip = True
-                    if config.verbose_finder:
+                    if current_state.verbose_finder:
                         print("    Skipping over:", shorten_path(entry))
                     break
             if skip:
@@ -160,9 +160,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         """Import the source code, transform it before executing it so that
         it is known to Python.
         """
-        if module.__name__ == config.source_argument:
+        if module.__name__ == current_state.source_argument:
             module.__name__ = "__main__"
-            config.source_argument = None
+            current_state.source_argument = None
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
@@ -180,7 +180,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                 callback_params=self.callback_params,
             )
 
-        if config.show_changes and original_source != source:
+        if current_state.show_changes and original_source != source:
             print_source(original_source, header="Original")
             print_source(source, header="New")
 
@@ -303,7 +303,7 @@ def create_hook(
     elif excluded_paths is None:
         excluded_paths = []
 
-    if config.verbose_finder:
+    if current_state.verbose_finder:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in excluded_paths:
@@ -368,8 +368,8 @@ def make_ipython_source_transformer(transform_source):
         # In IPython, the source transformation operates on a list of lines
         original_source = "".join(lines)
         source = transform_source(original_source)
-        if config.show_changes and source != original_source:
-            config.print_transformed(source, header="New: ")
+        if current_state.show_changes and source != original_source:
+            current_state.print_transformed(source, header="New: ")
         lines = source.splitlines(keepends=True)
         return lines
 
@@ -384,11 +384,11 @@ def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
     """
 
     def wrapped_ipython_ast_node_transformer():
-        if config.show_changes:
+        if current_state.show_changes:
             print(
                 "Cannot show the changed source for AST transform in IPython/Jupyter."
             )
-            config.show_changes = False
+            current_state.show_changes = False
         return ipython_ast_node_transformer
 
     return wrapped_ipython_ast_node_transformer

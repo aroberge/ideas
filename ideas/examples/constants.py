@@ -22,6 +22,34 @@ CONSTANTS = {}
 DECLARED_FINAL = {}
 
 
+def update_before_console_start(module):
+    print("Duplicating dicts")
+    filename = module.__file__
+    print(f"filename: {filename}")
+    print("before:\n", CONSTANTS)
+
+    _copy = {}
+    for key in CONSTANTS:
+        print(f"{key=}, {CONSTANTS[key]=}")
+        if key == filename:
+            _copy[CONSOLE_NAME] = CONSTANTS[filename]
+            print("copied")
+            break
+    if CONSOLE_NAME in _copy:
+        CONSTANTS[CONSOLE_NAME] = _copy[CONSOLE_NAME]
+
+    print("after:\n", CONSTANTS, "\n")
+    print("before:\n", DECLARED_FINAL)
+    _copy = {}
+    for key in DECLARED_FINAL:
+        if key == filename:
+            _copy[CONSOLE_NAME] = DECLARED_FINAL[filename]
+    for key in _copy:
+        DECLARED_FINAL[CONSOLE_NAME] = _copy[key]
+
+    print("after:\n", DECLARED_FINAL)
+
+
 def make_class(on_prevent_change=True):
     class ModuleWithConstants(types.ModuleType):
         """Special module type that prevents variables identified as constants
@@ -241,7 +269,8 @@ def add_hook(on_prevent_change=None, **_kwargs):
 
     module_class = make_class(**callback_params)
     console_dict = FinalDict(CONSOLE_NAME, on_prevent_change=on_prevent_change)
-    CONSTANTS[CONSOLE_NAME] = {}
+    if CONSOLE_NAME not in CONSTANTS:
+        CONSTANTS[CONSOLE_NAME] = {}
 
     hook = import_hook.create_hook(
         module_class=module_class,

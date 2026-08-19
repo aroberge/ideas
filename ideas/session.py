@@ -8,13 +8,15 @@ class State:
     def __init__(self):
         self.console_name = "Ideas Console"
         self.show_original = False
-        self.current_file = ""
         self.active_console = False
         self.original = ""
         self.verbose_finder = False
         self.show_changes = False
+        self.transforming_modules = []
         # The following is the source argument passed to __main__.py
         self.source_argument = None
+        self.main_file_name = None
+        self.main_module = None
 
     def print_original(self, source, header="Original"):
         """Depending on configuration, can print the original source
@@ -50,4 +52,4 @@ class State:
             print("-----------------------------")
 
 
-config = State()
+current_state = State()
