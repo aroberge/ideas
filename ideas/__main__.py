@@ -5,6 +5,7 @@ If no source is given, ideas will start an interactive console.
 
 import argparse
 from importlib import import_module
+import runpy
 import sys
 
 import ideas
@@ -27,7 +28,7 @@ parser.add_argument(
 parser.add_argument(
     "-a",
     "--add_hook",
-    nargs=1,
+    action="append",
     help="""Execute add_hook() from the specified module.
     An attempt is made to import the specified module from the
     usual entries in sys.path; if it not found, it is then
@@ -104,45 +105,73 @@ def register_codec(encoding):
 
 
 def main() -> None:
+    ideas_does_something = False
     args = parser.parse_args()
     if args.version:
         print(f"\nideas version {ideas.__version__}")
         return
 
     config.show_changes = bool(args.show_changes)
+    if config.show_changes:
+        ideas_does_something = True
 
     if args.add_hook and args.register_codec:
-        print("You can only use one option at a time:")
-        print("- either use a source transformation with -a (--add_hook); or")
-        print("- register a custom codec with -r (--register_codec),")
+        print("From the command line, you can only use one option at a time:")
+        print("- Either use one or more source transformations")
+        print("  with each transformation preceded by the -a (--add_hook) flag; or\n")
+        print("- Register a custom codec with -r (--register_codec),")
         return
 
     if args.add_hook:
-        add_transform(args.add_hook[0])
+        for hook in args.add_hook:
+            add_transform(hook)
+        ideas_does_something = True
+
     if args.register_codec:
         register_codec(args.register_codec[0])
+        ideas_does_something = True
 
-    if args.source is not None:
-        config.source_argument = args.source
-        try:
-            module = import_module(args.source)
-        except ModuleNotFoundError as exc:
-            print(f"{exc.__class__.__name__}: {exc.msg}")
-            if args.source.endswith(".py"):
-                print(
-                    f"The source argument '{args.source}' must not include the '.py' extension."
-                )
-                return
-            if "." in args.source:
-                print(
-                    f"The source argument '{args.source}' must be a module name without an extension."
-                )
-                return
-            raise
-        if sys.flags.interactive or args.i:
-            console.start(locals_=module.__dict__)
-    else:
+    if args.source is None:
         console.start()
+        return
+
+    # The command used was something like:
+    #     py [...] -m ideas [...] source
+    # All that is left is figuring out how to run the source provided
+    # which is meant to be the module __main__ instead of `ideas` itself
+
+    if not ideas_does_something and (sys.flags.interactive or args.i):
+        source_dict = runpy.run_module(args.source, run_name="__main__")
+        console.start(locals_=source_dict)
+        return
+
+    if not ideas_does_something:
+        print("\n***    `ideas` has been invoked but isn't doing anything.")
+        print(f"***    Simply executing `{args.source}` as a main module.\n")
+        runpy.run_module(args.source, run_name="__main__")
+        return
+
+    config.source_argument = args.source
+    try:
+        module = import_module(args.source)
+    except ModuleNotFoundError as exc:
+        print(f"{exc.__class__.__name__}: {exc.msg}")
+        if args.source.endswith(".py"):
+            print(
+                f"The source argument '{args.source}' must not include the '.py' extension."
+            )
+            return
+        if "." in args.source:
+            print(
+                f"The source argument '{args.source}' must be a module name without an extension."
+            )
+            return
+        raise
+    finally:
+        config.source_argument = None
+
+    if sys.flags.interactive or args.i:
+        console.start(locals_=module.__dict__)
 
 
 main()

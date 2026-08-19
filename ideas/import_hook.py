@@ -162,6 +162,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         """
         if module.__name__ == config.source_argument:
             module.__name__ = "__main__"
+            config.source_argument = None
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
