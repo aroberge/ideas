@@ -96,9 +96,7 @@ class FinalDict(dict):
                         filename=self.__file__, key=key, value=value, kind="set"
                     )
                 return
-        if key == key.upper() or (
-            self.__file__ in key and key in DECLARED_FINAL[self.__file__]
-        ):
+        if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
             CONSTANTS[self.__file__][key] = value
         return super().__setitem__(key, value)
 
