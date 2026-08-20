@@ -15,11 +15,15 @@ import types
 
 from ideas import import_hook
 from ideas.console import CONSOLE_NAME
+from ideas import utils
 import token_utils
 
-shorten_path = import_hook.shorten_path
+shorten_path = utils.shorten_path
 CONSTANTS = {}
 DECLARED_FINAL = {}
+
+CONSTANTS[CONSOLE_NAME] = {}
+DECLARED_FINAL[CONSOLE_NAME] = set([])
 
 
 def update_before_console_start(module):
@@ -30,7 +34,7 @@ def update_before_console_start(module):
 
     _copy = {}
     for key in CONSTANTS:
-        print(f"{key=}, {CONSTANTS[key]=}")
+        print(f"key={key}, value={CONSTANTS[key]}")
         if key == filename:
             _copy[CONSOLE_NAME] = CONSTANTS[filename]
             print("copied")
@@ -140,36 +144,36 @@ class FinalDict(dict):
             return
         return super().__delitem__(key)
 
-    def setdefault(self, key, default=None):
-        """Insert key with a value of default if key is not in the dictionary.
+    # def setdefault(self, key, default=None):
+    #     """Insert key with a value of default if key is not in the dictionary.
 
-        It prevents changes if the key is identified as a constant.
-        """
-        if key in CONSTANTS[self.__file__]:
-            if self.on_prevent_change:
-                if callable(self.on_prevent_change):
-                    self.on_prevent_change(
-                        filename=self.__file__, key=key, value=default, kind="set"
-                    )
-                return
-        if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
-            CONSTANTS[self.__file__][key] = default
-        return super().setdefault(key, default)
+    #     It prevents changes if the key is identified as a constant.
+    #     """
+    #     if key in CONSTANTS[self.__file__]:
+    #         if self.on_prevent_change:
+    #             if callable(self.on_prevent_change):
+    #                 self.on_prevent_change(
+    #                     filename=self.__file__, key=key, value=default, kind="set"
+    #                 )
+    #             return
+    #     if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
+    #         CONSTANTS[self.__file__][key] = default
+    #     return super().setdefault(key, default)
 
-    def pop(self, key):
-        """D.pop(key) -> value, remove specified key and return the corresponding value,
-        unless the key is identified as a constant.
+    # def pop(self, key):
+    #     """D.pop(key) -> value, remove specified key and return the corresponding value,
+    #     unless the key is identified as a constant.
 
-        If key is not found, d is returned if given, otherwise KeyError is raised
-        """
-        if key in CONSTANTS[self.__file__]:
-            if self.on_prevent_change:
-                if callable(self.on_prevent_change):
-                    self.on_prevent_change(
-                        filename=self.__file__, key=key, kind="delete"
-                    )
-                return CONSTANTS[self.__file__][key]
-        return super().pop(key)
+    #     If key is not found, d is returned if given, otherwise KeyError is raised
+    #     """
+    #     if key in CONSTANTS[self.__file__]:
+    #         if self.on_prevent_change:
+    #             if callable(self.on_prevent_change):
+    #                 self.on_prevent_change(
+    #                     filename=self.__file__, key=key, kind="delete"
+    #                 )
+    #             return CONSTANTS[self.__file__][key]
+    #     return super().pop(key)
 
     def update(self, mapping_or_iterable=(), **kwargs):
         """Updates the content of the dict from a mapping or an iterable,
@@ -244,11 +248,13 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
     """Function called by default when an attempt is made to change the
     value of a constant.
     """
+
     if kind == "set":
-        print(
-            "You cannot change the value of `%s.%s` to `%s`."
-            % (shorten_path(filename), key, value)
-        )
+        if filename == CONSOLE_NAME:
+            filename = ""
+        else:
+            filename = shorten_path(filename) + "."
+        print("You cannot change the value of `%s%s` to `%s`." % (filename, key, value))
     elif kind == "delete":
         print("You cannot delete `%s` in module `%s`." % (key, shorten_path(filename)))
     else:

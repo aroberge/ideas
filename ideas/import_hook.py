@@ -14,17 +14,65 @@ from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
 from . import console
-from .session import current_state
-from .utils import shorten_path, PYTHON, IDEAS, SITE_PACKAGES, print_source
+from . import session
+from . import utils
 
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
-    if current_state.verbose_finder:
+    if session.current_state.verbose_finder:
         print(text)
 
 
 DEFAULT = object()
+
+
+class IdeasHook:
+    """A custom import hook main object."""
+
+    def __init__(
+        self,
+        callback_params: Optional[Dict[str, Any]] = None,
+        create_module: Optional[Callable[..., ModuleType]] = None,
+        exec_: Optional[Callable[..., None]] = None,
+        extensions: Optional[Sequence[str]] = None,
+        excluded_paths: Optional[Sequence[str]] = DEFAULT,
+        hook_name: Optional[str] = None,
+        module_class: Optional[type] = None,
+        parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
+        source_init: Optional[Callable[[], str]] = None,
+        transform_ast: Optional[Callable[[ast.AST], ast.AST]] = None,
+        transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
+        transform_source: Optional[Callable[[str], str]] = None,
+    ):
+        self.callback_params = callback_params
+        self.custom_create_module = create_module
+        if excluded_paths is DEFAULT:
+            self.excluded_paths = [utils.PYTHON, utils.IDEAS, utils.SITE_PACKAGES]
+        elif excluded_paths is None:
+            self.excluded_paths = []
+        self.exec_ = exec_
+        self.extensions = extensions if extensions is not None else [".py"]
+        self.hook_name = (
+            hook_name if hook_name is not None else utils.generate_variable_names()
+        )
+        self.module_class = module_class
+        self.parse_source = parse_source
+        self.source_init = source_init
+        self.transform_ast = transform_ast
+        self.transform_bytecode = transform_bytecode
+        self.transform_source = transform_source
+
+        # The following attribute are created by the IdeasMetaFinder
+        self.meta_path_finder = None  # IdeasMetaFinder instance
+        self.filename = None
+        self.fullname = None
+        self.loader = None
+        # This will normally be changed via a method from session.current_state in session.py
+        self._enabled = True
+
+    def __repr__(self):
+        return f"<Ideas import hook named {self.hook_name}>"
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -32,42 +80,16 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
     is to ensure that our custom loader, which does the code transformations,
     is used."""
 
-    def __init__(
-        self,
-        callback_params=None,
-        create_module=None,
-        excluded_paths=None,
-        exec_=None,
-        extensions=None,
-        hook_name=None,
-        module_class=None,
-        source_init=None,
-        transform_ast=None,
-        transform_bytecode=None,
-        transform_source=None,
-        parse_source=None,
-    ):  # pylint: disable=R0913
-        self.callback_params = callback_params
-        self.custom_create_module = create_module
-        self.excluded_paths = excluded_paths if excluded_paths is not None else []
-        self.exec_ = exec_
-        self.extensions = extensions
-        self.hook_name = hook_name
-        self.module_class = module_class
-        self.source_init = source_init
-        self.transform_ast = transform_ast
-        self.transform_bytecode = transform_bytecode
-        self.transform_source = transform_source
-        self.parse_source = parse_source
-
-    def __repr__(self):
-        if self.hook_name is None:
-            return "<IdeasMetaFinder object>"
-        return f"<IdeasMetaFinder object for {self.hook_name}>"
+    def __init__(self, ideas_hook=None):  # pylint: disable=R0913
+        self.ideas_hook = ideas_hook
 
     def find_spec(self, fullname, path, target=None):  # pylint: disable=W0613
         """finds the appropriate properties (spec) of a module, and sets
         its loader."""
+        if self.ideas_hook is None:
+            print("WARNING: No IdeasHook object was passed.")
+            return None
+
         if not path:
             path = [os.getcwd()]
 
@@ -78,27 +100,31 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
 
         for entry in path:
             skip = False
-            for sub_path in self.excluded_paths:
+            for sub_path in self.ideas_hook.excluded_paths:
                 if sub_path in entry.lower():
                     skip = True
-                    if current_state.verbose_finder:
-                        print("    Skipping over:", shorten_path(entry))
+                    if session.current_state.verbose_finder:
+                        print("    Skipping over:", utils.shorten_path(entry))
                     break
             if skip:
                 continue
 
-            for extension in self.extensions:
+            for extension in self.ideas_hook.extensions:
                 if not extension.startswith("."):  # be forgiving ...
                     extension = "." + extension
                 filename = os.path.join(entry, name + extension)
 
-                finder_inform(f"    Searching for {shorten_path(filename)}{extension}")
+                finder_inform(
+                    f"    Searching for {utils.shorten_path(filename)}{extension}"
+                )
                 if os.path.exists(filename):
-                    finder_inform(f"    Found: {shorten_path(filename) + extension}\n")
+                    finder_inform(
+                        f"    Found: {utils.shorten_path(filename) + extension}\n"
+                    )
                     break
                 finder_inform(
                     "    IdeasMetaFinder did not find"
-                    + f"{shorten_path(fullname)}{extension}\n",
+                    + f"{utils.shorten_path(fullname)}{extension}\n",
                 )
             else:
                 continue
@@ -108,15 +134,15 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
                 filename,
                 loader=IdeasLoader(
                     filename,
-                    callback_params=self.callback_params,
-                    create_module=self.custom_create_module,
-                    exec_=self.exec_,
-                    module_class=self.module_class,
-                    source_init=self.source_init,
-                    transform_ast=self.transform_ast,
-                    transform_bytecode=self.transform_bytecode,
-                    transform_source=self.transform_source,
-                    parse_source=self.parse_source,
+                    callback_params=self.ideas_hook.callback_params,
+                    create_module=self.ideas_hook.custom_create_module,
+                    exec_=self.ideas_hook.exec_,
+                    module_class=self.ideas_hook.module_class,
+                    source_init=self.ideas_hook.source_init,
+                    transform_ast=self.ideas_hook.transform_ast,
+                    transform_bytecode=self.ideas_hook.transform_bytecode,
+                    transform_source=self.ideas_hook.transform_source,
+                    parse_source=self.ideas_hook.parse_source,
                 ),
             )
         return None  # we don't know how to import this
@@ -160,9 +186,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         """Import the source code, transform it before executing it so that
         it is known to Python.
         """
-        if module.__name__ == current_state.source_argument:
+        if module.__name__ == session.current_state.source_argument:
             module.__name__ = "__main__"
-            current_state.source_argument = None
+            session.current_state.source_argument = None
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
@@ -180,9 +206,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                 callback_params=self.callback_params,
             )
 
-        if current_state.show_changes and original_source != source:
-            print_source(original_source, header="Original")
-            print_source(source, header="New")
+        if session.current_state.show_changes and original_source != source:
+            utils.print_source(original_source, header="Original")
+            utils.print_source(source, header="New")
 
         if self.source_init is not None:
             source = self.source_init() + source
@@ -238,7 +264,7 @@ def create_hook(
     transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
     transform_source: Optional[Callable[[str], str]] = None,
     parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
-) -> IdeasMetaFinder:  # pylint: disable=R0913,R0914
+) -> IdeasHook:  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
     Each of the following parameter is optional; most of these are
@@ -283,33 +309,8 @@ def create_hook(
     * ``transform_source``: used to transform some source code prior
       to execution.
     """
-    if extensions is None:
-        extensions = [".py"]
 
-    try:
-        ipython_shell = get_ipython()  # noqa
-    except NameError:
-        ipython_shell = None
-
-    if source_init is not None and source_init().strip() and ipython_shell is not None:
-        print("   The following initializing code from ideas is included:\n")
-        print(source_init().strip())
-        lines = [line for line in source_init().splitlines() if line.strip()]
-        for line in lines:
-            ipython_shell.ex(line)
-
-    if excluded_paths is DEFAULT:
-        excluded_paths = [PYTHON, IDEAS, SITE_PACKAGES]
-    elif excluded_paths is None:
-        excluded_paths = []
-
-    if current_state.verbose_finder:
-        print("Looking for files with extensions: ", extensions)
-        print("The following paths will not be included in the search:")
-        for sub_path in excluded_paths:
-            print("  ", shorten_path(sub_path), sub_path)
-
-    hook = IdeasMetaFinder(
+    ideas_hook = IdeasHook(
         callback_params=callback_params,
         create_module=create_module,
         excluded_paths=excluded_paths,
@@ -324,14 +325,20 @@ def create_hook(
         parse_source=parse_source,
     )
 
-    if first:
-        sys.meta_path.insert(0, hook)
-    else:
-        sys.meta_path.append(hook)
+    ideas_hook.meta_path_finder = IdeasMetaFinder(ideas_hook=ideas_hook)
 
-    for obj in [transform_source, transform_ast, transform_bytecode, source_init]:
-        if obj is not None and isinstance(hook_name, str):
-            obj.hook_name = hook_name
+    if first:
+        sys.meta_path.insert(0, ideas_hook.meta_path_finder)
+    else:
+        sys.meta_path.append(ideas_hook.meta_path_finder)
+
+    if session.current_state.verbose_finder:
+        print("Looking for files with extensions: ", extensions)
+        print("The following paths will not be included in the search:")
+        for sub_path in excluded_paths:
+            print("  ", utils.shorten_path(sub_path), sub_path)
+
+    ## ----- Setting up Ideas Interactive Console
 
     console.configure(
         callback_params=callback_params,
@@ -342,17 +349,45 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    if transform_source is not None and ipython_shell is not None:
+
+    ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
+    try:
+        ipython_shell = get_ipython()  # noqa
+    except NameError:
+        pass
+    else:
+        set_up_ipython_shell(
+            ipython_shell,
+            ipython_ast_node_transformer=ipython_ast_node_transformer,
+            source_init=source_init,
+            transform_source=transform_source,
+        )
+
+    return ideas_hook
+
+
+def set_up_ipython_shell(
+    ipython_shell,
+    ipython_ast_node_transformer=None,
+    source_init=None,
+    transform_source=None,
+):
+    if transform_source is not None:
         ipython_source_transformer = make_ipython_source_transformer(transform_source)
         ipython_shell.input_transformers_cleanup.append(ipython_source_transformer)
 
-    if ipython_ast_node_transformer is not None and ipython_shell is not None:
+    if source_init is not None and source_init().strip():
+        print("   The following initializing code from ideas is included:\n")
+        print(source_init().strip())
+        lines = [line for line in source_init().splitlines() if line.strip()]
+        for line in lines:
+            ipython_shell.ex(line)
+
+    if ipython_ast_node_transformer is not None:
         wrapped_ipython_ast_node_transformer = make_ipython_ast_node_transformer(
             ipython_ast_node_transformer
         )
         ipython_shell.ast_transformers.append(wrapped_ipython_ast_node_transformer())
-
-    return hook
 
 
 def make_ipython_source_transformer(transform_source):
@@ -368,8 +403,8 @@ def make_ipython_source_transformer(transform_source):
         # In IPython, the source transformation operates on a list of lines
         original_source = "".join(lines)
         source = transform_source(original_source)
-        if current_state.show_changes and source != original_source:
-            current_state.print_transformed(source, header="New: ")
+        if session.current_state.show_changes and source != original_source:
+            session.current_state.print_transformed(source, header="New: ")
         lines = source.splitlines(keepends=True)
         return lines
 
@@ -384,11 +419,11 @@ def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
     """
 
     def wrapped_ipython_ast_node_transformer():
-        if current_state.show_changes:
+        if session.current_state.show_changes:
             print(
                 "Cannot show the changed source for AST transform in IPython/Jupyter."
             )
-            current_state.show_changes = False
+            session.current_state.show_changes = False
         return ipython_ast_node_transformer
 
     return wrapped_ipython_ast_node_transformer

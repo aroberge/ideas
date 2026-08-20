@@ -1,5 +1,5 @@
 echo off
-REM Default is Python 3.12
+REM Default is Python 3.11
 
 if "%1"=="3.7" goto py_37
 if "%1"=="3.8" goto py_38
@@ -12,7 +12,7 @@ if "%1"=="3.14" goto py_314
 if "%1"=="units" goto units
 if "%1"=="ipython" goto ipython
 
-goto py_312
+goto py_311
 
 :py_37
 venv-ideas3.7\scripts\activate
@@ -53,6 +53,5 @@ venv-units\scripts\activate
 
 :ipython
 venv-ipython\scripts\activate
-
 
 :end
