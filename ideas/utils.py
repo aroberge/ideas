@@ -92,7 +92,11 @@ def generate_variable_names():
 
 
 def generate_predictable_names():
-    """Generator that yields predictable variable names - useful for testing"""
+    """Generator that yields predictable variable names - useful for testing.
+
+    The names are of the form _N where N is an integer, starting at 1,
+    and incrementing by 1 for each subsequent name.
+    """
     index = 0
     while True:
         index += 1
