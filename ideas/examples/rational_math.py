@@ -4,6 +4,7 @@ Rational math
 
 Documentation to be written.
 """
+
 from ideas import import_hook
 import token_utils
 

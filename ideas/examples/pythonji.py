@@ -3,6 +3,7 @@
 Adapted from https://github.com/gahjelle/pythonji
 MIT license; author: Geir Arne Hjelle
 """
+
 import ast
 import sys
 
@@ -13,7 +14,6 @@ except ModuleNotFoundError:
     sys.exit()
 
 from ideas import import_hook
-
 
 DELIMITERS = ("__pythonji__", "__")
 

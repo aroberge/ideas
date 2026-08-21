@@ -3,7 +3,6 @@ This replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.
 """
 
-
 from ideas import custom_encoding, import_hook
 import token_utils
 

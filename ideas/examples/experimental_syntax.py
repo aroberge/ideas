@@ -30,6 +30,7 @@ the ``module`` is scanned to look for the following functions:
 
 
 """
+
 import ast
 from importlib import import_module
 import re

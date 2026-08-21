@@ -4,7 +4,6 @@
 This replaces any explicit float followed by ``D``, by a Decimal.
 """
 
-
 from ideas import import_hook
 import token_utils
 

@@ -9,6 +9,7 @@ a and b are integer literals (e.g. 2 + 4), the operations are
 done prior to the creation of a code object and thus are
 not captured by this transformation.
 """
+
 import dis
 import sys
 from types import CodeType

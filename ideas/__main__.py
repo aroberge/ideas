@@ -12,7 +12,6 @@ import ideas
 from ideas import console
 from ideas.session import current_state
 
-
 transforming_modules = []
 
 parser = argparse.ArgumentParser(

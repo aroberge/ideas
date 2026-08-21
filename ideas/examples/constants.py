@@ -10,7 +10,6 @@ In this import hook, constants are identified in two ways:
    of a ``Final`` type hint.
 """
 
-
 import types
 
 from ideas import import_hook

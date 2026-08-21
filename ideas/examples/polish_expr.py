@@ -34,6 +34,7 @@ assignment in prefix form:
     >>> * x x
     64
 """
+
 import ast
 from ast import (
     Add,
@@ -76,7 +77,9 @@ class Parser:
     """
 
     def __init__(self, tokens: Iterable[token_utils.Token], filename: str):
-        self.tokengen = (t for t in tokens if t.type not in {token.NEWLINE, token.NL, token.COMMENT})
+        self.tokengen = (
+            t for t in tokens if t.type not in {token.NEWLINE, token.NL, token.COMMENT}
+        )
         self.lasttok, self.nexttok = None, next(self.tokengen)
         self.filename = filename
 
@@ -87,7 +90,9 @@ class Parser:
         return tok
 
     def peekmatch(self, toktype, string=None):
-        return self.nexttok.type == toktype and (string is None or self.nexttok.string == string)
+        return self.nexttok.type == toktype and (
+            string is None or self.nexttok.string == string
+        )
 
     def match(self, toktype, string=None):
         if self.peekmatch(toktype, string):
@@ -105,15 +110,17 @@ class Parser:
     def _syntaxerror(self, msg, tok=None):
         if tok is None:
             tok = self.nexttok
-        return SyntaxError(msg, (
-            self.filename,
-            tok.start_row,
-            tok.start_col + 1,
-            tok.line,
-            tok.end_row,
-            tok.end_col + 1,
-        ))
-
+        return SyntaxError(
+            msg,
+            (
+                self.filename,
+                tok.start_row,
+                tok.start_col + 1,
+                tok.line,
+                tok.end_row,
+                tok.end_col + 1,
+            ),
+        )
 
     # Grammar rules
 
@@ -148,10 +155,7 @@ class Parser:
         if self.match(token.OP, "="):
             name = self.expect(token.NAME)
             expr = self.expr()
-            return Assign(
-                targets=[Name(id=name.string, ctx=ast.Store())],
-                value=expr
-            )
+            return Assign(targets=[Name(id=name.string, ctx=ast.Store())], value=expr)
         else:
             return Expr(value=self.expr())
 
@@ -163,20 +167,16 @@ class Parser:
 
         OPS = {"+": Add, "-": Sub, "*": Mult, "/": Div}
 
-        if (literal := self.match(token.NUMBER)):
+        if literal := self.match(token.NUMBER):
             return Constant(value=literal_eval(literal.string))
-        elif (name := self.match(token.NAME)):
+        elif name := self.match(token.NAME):
             return Name(id=name.string, ctx=ast.Load())
-        elif (op := self.match(token.OP)):
+        elif op := self.match(token.OP):
             if op.string not in OPS:
                 raise self._syntaxerror(f"unrecognized operator {op.string!r}", op)
             first = self.expr()
             second = self.expr()
-            return BinOp(
-                left=first,
-                op=OPS[op.string](),
-                right=second
-            )
+            return BinOp(left=first, op=OPS[op.string](), right=second)
         elif self.peekmatch(token.ENDMARKER):
             raise self._syntaxerror("unexpected EOF")
         else:

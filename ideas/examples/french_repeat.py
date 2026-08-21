@@ -5,7 +5,6 @@ Demonstrates how we can simply combine source transformations.
 from ideas import import_hook
 from ideas.examples import french, repeat
 
-
 additional_vocab = {
     "répéter": "repeat",
     "sansfin": "forever",

@@ -9,6 +9,7 @@ Adapted from unnormalized_unicode which was an
 original idea from Sergey B. Kirpichev and is found as
 anoter example.
 """
+
 import io
 import tokenize
 import token_utils

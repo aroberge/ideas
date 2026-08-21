@@ -90,6 +90,7 @@ The code for ``nobreak`` makes use of the ``get_first`` function from
         Returns ``None`` if none is found.
 
 """
+
 from ideas import import_hook
 import token_utils
 

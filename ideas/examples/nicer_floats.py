@@ -4,6 +4,7 @@ Nicer floats
 
 Documentation to be written.
 """
+
 from fractions import Fraction
 from ideas import import_hook
 import token_utils

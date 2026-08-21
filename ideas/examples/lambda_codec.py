@@ -8,7 +8,6 @@ the Python keyword.
 The source is assumed to be actually encoded in utf-8.
 """
 
-
 from ideas import custom_encoding
 import token_utils
 

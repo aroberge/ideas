@@ -8,6 +8,7 @@ from being 'normalized'.
 Original idea from Sergey B. Kirpichev.
 See https://github.com/aroberge/ideas/issues/13 for a reference.
 """
+
 import io
 import tokenize
 import token_utils

@@ -166,6 +166,7 @@ placeholder::
     created by ``auto_self``.
 
 """
+
 from ideas import import_hook
 import token_utils
 

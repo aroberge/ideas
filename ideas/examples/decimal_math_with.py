@@ -5,7 +5,6 @@ Defines a fake context environment in which explicit floats are
 replaced by decimals.
 """
 
-
 from ideas import import_hook
 import token_utils
 

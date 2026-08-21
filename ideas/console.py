@@ -17,7 +17,6 @@ from code import InteractiveConsole
 from . import __version__
 from .session import current_state
 
-
 BANNER = (
     f"Ideas Console version {__version__}. "
     + f"[Python version: {platform.python_version()}]"

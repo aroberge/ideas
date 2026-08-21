@@ -6,6 +6,7 @@ This module is intended to demonstrate some unusual transformations
 to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
+
 from ideas import import_hook
 import token_utils
 
