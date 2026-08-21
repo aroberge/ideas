@@ -32,6 +32,7 @@ enough to preserve the same rendering.
 The delimiters can be changed by changing the `HTML_START` and `HTML_END`
 constants below.
 """
+
 import logging
 import tokenize
 from typing import Optional, Union, Iterator, Iterable
@@ -418,7 +419,7 @@ def group_split_statements(lines: Iterable[list[Token]]) -> Iterator[Iterable[To
         yield indents[-1], list(remove_newlines(remove_indents(in_process)))
 
 
-HTML = Union[str, tuple[int, tuple[str, dict], list["html"]]]
+HTML = Union[str, tuple[int, tuple[str, dict]]]
 
 
 def extract_html(tokens: Iterable[Token], indent: str = "") -> HTML:
