@@ -20,10 +20,35 @@ class State:
         self.verbose_finder = False  # diagnostic
         self.show_changes = False  # Do we print the transformed source code?
         self.transforming_modules = []
+        self.hooks = []
         # The following is the source argument passed to __main__.py
         self.source_argument = None  # py [...] -m ideas [...] source_argument
         self.main_file_name = None  # ... source_argument.filename.py
         self.main_module = None  # ... source_argument -> main_module
+
+    def add_hook(self, hook):
+        self.hooks.append(hook)
+        print(f"Added hook {hook.name}")
+
+    def disable_hook(self, name):
+        for hook in self.hooks:
+            if hook.name == name:
+                hook.enabled = False
+                return
+        else:
+            print(f"Could not find hook {name}. Here are the known hooks:")
+            for hook in self.hooks:
+                print("  ", hook.name)
+
+    def enable_hook(self, name):
+        for hook in self.hooks:
+            if hook.name == name:
+                hook.enabled = True
+                return
+        else:
+            print(f"Could not find hook {name}. Here are the known hooks:")
+            for hook in self.hooks:
+                print("  ", hook.name)
 
     def print_original(self, source, header="Original"):
         """Depending on configuration, can print the original source

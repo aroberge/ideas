@@ -16,7 +16,7 @@ from . import console
 utf8 = encodings.search_function("utf8")
 
 
-def register_encoding(encoding_name=None, transform_source=None, hook_name=None):
+def register_encoding(encoding_name=None, transform_source=None, name=None):
     if encoding_name is None:
         raise TypeError("You must supply a name for your encoding")
     if transform_source is None or not callable(transform_source):
@@ -59,6 +59,6 @@ def register_encoding(encoding_name=None, transform_source=None, hook_name=None)
     codecs.register(search_function)
     print(f"{encoding_name} has been registered.")
 
-    if hook_name is not None:
-        transform_source.hook_name = hook_name
+    if name is not None:
+        transform_source.name = name
     console.configure(transform_source=transform_source)

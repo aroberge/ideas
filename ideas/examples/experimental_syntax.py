@@ -178,13 +178,15 @@ def transform_bytecode(byte_code):
     return byte_code
 
 
-def add_hook(**_kwargs):
+def add_hook(name=None, **_kwargs):
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
+    if name is None:
+        name = __name__
     hook = import_hook.create_hook(
         transform_source=transform_source,
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
-        hook_name=__name__,
+        name=name,
     )
     return hook

@@ -43,10 +43,12 @@ def source_init():
     return import_fraction
 
 
-def add_hook(**_kwargs):
+def add_hook(name=None, **_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path."""
+    if name is None:
+        name = __name__
     hook = import_hook.create_hook(
-        hook_name=__name__,
+        name=name,
         source_init=source_init,
         transform_source=transform_source,
     )

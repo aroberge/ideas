@@ -37,7 +37,7 @@ class IdeasHook:
         exec_: Optional[Callable[..., None]] = None,
         extensions: Optional[Sequence[str]] = None,
         excluded_paths: Optional[Sequence[str]] = DEFAULT,
-        hook_name: Optional[str] = None,
+        name: Optional[str] = None,
         module_class: Optional[type] = None,
         parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
         source_init: Optional[Callable[[], str]] = None,
@@ -46,16 +46,14 @@ class IdeasHook:
         transform_source: Optional[Callable[[str], str]] = None,
     ):
         self.callback_params = callback_params
-        self.custom_create_module = create_module
+        self.create_module = create_module
         if excluded_paths is DEFAULT:
             self.excluded_paths = [utils.PYTHON, utils.IDEAS, utils.SITE_PACKAGES]
         elif excluded_paths is None:
             self.excluded_paths = []
         self.exec_ = exec_
         self.extensions = extensions if extensions is not None else [".py"]
-        self.hook_name = (
-            hook_name if hook_name is not None else utils.generate_variable_names()
-        )
+        self.name = name if name is not None else utils.generate_variable_names()
         self.module_class = module_class
         self.parse_source = parse_source
         self.source_init = source_init
@@ -69,10 +67,10 @@ class IdeasHook:
         self.fullname = None
         self.loader = None
         # This will normally be changed via a method from session.current_state in session.py
-        self._enabled = True
+        self.enabled = True
 
     def __repr__(self):
-        return f"<Ideas import hook named {self.hook_name}>"
+        return f"<Ideas import hook named {self.name}>"
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -90,13 +88,17 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             print("WARNING: No IdeasHook object was passed.")
             return None
 
+        if not self.ideas_hook.enabled:
+            print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
+            return None
+
         if not path:
             path = [os.getcwd()]
 
         if "." in fullname:
-            name = fullname.split(".")[-1]
+            module_name = fullname.split(".")[-1]
         else:
-            name = fullname
+            module_name = fullname
 
         for entry in path:
             skip = False
@@ -112,7 +114,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             for extension in self.ideas_hook.extensions:
                 if not extension.startswith("."):  # be forgiving ...
                     extension = "." + extension
-                filename = os.path.join(entry, name + extension)
+                filename = os.path.join(entry, module_name + extension)
 
                 finder_inform(
                     f"    Searching for {utils.shorten_path(filename)}{extension}"
@@ -134,8 +136,9 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
                 filename,
                 loader=IdeasLoader(
                     filename,
+                    ideas_hook=self.ideas_hook,
                     callback_params=self.ideas_hook.callback_params,
-                    create_module=self.ideas_hook.custom_create_module,
+                    create_module=self.ideas_hook.create_module,
                     exec_=self.ideas_hook.exec_,
                     module_class=self.ideas_hook.module_class,
                     source_init=self.ideas_hook.source_init,
@@ -154,6 +157,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
     def __init__(
         self,
         filename,
+        ideas_hook=None,
         callback_params=None,
         create_module=None,
         exec_=None,
@@ -165,6 +169,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         parse_source=None,
     ):  # pylint: disable=R0913
         self.filename = filename
+        self.ideas_hook = ideas_hook
         self.exec_ = exec_
         self.callback_params = callback_params
         self.custom_create_module = create_module
@@ -256,7 +261,7 @@ def create_hook(
     extensions: Optional[Sequence[str]] = None,
     excluded_paths: Optional[Sequence[str]] = DEFAULT,
     first: bool = True,
-    hook_name: Optional[str] = None,
+    name: Optional[str] = None,
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
     module_class: Optional[type] = None,
     source_init: Optional[Callable[[], str]] = None,
@@ -288,7 +293,7 @@ def create_hook(
       library, the site packages, as well as files from this project.
     * ``first``: if ``True``, the custom hook will be used as the first
       location in ``sys.meta_path``, to look for source files.
-    * ``hook_name``: used to give a more readable ``repr`` to the hook created.
+    * ``name``: used to give a more readable ``repr`` to the hook created.
     * ``ipython_ast_node_transformer``: used to do AST transformations in an
       IPython/Jupyter environment. It should be a class derived from
       ``ast.NodeTransformer`` and return a ``node``.
@@ -316,7 +321,7 @@ def create_hook(
         excluded_paths=excluded_paths,
         exec_=exec_,
         extensions=extensions,
-        hook_name=hook_name,
+        name=name,
         module_class=module_class,
         source_init=source_init,
         transform_ast=transform_ast,
@@ -324,7 +329,7 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-
+    session.current_state.add_hook(ideas_hook)
     ideas_hook.meta_path_finder = IdeasMetaFinder(ideas_hook=ideas_hook)
 
     if first:
@@ -335,7 +340,7 @@ def create_hook(
     if session.current_state.verbose_finder:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
-        for sub_path in excluded_paths:
+        for sub_path in ideas_hook.excluded_paths:
             print("  ", utils.shorten_path(sub_path), sub_path)
 
     ## ----- Setting up Ideas Interactive Console
@@ -394,6 +399,7 @@ def make_ipython_source_transformer(transform_source):
     """Takes a source transform and makes returns an IPython compatible
     source transformer.
     """
+
     # This is done as during the cleanup phase
     # (``ipython_shell.input_transformers_cleanup``), as opposed to the
     # post phase (``ipython_shell.input_transformers_post``) so that

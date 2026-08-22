@@ -536,11 +536,11 @@ def transform_source(source: str, **_kwargs) -> str:
     return new_source
 
 
-def add_hook(**_kwargs):
+def add_hook(name=None, **_kwargs):
     """
     Install the embedded_html transform.
     """
-    hook = import_hook.create_hook(
-        transform_source=transform_source, hook_name=__name__
-    )
+    if name is None:
+        name = __name__
+    hook = import_hook.create_hook(transform_source=transform_source, name=name)
     return hook

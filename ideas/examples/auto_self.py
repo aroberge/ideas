@@ -47,8 +47,8 @@ joy when discovering `attrs: Classes Without Boilerplate <https://www.attrs.org/
 Starting with Python 3.7, the standard library includes
 `dataclasses <https://docs.python.org/3/library/dataclasses.html>`_ which shares some
 similarity with ``attrs``. However, it does require to use type hints which,
-in my opinion, reduces readability; note that many programmers find that
-type hints increase readability.
+in my opinion, reduces readability; note that many (most?) programmers find that
+type hints do increase readability.
 
 As a concrete example of using traditional Python notation and
 dataclasses, let's consider the code given in
@@ -230,10 +230,12 @@ def transform_source(source, **_kwargs):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(**_kwargs):
+def add_hook(name=None, **_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
+    if name is None:
+        name = __name__
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        hook_name=__name__,
+        name=name,
     )
     return hook

@@ -260,7 +260,7 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
         raise NotImplementedError
 
 
-def add_hook(on_prevent_change=None, **_kwargs):
+def add_hook(name=None, on_prevent_change=None, **_kwargs):
     """Creates and adds the import hook in sys.meta_path
 
     When an attempt is made to change the value of a constant, ``on_prevent_change``
@@ -268,14 +268,14 @@ def add_hook(on_prevent_change=None, **_kwargs):
     was done. This could be replaced by a function that logs the results or
     one that raises an exception, etc.
     """
+    if name is None:
+        name = __name__
     if on_prevent_change is None:
         on_prevent_change = on_change_print
     callback_params = {"on_prevent_change": on_prevent_change}
 
     module_class = make_class(**callback_params)
     console_dict = FinalDict(CONSOLE_NAME, on_prevent_change=on_prevent_change)
-    if CONSOLE_NAME not in CONSTANTS:
-        CONSTANTS[CONSOLE_NAME] = {}
 
     hook = import_hook.create_hook(
         module_class=module_class,
@@ -283,6 +283,6 @@ def add_hook(on_prevent_change=None, **_kwargs):
         exec_=exec_,
         callback_params=callback_params,
         console_dict=console_dict,
-        hook_name=__name__,
+        name=name,
     )
     return hook

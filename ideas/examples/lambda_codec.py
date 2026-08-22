@@ -29,5 +29,5 @@ encoding_name = "lambda_encoding"
 custom_encoding.register_encoding(
     encoding_name=encoding_name,
     transform_source=transform_source,
-    hook_name=__name__,
+    name=__name__,
 )

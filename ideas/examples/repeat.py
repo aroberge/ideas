@@ -178,16 +178,18 @@ def transform_source(source, callback_params=None, **_kwargs):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(predictable_names=False, **_kwargs):
+def add_hook(name=None, predictable_names=False, **_kwargs):
     """Creates and adds the import hook in sys.meta_path.
 
     If ``predictable_names`` is set to ``True``, a callback parameter
     passed to the source transformation function will be used to
     create variable loops with predictable names."""
+    if name is None:
+        name = __name__
     callback_params = {"predictable_names": predictable_names}
     hook = import_hook.create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
-        hook_name=__name__,
+        name=name,
     )
     return hook
