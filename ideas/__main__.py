@@ -37,6 +37,15 @@ parser.add_argument(
     metavar="MODULE",
 )
 
+
+parser.add_argument(
+    "-m",
+    "--run_as_main",
+    action="store_true",
+    help="""Name of the main Python module (path.to.my_program) to be executed as a main scrit.
+    The extension (.py) must not be included.""",
+)
+
 parser.add_argument(
     "-r",
     "--register_codec",
@@ -145,17 +154,24 @@ def main() -> None:
     # which is meant to be the module __main__ instead of `ideas` itself
 
     if not ideas_does_something and (sys.flags.interactive or args.i):
-        source_dict = runpy.run_module(args.source, run_name="__main__")
+        if args.run_as_main:
+            source_dict = runpy.run_module(args.source, run_name="__main__")
+        else:
+            source_dict = runpy.run_module(args.source)
         console.start(locals_=source_dict)
         return
 
     if not ideas_does_something:
         print("\n***    `ideas` has been invoked but isn't doing anything.")
         print(f"***    Simply executing `{args.source}` as a main module.\n")
-        runpy.run_module(args.source, run_name="__main__")
+        if args.run_as_main:
+            source_dict = runpy.run_module(args.source, run_name="__main__")
+        else:
+            source_dict = runpy.run_module(args.source)
         return
 
-    current_state.source_argument = args.source
+    if args.run_as_main:
+        current_state.source_argument = args.source
     try:
         module = import_module(args.source)
     except ModuleNotFoundError as exc:
