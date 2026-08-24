@@ -53,7 +53,7 @@ def update_before_console_start(module):
     print("after:\n", DECLARED_FINAL)
 
 
-def make_class(on_prevent_change=True):
+def make_class(on_prevent_change_feedback=True, freeze_after_creation=False):
     class ModuleWithConstants(types.ModuleType):
         """Special module type that prevents variables identified as constants
         to have their value changed.
@@ -67,15 +67,17 @@ def make_class(on_prevent_change=True):
         exception could be raised.
         """
 
+        _readonly = freeze_after_creation
+
         def __setattr__(self, key, value):
             if (
                 key in CONSTANTS[self.__file__]
                 or key == key.upper()
                 or key in DECLARED_FINAL[self.__file__]
             ):
-                if on_prevent_change:
-                    if callable(on_prevent_change):
-                        on_prevent_change(  # noqa
+                if on_prevent_change_feedback:
+                    if callable(on_prevent_change_feedback):
+                        on_prevent_change_feedback(  # noqa
                             filename=self.__file__, key=key, value=value, kind="set"
                         )
                     return
@@ -83,15 +85,24 @@ def make_class(on_prevent_change=True):
 
         def __delattr__(self, key):
             if key in CONSTANTS[self.__file__]:
-                if on_prevent_change:
-                    if callable(on_prevent_change):
-                        on_prevent_change(  # noqa
+                if on_prevent_change_feedback:
+                    if callable(on_prevent_change_feedback):
+                        on_prevent_change_feedback(  # noqa
                             filename=self.__file__, key=key, kind="delete"
                         )
                     return
             super().__delattr__(key)
 
+        def __getattribute__(self, name):
+            if name == "__dict__" and object.__getattribute__(self, "_readonly"):
+                d = super().__getattribute__(name)
+                return types.MappingProxyType(d)
+            return super().__getattribute__(name)
+
     return ModuleWithConstants
+
+
+""
 
 
 class FinalDict(dict):
@@ -108,10 +119,10 @@ class FinalDict(dict):
     of a constant.
     """
 
-    def __init__(self, module_filename, on_prevent_change=True):
+    def __init__(self, module_filename, on_prevent_change_feedback=True):
         """Initialises the instance"""
         self.__file__ = module_filename
-        self.on_prevent_change = on_prevent_change
+        self.on_prevent_change_feedback = on_prevent_change_feedback
         super().__init__()
 
     def __setitem__(self, key, value):
@@ -121,9 +132,9 @@ class FinalDict(dict):
         its value after initial assignment.
         """
         if key in CONSTANTS[self.__file__]:
-            if self.on_prevent_change:
-                if callable(self.on_prevent_change):
-                    self.on_prevent_change(
+            if self.on_prevent_change_feedback:
+                if callable(self.on_prevent_change_feedback):
+                    self.on_prevent_change_feedback(
                         filename=self.__file__, key=key, value=value, kind="set"
                     )
                 return
@@ -134,30 +145,36 @@ class FinalDict(dict):
     def __delitem__(self, key):
         """Deletes self[key] unless key is identified as a constant"""
         if key in CONSTANTS[self.__file__]:
-            if self.on_prevent_change:
-                if callable(self.on_prevent_change):
-                    self.on_prevent_change(
+            if self.on_prevent_change_feedback:
+                if callable(self.on_prevent_change_feedback):
+                    self.on_prevent_change_feedback(
                         filename=self.__file__, key=key, kind="delete"
                     )
                 return
             return
         return super().__delitem__(key)
 
-    # def setdefault(self, key, default=None):
-    #     """Insert key with a value of default if key is not in the dictionary.
+    def __setattr__(self, name, value):
+        return super().__setattr__(name, value)
 
-    #     It prevents changes if the key is identified as a constant.
-    #     """
-    #     if key in CONSTANTS[self.__file__]:
-    #         if self.on_prevent_change:
-    #             if callable(self.on_prevent_change):
-    #                 self.on_prevent_change(
-    #                     filename=self.__file__, key=key, value=default, kind="set"
-    #                 )
-    #             return
-    #     if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
-    #         CONSTANTS[self.__file__][key] = default
-    #     return super().setdefault(key, default)
+    def __getattribute__(self, name):
+        return super().__getattribute__(name)
+
+    def setdefault(self, key, default=None):
+        """Insert key with a value of default if key is not in the dictionary.
+
+        It prevents changes if the key is identified as a constant.
+        """
+        if key in CONSTANTS[self.__file__]:
+            if self.on_prevent_change_feedback:
+                if callable(self.on_prevent_change_feedback):
+                    self.on_prevent_change_feedback(
+                        filename=self.__file__, key=key, value=default, kind="set"
+                    )
+                return
+        if key == key.upper() or key in DECLARED_FINAL[self.__file__]:
+            CONSTANTS[self.__file__][key] = default
+        return super().setdefault(key, default)
 
     # def pop(self, key):
     #     """D.pop(key) -> value, remove specified key and return the corresponding value,
@@ -166,29 +183,29 @@ class FinalDict(dict):
     #     If key is not found, d is returned if given, otherwise KeyError is raised
     #     """
     #     if key in CONSTANTS[self.__file__]:
-    #         if self.on_prevent_change:
-    #             if callable(self.on_prevent_change):
-    #                 self.on_prevent_change(
+    #         if self.on_prevent_change_feedback:
+    #             if callable(self.on_prevent_change_feedback):
+    #                 self.on_prevent_change_feedback(
     #                     filename=self.__file__, key=key, kind="delete"
     #                 )
     #             return CONSTANTS[self.__file__][key]
     #     return super().pop(key)
 
-    def update(self, mapping_or_iterable=(), **kwargs):
-        """Updates the content of the dict from a mapping or an iterable,
-        or from a list of keywords arguments.
+    # def update(self, mapping_or_iterable=(), **kwargs):
+    #     """Updates the content of the dict from a mapping or an iterable,
+    #     or from a list of keywords arguments.
 
-        Keys identified as constants are prevented from changing.
-        """
-        if hasattr(mapping_or_iterable, "keys"):
-            for key in mapping_or_iterable:
-                self.__setitem__(key, mapping_or_iterable[key])
-        else:
-            for key, value in mapping_or_iterable:
-                self.__setitem__(key, value)
+    #     Keys identified as constants are prevented from changing.
+    #     """
+    #     if hasattr(mapping_or_iterable, "keys"):
+    #         for key in mapping_or_iterable:
+    #             self.__setitem__(key, mapping_or_iterable[key])
+    #     else:
+    #         for key, value in mapping_or_iterable:
+    #             self.__setitem__(key, value)
 
-        for key in kwargs:
-            self.__setitem__(key, kwargs[key])
+    #     for key in kwargs:
+    #         self.__setitem__(key, kwargs[key])
 
 
 def transform_source(source, filename=None, **_kwargs):
@@ -236,7 +253,8 @@ def exec_(code_object, filename=None, module=None, callback_params=None, **kwarg
     update the module's ``__dict__``.
     """
     locals_ = FinalDict(
-        filename, on_prevent_change=callback_params["on_prevent_change"]
+        filename,
+        on_prevent_change_feedback=callback_params["on_prevent_change_feedback"],
     )
     locals_.update(module.__dict__)
     exec(code_object, locals_)
@@ -260,22 +278,29 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
         raise NotImplementedError
 
 
-def add_hook(name=None, on_prevent_change=None, **_kwargs):
+def add_hook(
+    name=None, on_prevent_change_feedback=None, freeze_after_creation=False, **_kwargs
+):
     """Creates and adds the import hook in sys.meta_path
 
-    When an attempt is made to change the value of a constant, ``on_prevent_change``
+    When an attempt is made to change the value of a constant, ``on_prevent_change_feedback``
     is called. By default, this function just prints a warning about what
     was done. This could be replaced by a function that logs the results or
     one that raises an exception, etc.
     """
     if name is None:
         name = __name__
-    if on_prevent_change is None:
-        on_prevent_change = on_change_print
-    callback_params = {"on_prevent_change": on_prevent_change}
+    if on_prevent_change_feedback is None:
+        on_prevent_change_feedback = on_change_print
+    callback_params = {
+        "on_prevent_change_feedback": on_prevent_change_feedback,
+        "freeze_after_creation": freeze_after_creation,
+    }
 
     module_class = make_class(**callback_params)
-    console_dict = FinalDict(CONSOLE_NAME, on_prevent_change=on_prevent_change)
+    console_dict = FinalDict(
+        CONSOLE_NAME, on_prevent_change_feedback=on_prevent_change_feedback
+    )
 
     hook = import_hook.create_hook(
         module_class=module_class,
