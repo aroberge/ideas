@@ -53,7 +53,7 @@ def update_before_console_start(module):
     print("after:\n", DECLARED_FINAL)
 
 
-def make_class(on_prevent_change_feedback=True, freeze_after_creation=False):
+def make_class(on_prevent_change_feedback=True, prevent_dict_modifications=False):
     class ModuleWithConstants(types.ModuleType):
         """Special module type that prevents variables identified as constants
         to have their value changed.
@@ -67,7 +67,7 @@ def make_class(on_prevent_change_feedback=True, freeze_after_creation=False):
         exception could be raised.
         """
 
-        _readonly = freeze_after_creation
+        _readonly = prevent_dict_modifications
 
         def __setattr__(self, key, value):
             if (
@@ -279,7 +279,10 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
 
 
 def add_hook(
-    name=None, on_prevent_change_feedback=None, freeze_after_creation=False, **_kwargs
+    name=None,
+    on_prevent_change_feedback=None,
+    prevent_dict_modifications=False,
+    **_kwargs,
 ):
     """Creates and adds the import hook in sys.meta_path
 
@@ -294,7 +297,7 @@ def add_hook(
         on_prevent_change_feedback = on_change_print
     callback_params = {
         "on_prevent_change_feedback": on_prevent_change_feedback,
-        "freeze_after_creation": freeze_after_creation,
+        "prevent_dict_modifications": prevent_dict_modifications,
     }
 
     module_class = make_class(**callback_params)
