@@ -30,25 +30,64 @@ class State:
         self.hooks.append(hook)
         print(f"Added hook {hook.name}")
 
+    def list_hooks(self):
+        """Lists the import hooks that have been activated together
+        with their status (currently enabled or not).
+        """
+        for hook in self.hooks:
+            print(f"  {hook.name} ; enabled: {hook.enabled}")
+
     def disable_hook(self, name):
+        """Disable a given import hook. Use name="*" as a shortcut for
+        disabling all hooks.
+
+        Since many of the import hooks are found in the ideas.examples directory
+        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        """
+        if name == "*":
+            for hook in self.hooks:
+                hook.enabled = False
+            return
+
+        potential_hook = None
         for hook in self.hooks:
             if hook.name == name:
                 hook.enabled = False
                 return
+            elif hook.name == "ideas.examples." + name:
+                potential_hook = hook
         else:
+            if potential_hook is not None:
+                potential_hook.enabled = False
+                return
             print(f"Could not find hook {name}. Here are the known hooks:")
-            for hook in self.hooks:
-                print("  ", hook.name)
+            self.list_hooks()
 
     def enable_hook(self, name):
+        """Enable a given import hook. Use name="*" as a shortcut for
+        Enabling all hooks.
+
+        Since many of the import hooks are found in the ideas.examples directory
+        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        """
+        if name == "*":
+            for hook in self.hooks:
+                hook.enabled = True
+            return
+
+        potential_hook = None
         for hook in self.hooks:
             if hook.name == name:
                 hook.enabled = True
                 return
+            elif hook.name == "ideas.examples." + name:
+                potential_hook = hook
         else:
+            if potential_hook is not None:
+                potential_hook.enabled = True
+                return
             print(f"Could not find hook {name}. Here are the known hooks:")
-            for hook in self.hooks:
-                print("  ", hook.name)
+            self.list_hooks()
 
     def print_original(self, source, header="Original"):
         """Depending on configuration, can print the original source
