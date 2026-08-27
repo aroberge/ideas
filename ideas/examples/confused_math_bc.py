@@ -137,12 +137,10 @@ def transform_bytecode(code_object, **_kwargs):
     return new_code_object
 
 
-def add_hook(name=None, **_kwargs):
+def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    if name is None:
-        name = __name__
     hook = import_hook.create_hook(
-        name=name,
+        name=__name__,
         transform_bytecode=transform_bytecode,
     )
     return hook

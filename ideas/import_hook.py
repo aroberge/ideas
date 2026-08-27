@@ -26,6 +26,9 @@ def finder_inform(text):
 
 DEFAULT = object()
 
+# TODO: Add test for french_repeat
+# TODO: Ensure that all existing hooks are tested.
+
 
 class IdeasHook:
     """A custom import hook main object."""
@@ -62,15 +65,24 @@ class IdeasHook:
         self.transform_source = transform_source
 
         # The following attribute are created by the IdeasMetaFinder
-        self.meta_path_finder = None  # IdeasMetaFinder instance
+        self.meta_path_finder = None  # IdeasMetaFinder instance; is it
         self.filename = None
         self.fullname = None
-        self.loader = None
+        self.loader = None  # Is this needed?
         # This will normally be changed via a method from session.current_state in session.py
         self.enabled = True
 
+        try:
+            self.source_module = sys.modules[name]
+        except KeyError:
+            print("FATAL ERROR!")
+            print(
+                "IdeasHook object must be created with the name of its source module."
+            )
+            raise
+
     def __repr__(self):
-        return f"<Ideas import hook named {self.name}>"
+        return f"<Ideas import hook: {self.name}>"
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -254,6 +266,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
 
 def create_hook(
+    name: str = "",
     callback_params: Optional[Dict[str, Any]] = None,
     create_module: Optional[Callable[..., ModuleType]] = None,
     console_dict: Optional[Dict[str, Any]] = None,
@@ -261,7 +274,6 @@ def create_hook(
     extensions: Optional[Sequence[str]] = None,
     excluded_paths: Optional[Sequence[str]] = DEFAULT,
     first: bool = True,
-    name: Optional[str] = None,
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
     module_class: Optional[type] = None,
     source_init: Optional[Callable[[], str]] = None,
@@ -271,6 +283,9 @@ def create_hook(
     parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
 ) -> IdeasHook:  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
+
+    ``name``: required parameter which must be the ``__name__`` of
+    the module in which the import hook is defined.
 
     Each of the following parameter is optional; most of these are
     never needed except in some unusual import hooks.
@@ -293,7 +308,6 @@ def create_hook(
       library, the site packages, as well as files from this project.
     * ``first``: if ``True``, the custom hook will be used as the first
       location in ``sys.meta_path``, to look for source files.
-    * ``name``: used to give a more readable ``repr`` to the hook created.
     * ``ipython_ast_node_transformer``: used to do AST transformations in an
       IPython/Jupyter environment. It should be a class derived from
       ``ast.NodeTransformer`` and return a ``node``.
@@ -314,6 +328,11 @@ def create_hook(
     * ``transform_source``: used to transform some source code prior
       to execution.
     """
+
+    if not name:
+        raise RuntimeError(
+            "`name` is required and should be the source module __name__."
+        )
 
     ideas_hook = IdeasHook(
         callback_params=callback_params,

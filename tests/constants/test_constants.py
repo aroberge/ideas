@@ -26,8 +26,8 @@ def test_uppercase():
     remove_hook(hook)
 
 
-def test_final(on_prevent_change=None):
-    hook = constants.add_hook(on_prevent_change=on_prevent_change)
+def test_final(on_prevent_change_feedback=None):
+    hook = constants.add_hook(on_prevent_change_feedback=on_prevent_change_feedback)
 
     # The following module contains assertions confirming that it
     # is processed correctly when it is created.
@@ -48,7 +48,9 @@ def test_final(on_prevent_change=None):
 
     remove_hook(hook)
 
+def _feedback(filename, key, value, kind):
+    print("Change not allowed in", filename, key, value, kind)
 
 def test_final_prevent_change():
-    test_final(on_prevent_change=True)
+    test_final(on_prevent_change_feedback=_feedback)
 

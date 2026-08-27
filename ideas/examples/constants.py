@@ -279,10 +279,8 @@ def on_change_print(filename=None, key=None, value=None, kind=None):
 
 
 def add_hook(
-    name=None,
     on_prevent_change_feedback=None,
     prevent_dict_modifications=False,
-    **_kwargs,
 ):
     """Creates and adds the import hook in sys.meta_path
 
@@ -291,8 +289,6 @@ def add_hook(
     was done. This could be replaced by a function that logs the results or
     one that raises an exception, etc.
     """
-    if name is None:
-        name = __name__
     if on_prevent_change_feedback is None:
         on_prevent_change_feedback = on_change_print
     callback_params = {
@@ -311,6 +307,6 @@ def add_hook(
         exec_=exec_,
         callback_params=callback_params,
         console_dict=console_dict,
-        name=name,
+        name=__name__,
     )
     return hook

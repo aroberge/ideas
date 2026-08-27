@@ -204,12 +204,10 @@ def parse_source(src, filename, mode, **_kwargs):
     return fix_missing_locations(tree)
 
 
-def add_hook(name=None, **_kwargs):
+def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    if name is None:
-        name = __name__
     hook = import_hook.create_hook(
-        name=name,
+        name=__name__,
         parse_source=parse_source,
     )
     return hook

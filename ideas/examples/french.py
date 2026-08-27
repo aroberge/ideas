@@ -161,14 +161,12 @@ def transform_source(source, **_kwargs):
     return new_source
 
 
-def add_hook(name=None, **_kwargs):
+def add_hook():
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
-    if name is None:
-        name = __name__
     hook = import_hook.create_hook(
         transform_source=transform_source,
-        name=name,
+        name=__name__,
         extensions=[".pyfr"],
     )
     return hook

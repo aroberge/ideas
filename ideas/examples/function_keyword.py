@@ -19,9 +19,7 @@ def transform_source(source, **_kwargs):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(name=None, **_kwargs):
+def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    if name is None:
-        name = __name__
-    hook = import_hook.create_hook(transform_source=transform_source, name=name)
+    hook = import_hook.create_hook(transform_source=transform_source, name=__name__)
     return hook

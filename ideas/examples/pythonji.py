@@ -39,15 +39,13 @@ def transform_ast(tree, **_kwargs):
     return tree_or_node
 
 
-def add_hook(name=None, **_kwargs):
+def add_hook():
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
-    if name is None:
-        name = __name__
     hook = import_hook.create_hook(
         transform_source=transform_source,
         transform_ast=transform_ast,
-        name=name,
+        name=__name__,
         extensions=[".🐍"],
     )
     return hook
