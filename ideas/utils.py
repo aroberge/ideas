@@ -15,6 +15,10 @@ IDEAS = os.path.dirname(__file__).lower()
 TESTS = os.path.normpath(os.path.join(IDEAS, "..", "tests")).lower()
 HOME = os.path.expanduser("~").lower()
 
+# The following is used in other files; to be used when
+# None would not be a valid choice
+DEFAULT = object()  # noqa
+
 
 def shorten_path(path):
     """Utility function used to reduce the length of the path shown

@@ -16,6 +16,7 @@ from typing import Callable, Dict, Sequence, Optional, Any
 from . import console
 from . import session
 from . import utils
+from .ideas_hook import IdeasHook
 
 
 def finder_inform(text):
@@ -24,65 +25,10 @@ def finder_inform(text):
         print(text)
 
 
-DEFAULT = object()
+# utils.DEFAULT = object()  # Use instead of None when None would be a valid choice
 
 # TODO: Add test for french_repeat
 # TODO: Ensure that all existing hooks are tested.
-
-
-class IdeasHook:
-    """A custom import hook main object."""
-
-    def __init__(
-        self,
-        callback_params: Optional[Dict[str, Any]] = None,
-        create_module: Optional[Callable[..., ModuleType]] = None,
-        exec_: Optional[Callable[..., None]] = None,
-        extensions: Optional[Sequence[str]] = None,
-        excluded_paths: Optional[Sequence[str]] = DEFAULT,
-        name: Optional[str] = None,
-        module_class: Optional[type] = None,
-        parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
-        source_init: Optional[Callable[[], str]] = None,
-        transform_ast: Optional[Callable[[ast.AST], ast.AST]] = None,
-        transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
-        transform_source: Optional[Callable[[str], str]] = None,
-    ):
-        self.callback_params = callback_params
-        self.create_module = create_module
-        if excluded_paths is DEFAULT:
-            self.excluded_paths = [utils.PYTHON, utils.IDEAS, utils.SITE_PACKAGES]
-        elif excluded_paths is None:
-            self.excluded_paths = []
-        self.exec_ = exec_
-        self.extensions = extensions if extensions is not None else [".py"]
-        self.name = name if name is not None else utils.generate_variable_names()
-        self.module_class = module_class
-        self.parse_source = parse_source
-        self.source_init = source_init
-        self.transform_ast = transform_ast
-        self.transform_bytecode = transform_bytecode
-        self.transform_source = transform_source
-
-        # The following attribute are created by the IdeasMetaFinder
-        self.meta_path_finder = None  # IdeasMetaFinder instance; is it
-        self.filename = None
-        self.fullname = None
-        self.loader = None  # Is this needed?
-        # This will normally be changed via a method from session.current_state in session.py
-        self.enabled = True
-
-        try:
-            self.source_module = sys.modules[name]
-        except KeyError:
-            print("FATAL ERROR!")
-            print(
-                "IdeasHook object must be created with the name of its source module."
-            )
-            raise
-
-    def __repr__(self):
-        return f"<Ideas import hook: {self.name}>"
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
@@ -272,7 +218,7 @@ def create_hook(
     console_dict: Optional[Dict[str, Any]] = None,
     exec_: Optional[Callable[..., None]] = None,
     extensions: Optional[Sequence[str]] = None,
-    excluded_paths: Optional[Sequence[str]] = DEFAULT,
+    excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
     first: bool = True,
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
     module_class: Optional[type] = None,
@@ -334,7 +280,7 @@ def create_hook(
             "`name` is required and should be the source module __name__."
         )
 
-    ideas_hook = IdeasHook(
+    hook = IdeasHook(
         callback_params=callback_params,
         create_module=create_module,
         excluded_paths=excluded_paths,
@@ -348,18 +294,18 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    session.current_state.append_hook(ideas_hook)
-    ideas_hook.meta_path_finder = IdeasMetaFinder(ideas_hook=ideas_hook)
+    session.current_state.add_hook(hook)
+    hook.meta_path_finder = IdeasMetaFinder(ideas_hook=hook)
 
     if first:
-        sys.meta_path.insert(0, ideas_hook.meta_path_finder)
+        sys.meta_path.insert(0, hook.meta_path_finder)
     else:
-        sys.meta_path.append(ideas_hook.meta_path_finder)
+        sys.meta_path.append(hook.meta_path_finder)
 
     if session.current_state.verbose_finder:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
-        for sub_path in ideas_hook.excluded_paths:
+        for sub_path in hook.excluded_paths:
             print("  ", utils.shorten_path(sub_path), sub_path)
 
     ## ----- Setting up Ideas Interactive Console
@@ -376,7 +322,7 @@ def create_hook(
 
     ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
     try:
-        ipython_shell = get_ipython()  # noqa
+        ipython_shell = get_ipython()  # type: ignore # noqa
     except NameError:
         pass
     else:
@@ -387,7 +333,7 @@ def create_hook(
             transform_source=transform_source,
         )
 
-    return ideas_hook
+    return hook
 
 
 def set_up_ipython_shell(

@@ -26,7 +26,7 @@ class State:
         self.main_file_name = None  # ... source_argument.filename.py
         self.main_module = None  # ... source_argument -> main_module
 
-    def append_hook(self, hook):
+    def add_hook(self, hook):
         # TODO: check to see if a hook by that name already exists. If so,
         # append the new one but disable it before, and print an error message.
         self.hooks.append(hook)
