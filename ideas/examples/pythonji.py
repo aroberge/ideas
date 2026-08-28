@@ -13,7 +13,7 @@ except ModuleNotFoundError:
     print("You need to install 'emoji' from pypi.")
     sys.exit()
 
-from ideas import import_hook
+from ideas import create_hook
 
 DELIMITERS = ("__pythonji__", "__")
 
@@ -42,7 +42,7 @@ def transform_ast(tree, **_kwargs):
 def add_hook():
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         transform_ast=transform_ast,
         name=__name__,

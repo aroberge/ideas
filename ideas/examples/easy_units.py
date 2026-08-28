@@ -9,7 +9,7 @@ In the meantime, see
 https://aroberge.blogspot.com/2022/04/natural-syntax-for-units-in-python.html
 """
 
-from ideas import import_hook, utils
+from ideas import create_hook, utils
 import token_utils
 
 PREFIX = {}
@@ -137,7 +137,7 @@ def add_hook(show_original=False, show_changes=False):
         "show_original": show_original,
         "show_changes": show_changes,
     }
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
         name=__name__,

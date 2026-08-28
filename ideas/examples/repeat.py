@@ -108,7 +108,7 @@ is equivalent to::
             pass
 """
 
-from ideas import import_hook, utils
+from ideas import create_hook, utils
 import token_utils
 
 
@@ -185,7 +185,7 @@ def add_hook(predictable_names=False):
     passed to the source transformation function will be used to
     create variable loops with predictable names."""
     callback_params = {"predictable_names": predictable_names}
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         callback_params=callback_params,
         name=__name__,

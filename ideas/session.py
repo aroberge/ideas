@@ -26,9 +26,29 @@ class State:
         self.main_file_name = None  # ... source_argument.filename.py
         self.main_module = None  # ... source_argument -> main_module
 
-    def add_hook(self, hook):
+    def append_hook(self, hook):
+        # TODO: check to see if a hook by that name already exists. If so,
+        # append the new one but disable it before, and print an error message.
         self.hooks.append(hook)
         print(f"Added hook {hook.name}")
+
+    def remove_hook(self, hook):
+        if isinstance(hook, str):
+            name = hook
+        elif hasattr(hook, "name"):
+            name = hook.name
+        else:
+            print(
+                "remove_hook require either a name (str) or hook object (with .name attribute)"
+            )
+            return
+
+        try:
+            self.hooks.remove(name)
+        except ValueError:
+            print(f"No import hook removed: {name} was not found.")
+
+        # TODO: remove from sys.meta_path
 
     def list_hooks(self):
         """Lists the import hooks that have been activated together

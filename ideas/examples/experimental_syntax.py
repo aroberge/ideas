@@ -35,7 +35,7 @@ import ast
 from importlib import import_module
 import re
 
-from ideas import import_hook
+from ideas import create_hook
 
 IMPORT_STATEMENT = re.compile("from experimental-syntax import (.*)")
 SOURCE_TRANSFORMERS = []
@@ -181,7 +181,7 @@ def transform_bytecode(byte_code):
 def add_hook():
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,

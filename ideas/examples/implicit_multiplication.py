@@ -7,7 +7,7 @@ to allow someone to write equations as they would on paper
 and have Python interpret them properly.
 """
 
-from ideas import import_hook
+from ideas import create_hook
 import token_utils
 
 
@@ -58,7 +58,7 @@ def transform_source(source, **_kwargs):
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         name=__name__,
     )

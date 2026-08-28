@@ -3,7 +3,7 @@ This replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.
 """
 
-from ideas import custom_encoding, import_hook
+from ideas import custom_encoding, create_hook
 import token_utils
 
 
@@ -35,7 +35,7 @@ def register():
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         name=__name__,
         source_init=source_init,
         transform_source=transform_source,

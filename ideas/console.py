@@ -221,10 +221,10 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None, transforming_modules=No
     else:
         locals_["config"] = current_state
 
-    for mod in current_state.transforming_modules:
-        print(f"line 226: {mod.__file__}: {mod.__name__}")
-        if hasattr(mod, "update_before_console_start"):
-            mod.update_before_console_start(mod)
+    # for hooks in current_state.hooks:
+    #     print(f"line 225, module name: {mod.__name__}")
+    #     if hasattr(mod, "update_before_console_start"):
+    #         mod.update_before_console_start(mod)
 
     console = IdeasConsole(**_CONFIG, locals_=locals_)
 

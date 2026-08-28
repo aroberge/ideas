@@ -348,7 +348,7 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    session.current_state.add_hook(ideas_hook)
+    session.current_state.append_hook(ideas_hook)
     ideas_hook.meta_path_finder = IdeasMetaFinder(ideas_hook=ideas_hook)
 
     if first:

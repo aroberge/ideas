@@ -16,7 +16,7 @@ import token_utils
 import unicodedata
 import uuid
 
-from ideas import import_hook
+from ideas import create_hook
 
 _NAMES_MAP = {}
 
@@ -86,6 +86,6 @@ from ideas.examples.nfc_normalization import new_dir as dir
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    return import_hook.create_hook(
+    return create_hook(
         transform_source=transform_source, source_init=source_init, name=__name__
     )

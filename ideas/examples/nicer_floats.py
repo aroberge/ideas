@@ -6,7 +6,7 @@ Documentation to be written.
 """
 
 from fractions import Fraction
-from ideas import import_hook
+from ideas import create_hook
 import token_utils
 
 
@@ -67,7 +67,7 @@ def source_init():
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path."""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         name=__name__,
         source_init=source_init,
         transform_source=transform_source,

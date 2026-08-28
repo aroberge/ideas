@@ -12,7 +12,7 @@ In this import hook, constants are identified in two ways:
 
 import types
 
-from ideas import import_hook
+from ideas import create_hook
 from ideas.console import CONSOLE_NAME
 from ideas import utils
 import token_utils
@@ -301,7 +301,7 @@ def add_hook(
         CONSOLE_NAME, on_prevent_change_feedback=on_prevent_change_feedback
     )
 
-    hook = import_hook.create_hook(
+    hook = create_hook(
         module_class=module_class,
         transform_source=transform_source,
         exec_=exec_,

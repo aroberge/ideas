@@ -13,7 +13,7 @@ not captured by this transformation.
 import dis
 import sys
 from types import CodeType
-from ideas import import_hook
+from ideas import create_hook
 
 # The actual bytecode used can change with different Python version.
 # Instead of attempting to hard-code some actual bytecode values
@@ -139,7 +139,7 @@ def transform_bytecode(code_object, **_kwargs):
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         name=__name__,
         transform_bytecode=transform_bytecode,
     )

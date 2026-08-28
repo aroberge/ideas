@@ -39,7 +39,7 @@ from typing import Optional, Union, Iterator, Iterable
 
 import token_utils
 
-from ideas import import_hook
+from ideas import create_hook
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
@@ -540,5 +540,5 @@ def add_hook():
     """
     Install the embedded_html transform.
     """
-    hook = import_hook.create_hook(transform_source=transform_source, name=__name__)
+    hook = create_hook(transform_source=transform_source, name=__name__)
     return hook

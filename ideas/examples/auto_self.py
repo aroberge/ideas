@@ -167,7 +167,7 @@ placeholder::
 
 """
 
-from ideas import import_hook
+from ideas import create_hook
 import token_utils
 
 
@@ -232,7 +232,7 @@ def transform_source(source, **_kwargs):
 
 def add_hook():
     """Creates and adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         transform_source=transform_source,
         name=__name__,
     )

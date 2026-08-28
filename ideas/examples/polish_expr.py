@@ -55,7 +55,7 @@ import token
 import token_utils
 from typing import Iterable
 
-from ideas import import_hook
+from ideas import create_hook
 
 
 class Parser:
@@ -206,7 +206,7 @@ def parse_source(src, filename, mode, **_kwargs):
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
-    hook = import_hook.create_hook(
+    hook = create_hook(
         name=__name__,
         parse_source=parse_source,
     )

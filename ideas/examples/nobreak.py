@@ -91,7 +91,7 @@ The code for ``nobreak`` makes use of the ``get_first`` function from
 
 """
 
-from ideas import import_hook
+from ideas import create_hook
 import token_utils
 
 
@@ -123,4 +123,4 @@ def transform_source(source, **_kwargs):
 
 def add_hook(n):
     """Creates and automatically adds the import hook in sys.meta_path"""
-    return import_hook.create_hook(transform_source=transform_source, name=__name__)
+    return create_hook(transform_source=transform_source, name=__name__)
