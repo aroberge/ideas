@@ -2,7 +2,7 @@ import sys
 
 if sys.version_info >= (3, 8):
     from ideas.examples import polish_expr
-from ideas.import_hook import remove_hook
+from ideas import remove_hook
 
 import pytest
 

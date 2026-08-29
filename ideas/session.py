@@ -7,6 +7,9 @@ configuration choice during a single run/session."""
 # In practice, we have found this to be an easier way to keep
 # the interactive console in sync with changes introduced by
 # various transformers.
+import sys
+
+from .ideas_hook import IdeasHook
 
 
 class State:
@@ -17,7 +20,7 @@ class State:
         self.show_original = False  # Print the source code prior to a transformation?
         self.active_console = False
         self.original = ""  # code prior to transformation
-        self.verbose_finder = False  # diagnostic
+        self.verbose = False  # diagnostic
         self.show_changes = False  # Do we print the transformed source code?
         self.transforming_modules = []
         self.hooks = []
@@ -26,29 +29,38 @@ class State:
         self.main_file_name = None  # ... source_argument.filename.py
         self.main_module = None  # ... source_argument -> main_module
 
+    def get_hook_by_name(self, name):
+        for hook in self.hooks:
+            if hook.name == name:
+                return hook
+        # Perhaps we're trying to find a hook from the examples folder
+        if "." not in name:
+            name = "ideas.examples." + name
+        for hook in self.hooks:
+            if hook.name == name:
+                return hook
+        if self.verbose:
+            print(f"Did not find a hook named {name}.")
+
     def add_hook(self, hook):
         # TODO: check to see if a hook by that name already exists. If so,
         # append the new one but disable it before, and print an error message.
+        assert isinstance(hook, IdeasHook)
         self.hooks.append(hook)
-        print(f"Added hook {hook.name}")
+        if self.verbose:
+            print(f"Added hook {hook.name}")
 
     def remove_hook(self, hook):
         if isinstance(hook, str):
-            name = hook
-        elif hasattr(hook, "name"):
-            name = hook.name
-        else:
-            print(
-                "remove_hook require either a name (str) or hook object (with .name attribute)"
-            )
+            hook = self.get_hook_by_name(hook)
+            if hook is None:
+                return
+
+        if hook.meta_path_finder not in sys.meta_path:
+            print(f"ERROR: {hook} not found in sys.meta_path")
             return
-
-        try:
-            self.hooks.remove(name)
-        except ValueError:
-            print(f"No import hook removed: {name} was not found.")
-
-        # TODO: remove from sys.meta_path
+        sys.meta_path.remove(hook.meta_path_finder)
+        self.hooks.remove(hook)
 
     def list_hooks(self):
         """Lists the import hooks that have been activated together

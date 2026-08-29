@@ -32,7 +32,7 @@ class IdeasHook:
             self.excluded_paths = []
         self.exec_ = exec_
         self.extensions = extensions if extensions is not None else [".py"]
-        self.name = name if name is not None else utils.generate_variable_names()
+        self.name = name
         self.module_class = module_class
         self.parse_source = parse_source
         self.source_init = source_init
@@ -59,3 +59,6 @@ class IdeasHook:
 
     def __repr__(self):
         return f"<Ideas import hook: {self.name}>"
+
+    def __eq__(self, other):
+        return isinstance(other, IdeasHook) and self.name == other.name

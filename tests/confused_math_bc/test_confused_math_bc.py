@@ -1,5 +1,5 @@
 from ideas.examples import confused_math_bc
-from ideas.import_hook import remove_hook
+from ideas import remove_hook
 
 
 def test_simple_case():

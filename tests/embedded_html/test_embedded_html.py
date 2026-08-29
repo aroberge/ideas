@@ -3,7 +3,6 @@ import types
 
 if sys.version_info >= (3, 9):
     from ideas.examples import embedded_html
-from ideas.import_hook import remove_hook
 
 import pytest
 

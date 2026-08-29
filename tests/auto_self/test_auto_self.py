@@ -1,6 +1,6 @@
 from ideas.examples import auto_self
-from ideas.import_hook import remove_hook
 
+from ideas import remove_hook
 
 cls_source = """
 def __init__(cls, *args, **kwargs):

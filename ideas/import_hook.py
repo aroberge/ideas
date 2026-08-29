@@ -21,11 +21,9 @@ from .ideas_hook import IdeasHook
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
-    if session.current_state.verbose_finder:
+    if session.current_state.verbose:
         print(text)
 
-
-# utils.DEFAULT = object()  # Use instead of None when None would be a valid choice
 
 # TODO: Add test for french_repeat
 # TODO: Ensure that all existing hooks are tested.
@@ -46,7 +44,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             print("WARNING: No IdeasHook object was passed.")
             return None
 
-        if not self.ideas_hook.enabled:
+        if not self.ideas_hook.enabled and session.current_state.verbose:
             print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
             return None
 
@@ -63,7 +61,7 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             for sub_path in self.ideas_hook.excluded_paths:
                 if sub_path in entry.lower():
                     skip = True
-                    if session.current_state.verbose_finder:
+                    if session.current_state.verbose:
                         print("    Skipping over:", utils.shorten_path(entry))
                     break
             if skip:
@@ -273,6 +271,8 @@ def create_hook(
     * ``transform_bytecode``: used to mutate a code object.
     * ``transform_source``: used to transform some source code prior
       to execution.
+
+    Returns: an IdeasHook instance.
     """
 
     if not name:
@@ -302,7 +302,7 @@ def create_hook(
     else:
         sys.meta_path.append(hook.meta_path_finder)
 
-    if session.current_state.verbose_finder:
+    if session.current_state.verbose and extensions is not None:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in hook.excluded_paths:
@@ -398,14 +398,3 @@ def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
         return ipython_ast_node_transformer
 
     return wrapped_ipython_ast_node_transformer
-
-
-def remove_hook(hook):
-    """Function used to remove a previously imported hook inserted in sys.meta_path"""
-    for index, meta_finder in enumerate(sys.meta_path):
-        if meta_finder == hook:
-            del sys.meta_path[index]
-            break
-    else:
-        print("Import hook not found in remove_hook.")
-        return

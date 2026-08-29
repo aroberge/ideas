@@ -10,7 +10,7 @@ import sys
 
 import ideas
 from ideas import console
-from ideas.session import current_state
+from ideas import current_state
 
 transforming_modules = []
 
@@ -20,7 +20,6 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument(
-    "-v",
     "--version",
     help="Only displays the current version.",
     action="store_true",
@@ -36,7 +35,6 @@ parser.add_argument(
     imported from ideas.examples.""",
     metavar="MODULE",
 )
-
 
 parser.add_argument(
     "-m",
@@ -61,6 +59,14 @@ parser.add_argument(
     "--show_changes",
     action="store_true",
     help="""Shows the transformed code before it is executed.""",
+)
+
+parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    help="""Prints out information about what is being done. Useful for diagnostic.
+    Automatically includes --show_changes.""",
 )
 
 parser.add_argument(
@@ -125,8 +131,9 @@ def main() -> None:
         return
 
     current_state.show_changes = bool(args.show_changes)
-    if current_state.show_changes:
-        ideas_does_something = True
+    current_state.verbose = bool(args.verbose)
+    if current_state.verbose:
+        current_state.show_changes = True
 
     if args.add_hook and args.register_codec:
         print("From the command line, you can only use one option at a time:")

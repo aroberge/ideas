@@ -1,5 +1,5 @@
 from ideas.examples import french
-from ideas.import_hook import remove_hook
+from ideas import remove_hook
 
 
 def test_french():

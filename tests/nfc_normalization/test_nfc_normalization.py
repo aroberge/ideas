@@ -1,5 +1,5 @@
 from ideas.examples import nfc_normalization
-from ideas.import_hook import remove_hook
+from ideas import remove_hook
 
 
 def test_nfc_normalization():

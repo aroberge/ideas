@@ -5,7 +5,8 @@
     extension (``.pyfr``) as an indication that an import hook must
     be used.
 
-    It also demonstrates how to use the ``verbose_finder`` configuration option.
+    It also demonstrates how to use the ``verbose`` configuration option
+    gives us information about how the finder searches for files.
 
 French Python
 ==============
@@ -77,8 +78,8 @@ setting up the ``french`` import hook and enabling the
 verbose finder::
 
 
-   >>> from ideas.session import config
-   >>> config.verbose_finder = True
+   >>> from ideas.session import current_state
+   >>> current_state.verbose = True
    >>> from ideas.examples import french
    >>> hook = french.add_hook()
    Looking for files with extensions:  ['.pyfr']

@@ -1,7 +1,7 @@
 import pytest
 
 from ideas.examples import repeat
-from ideas.import_hook import remove_hook
+from ideas import remove_hook
 
 
 def test_repeat():
