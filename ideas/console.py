@@ -211,20 +211,26 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None, transforming_modules=No
         sys.ps2 = (len(prompt) - 4) * " " + "... "
     sys.ps1 = prompt
     if locals_ is None:
-        locals_ = {"config": current_state}
+        locals_ = {"current_state": current_state}
     elif "Ideas" in locals_:
         if "ideas_config" in locals_:
             print("Ideas' configuration object is not available.")
         else:
             print("Ideas' configuration object is available as ideas_config")
-            locals_["ideas_config"] = current_state
+            locals_["current_state"] = current_state
     else:
-        locals_["config"] = current_state
+        locals_["current_state"] = current_state
 
-    # for hooks in current_state.hooks:
-    #     print(f"line 225, module name: {mod.__name__}")
-    #     if hasattr(mod, "update_before_console_start"):
-    #         mod.update_before_console_start(mod)
+    if current_state.source_argument is not None:
+        source_module = sys.modules.get(current_state.source_argument)
+        if source_module is not None:
+            for hook in current_state.hooks:
+                mod = sys.modules[hook.name]
+                if hasattr(mod, "update_before_console_start"):
+                    mod.update_before_console_start(source_module)
+        else:
+            print("ERROR from console.start:")
+            print("Cannot find the source module from the source argument.")
 
     console = IdeasConsole(**_CONFIG, locals_=locals_)
 

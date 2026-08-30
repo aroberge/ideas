@@ -147,9 +147,11 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         """Import the source code, transform it before executing it so that
         it is known to Python.
         """
-        if module.__name__ == session.current_state.source_argument:
+        if (
+            module.__name__ == session.current_state.source_argument
+            and session.current_state.run_as_main_argument
+        ):
             module.__name__ = "__main__"
-            session.current_state.source_argument = None
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
@@ -294,7 +296,7 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    session.current_state.add_hook(hook)
+    session.current_state._add_hook(hook)
     hook.meta_path_finder = IdeasMetaFinder(ideas_hook=hook)
 
     if first:

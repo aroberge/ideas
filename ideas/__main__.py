@@ -37,7 +37,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "-m",
     "--run_as_main",
     action="store_true",
     help="""Name of the main Python module (path.to.my_program) to be executed as a main scrit.
@@ -151,14 +150,20 @@ def main() -> None:
         register_codec(args.register_codec[0])
         ideas_does_something = True
 
-    if args.source is None:
+    if not (args.source or args.run_as_main):
         console.start()
         return
 
     # The command used was something like:
     #     py [...] -m ideas [...] source
+    # or
+    #     py [...] -m ideas [...] -m or --run_as_main source
     # All that is left is figuring out how to run the source provided
-    # which is meant to be the module __main__ instead of `ideas` itself
+
+    if args.source:
+        current_state.source_argument = args.source
+    if args.run_as_main:
+        current_state.run_as_main_argument = args.run_as_main
 
     if not ideas_does_something and (sys.flags.interactive or args.i):
         if args.run_as_main:
@@ -177,8 +182,6 @@ def main() -> None:
             source_dict = runpy.run_module(args.source)
         return
 
-    if args.run_as_main:
-        current_state.source_argument = args.source
     try:
         module = import_module(args.source)
     except ModuleNotFoundError as exc:
@@ -194,8 +197,6 @@ def main() -> None:
             )
             return
         raise
-    finally:
-        current_state.source_argument = None
 
     if sys.flags.interactive or args.i:
         console.start(

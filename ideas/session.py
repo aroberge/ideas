@@ -26,10 +26,13 @@ class State:
         self.hooks = []
         # The following is the source argument passed to __main__.py
         self.source_argument = None  # py [...] -m ideas [...] source_argument
-        self.main_file_name = None  # ... source_argument.filename.py
-        self.main_module = None  # ... source_argument -> main_module
+        self.run_as_main_argument = False
 
     def get_hook_by_name(self, name):
+        """Finds a previously imported hook based on its name.
+
+        If it is one of the included examples, the name can be written
+        as 'module_name' to be equivalent to 'ideas.examples.module_name'."""
         for hook in self.hooks:
             if hook.name == name:
                 return hook
@@ -42,7 +45,8 @@ class State:
         if self.verbose:
             print(f"Did not find a hook named {name}.")
 
-    def add_hook(self, hook):
+    def _add_hook(self, hook):
+        """Adds a created IdeasHook instance to the current list."""
         # TODO: check to see if a hook by that name already exists. If so,
         # append the new one but disable it before, and print an error message.
         assert isinstance(hook, IdeasHook)
@@ -50,11 +54,23 @@ class State:
         if self.verbose:
             print(f"Added hook {hook.name}")
 
-    def remove_hook(self, hook):
-        if isinstance(hook, str):
-            hook = self.get_hook_by_name(hook)
+    def remove_hook(self, name_or_hook):
+        """Removes completely a given import hook, either by its name
+        or by the an IdeasHook instance.
+
+        Since many of the import hooks are found in the ideas.examples directory
+        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        """
+        if isinstance(name_or_hook, str):
+            hook = self.get_hook_by_name(name_or_hook)
             if hook is None:
+                print(f"ERROR: {name_or_hook} not found.")
                 return
+        elif not isinstance(name_or_hook, IdeasHook):
+            print(f"ERROR: {name_or_hook} not found.")
+            return
+        else:
+            hook = name_or_hook
 
         if hook.meta_path_finder not in sys.meta_path:
             print(f"ERROR: {hook} not found in sys.meta_path")
@@ -66,60 +82,64 @@ class State:
         """Lists the import hooks that have been activated together
         with their status (currently enabled or not).
         """
+        if not self.hooks:
+            print("No imported hook.")
+            return
         for hook in self.hooks:
-            print(f"  {hook.name} ; enabled: {hook.enabled}")
+            enabled = "enabled" if hook.enabled else "disabled"
+            print(f"  {hook.name}: {enabled}")
 
-    def disable_hook(self, name):
-        """Disable a given import hook. Use name="*" as a shortcut for
-        disabling all hooks.
+    def disable_hook(self, name_or_hook):
+        """Disables a given import hook, either by its name or by the IdeasHook
+        instance. Use name_or_hook="*" as a shortcut for disabling all hooks.
 
         Since many of the import hooks are found in the ideas.examples directory
         one can use "module_name" as an abbreviation of "ideas.examples.module_name".
         """
-        if name == "*":
+        if name_or_hook == "*":
             for hook in self.hooks:
                 hook.enabled = False
             return
 
         potential_hook = None
         for hook in self.hooks:
-            if hook.name == name:
+            if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = False
                 return
-            elif hook.name == "ideas.examples." + name:
+            elif hook.name == "ideas.examples." + name_or_hook:
                 potential_hook = hook
         else:
             if potential_hook is not None:
                 potential_hook.enabled = False
                 return
-            print(f"Could not find hook {name}. Here are the known hooks:")
-            self.list_hooks()
+        print(f"Could not find hook {name_or_hook}. Here are the known hooks:")
+        self.list_hooks()
 
-    def enable_hook(self, name):
-        """Enable a given import hook. Use name="*" as a shortcut for
-        Enabling all hooks.
+    def enable_hook(self, name_or_hook):
+        """Enables a given import hook, either by its name or by the IdeasHook
+        instance. Use name_or_hook="*" as a shortcut for disabling all hooks.
 
         Since many of the import hooks are found in the ideas.examples directory
         one can use "module_name" as an abbreviation of "ideas.examples.module_name".
         """
-        if name == "*":
+        if name_or_hook == "*":
             for hook in self.hooks:
                 hook.enabled = True
             return
 
         potential_hook = None
         for hook in self.hooks:
-            if hook.name == name:
+            if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = True
                 return
-            elif hook.name == "ideas.examples." + name:
+            elif hook.name == "ideas.examples." + name_or_hook:
                 potential_hook = hook
         else:
             if potential_hook is not None:
                 potential_hook.enabled = True
                 return
-            print(f"Could not find hook {name}. Here are the known hooks:")
-            self.list_hooks()
+        print(f"Could not find hook {name_or_hook}. Here are the known hooks:")
+        self.list_hooks()
 
     def print_original(self, source, header="Original"):
         """Depending on configuration, can print the original source
