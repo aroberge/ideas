@@ -85,9 +85,15 @@ def transform_source(source, **_kwargs):
         return source
 
     new_tokens = []
-    for token, next_ in zip(tokens, tokens[1:]):
-        if token.is_integer() and next_ == "/":
+    second_is_int = False
+    for token, next_, second in zip(tokens, tokens[1:], tokens[2:]):
+        if token.is_integer() and second_is_int:
             token.string = f"Fraction({token.string})"
+            second_is_int = False
+        elif token.is_integer() and next_ == "/":
+            token.string = f"Fraction({token.string})"
+            if second.is_integer():
+                second_is_int = True
         new_tokens.append(token)
     new_tokens.append(next_)  # noqa
 
