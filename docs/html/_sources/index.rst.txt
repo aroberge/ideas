@@ -96,6 +96,7 @@ Quick links to topics
     Additional motivation <motivation>
     Usage  <usage>
     Create your own import hook <function_keyword>
+    Improving function as a keyword <function>
     A deep dive <possible>
 
     Guide to the examples <guide>
@@ -114,6 +115,12 @@ Quick links to topics
     Switch statement <switch>
     Implicit multiplication <implicit_multiplication>
     Unnormalized unicode <unnormalized_unicode>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Custom parsing
+
+    Polish expressions <polish_expr>
 
 .. toctree::
    :maxdepth: 1

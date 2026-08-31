@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.examples.fractions_ast &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>ideas.examples.fractions_ast &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -26,14 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,25 +45,49 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html#ideas.examples.nobreak.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html#ideas.examples.nobreak.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../unnormalized_unicode.html"> Unnormalized unicode</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html">Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.FractionWrapper"><code class="docutils literal notranslate"><span class="pre">FractionWrapper</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.transform_ast"><code class="docutils literal notranslate"><span class="pre">transform_ast()</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
 <ul>
@@ -80,8 +106,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> </a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../console.html"> console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 
         </div>
@@ -97,9 +130,9 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>ideas.examples.fractions_ast</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ideas.examples.fractions_ast</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -109,7 +142,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ideas.examples.fractions_ast</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">.. admonition:: Summary</span>
 
 <span class="sd">    - Demonstrates how to use an import hook that does an AST transformation</span>
@@ -139,7 +172,7 @@
 <span class="sd">This is quite surprising for beginners, not familiar with the</span>
 <span class="sd">limitations of representing floating point numbers.</span>
 
-<span class="sd">However, we can &quot;fix&quot; this using an import hook that performs</span>
+<span class="sd">However, we can "fix" this using an import hook that performs</span>
 <span class="sd">and Abstract Syntax Tree (AST) transformation::</span>
 
 
@@ -175,20 +208,37 @@
 <span class="sd">    new: x = Fraction(1, 10)</span>
 
 <span class="sd">    ideas&gt;</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">ast</span>
+<span class="sd">"""</span>
 
-<span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">import_hook</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_hook</span>
 
 
-<div class="viewcode-block" id="FractionWrapper"><a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.FractionWrapper">[docs]</a><span class="k">class</span> <span class="nc">FractionWrapper</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrap all int divisions in a call to Fractions.</span>
+<div class="viewcode-block" id="FractionWrapper">
+<a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.FractionWrapper">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FractionWrapper</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Wrap all int divisions in a call to Fractions.</span>
 
-<span class="sd">    Adapted from https://github.com/diofant/diofant&quot;&quot;&quot;</span>
+<span class="sd">    Adapted from https://github.com/diofant/diofant"""</span>
 
-    <span class="k">def</span> <span class="nf">visit_BinOp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">is_integer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Num</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="FractionWrapper.visit_BinOp">
+<a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.FractionWrapper.visit_BinOp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">visit_BinOp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_integer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">minor</span> <span class="o">&lt;=</span> <span class="mi">11</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Num</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="c1"># Python version change</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">minor</span> <span class="o">&gt;</span> <span class="mi">11</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">UnaryOp</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">USub</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">UAdd</span><span class="p">)):</span>
                 <span class="k">return</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
@@ -203,43 +253,58 @@
             <span class="n">is_integer</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">]</span>
         <span class="p">):</span>
             <span class="k">return</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span>
-                <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">()),</span>
+                <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"Fraction"</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">()),</span>
                 <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">],</span>
                 <span class="n">keywords</span><span class="o">=</span><span class="p">[],</span>
-                <span class="n">starargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="c1"># starargs=None,</span>
+                <span class="c1"># kwargs=None,</span>
             <span class="p">)</span>
         <span class="c1"># IPython requires transformations that return a single node</span>
-        <span class="c1"># whereas ideas works with entire trees.</span>
+        <span class="c1"># whereas ideas works with entire trees. We can check if iPython we</span>
+        <span class="c1"># are running iPython using __IPYTHON__</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">get_python</span><span class="p">()</span>  <span class="c1"># noqa</span>
-            <span class="k">return</span> <span class="n">node</span>
+            <span class="n">__IPYTHON__</span>  <span class="c1"># noqa</span>
         <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+</div>
 
 
-<div class="viewcode-block" id="transform_ast"><a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.transform_ast">[docs]</a><span class="k">def</span> <span class="nf">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Transforms the Abstract Syntax Tree or a single node&quot;&quot;&quot;</span>
+
+<span class="n">ipython_ast_node_transformer</span> <span class="o">=</span> <span class="n">FractionWrapper</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="transform_ast">
+<a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.transform_ast">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Transforms the Abstract Syntax Tree or a single node"""</span>
     <span class="n">tree_or_node</span> <span class="o">=</span> <span class="n">FractionWrapper</span><span class="p">()</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
     <span class="n">ast</span><span class="o">.</span><span class="n">fix_missing_locations</span><span class="p">(</span><span class="n">tree_or_node</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree_or_node</span></div>
 
 
-<div class="viewcode-block" id="source_init"><a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.source_init">[docs]</a><span class="k">def</span> <span class="nf">source_init</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Adds required import so that ``Fraction`` is a known object.&quot;&quot;&quot;</span>
-    <span class="n">import_fraction</span> <span class="o">=</span> <span class="s2">&quot;from fractions import Fraction</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<div class="viewcode-block" id="source_init">
+<a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.source_init">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">source_init</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Adds required import so that ``Fraction`` is a known object."""</span>
+    <span class="n">import_fraction</span> <span class="o">=</span> <span class="s2">"from fractions import Fraction</span><span class="se">\n</span><span class="s2">"</span>
     <span class="k">return</span> <span class="n">import_fraction</span></div>
 
 
-<div class="viewcode-block" id="add_hook"><a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.add_hook">[docs]</a><span class="k">def</span> <span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates and automatically adds the import hook in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
-        <span class="n">hook_name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+
+<div class="viewcode-block" id="add_hook">
+<a class="viewcode-back" href="../../../fractional_math_ast.html#ideas.examples.fractions_ast.add_hook">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Creates and automatically adds the import hook in sys.meta_path"""</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
         <span class="n">source_init</span><span class="o">=</span><span class="n">source_init</span><span class="p">,</span>
         <span class="n">transform_ast</span><span class="o">=</span><span class="n">transform_ast</span><span class="p">,</span>
-        <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="n">FractionWrapper</span><span class="p">(),</span>
+        <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="n">ipython_ast_node_transformer</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span></div>
+
 </pre></div>
 
            </div>
@@ -249,7 +314,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

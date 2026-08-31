@@ -117,4 +117,3 @@ This can be done with the ``implicit_multiplication`` import hook.
     12
 
 .. automodule:: ideas.examples.implicit_multiplication
-   :members:

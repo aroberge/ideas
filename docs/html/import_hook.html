@@ -1,22 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>import_hook.py &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>import_hook.py &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -61,6 +64,10 @@
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -100,8 +107,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>import_hook.py</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">import_hook.py</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/import_hook.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -114,134 +121,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<span class="target" id="module-ideas.import_hook"></span><section id="import-hook-py">
-<h1>import_hook.py<a class="headerlink" href="#import-hook-py" title="Permalink to this headline"></a></h1>
+  <section id="import-hook-py">
+<span id="module-ideas.import_hook"></span><h1>import_hook.py<a class="headerlink" href="#import-hook-py" title="Link to this heading"></a></h1>
 <p>This module contains the core functions required to create an import hook.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="ideas.import_hook.IdeasLoader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">IdeasLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader" title="Permalink to this definition"></a></dt>
-<dd><p>A custom loader which will transform the source prior to its execution</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.import_hook.IdeasLoader.create_module">
-<span class="sig-name descname"><span class="pre">create_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader.create_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader.create_module" title="Permalink to this definition"></a></dt>
-<dd><p>Potential replacement for the default create_module method.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.import_hook.IdeasLoader.exec_module">
-<span class="sig-name descname"><span class="pre">exec_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasLoader.exec_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasLoader.exec_module" title="Permalink to this definition"></a></dt>
-<dd><p>Import the source code, transform it before executing it so that
-it is known to Python.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="ideas.import_hook.IdeasMetaFinder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">IdeasMetaFinder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excluded_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder" title="Permalink to this definition"></a></dt>
-<dd><p>A custom finder to locate modules. The main reason for this code
-is to ensure that our custom loader, which does the code transformations,
-is used.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.import_hook.IdeasMetaFinder.find_spec">
-<span class="sig-name descname"><span class="pre">find_spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fullname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#IdeasMetaFinder.find_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.IdeasMetaFinder.find_spec" title="Permalink to this definition"></a></dt>
-<dd><p>finds the appropriate properties (spec) of a module, and sets
-its loader.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.import_hook.create_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">create_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">console_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.create_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Function to facilitate the creation of an import hook.</p>
-<p>Each of the following parameter is optional; most of these are
-never needed except in some unusual import hooks.</p>
-<p>Usually, at least one of <code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>, <code class="docutils literal notranslate"><span class="pre">transform_bytecode</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> should be specified.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">callback_params</span></code>: a dict containing keyword parameters
-to be passed back to the <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> function.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">create_module</span></code>: a custom function to create a module object
-instead of using Python’s default.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">console_dict</span></code>: a dict object used as ‘locals’ with the Ideas console,
-instead of its usual default.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">exec_</span></code>: a custom method used to execute the source code inside
-a module’s dict.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">extensions</span></code>: a list of file extensions, other than the usual <cite>.py</cite>, etc.,
-used to identify modules containing source code.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">first</span></code>: if <code class="docutils literal notranslate"><span class="pre">True</span></code>, the custom hook will be used as the first
-location in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>, to look for source files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hook_name</span></code>: used to give a more readable <code class="docutils literal notranslate"><span class="pre">repr</span></code> to the hook created.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ipython_ast_node_transformer</span></code>: used to do AST transformations in an
-IPython/Jupyter environment. It should be a class derived from
-<code class="docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code> and return a <code class="docutils literal notranslate"><span class="pre">node</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">module_class</span></code>: custom class to use for the module created instead of
-the default one assigned by Python.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">source_init</span></code>: custom code to be executed before any code from
-a user is executed. For example, if one creates an import hook that
-treats every <code class="docutils literal notranslate"><span class="pre">float</span></code> as a <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> object, this custom code
-could be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
-</pre></div>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>: used to do AST transformations in a Python
-environment (excluding IPython/Jupyter).  It should be a class
-derived from <code class="docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code>, eventually returning a
-tree object.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">transform_bytecode</span></code>: used to mutate a code object.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">transform_source</span></code>: used to transform some source code prior
-to execution.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.import_hook.make_ipython_ast_node_transformer">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">make_ipython_ast_node_transformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#make_ipython_ast_node_transformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.make_ipython_ast_node_transformer" title="Permalink to this definition"></a></dt>
-<dd><p>Takes an AST transformer designed to work with IPython,
-and wraps it to add a warning in case the user would like to
-see how the code is actually transformed, since this is not
-possible when using IPython.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.import_hook.make_ipython_source_transformer">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">make_ipython_source_transformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transform_source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#make_ipython_source_transformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.make_ipython_source_transformer" title="Permalink to this definition"></a></dt>
-<dd><p>Takes a source transform and makes returns an IPython compatible
-source transformer.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.import_hook.remove_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">remove_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hook</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#remove_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.import_hook.remove_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Function used to remove a previously imported hook inserted in sys.meta_path</p>
-</dd></dl>
-
 </section>
 
 
@@ -255,7 +137,7 @@ source transformer.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

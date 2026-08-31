@@ -1,22 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,14 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> ideas
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -60,6 +65,10 @@
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -99,8 +108,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Ideas: making it easier to extend Python’s syntax</li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ideas: making it easier to extend Python’s syntax</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -112,34 +121,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="ideas-making-it-easier-to-extend-python-s-syntax">
-<h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Permalink to this headline"></a></h1>
+  <section id="ideas-making-it-easier-to-extend-python-s-syntax">
+<h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Link to this heading"></a></h1>
 <p><a class="reference external" href="https://github.com/aroberge/ideas">Code on Github</a></p>
-<a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" /></a>
+<a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" />
+</a>
 <p>You have an <strong>Excellent Idea</strong> ® to change the Python syntax and want
 to find a way to include your
 <strong>Excellent Idea</strong> ®  in your Python programs.
@@ -164,14 +150,14 @@ to share your work with others so that they can try it out.</p>
 modified syntax using import hooks [<em>or, in some cases as shown later,
 using a custom codec</em>.]</p>
 <section id="what-is-an-import-hook">
-<h2>What is an import hook<a class="headerlink" href="#what-is-an-import-hook" title="Permalink to this headline"></a></h2>
+<h2>What is an import hook<a class="headerlink" href="#what-is-an-import-hook" title="Link to this heading"></a></h2>
 <aside class="sidebar">
 <p class="sidebar-title">Skipping over details.</p>
 <p>This is a simplified description. A more detailed explanation will
 be given later.</p>
 </aside>
 <p>When you write something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">my_module</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">my_module</span>
 </pre></div>
 </div>
 <p>Python’s import machinery has to do the following:</p>
@@ -218,12 +204,13 @@ is not recommended for production code.</p>
 </div>
 </section>
 <section id="quick-links-to-topics">
-<h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Permalink to this headline"></a></h2>
+<h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -241,6 +228,12 @@ is not recommended for production code.</p>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -279,12 +272,7 @@ is not recommended for production code.</p>
 </div>
 </section>
 <section id="to-do">
-<h2>To do<a class="headerlink" href="#to-do" title="Permalink to this headline"></a></h2>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
-<p>Try to create a different module object.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\constants.rst, line 123.)</p>
+<h2>To do<a class="headerlink" href="#to-do" title="Link to this heading"></a></h2>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p><strong>Add these examples</strong></p>
@@ -296,6 +284,11 @@ is not recommended for production code.</p>
 <p>etc.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="excluded.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\excluded.rst, line 26.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Try to create a different module object.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\constants.rst, line 123.)</p>
 </section>
 </section>
 
@@ -309,7 +302,7 @@ is not recommended for production code.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

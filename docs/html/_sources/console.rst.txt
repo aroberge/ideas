@@ -1,3 +1,3 @@
 
 .. automodule:: ideas.console
-   :members:
+

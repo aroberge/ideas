@@ -18,6 +18,8 @@ from . import session
 from . import utils
 from .ideas_hook import IdeasHook
 
+from ideas import current_state
+
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
@@ -99,7 +101,6 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
                     source_init=self.ideas_hook.source_init,
                     transform_ast=self.ideas_hook.transform_ast,
                     transform_bytecode=self.ideas_hook.transform_bytecode,
-                    transform_source=self.ideas_hook.transform_source,
                     parse_source=self.ideas_hook.parse_source,
                 ),
             )
@@ -120,7 +121,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         source_init=None,
         transform_ast=None,
         transform_bytecode=None,
-        transform_source=None,
         parse_source=None,
     ):  # pylint: disable=R0913
         self.filename = filename
@@ -132,7 +132,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         self.source_init = source_init
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
-        self.transform_source = transform_source
         self.parse_source = parse_source
 
     def create_module(self, spec):
@@ -160,13 +159,12 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         source = decode_source(encoded_source)
         original_source = source
 
-        if self.transform_source is not None:
-            source = self.transform_source(
-                source,
-                filename=self.filename,
-                module=module,
-                callback_params=self.callback_params,
-            )
+        source = current_state.source_transforms(
+            source,
+            filename=self.filename,
+            module=module,
+            callback_params=self.callback_params,
+        )
 
         if session.current_state.show_changes and original_source != source:
             utils.print_source(original_source, header="Original")
@@ -317,7 +315,6 @@ def create_hook(
         source_init=source_init,
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
-        transform_source=transform_source,
         parse_source=parse_source,
     )
 

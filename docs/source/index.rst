@@ -96,6 +96,7 @@ Quick links to topics
     Additional motivation <motivation>
     Usage  <usage>
     Create your own import hook <function_keyword>
+    Improving function as a keyword <function>
     A deep dive <possible>
 
     Guide to the examples <guide>

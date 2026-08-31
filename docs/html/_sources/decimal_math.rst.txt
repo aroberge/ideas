@@ -112,4 +112,3 @@ You can now invoke your module doing the following::
 
 
 .. automodule:: ideas.examples.decimal_math
-   :members:

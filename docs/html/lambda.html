@@ -1,22 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>λ encoding &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>λ encoding &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -61,6 +64,10 @@
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -104,8 +111,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>λ encoding</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">λ encoding</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/lambda.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,32 +125,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="encoding">
-<h1>λ encoding<a class="headerlink" href="#encoding" title="Permalink to this headline"></a></h1>
+  <section id="encoding">
+<h1>λ encoding<a class="headerlink" href="#encoding" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>Using a custom codec instead of an import hook.</p>
@@ -163,10 +146,10 @@ in this case, we use <code class="docutils literal notranslate"><span class="pre
 
 <span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using lambda-encoding: λ&quot;</span><span class="p">)</span>  <span class="c1"># λ is not converted inside strings</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using lambda-encoding: λ"</span><span class="p">)</span>  <span class="c1"># λ is not converted inside strings</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The square of 5 is&quot;</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"The square of 5 is"</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Before we can do this, we need to make Python aware of the existence
@@ -174,9 +157,9 @@ of our custom encoding. This can be done by having the following
 program:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># usercustomize.py</span>
 
-<span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">lambda_codec</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>  <span class="c1"># noqa</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --&gt; usercustomize.py was executed&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"  --&gt; usercustomize.py was executed"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>By setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> to a directory where a program named
@@ -195,8 +178,8 @@ The square of 5 is 25
 </pre></div>
 </div>
 <p>We can also use the <strong>ideas</strong> console and have our special encoding be used.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">lambda_codec</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
 <span class="go">    transform_source from ideas.examples.lambda_codec</span>
@@ -208,22 +191,15 @@ The square of 5 is 25
 <span class="go">9</span>
 </pre></div>
 </div>
-<span class="target" id="module-ideas.examples.lambda_codec"></span><section id="lambda-codec-py">
-<h2>lambda_codec.py<a class="headerlink" href="#lambda-codec-py" title="Permalink to this headline"></a></h2>
+<section id="lambda-codec-py">
+<span id="module-ideas.examples.lambda_codec"></span><h2>lambda_codec.py<a class="headerlink" href="#lambda-codec-py" title="Link to this heading"></a></h2>
 <p>This codec replaces any Python identifier (token) represented by the
 single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
 the Python keyword.</p>
 <p>The source is assumed to be actually encoded in utf-8.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.lambda_codec.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.lambda_codec.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/lambda_codec.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.lambda_codec.transform_source" title="Permalink to this definition"></a></dt>
-<dd><p>Simple transformation: replaces any single token λ by lambda.</p>
-<p>By defining this function, we can also make use of Ideas’ console.</p>
-</dd></dl>
-
 </section>
-<span class="target" id="module-ideas.custom_encoding"></span><section id="lambda-encoding-py">
-<h2>lambda_encoding.py<a class="headerlink" href="#lambda-encoding-py" title="Permalink to this headline"></a></h2>
+<section id="lambda-encoding-py">
+<span id="module-ideas.custom_encoding"></span><h2>lambda_encoding.py<a class="headerlink" href="#lambda-encoding-py" title="Link to this heading"></a></h2>
 <p>This codec replaces any Python identifier (token) represented by the
 single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
 the Python keyword.</p>
@@ -242,7 +218,7 @@ the Python keyword.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

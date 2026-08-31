@@ -174,5 +174,20 @@ class State:
             print(source)
             print("-----------------------------")
 
+    def source_transforms(
+        self, source, filename=None, module=None, callback_params=None
+    ):
+        for hook in self.hooks:
+            if hook.enabled and hook.transform_source is not None:
+                print(f"Transforming from module {hook.name}")
+                source = hook.transform_source(
+                    source,
+                    filename=filename,
+                    module=module,
+                    callback_params=callback_params,
+                )
+
+        return source
+
 
 current_state = State()

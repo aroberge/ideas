@@ -1,27 +1,28 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A deep dive &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>A deep dive &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Guide to the examples" href="guide.html" />
-    <link rel="prev" title="Create your first import hook" href="function_keyword.html" /> 
+    <link rel="prev" title="Improving function as a keyword" href="function.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> A deep dive</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#using-ideas">Using Ideas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#options-to-create-a-custom-hook">Options to create a custom hook</a></li>
@@ -57,15 +60,32 @@
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -88,8 +108,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 
         </div>
@@ -105,13 +132,13 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>A deep dive</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">A deep dive</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/possible.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="function_keyword.html" class="btn btn-neutral float-left" title="Create your first import hook" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="function.html" class="btn btn-neutral float-left" title="Improving function as a keyword" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="guide.html" class="btn btn-neutral float-right" title="Guide to the examples" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
@@ -119,32 +146,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="a-deep-dive">
-<h1>A deep dive<a class="headerlink" href="#a-deep-dive" title="Permalink to this headline"></a></h1>
+  <section id="a-deep-dive">
+<h1>A deep dive<a class="headerlink" href="#a-deep-dive" title="Link to this heading"></a></h1>
 <p>In Python, an import hook has two main components:</p>
 <blockquote>
 <div><ul class="simple">
@@ -160,7 +163,7 @@ an returns a module object.</p></li>
 These can be broken down further as follows.</p>
 <img alt="Import hook details" class="align-center" src="_images/import_hook2.png" />
 <section id="using-ideas">
-<h2>Using Ideas<a class="headerlink" href="#using-ideas" title="Permalink to this headline"></a></h2>
+<h2>Using Ideas<a class="headerlink" href="#using-ideas" title="Link to this heading"></a></h2>
 <p>Normally, for creating import hooks and as shown above,
 it is important to distinguish
 the two main phases, that is creating a <code class="docutils literal notranslate"><span class="pre">Finder</span></code> and a <code class="docutils literal notranslate"><span class="pre">Loader</span></code>.
@@ -182,15 +185,17 @@ should be added.</p></li>
 <img alt="ideas import hook possibilities" class="align-center" src="_images/import_hook3.png" />
 </section>
 <section id="options-to-create-a-custom-hook">
-<h2>Options to create a custom hook<a class="headerlink" href="#options-to-create-a-custom-hook" title="Permalink to this headline"></a></h2>
+<h2>Options to create a custom hook<a class="headerlink" href="#options-to-create-a-custom-hook" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py">
-<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">create_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">console_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exec_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ipython_ast_node_transformer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_ast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_bytecode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">ideas.import_hook.</span></span><span class="sig-name descname"><span class="pre">create_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">callback_params:</span> <span class="pre">~typing.Dict[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">create_module:</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">~types.ModuleType]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">console_dict:</span> <span class="pre">~typing.Dict[str,</span> <span class="pre">~typing.Any]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">exec_:</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">None]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">extensions:</span> <span class="pre">~typing.Sequence[str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">excluded_paths:</span> <span class="pre">~typing.Sequence[str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;object</span> <span class="pre">object&gt;,</span> <span class="pre">first:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">ipython_ast_node_transformer:</span> <span class="pre">~ast.NodeTransformer</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">module_class:</span> <span class="pre">type</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">source_init:</span> <span class="pre">~typing.Callable[[],</span> <span class="pre">str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">transform_ast:</span> <span class="pre">~typing.Callable[[~ast.AST],</span> <span class="pre">~ast.AST]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">transform_bytecode:</span> <span class="pre">~typing.Callable[[~types.CodeType],</span> <span class="pre">~types.CodeType]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">transform_source:</span> <span class="pre">~typing.Callable[[str],</span> <span class="pre">str]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">parse_source:</span> <span class="pre">~typing.Callable[[str,</span> <span class="pre">str,</span> <span class="pre">str],</span> <span class="pre">~ast.AST</span> <span class="pre">|</span> <span class="pre">None]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IdeasHook</span></span></span><a class="reference internal" href="_modules/ideas/import_hook.html#create_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Function to facilitate the creation of an import hook.</p>
+<p><code class="docutils literal notranslate"><span class="pre">name</span></code>: required parameter which must be the <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of
+the module in which the import hook is defined.</p>
 <p>Each of the following parameter is optional; most of these are
 never needed except in some unusual import hooks.</p>
-<p>Usually, at least one of <code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>, <code class="docutils literal notranslate"><span class="pre">transform_bytecode</span></code>,
-and <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> should be specified.</p>
+<p>Usually, at least one of <code class="docutils literal notranslate"><span class="pre">transform_ast</span></code>, <code class="docutils literal notranslate"><span class="pre">transform_bytecode``s,</span>
+<span class="pre">and</span> <span class="pre">``transform_source</span></code> should be specified.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">callback_params</span></code>: a dict containing keyword parameters
 to be passed back to the <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> function.</p></li>
@@ -202,9 +207,11 @@ instead of its usual default.</p></li>
 a module’s dict.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">extensions</span></code>: a list of file extensions, other than the usual <cite>.py</cite>, etc.,
 used to identify modules containing source code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">excluded_paths</span></code>: a list of paths to be excluded for consideration.
+If not specified, excluded paths include the location of the standard
+library, the site packages, as well as files from this project.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">first</span></code>: if <code class="docutils literal notranslate"><span class="pre">True</span></code>, the custom hook will be used as the first
 location in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>, to look for source files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hook_name</span></code>: used to give a more readable <code class="docutils literal notranslate"><span class="pre">repr</span></code> to the hook created.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ipython_ast_node_transformer</span></code>: used to do AST transformations in an
 IPython/Jupyter environment. It should be a class derived from
 <code class="docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code> and return a <code class="docutils literal notranslate"><span class="pre">node</span></code>.</p></li>
@@ -214,7 +221,7 @@ the default one assigned by Python.</p></li>
 a user is executed. For example, if one creates an import hook that
 treats every <code class="docutils literal notranslate"><span class="pre">float</span></code> as a <code class="docutils literal notranslate"><span class="pre">Decimal</span></code> object, this custom code
 could be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 </pre></div>
 </div>
 </li>
@@ -226,11 +233,12 @@ tree object.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transform_source</span></code>: used to transform some source code prior
 to execution.</p></li>
 </ul>
+<p>Returns: an IdeasHook instance.</p>
 </dd></dl>
 
 </section>
 <section id="about-decode">
-<h2>About Decode<a class="headerlink" href="#about-decode" title="Permalink to this headline"></a></h2>
+<h2>About Decode<a class="headerlink" href="#about-decode" title="Link to this heading"></a></h2>
 <p>In the last diagram shown above, there is a block labeled ‘Decode’.
 Changing the way that Python processes code during this phase
 does not require the creation of an import hook; instead,
@@ -243,14 +251,14 @@ it requires the use of a custom codec.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="function_keyword.html" class="btn btn-neutral float-left" title="Create your first import hook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="function.html" class="btn btn-neutral float-left" title="Improving function as a keyword" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="guide.html" class="btn btn-neutral float-right" title="Guide to the examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

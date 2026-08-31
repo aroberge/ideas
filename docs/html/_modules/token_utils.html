@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>token_utils &mdash; ideas 0.0.34 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>token_utils &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -26,14 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.34
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,21 +45,41 @@
 <li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nobreak.html#ideas.examples.nobreak.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nobreak.html#ideas.examples.nobreak.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decimal_math.html"> Decimal math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -80,8 +102,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
-<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 
         </div>
@@ -97,9 +126,9 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Module code</a> &raquo;</li>
-      <li>token_utils</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">token_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -109,24 +138,26 @@
            <div itemprop="articleBody">
              
   <h1>Source code for token_utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;token_utils.py</span>
+<span></span><span class="sd">"""token_utils.py</span>
 <span class="sd">------------------</span>
 
 <span class="sd">A collection of useful functions and methods to deal with tokenizing</span>
 <span class="sd">source code.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">keyword</span>
-<span class="kn">import</span> <span class="nn">tokenize</span> <span class="k">as</span> <span class="nn">py_tokenize</span>
+<span class="sd">"""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">keyword</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tokenize</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">py_tokenize</span>
 
-<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringIO</span>
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1.8&quot;</span>
-<span class="n">_token_format</span> <span class="o">=</span> <span class="s2">&quot;type=</span><span class="si">{type}</span><span class="s2">  string=</span><span class="si">{string}</span><span class="s2">  start=</span><span class="si">{start}</span><span class="s2">  end=</span><span class="si">{end}</span><span class="s2">  line=</span><span class="si">{line}</span><span class="s2">&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">"0.1.8"</span>
+<span class="n">_token_format</span> <span class="o">=</span> <span class="s2">"type=</span><span class="si">{type}</span><span class="s2">  string=</span><span class="si">{string}</span><span class="s2">  start=</span><span class="si">{start}</span><span class="s2">  end=</span><span class="si">{end}</span><span class="s2">  line=</span><span class="si">{line}</span><span class="s2">"</span>
 
 
-<div class="viewcode-block" id="Token"><a class="viewcode-back" href="../tokenize.html#token_utils.Token">[docs]</a><span class="k">class</span> <span class="nc">Token</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Token as generated from Python&#39;s tokenize.generate_tokens written here in</span>
+<div class="viewcode-block" id="Token">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Token</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Token as generated from Python's tokenize.generate_tokens written here in</span>
 <span class="sd">    a more convenient form, and with some custom methods.</span>
 
 <span class="sd">    The various parameters are::</span>
@@ -138,95 +169,121 @@
 <span class="sd">        line: entire line of code where the token is found.</span>
 
 <span class="sd">    Token instances are mutable objects. Therefore, given a list of tokens,</span>
-<span class="sd">    we can change the value of any token&#39;s attribute, untokenize the list and</span>
+<span class="sd">    we can change the value of any token's attribute, untokenize the list and</span>
 <span class="sd">    automatically obtain a transformed source.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_col</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">token</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Compares a Token with another object; returns true if</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Compares a Token with another object; returns true if</span>
 <span class="sd">        self.string == other.string or if self.string == other.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">):</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">"string"</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">string</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">other</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s2">&quot;A token can only be compared to another token or to a string.&quot;</span>
+                <span class="s2">"A token can only be compared to another token or to a string."</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Nicely formatted token to help with debugging session.</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Nicely formatted token to help with debugging session.</span>
 
 <span class="sd">        Note that it does **not** print a string representation that could be</span>
 <span class="sd">        used to create a new ``Token`` instance, which is something you should</span>
 <span class="sd">        never need to do other than indirectly by using the functions</span>
 <span class="sd">        provided in this module.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">_token_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">tok_name</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]),</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)"</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">tok_name</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]),</span>
             <span class="n">string</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
             <span class="n">start</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
             <span class="n">end</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">),</span>
             <span class="n">line</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">),</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the string attribute.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns the string attribute."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span>
 
-<div class="viewcode-block" id="Token.is_comment"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_comment">[docs]</a>    <span class="k">def</span> <span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a comment.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Token.is_comment">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token is a comment."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">COMMENT</span></div>
 
-<div class="viewcode-block" id="Token.is_identifier"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_identifier">[docs]</a>    <span class="k">def</span> <span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns ``True`` if the token represents a valid Python identifier</span>
+
+<div class="viewcode-block" id="Token.is_identifier">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_identifier">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns ``True`` if the token represents a valid Python identifier</span>
 <span class="sd">        excluding Python keywords.</span>
 
-<span class="sd">        Note: this is different from Python&#39;s string method ``isidentifier``</span>
+<span class="sd">        Note: this is different from Python's string method ``isidentifier``</span>
 <span class="sd">        which also returns ``True`` if the string is a keyword.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">isidentifier</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_keyword</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Token.is_name"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_name">[docs]</a>    <span class="k">def</span> <span class="nf">is_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns ``True`` if the token is a type NAME&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_name">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns ``True`` if the token is a type NAME"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">NAME</span></div>
 
-<div class="viewcode-block" id="Token.is_keyword"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_keyword">[docs]</a>    <span class="k">def</span> <span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a Python keyword.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_keyword">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_keyword">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token represents a Python keyword."""</span>
         <span class="k">return</span> <span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Token.is_number"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_number">[docs]</a>    <span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a number&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_number">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_number">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token represents a number"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">NUMBER</span></div>
 
-<div class="viewcode-block" id="Token.is_float"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_float">[docs]</a>    <span class="k">def</span> <span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a float&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_float">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_float">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token represents a float"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span> <span class="nb">float</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Token.is_integer"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_integer">[docs]</a>    <span class="k">def</span> <span class="nf">is_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents an integer&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_integer">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_integer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token represents an integer"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Token.is_complex"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_complex">[docs]</a>    <span class="k">def</span> <span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token represents a complex number&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_complex">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_complex">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token represents a complex number"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">),</span> <span class="nb">complex</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Token.is_space"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_space">[docs]</a>    <span class="k">def</span> <span class="nf">is_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token indicates a change in indentation,</span>
+
+<div class="viewcode-block" id="Token.is_space">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_space">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token indicates a change in indentation,</span>
 <span class="sd">        the end of a line, or the end of the source</span>
 <span class="sd">        (``INDENT``, ``DEDENT``, ``NEWLINE``, ``NL``, and ``ENDMARKER``).</span>
 
 <span class="sd">        Note that spaces, including tab charcters ``\\t``, between tokens</span>
 <span class="sd">        on a given line are not considered to be tokens themselves.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span>
             <span class="n">py_tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span>
             <span class="n">py_tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">,</span>
@@ -235,26 +292,39 @@
             <span class="n">py_tokenize</span><span class="o">.</span><span class="n">ENDMARKER</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Token.is_string"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_string">[docs]</a>    <span class="k">def</span> <span class="nf">is_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the token is a string&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_string">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_string">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the token is a string"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">STRING</span></div>
 
-<div class="viewcode-block" id="Token.is_in"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_in">[docs]</a>    <span class="k">def</span> <span class="nf">is_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the string attribute is found as an item of iterable.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Token.is_in">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_in">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the string attribute is found as an item of iterable."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="n">iterable</span></div>
 
-<div class="viewcode-block" id="Token.is_not_in"><a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_not_in">[docs]</a>    <span class="k">def</span> <span class="nf">is_not_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if the string attribute is found as an item of iterable.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">iterable</span></div></div>
+
+<div class="viewcode-block" id="Token.is_not_in">
+<a class="viewcode-back" href="../tokenize.html#token_utils.Token.is_not_in">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_not_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Returns True if the string attribute is found as an item of iterable."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">iterable</span></div>
+</div>
 
 
-<div class="viewcode-block" id="find_token_by_position"><a class="viewcode-back" href="../tokenize.html#token_utils.find_token_by_position">[docs]</a><span class="k">def</span> <span class="nf">find_token_by_position</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, a specific row (linenumber) and column,</span>
+
+<div class="viewcode-block" id="find_token_by_position">
+<a class="viewcode-back" href="../tokenize.html#token_utils.find_token_by_position">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_token_by_position</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, a specific row (linenumber) and column,</span>
 <span class="sd">    a two-tuple is returned that includes the token</span>
 <span class="sd">    found at that position as well as its list index.</span>
 
 <span class="sd">    If no such token can be found, ``None, None`` is returned.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">tok</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span>
             <span class="n">tok</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&lt;=</span> <span class="n">row</span> <span class="o">&lt;=</span> <span class="n">tok</span><span class="o">.</span><span class="n">end_row</span>
@@ -264,29 +334,35 @@
     <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="fix_empty_line"><a class="viewcode-back" href="../tokenize.html#token_utils.fix_empty_line">[docs]</a><span class="k">def</span> <span class="nf">fix_empty_line</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Python&#39;s tokenizer drops entirely a last line if it consists only of</span>
+
+<div class="viewcode-block" id="fix_empty_line">
+<a class="viewcode-back" href="../tokenize.html#token_utils.fix_empty_line">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fix_empty_line</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Python's tokenizer drops entirely a last line if it consists only of</span>
 <span class="sd">    space characters and/or tab characters.  To ensure that we can always have::</span>
 
 <span class="sd">        untokenize(tokenize(source)) == source</span>
 
 <span class="sd">    we correct the last token content if needed.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">):</span>
             <span class="n">nb</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">break</span>
     <span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="o">-</span><span class="n">nb</span><span class="p">:]</span></div>
 
 
-<div class="viewcode-block" id="tokenize"><a class="viewcode-back" href="../tokenize.html#token_utils.tokenize">[docs]</a><span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">warning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Transforms a source (string) into a list of Tokens.</span>
 
-<span class="sd">    If an exception is raised by Python&#39;s tokenize module, the list of tokens</span>
+<div class="viewcode-block" id="tokenize">
+<a class="viewcode-back" href="../tokenize.html#token_utils.tokenize">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">warning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Transforms a source (string) into a list of Tokens.</span>
+
+<span class="sd">    If an exception is raised by Python's tokenize module, the list of tokens</span>
 <span class="sd">    accumulated up to that point is returned.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -296,22 +372,25 @@
     <span class="k">except</span> <span class="p">(</span><span class="n">py_tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">warning</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;WARNING: the following error was raised in &quot;</span><span class="p">,</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.tokenize&quot;</span><span class="p">,</span>
+                <span class="s2">"WARNING: the following error was raised in "</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.tokenize"</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tokens</span>
 
-    <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)):</span>
         <span class="n">fix_empty_line</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">tokens</span></div>
 
 
-<div class="viewcode-block" id="get_lines"><a class="viewcode-back" href="../tokenize.html#token_utils.get_lines">[docs]</a><span class="k">def</span> <span class="nf">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">warning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Transforms a source (string) into a list of Tokens, with each</span>
+
+<div class="viewcode-block" id="get_lines">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_lines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">warning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Transforms a source (string) into a list of Tokens, with each</span>
 <span class="sd">    (inner) list containing all the tokens found on a given line of code.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">current_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">new_line</span> <span class="o">=</span> <span class="p">[]</span>
@@ -329,25 +408,28 @@
     <span class="k">except</span> <span class="p">(</span><span class="n">py_tokenize</span><span class="o">.</span><span class="n">TokenError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">warning</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;WARNING: the following tokenize error was raised in &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.get_lines&quot;</span>
+                <span class="s2">"WARNING: the following tokenize error was raised in "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.get_lines"</span>
             <span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lines</span>
 
-    <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)):</span>
         <span class="n">fix_empty_line</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">lines</span></div>
 
 
-<div class="viewcode-block" id="get_number"><a class="viewcode-back" href="../tokenize.html#token_utils.get_number">[docs]</a><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, gives a count of the number of</span>
+
+<div class="viewcode-block" id="get_number">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_number">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_number</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, gives a count of the number of</span>
 <span class="sd">    tokens which are not space tokens (such as ``NEWLINE``, ``INDENT``,</span>
 <span class="sd">    ``DEDENT``, etc.)</span>
 
 <span class="sd">    By default, ``COMMMENT`` tokens are not included in the count.</span>
 <span class="sd">    If you wish to include them, set ``exclude_comment`` to ``False``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
@@ -357,8 +439,11 @@
     <span class="k">return</span> <span class="n">nb</span></div>
 
 
-<div class="viewcode-block" id="strip_comment"><a class="viewcode-back" href="../tokenize.html#token_utils.strip_comment">[docs]</a><span class="k">def</span> <span class="nf">strip_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Removes comments from a line&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="strip_comment">
+<a class="viewcode-back" href="../tokenize.html#token_utils.strip_comment">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">strip_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Removes comments from a line"""</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">):</span>
@@ -371,15 +456,18 @@
     <span class="k">return</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_first"><a class="viewcode-back" href="../tokenize.html#token_utils.get_first">[docs]</a><span class="k">def</span> <span class="nf">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the first token which is not a space token</span>
+
+<div class="viewcode-block" id="get_first">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_first">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, find the first token which is not a space token</span>
 <span class="sd">    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,</span>
 <span class="sd">    by default, also not a ``COMMMENT``.</span>
 
 <span class="sd">    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.</span>
 
 <span class="sd">    Returns ``None`` if none is found.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">exclude_comment</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">is_comment</span><span class="p">()):</span>
             <span class="k">continue</span>
@@ -387,14 +475,17 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_first_index"><a class="viewcode-back" href="../tokenize.html#token_utils.get_first_index">[docs]</a><span class="k">def</span> <span class="nf">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the index of the first token which is</span>
+
+<div class="viewcode-block" id="get_first_index">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_first_index">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, find the index of the first token which is</span>
 <span class="sd">    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor</span>
 <span class="sd">    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``</span>
 <span class="sd">    to ``True``.</span>
 
 <span class="sd">    Returns ``None`` if none is found.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">exclude_comment</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">is_comment</span><span class="p">()):</span>
             <span class="k">continue</span>
@@ -402,8 +493,11 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_last"><a class="viewcode-back" href="../tokenize.html#token_utils.get_last">[docs]</a><span class="k">def</span> <span class="nf">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the last token which is not a space token</span>
+
+<div class="viewcode-block" id="get_last">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_last">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_last</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, find the last token which is not a space token</span>
 <span class="sd">    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default,</span>
 <span class="sd">    also not a ``COMMMENT``.</span>
 
@@ -411,18 +505,21 @@
 <span class="sd">    to ``False``.</span>
 
 <span class="sd">    Returns ``None`` if none is found.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">get_first</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="n">exclude_comment</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_last_index"><a class="viewcode-back" href="../tokenize.html#token_utils.get_last_index">[docs]</a><span class="k">def</span> <span class="nf">get_last_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, find the index of the last token which is</span>
+
+<div class="viewcode-block" id="get_last_index">
+<a class="viewcode-back" href="../tokenize.html#token_utils.get_last_index">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_last_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">exclude_comment</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, find the index of the last token which is</span>
 <span class="sd">    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor</span>
 <span class="sd">    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``</span>
 <span class="sd">    to True.</span>
 
 <span class="sd">    Returns ``None`` if none is found.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
         <span class="o">-</span> <span class="mi">1</span>
@@ -430,39 +527,48 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="dedent"><a class="viewcode-back" href="../tokenize.html#token_utils.dedent">[docs]</a><span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, produces an equivalent list corresponding</span>
+
+<div class="viewcode-block" id="dedent">
+<a class="viewcode-back" href="../tokenize.html#token_utils.dedent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, produces an equivalent list corresponding</span>
 <span class="sd">    to a line of code with the first nb characters removed.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">nb</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="indent"><a class="viewcode-back" href="../tokenize.html#token_utils.indent">[docs]</a><span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">tab</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given a list of tokens, produces an equivalent list corresponding</span>
+
+<div class="viewcode-block" id="indent">
+<a class="viewcode-back" href="../tokenize.html#token_utils.indent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">tab</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Given a list of tokens, produces an equivalent list corresponding</span>
 <span class="sd">    to a line of code with nb space characters inserted at the beginning.</span>
 
 <span class="sd">    If ``tab`` is specified to be ``True``, ``nb`` tab characters are inserted</span>
 <span class="sd">    instead of spaces.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">line</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tab</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">"</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s2">" "</span> <span class="o">*</span> <span class="n">nb</span> <span class="o">+</span> <span class="n">line</span>
     <span class="k">return</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="untokenize"><a class="viewcode-back" href="../tokenize.html#token_utils.untokenize">[docs]</a><span class="k">def</span> <span class="nf">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return source code based on tokens.</span>
+
+<div class="viewcode-block" id="untokenize">
+<a class="viewcode-back" href="../tokenize.html#token_utils.untokenize">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">untokenize</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return source code based on tokens.</span>
 
 <span class="sd">    Adapted from https://github.com/myint/untokenize,</span>
 <span class="sd">    Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).</span>
 
-<span class="sd">    This is similar to Python&#39;s own tokenize.untokenize(), except that it</span>
+<span class="sd">    This is similar to Python's own tokenize.untokenize(), except that it</span>
 <span class="sd">    preserves spacing between tokens, by using the line</span>
-<span class="sd">    information recorded by Python&#39;s tokenize.generate_tokens.</span>
+<span class="sd">    information recorded by Python's tokenize.generate_tokens.</span>
 <span class="sd">    As a result, if the original soure code had multiple spaces between</span>
 <span class="sd">    some tokens or if escaped newlines were used or if tab characters</span>
 <span class="sd">    were present in the original source, those will also be present</span>
@@ -475,9 +581,9 @@
 <span class="sd">    Instead of full token object, ``untokenize`` will accept simple</span>
 <span class="sd">    strings; however, it will only insert them *as is* without taking them</span>
 <span class="sd">    into account when it comes with figuring out spacing between tokens.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">previous_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">previous_line</span> <span class="o">=</span> <span class="s2">""</span>
     <span class="n">last_row</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">last_column</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="n">last_non_whitespace_token_type</span> <span class="o">=</span> <span class="kc">None</span>
@@ -494,8 +600,8 @@
             <span class="n">last_non_whitespace_token_type</span> <span class="o">!=</span> <span class="n">py_tokenize</span><span class="o">.</span><span class="n">COMMENT</span>
             <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&gt;</span> <span class="n">last_row</span>
         <span class="p">):</span>
-            <span class="k">if</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\\\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\\r</span><span class="s2">&quot;</span><span class="p">)):</span>
-                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t\n\r\\</span><span class="s2">&quot;</span><span class="p">))</span> <span class="p">:])</span>
+            <span class="k">if</span> <span class="n">previous_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">"</span><span class="se">\\\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\\r\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\\r</span><span class="s2">"</span><span class="p">)):</span>
+                <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">previous_line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">" </span><span class="se">\t\n\r\\</span><span class="s2">"</span><span class="p">))</span> <span class="p">:])</span>
 
         <span class="c1"># Preserve spacing.</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_row</span> <span class="o">&gt;</span> <span class="n">last_row</span><span class="p">:</span>
@@ -511,16 +617,19 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">():</span>
             <span class="n">last_non_whitespace_token_type</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span>
 
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="print_tokens"><a class="viewcode-back" href="../tokenize.html#token_utils.print_tokens">[docs]</a><span class="k">def</span> <span class="nf">print_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Prints tokens found in source, excluding spaces and comments.</span>
+
+<div class="viewcode-block" id="print_tokens">
+<a class="viewcode-back" href="../tokenize.html#token_utils.print_tokens">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_tokens</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Prints tokens found in source, excluding spaces and comments.</span>
 
 <span class="sd">    ``source`` is either a string to be tokenized, or a list of Token objects.</span>
 
 <span class="sd">    This is occasionally useful as a debugging tool.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Token</span><span class="p">):</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
@@ -528,6 +637,7 @@
         <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">()</span></div>
+
 </pre></div>
 
            </div>

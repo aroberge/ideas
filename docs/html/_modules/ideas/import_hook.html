@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.import_hook &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>ideas.import_hook &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,14 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,21 +45,41 @@
 <li class="toctree-l1"><a class="reference internal" href="../../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html#ideas.examples.nobreak.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nobreak.html#ideas.examples.nobreak.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../decimal_math.html"> Decimal math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -80,8 +102,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tokenize_notebook.html"> </a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../console.html"> console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 
         </div>
@@ -97,9 +126,9 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>ideas.import_hook</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ideas.import_hook</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -109,134 +138,133 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ideas.import_hook</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;import_hook.py</span>
+<span></span><span class="sd">"""import_hook.py</span>
 <span class="sd">------------------</span>
 
 <span class="sd">This module contains the core functions required to create an import hook.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="kn">import</span> <span class="n">Loader</span><span class="p">,</span> <span class="n">MetaPathFinder</span>
-<span class="kn">from</span> <span class="nn">importlib.util</span> <span class="kn">import</span> <span class="n">spec_from_file_location</span><span class="p">,</span> <span class="n">decode_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Loader</span><span class="p">,</span> <span class="n">MetaPathFinder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">spec_from_file_location</span><span class="p">,</span> <span class="n">decode_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodeType</span><span class="p">,</span> <span class="n">ModuleType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">console</span>
-<span class="kn">from</span> <span class="nn">.session</span> <span class="kn">import</span> <span class="n">config</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">shorten_path</span><span class="p">,</span> <span class="n">PYTHON</span><span class="p">,</span> <span class="n">IDEAS</span><span class="p">,</span> <span class="n">SITE_PACKAGES</span><span class="p">,</span> <span class="n">print_source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ideas_hook</span><span class="w"> </span><span class="kn">import</span> <span class="n">IdeasHook</span>
 
-
-<span class="c1"># Identify the main script assuming that it has been called from</span>
-<span class="c1"># the command line using something like</span>
-<span class="c1"># python -m ideas main_script[.py] -some_flag</span>
-<span class="n">MAIN_NAME</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">):</span>
-    <span class="n">MAIN_NAME</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">current_state</span>
 
 
-<div class="viewcode-block" id="IdeasMetaFinder"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">IdeasMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A custom finder to locate modules. The main reason for this code</span>
+<div class="viewcode-block" id="finder_inform">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.finder_inform">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">finder_inform</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Print some informative text when verbose finder is set"""</span>
+    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># TODO: Add test for french_repeat</span>
+<span class="c1"># TODO: Ensure that all existing hooks are tested.</span>
+
+
+<div class="viewcode-block" id="IdeasMetaFinder">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IdeasMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0902</span>
+<span class="w">    </span><span class="sd">"""A custom finder to locate modules. The main reason for this code</span>
 <span class="sd">    is to ensure that our custom loader, which does the code transformations,</span>
-<span class="sd">    is used.&quot;&quot;&quot;</span>
+<span class="sd">    is used."""</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">excluded_paths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">hook_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">transform_bytecode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="o">=</span> <span class="n">create_module</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span> <span class="o">=</span> <span class="n">excluded_paths</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span> <span class="o">=</span> <span class="n">exec_</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="n">extensions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hook_name</span> <span class="o">=</span> <span class="n">hook_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="o">=</span> <span class="n">module_class</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source_init</span> <span class="o">=</span> <span class="n">source_init</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="o">=</span> <span class="n">transform_ast</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="o">=</span> <span class="n">transform_bytecode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ideas_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0913</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span> <span class="o">=</span> <span class="n">ideas_hook</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">"IdeasHook instance missing in IdeasMetaFinder()."</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hook_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&lt;IdeasMetaFinder object&gt;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;IdeasMetaFinder object for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hook_name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+<div class="viewcode-block" id="IdeasMetaFinder.find_spec">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder.find_spec">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># pylint: disable=W0613</span>
+<span class="w">        </span><span class="sd">"""finds the appropriate properties (spec) of a module, and sets</span>
+<span class="sd">        its loader."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hook </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> disabled in IdeasMetaPathFinder."</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="IdeasMetaFinder.find_spec"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasMetaFinder.find_spec">[docs]</a>    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;finds the appropriate properties (spec) of a module, and sets</span>
-<span class="sd">        its loader.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()]</span>
 
-        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">fullname</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"."</span> <span class="ow">in</span> <span class="n">fullname</span><span class="p">:</span>
+            <span class="n">module_name</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span>
+            <span class="n">module_name</span> <span class="o">=</span> <span class="n">fullname</span>
 
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
             <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">excluded_paths</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">excluded_paths</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
                     <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    Skipping over:&quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">"    Skipping over:"</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
                     <span class="k">break</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>  <span class="c1"># be forgiving ...</span>
-                    <span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">extension</span>
-                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">extensions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">extension</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"."</span><span class="p">):</span>  <span class="c1"># be forgiving ...</span>
+                    <span class="n">extension</span> <span class="o">=</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">extension</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">module_name</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Searching for </span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">finder_inform</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"    Searching for </span><span class="si">{</span><span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                    <span class="n">finder_inform</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"    Found: </span><span class="si">{</span><span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">extension</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span>
+                    <span class="p">)</span>
                     <span class="k">break</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span>
-                            <span class="s2">&quot;    IdeasMetaFinder did not find&quot;</span><span class="p">,</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-                        <span class="p">)</span>
+                <span class="n">finder_inform</span><span class="p">(</span>
+                    <span class="s2">"    IdeasMetaFinder did not find"</span>
+                    <span class="o">+</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    Found:&quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span> <span class="n">extension</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">spec_from_file_location</span><span class="p">(</span>
                 <span class="n">fullname</span><span class="p">,</span>
                 <span class="n">filename</span><span class="p">,</span>
                 <span class="n">loader</span><span class="o">=</span><span class="n">IdeasLoader</span><span class="p">(</span>
                     <span class="n">filename</span><span class="p">,</span>
-                    <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
-                    <span class="n">create_module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span><span class="p">,</span>
-                    <span class="n">exec_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exec_</span><span class="p">,</span>
-                    <span class="n">module_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">module_class</span><span class="p">,</span>
-                    <span class="n">source_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source_init</span><span class="p">,</span>
-                    <span class="n">transform_ast</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">,</span>
-                    <span class="n">transform_bytecode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span><span class="p">,</span>
-                    <span class="n">transform_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">,</span>
+                    <span class="n">ideas_hook</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="p">,</span>
+                    <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
+                    <span class="n">create_module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">create_module</span><span class="p">,</span>
+                    <span class="n">exec_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">exec_</span><span class="p">,</span>
+                    <span class="n">module_class</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">module_class</span><span class="p">,</span>
+                    <span class="n">source_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">source_init</span><span class="p">,</span>
+                    <span class="n">transform_ast</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">,</span>
+                    <span class="n">transform_bytecode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">transform_bytecode</span><span class="p">,</span>
+                    <span class="n">parse_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span><span class="o">.</span><span class="n">parse_source</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># we don&#39;t know how to import this</span></div></div>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># we don't know how to import this</span></div>
+</div>
 
 
-<div class="viewcode-block" id="IdeasLoader"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader">[docs]</a><span class="k">class</span> <span class="nc">IdeasLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A custom loader which will transform the source prior to its execution&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<div class="viewcode-block" id="IdeasLoader">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IdeasLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>  <span class="c1"># pylint: disable=R0902</span>
+<span class="w">    </span><span class="sd">"""A custom loader which will transform the source prior to its execution"""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">filename</span><span class="p">,</span>
+        <span class="n">ideas_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -244,9 +272,10 @@
         <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_bytecode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+        <span class="n">parse_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>  <span class="c1"># pylint: disable=R0913</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ideas_hook</span> <span class="o">=</span> <span class="n">ideas_hook</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exec_</span> <span class="o">=</span> <span class="n">exec_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span> <span class="o">=</span> <span class="n">callback_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="o">=</span> <span class="n">create_module</span>
@@ -254,64 +283,67 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source_init</span> <span class="o">=</span> <span class="n">source_init</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="o">=</span> <span class="n">transform_ast</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="o">=</span> <span class="n">transform_bytecode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="o">=</span> <span class="n">transform_source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_source</span> <span class="o">=</span> <span class="n">parse_source</span>
 
-<div class="viewcode-block" id="IdeasLoader.create_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.create_module">[docs]</a>    <span class="k">def</span> <span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Potential replacement for the default create_module method.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IdeasLoader.create_module">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.create_module">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Potential replacement for the default create_module method."""</span>
         <span class="c1"># Note: I do not have an example of custom module creation yet.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_create_module</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># use default module creation semantics</span></div>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># use default module creation semantics</span></div>
 
-<div class="viewcode-block" id="IdeasLoader.exec_module"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Import the source code, transform it before executing it so that</span>
+
+<div class="viewcode-block" id="IdeasLoader.exec_module">
+<a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.IdeasLoader.exec_module">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Import the source code, transform it before executing it so that</span>
 <span class="sd">        it is known to Python.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># The main script should be the very first one imported.</span>
-        <span class="c1"># To avoid potential named conflicts, we ensure that the potential</span>
-        <span class="c1"># identification is only done once.</span>
-        <span class="k">global</span> <span class="n">MAIN_NAME</span>
-        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">MAIN_NAME</span><span class="p">:</span>
-            <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
-        <span class="n">MAIN_NAME</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">source_argument</span>
+            <span class="ow">and</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">run_as_main_argument</span>
+        <span class="p">):</span>
+            <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">"__main__"</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span>
+            <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_class</span>  <span class="c1"># pylint: disable=E0243</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r+b&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="n">decode_source</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">encoded_source</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">decode_source</span><span class="p">(</span><span class="n">encoded_source</span><span class="p">)</span>
         <span class="n">original_source</span> <span class="o">=</span> <span class="n">source</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">current_state</span><span class="o">.</span><span class="n">source_transforms</span><span class="p">(</span>
                 <span class="n">source</span><span class="p">,</span>
                 <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                 <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
                 <span class="n">callback_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_params</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="ow">and</span> <span class="n">original_source</span> <span class="o">!=</span> <span class="n">source</span><span class="p">:</span>
-            <span class="n">print_source</span><span class="p">(</span><span class="n">original_source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
-            <span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;New&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="ow">and</span> <span class="n">original_source</span> <span class="o">!=</span> <span class="n">source</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">original_source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">"Original"</span><span class="p">)</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">print_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">"New"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_init</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_init</span><span class="p">()</span> <span class="o">+</span> <span class="n">source</span>
 
+        <span class="n">parse_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_source</span> <span class="ow">or</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while parsing source.&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">e</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"exec"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Exception raised while parsing source."</span><span class="p">)</span>
+            <span class="k">raise</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_ast</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">code_object</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while compiling tree.&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">e</span>
+            <span class="n">code_object</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"exec"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Exception raised while compiling tree."</span><span class="p">)</span>
+            <span class="k">raise</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">code_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_bytecode</span><span class="p">(</span><span class="n">code_object</span><span class="p">)</span>
@@ -326,48 +358,59 @@
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">exec</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception raised while executing code object.&quot;</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="n">e</span></div></div>
+                <span class="n">exec</span><span class="p">(</span><span class="n">code_object</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>  <span class="c1"># pylint: disable=W0122</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"Exception raised while executing code object."</span><span class="p">)</span>
+                <span class="k">raise</span></div>
+</div>
 
 
-<div class="viewcode-block" id="create_hook"><a class="viewcode-back" href="../../possible.html#ideas.import_hook.create_hook">[docs]</a><span class="k">def</span> <span class="nf">create_hook</span><span class="p">(</span>
-    <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">create_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">exec_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">hook_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">module_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">source_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">transform_ast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">transform_bytecode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">transform_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Function to facilitate the creation of an import hook.</span>
+
+<div class="viewcode-block" id="create_hook">
+<a class="viewcode-back" href="../../possible.html#ideas.import_hook.create_hook">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_hook</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="n">callback_params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">create_module</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">ModuleType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">console_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">exec_</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">extensions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">excluded_paths</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">ipython_ast_node_transformer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">module_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">source_init</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">transform_ast</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">],</span> <span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">transform_bytecode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">CodeType</span><span class="p">],</span> <span class="n">CodeType</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">transform_source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">parse_source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">AST</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IdeasHook</span><span class="p">:</span>  <span class="c1"># pylint: disable=R0913,R0914</span>
+<span class="w">    </span><span class="sd">"""Function to facilitate the creation of an import hook.</span>
+
+<span class="sd">    ``name``: required parameter which must be the ``__name__`` of</span>
+<span class="sd">    the module in which the import hook is defined.</span>
 
 <span class="sd">    Each of the following parameter is optional; most of these are</span>
 <span class="sd">    never needed except in some unusual import hooks.</span>
 
-<span class="sd">    Usually, at least one of ``transform_ast``, ``transform_bytecode``,</span>
+<span class="sd">    Usually, at least one of ``transform_ast``, ``transform_bytecode``s,</span>
 <span class="sd">    and ``transform_source`` should be specified.</span>
 
 <span class="sd">    * ``callback_params``: a dict containing keyword parameters</span>
 <span class="sd">      to be passed back to the ``transform_source`` function.</span>
 <span class="sd">    * ``create_module``: a custom function to create a module object</span>
-<span class="sd">      instead of using Python&#39;s default.</span>
-<span class="sd">    * ``console_dict``: a dict object used as &#39;locals&#39; with the Ideas console,</span>
+<span class="sd">      instead of using Python's default.</span>
+<span class="sd">    * ``console_dict``: a dict object used as 'locals' with the Ideas console,</span>
 <span class="sd">      instead of its usual default.</span>
 <span class="sd">    * ``exec_``: a custom method used to execute the source code inside</span>
-<span class="sd">      a module&#39;s dict.</span>
+<span class="sd">      a module's dict.</span>
 <span class="sd">    * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,</span>
 <span class="sd">      used to identify modules containing source code.</span>
+<span class="sd">    * ``excluded_paths``: a list of paths to be excluded for consideration.</span>
+<span class="sd">      If not specified, excluded paths include the location of the standard</span>
+<span class="sd">      library, the site packages, as well as files from this project.</span>
 <span class="sd">    * ``first``: if ``True``, the custom hook will be used as the first</span>
 <span class="sd">      location in ``sys.meta_path``, to look for source files.</span>
-<span class="sd">    * ``hook_name``: used to give a more readable ``repr`` to the hook created.</span>
 <span class="sd">    * ``ipython_ast_node_transformer``: used to do AST transformations in an</span>
 <span class="sd">      IPython/Jupyter environment. It should be a class derived from</span>
 <span class="sd">      ``ast.NodeTransformer`` and return a ``node``.</span>
@@ -387,52 +430,44 @@
 <span class="sd">    * ``transform_bytecode``: used to mutate a code object.</span>
 <span class="sd">    * ``transform_source``: used to transform some source code prior</span>
 <span class="sd">      to execution.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.py&quot;</span><span class="p">]</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">ipython_shell</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>  <span class="c1"># noqa</span>
-    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
-        <span class="n">ipython_shell</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">    Returns: an IdeasHook instance.</span>
+<span class="sd">    """</span>
 
-    <span class="k">if</span> <span class="n">source_init</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   The following initializing code from ideas is included:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source_init</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">"`name` is required and should be the source module __name__."</span>
+        <span class="p">)</span>
 
-    <span class="n">excluded_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">PYTHON</span><span class="p">,</span> <span class="n">IDEAS</span><span class="p">,</span> <span class="n">SITE_PACKAGES</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">verbose_finder</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Looking for files with extensions: &quot;</span><span class="p">,</span> <span class="n">extensions</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The following paths will not be included in the search:&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">excluded_paths</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">shorten_path</span><span class="p">(</span><span class="n">sub_path</span><span class="p">),</span> <span class="n">sub_path</span><span class="p">)</span>
-
-    <span class="n">hook</span> <span class="o">=</span> <span class="n">IdeasMetaFinder</span><span class="p">(</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">IdeasHook</span><span class="p">(</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
         <span class="n">create_module</span><span class="o">=</span><span class="n">create_module</span><span class="p">,</span>
         <span class="n">excluded_paths</span><span class="o">=</span><span class="n">excluded_paths</span><span class="p">,</span>
         <span class="n">exec_</span><span class="o">=</span><span class="n">exec_</span><span class="p">,</span>
         <span class="n">extensions</span><span class="o">=</span><span class="n">extensions</span><span class="p">,</span>
-        <span class="n">hook_name</span><span class="o">=</span><span class="n">hook_name</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
         <span class="n">module_class</span><span class="o">=</span><span class="n">module_class</span><span class="p">,</span>
         <span class="n">source_init</span><span class="o">=</span><span class="n">source_init</span><span class="p">,</span>
         <span class="n">transform_ast</span><span class="o">=</span><span class="n">transform_ast</span><span class="p">,</span>
         <span class="n">transform_bytecode</span><span class="o">=</span><span class="n">transform_bytecode</span><span class="p">,</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">parse_source</span><span class="o">=</span><span class="n">parse_source</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">_add_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
+    <span class="n">hook</span><span class="o">.</span><span class="n">meta_path_finder</span> <span class="o">=</span> <span class="n">IdeasMetaFinder</span><span class="p">(</span><span class="n">ideas_hook</span><span class="o">=</span><span class="n">hook</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hook</span><span class="o">.</span><span class="n">meta_path_finder</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hook</span><span class="o">.</span><span class="n">meta_path_finder</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="p">[</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">transform_ast</span><span class="p">,</span> <span class="n">transform_bytecode</span><span class="p">,</span> <span class="n">source_init</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hook_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">hook_name</span> <span class="o">=</span> <span class="n">hook_name</span>
+    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">current_state</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="n">extensions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Looking for files with extensions: "</span><span class="p">,</span> <span class="n">extensions</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"The following paths will not be included in the search:"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_path</span> <span class="ow">in</span> <span class="n">hook</span><span class="o">.</span><span class="n">excluded_paths</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"  "</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">shorten_path</span><span class="p">(</span><span class="n">sub_path</span><span class="p">),</span> <span class="n">sub_path</span><span class="p">)</span>
+
+    <span class="c1">## ----- Setting up Ideas Interactive Console</span>
 
     <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
         <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
@@ -440,66 +475,26 @@
         <span class="n">source_init</span><span class="o">=</span><span class="n">source_init</span><span class="p">,</span>
         <span class="n">transform_ast</span><span class="o">=</span><span class="n">transform_ast</span><span class="p">,</span>
         <span class="n">transform_bytecode</span><span class="o">=</span><span class="n">transform_bytecode</span><span class="p">,</span>
-        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">parse_source</span><span class="o">=</span><span class="n">parse_source</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ipython_source_transformer</span> <span class="o">=</span> <span class="n">make_ipython_source_transformer</span><span class="p">(</span><span class="n">transform_source</span><span class="p">)</span>
-        <span class="n">ipython_shell</span><span class="o">.</span><span class="n">input_transformers_post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ipython_source_transformer</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">ipython_ast_node_transformer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ipython_shell</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">wrapped_ipython_ast_node_transformer</span> <span class="o">=</span> <span class="n">make_ipython_ast_node_transformer</span><span class="p">(</span>
-            <span class="n">ipython_ast_node_transformer</span>
+    <span class="c1">## ----- Conditionally setting up IPython shell including Jupyter Notebooks</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ipython_shell</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>  <span class="c1"># type: ignore # noqa</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.ipython_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_up_ipython_shell</span>
+
+        <span class="n">set_up_ipython_shell</span><span class="p">(</span>
+            <span class="n">ipython_shell</span><span class="p">,</span>
+            <span class="n">ipython_ast_node_transformer</span><span class="o">=</span><span class="n">ipython_ast_node_transformer</span><span class="p">,</span>
+            <span class="n">source_init</span><span class="o">=</span><span class="n">source_init</span><span class="p">,</span>
+            <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">ipython_shell</span><span class="o">.</span><span class="n">ast_transformers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapped_ipython_ast_node_transformer</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">hook</span></div>
 
-
-<div class="viewcode-block" id="make_ipython_source_transformer"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.make_ipython_source_transformer">[docs]</a><span class="k">def</span> <span class="nf">make_ipython_source_transformer</span><span class="p">(</span><span class="n">transform_source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Takes a source transform and makes returns an IPython compatible</span>
-<span class="sd">    source transformer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">ipython_source_transformer</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">has_side_effects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># noqa</span>
-        <span class="c1"># In IPython, the source transformation operates on a list of lines</span>
-        <span class="n">original_source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-        <span class="n">source</span> <span class="o">=</span> <span class="n">transform_source</span><span class="p">(</span><span class="n">original_source</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="ow">and</span> <span class="n">source</span> <span class="o">!=</span> <span class="n">original_source</span><span class="p">:</span>
-            <span class="n">config</span><span class="o">.</span><span class="n">print_transformed</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;New: &quot;</span><span class="p">)</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="n">keepends</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">lines</span>
-
-    <span class="k">return</span> <span class="n">ipython_source_transformer</span></div>
-
-
-<div class="viewcode-block" id="make_ipython_ast_node_transformer"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.make_ipython_ast_node_transformer">[docs]</a><span class="k">def</span> <span class="nf">make_ipython_ast_node_transformer</span><span class="p">(</span><span class="n">ipython_ast_node_transformer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Takes an AST transformer designed to work with IPython,</span>
-<span class="sd">    and wraps it to add a warning in case the user would like to</span>
-<span class="sd">    see how the code is actually transformed, since this is not</span>
-<span class="sd">    possible when using IPython.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">wrapped_ipython_ast_node_transformer</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;Cannot show the changed source for AST transform in IPython/Jupyter.&quot;</span>
-            <span class="p">)</span>
-            <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">ipython_ast_node_transformer</span>
-
-    <span class="k">return</span> <span class="n">wrapped_ipython_ast_node_transformer</span></div>
-
-
-<div class="viewcode-block" id="remove_hook"><a class="viewcode-back" href="../../import_hook.html#ideas.import_hook.remove_hook">[docs]</a><span class="k">def</span> <span class="nf">remove_hook</span><span class="p">(</span><span class="n">hook</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Function used to remove a previously imported hook inserted in sys.meta_path&quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="n">hook</span><span class="p">:</span>
-            <span class="k">break</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Import hook not found in remove_hook.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">console</span><span class="o">.</span><span class="n">configure</span><span class="p">()</span></div>
 </pre></div>
 
            </div>

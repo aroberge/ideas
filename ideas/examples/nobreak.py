@@ -4,7 +4,7 @@
     This module enables someone to use ``nobreak`` as a keyword
     equivalent to ``else`` in ``for`` and ``while`` loops.
 
-``nobreak`` as a keyword
+nobreak as a keyword
 ========================
 
 Python's ``for`` and ``while`` loop include an ``else`` clause

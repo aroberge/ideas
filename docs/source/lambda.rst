@@ -74,7 +74,6 @@ We can also use the **ideas** console and have our special encoding be used.::
     9
 
 .. automodule:: ideas.examples.lambda_codec
-   :members:
 
 .. automodule:: ideas.custom_encoding
-   :members:
+

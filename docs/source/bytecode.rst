@@ -37,4 +37,4 @@ API for ``confused_math_bc``
 
 
 .. automodule:: ideas.examples.confused_math_bc
-   :members:
+

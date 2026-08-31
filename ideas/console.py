@@ -42,7 +42,6 @@ class IdeasConsole(InteractiveConsole):
         source_init=None,
         transform_ast=None,
         transform_bytecode=None,
-        transform_source=None,
         callback_params=None,
         console_dict=None,
         locals_=None,
@@ -53,7 +52,6 @@ class IdeasConsole(InteractiveConsole):
         """
         self.transform_ast = transform_ast
         self.transform_bytecode = transform_bytecode
-        self.transform_source = transform_source
         self.parse_source = parse_source
         self.callback_params = callback_params
 
@@ -93,28 +91,27 @@ class IdeasConsole(InteractiveConsole):
         source = "\n".join(self.buffer)
         current_state.original = source
 
-        if self.transform_source is not None:
-            last_line = source.endswith("\n")  # signals the end of a block
-            try:
-                source = self.transform_source(
-                    source, filename=CONSOLE_NAME, callback_params=self.callback_params
-                )
-            except tokenize.TokenError:
-                # Pass on the original source so that open (, or additional)
-                # can be handled correctly as either SyntaxErrors or indication
-                # that more code is needed.
-                more = self.runsource(source, CONSOLE_NAME)
-                if not more:
-                    self.resetbuffer()
-                return more
-            except Exception as exc:
-                print("Error when executing transform_source:")
-                print("   ", traceback.format_exception_only(type(exc), exc)[0].strip())
+        last_line = source.endswith("\n")  # signals the end of a block
+        try:
+            source = current_state.source_transforms(
+                source, filename=CONSOLE_NAME, callback_params=self.callback_params
+            )
+        except tokenize.TokenError:
+            # Pass on the original source so that open (, or additional)
+            # can be handled correctly as either SyntaxErrors or indication
+            # that more code is needed.
+            more = self.runsource(source, CONSOLE_NAME)
+            if not more:
                 self.resetbuffer()
-                return
-            # Some transformations may add some extra "\n" (usually at most one)
-            if not last_line:
-                source = source.rstrip("\n")
+            return more
+        except Exception as exc:
+            print("Error when executing transform_source:")
+            print("   ", traceback.format_exception_only(type(exc), exc)[0].strip())
+            self.resetbuffer()
+            return
+        # Some transformations may add some extra "\n" (usually at most one)
+        if not last_line:
+            source = source.rstrip("\n")
         more = self.runsource(source, CONSOLE_NAME)
         if not more:
             self.resetbuffer()

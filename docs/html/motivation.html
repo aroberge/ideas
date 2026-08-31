@@ -1,22 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Additional motivation for this project &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Additional motivation for this project &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -51,21 +53,39 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> nobreak as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="repeat.html"> repeat as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="french.html"> French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="french_repeat.html"> French repeat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_self.html"> Auto-self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="decimal_math.html"> Decimal math</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html"> Fractional math (token)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -88,8 +108,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 
         </div>
@@ -105,8 +132,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Additional motivation for this project</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Additional motivation for this project</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/motivation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -119,32 +146,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="additional-motivation-for-this-project">
-<h1>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Permalink to this headline"></a></h1>
+  <section id="additional-motivation-for-this-project">
+<h1>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Link to this heading"></a></h1>
 <p>While ideas such as the f-strings and <strong>especially</strong> the walrus operator
 were discussed on Python-ideas and similar places, many people were
 opposed to them being added to Python. This likely lead to the
@@ -170,7 +173,7 @@ use an import hook and are not interested in the origin of this project,
 nor about its intended usage.</p>
 </div>
 <section id="original-motivation">
-<h2>Original motivation<a class="headerlink" href="#original-motivation" title="Permalink to this headline"></a></h2>
+<h2>Original motivation<a class="headerlink" href="#original-motivation" title="Link to this heading"></a></h2>
 <p>Programming in Python is my main hobby.
 As an amateur, I like to explore various ideas, learning along the way.
 As I found myself doing a lot of copy-paste-modify on the various import
@@ -184,7 +187,7 @@ enough visibility, some programmers much more qualified than I am might
 take the time to make concrete suggestions as to how to improve it.</p>
 </section>
 <section id="additional-motivation">
-<h2>Additional motivation<a class="headerlink" href="#additional-motivation" title="Permalink to this headline"></a></h2>
+<h2>Additional motivation<a class="headerlink" href="#additional-motivation" title="Link to this heading"></a></h2>
 <p>Often, on Python-ideas, a suggestion is made to someone that proposes something
 new to try it by modifying Python using an import hook. For example:</p>
 <blockquote>
@@ -215,7 +218,7 @@ as well as advanced Python programmers might be interested enough to
 make suggestions as to how to improve this project.</p>
 </section>
 <section id="about-the-name">
-<h2>About the name<a class="headerlink" href="#about-the-name" title="Permalink to this headline"></a></h2>
+<h2>About the name<a class="headerlink" href="#about-the-name" title="Link to this heading"></a></h2>
 <p>For this project, I was thinking of using <code class="docutils literal notranslate"><span class="pre">importhook</span></code> (singular) or
 <code class="docutils literal notranslate"><span class="pre">importhooks</span></code> (plural). However, there is already a package named
 <code class="docutils literal notranslate"><span class="pre">importhook</span></code> on Pypi and I thought that using the plural form would
@@ -242,7 +245,7 @@ as <strong>stupid</strong> but rather as <strong>entertaining</strong> <strong>i
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

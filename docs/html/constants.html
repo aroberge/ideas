@@ -1,22 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>True constants &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>True constants &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -61,6 +64,10 @@
 <li class="toctree-l1"><a class="reference internal" href="switch.html"> Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -106,8 +113,8 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>True constants</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">True constants</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/constants.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,32 +127,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="true-constants">
-<h1>True constants<a class="headerlink" href="#true-constants" title="Permalink to this headline"></a></h1>
+  <section id="true-constants">
+<h1>True constants<a class="headerlink" href="#true-constants" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>How to ensure that variables defined as constants by some notational
@@ -164,7 +147,7 @@ and I learned a fair bit along the way.  Given the relative complexity of
 the final solution, I thought it would be appropriate to start slowly,
 explaining what is usually done by Pythonistas.</p>
 <section id="consenting-adults">
-<h2>Consenting adults<a class="headerlink" href="#consenting-adults" title="Permalink to this headline"></a></h2>
+<h2>Consenting adults<a class="headerlink" href="#consenting-adults" title="Link to this heading"></a></h2>
 <p>Unlike some other programming languages that force their users
 to do things in a very strict fashion,
 Python gives a lot of flexibility and assume that they are responsible adults,
@@ -206,14 +189,14 @@ use an agreed-upon convention.
 As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-)</p>
 </section>
 <section id="demonstration">
-<h2>Demonstration<a class="headerlink" href="#demonstration" title="Permalink to this headline"></a></h2>
+<h2>Demonstration<a class="headerlink" href="#demonstration" title="Link to this heading"></a></h2>
 <p>I can think of nothing better than a quick demonstration using the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas.examples</span> <span class="kn">import</span> <span class="n">constants</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ideas</span> <span class="kn">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
-<span class="go">    callback_params: {&#39;on_prevent_change&#39;: &lt;function on_change_print ...&gt;}</span>
+<span class="go">    callback_params: {'on_prevent_change': &lt;function on_change_print ...&gt;}</span>
 <span class="go">    console_dict: {}</span>
 <span class="go">    transform_source from ideas.examples.constants</span>
 <span class="go">--------------------------------------------------</span>
@@ -229,18 +212,18 @@ As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-
 <span class="go">~&gt;&gt; a = 3</span>
 <span class="go">~&gt;&gt; a = 4</span>
 <span class="go">~&gt;&gt; try:</span>
-<span class="gp">... </span>    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span>  <span class="c1"># Python 3.8+</span>
-<span class="gp">... </span><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">class</span> <span class="nc">Final</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="k">pass</span>
-<span class="gp">...</span>
-<span class="go">~&gt;&gt; greetings : Final = &quot;Hello&quot;</span>
+<span class="go">...     from typing import Final  # Python 3.8+</span>
+<span class="go">... except ImportError:</span>
+<span class="go">...     class Final:</span>
+<span class="go">...         pass</span>
+<span class="go">...</span>
+<span class="go">~&gt;&gt; greetings : Final = "Hello"</span>
 <span class="go">~&gt;&gt; greetings = 3</span>
 <span class="go">You cannot change the value of IdeasConsole.greetings to 3</span>
 <span class="go">~&gt;&gt;</span>
 <span class="go">~&gt;&gt; NAME += 3</span>
 <span class="go">You cannot change the value of IdeasConsole.NAME to 6</span>
-<span class="go">~&gt;&gt; globals()[&#39;NAME&#39;] = 6</span>
+<span class="go">~&gt;&gt; globals()['NAME'] = 6</span>
 <span class="go">You cannot change the value of IdeasConsole.NAME to 6</span>
 <span class="go">~&gt;&gt;</span>
 <span class="go">~&gt;&gt; from tests.constants import uppercase</span>
@@ -256,7 +239,7 @@ As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-
 <span class="go">~&gt;&gt; uppercase.XX</span>
 <span class="go">36</span>
 <span class="go">~&gt;&gt; # Cheating ...</span>
-<span class="go">~&gt;&gt; uppercase.__dict__[&#39;XX&#39;] = 99</span>
+<span class="go">~&gt;&gt; uppercase.__dict__['XX'] = 99</span>
 <span class="go">~&gt;&gt; uppercase.XX</span>
 <span class="go">99</span>
 </pre></div>
@@ -269,7 +252,7 @@ I <strong>think</strong> it might be possible by creating a different module obj
 </div>
 </section>
 <section id="how-does-it-work">
-<h2>How does it work<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline"></a></h2>
+<h2>How does it work<a class="headerlink" href="#how-does-it-work" title="Link to this heading"></a></h2>
 <p>Suppose I have a variable <code class="docutils literal notranslate"><span class="pre">X</span></code> in module <code class="docutils literal notranslate"><span class="pre">Y</span></code>.  Normally, there are two ways
 that we can change the value of this variable:</p>
 <ol class="arabic simple">
@@ -281,17 +264,13 @@ from that module.</p></li>
 must be used, depending on whether case 1 or case 2 above is used.</p>
 </section>
 <section id="suggestion-for-you">
-<h2>Suggestion for you<a class="headerlink" href="#suggestion-for-you" title="Permalink to this headline"></a></h2>
+<h2>Suggestion for you<a class="headerlink" href="#suggestion-for-you" title="Link to this heading"></a></h2>
 <p>Try to implement your own variation, perhaps by introducing <code class="docutils literal notranslate"><span class="pre">let</span></code>
 as a new keyword:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">this_variable</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># this_variable is thus declared as constant</span>
 </pre></div>
 </div>
-<aside class="sidebar">
-<p class="sidebar-title">API</p>
-<p>Generated by Sphinx</p>
-</aside>
-<span class="target" id="module-ideas.examples.constants"></span><p>This import hook makes it possible to define constants, that is variables
+<p id="module-ideas.examples.constants">This import hook makes it possible to define constants, that is variables
 which cannot have their initial value changed.</p>
 <p>In this import hook, constants are identified in two ways:</p>
 <ol class="arabic simple">
@@ -299,88 +278,6 @@ which cannot have their initial value changed.</p>
 <li><p>variables that were declared to be constant by the inclusion
 of a <code class="docutils literal notranslate"><span class="pre">Final</span></code> type hint.</p></li>
 </ol>
-<dl class="py class">
-<dt class="sig sig-object py" id="ideas.examples.constants.FinalDict">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.examples.constants.</span></span><span class="sig-name descname"><span class="pre">FinalDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_prevent_change</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict" title="Permalink to this definition"></a></dt>
-<dd><p>A <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code> is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> subclass which ensures that constants
-are not over-written.</p>
-<p>Constants are identified in two ways:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>names in all <code class="docutils literal notranslate"><span class="pre">UPPERCASE_LETTERS</span></code>, which is a common Python convention</p></li>
-<li><p>variables that were declared to be constant by the inclusion
-of a <code class="docutils literal notranslate"><span class="pre">Final</span></code> type hint.</p></li>
-</ol>
-</div></blockquote>
-<p>Note: We only override methods which could result in changing the value
-of a constant.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.examples.constants.FinalDict.pop">
-<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">value,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value,</span></span></span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.pop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.pop" title="Permalink to this definition"></a></dt>
-<dd><p>unless the key is identified as a constant.</p>
-<p>If key is not found, d is returned if given, otherwise KeyError is raised</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.examples.constants.FinalDict.setdefault">
-<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.setdefault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.setdefault" title="Permalink to this definition"></a></dt>
-<dd><p>Insert key with a value of default if key is not in the dictionary.</p>
-<p>It prevents changes if the key is identified as a constant.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ideas.examples.constants.FinalDict.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping_or_iterable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#FinalDict.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.FinalDict.update" title="Permalink to this definition"></a></dt>
-<dd><p>Updates the content of the dict from a mapping or an iterable,
-or from a list of keywords arguments.</p>
-<p>Keys identified as constants are prevented from changing.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.constants.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.constants.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on_prevent_change</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.add_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Creates and adds the import hook in sys.meta_path</p>
-<p>When an attempt is made to change the value of a constant, <code class="docutils literal notranslate"><span class="pre">on_prevent_change</span></code>
-is called. By default, this function just prints a warning about what
-was done. This could be replaced by a function that logs the results or
-one that raises an exception, etc.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.constants.exec_">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.constants.</span></span><span class="sig-name descname"><span class="pre">exec_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#exec_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.exec_" title="Permalink to this definition"></a></dt>
-<dd><p>Executes a code_object in a local instance of a <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code>.</p>
-<p>The argument <code class="docutils literal notranslate"><span class="pre">globals_</span></code> is assumed to be the original module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>.
-A module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> is a read-only object; therefore, we cannot execute
-code in it while expecting to be able to prevent changes to variables intended
-to remain constants.  However, we can do so indirectly.</p>
-<p>Instead of executing code using the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> directly, we start
-by making a copy of its content into a <code class="docutils literal notranslate"><span class="pre">FinalDict</span></code> instance.
-We execute the code in that instance, and use its value after execution to
-update the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.constants.on_change_print">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.constants.</span></span><span class="sig-name descname"><span class="pre">on_change_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#on_change_print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.on_change_print" title="Permalink to this definition"></a></dt>
-<dd><p>Function called by default when an attempt is made to change the
-value of a constant.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.constants.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.constants.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/constants.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.constants.transform_source" title="Permalink to this definition"></a></dt>
-<dd><p>Identifies simple assignments with a Final type hint, returning
-the source unchanged.</p>
-<p>The pattern we are looking for is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="n">python_identifier</span> <span class="p">:</span> <span class="n">Final</span> <span class="o">...</span>
-</pre></div>
-</div>
-<p>where <code class="docutils literal notranslate"><span class="pre">|</span></code> indicates the beginning of a line.</p>
-</dd></dl>
-
 </section>
 </section>
 
@@ -395,7 +292,7 @@ the source unchanged.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

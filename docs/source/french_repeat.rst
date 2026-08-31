@@ -24,4 +24,4 @@ and
 .. literalinclude:: ../../usage_demo/tortue.pyfr
 
 .. automodule:: ideas.examples.french_repeat
-   :members:
+

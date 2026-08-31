@@ -66,4 +66,4 @@ which was the norm when the PEP was written.
 
 
 .. automodule:: ideas.examples.switch
-   :members:
+

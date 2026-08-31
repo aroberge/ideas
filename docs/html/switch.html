@@ -1,27 +1,28 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Switch statement &mdash; ideas 0.0.38 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Switch statement &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=c7e4a82f" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Implicit multiplication" href="implicit_multiplication.html" />
-    <link rel="prev" title="Fractional math (token)" href="fractional_math_tok.html" /> 
+    <link rel="prev" title="Fractional math (token based)" href="fractional_math_tok.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,14 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> ideas
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
           </a>
-              <div class="version">
-                0.0.38
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
 <li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the examples</a></li>
 </ul>
@@ -67,6 +70,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="implicit_multiplication.html"> Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="polish_expr.html"> Polish expressions</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
 <ul>
@@ -106,13 +113,13 @@
         <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Switch statement</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Switch statement</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/switch.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="implicit_multiplication.html" class="btn btn-neutral float-right" title="Implicit multiplication" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
@@ -120,32 +127,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="switch-statement">
-<h1>Switch statement<a class="headerlink" href="#switch-statement" title="Permalink to this headline"></a></h1>
+  <section id="switch-statement">
+<h1>Switch statement<a class="headerlink" href="#switch-statement" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>Adds a switch statement to Python.</p>
@@ -190,7 +173,7 @@ namely version 1 B. The implementation meant to replace code like:</p>
 Note that I didn’t bother to dedent the inner <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> as it is
 never shown to the end user and would only complicate the code.</p>
 <section id="result">
-<h2>Result<a class="headerlink" href="#result" title="Permalink to this headline"></a></h2>
+<h2>Result<a class="headerlink" href="#result" title="Link to this heading"></a></h2>
 <p>The actual result is not particularly enlightning.
 PEP 3103 considers the fact that each <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> has two levels
 of indentation to be a downside. Personally, after writing some testing
@@ -200,48 +183,10 @@ having a traditional <code class="docutils literal notranslate"><span class="pre
 indentation to be a bonus. However, perhaps I might feel otherwise if I
 always limited myself to having line with no more than 79 characters
 which was the norm when the PEP was written.</p>
-<span class="target" id="module-ideas.examples.switch"></span><section id="switch-py">
-<h3>switch.py<a class="headerlink" href="#switch-py" title="Permalink to this headline"></a></h3>
+<section id="switch-py">
+<span id="module-ideas.examples.switch"></span><h3>switch.py<a class="headerlink" href="#switch-py" title="Link to this heading"></a></h3>
 <p>Implements something similar to version 1.B of
 <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a></p>
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.switch.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Permalink to this definition"></a></dt>
-<dd><p>Creates and adds the import hook in sys.meta_path</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.switch.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Permalink to this definition"></a></dt>
-<dd><p>Replaces code like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
-    <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-    <span class="k">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-    <span class="n">case</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-    <span class="o">...</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-</pre></div>
-</div>
-<p>by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_name</span> <span class="o">=</span> <span class="n">EXPR</span>
-<span class="k">if</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_1</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-<span class="k">elif</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_2</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-<span class="k">elif</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-<span class="k">else</span><span class="p">:</span>
-        <span class="n">SUITE</span>
-<span class="k">del</span> <span class="n">var_name</span>
-</pre></div>
-</div>
-<p>Limitation: switch blocks cannot be part of a SUITE of another switch block.</p>
-</dd></dl>
-
 </section>
 </section>
 </section>
@@ -250,14 +195,14 @@ which was the norm when the PEP was written.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="implicit_multiplication.html" class="btn btn-neutral float-right" title="Implicit multiplication" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, André Roberge.</p>
+    <p>&#169; Copyright André Roberge.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
