@@ -7,6 +7,8 @@ configuration choice during a single run/session."""
 # In practice, we have found this to be an easier way to keep
 # the interactive console in sync with changes introduced by
 # various transformers.
+
+from collections import defaultdict
 import sys
 
 from .ideas_hook import IdeasHook
@@ -28,6 +30,8 @@ class State:
         # The following is the source argument passed to __main__.py
         self.source_argument = None  # py [...] -m ideas [...] source_argument
         self.run_as_main_argument = False
+        #
+        self.patches = defaultdict(list)
 
     def get_hook_by_name(self, name):
         """Finds a previously imported hook based on its name.
@@ -62,6 +66,12 @@ class State:
         Since many of the import hooks are found in the ideas.examples directory
         one can use "module_name" as an abbreviation of "ideas.examples.module_name".
         """
+        if name_or_hook == "*":
+            for hook in self.hooks:
+                sys.meta_path.remove(hook.meta_path_finder)
+                self.hooks.remove(hook)
+            return
+
         if isinstance(name_or_hook, str):
             hook = self.get_hook_by_name(name_or_hook)
             if hook is None:
@@ -188,6 +198,35 @@ class State:
                 )
 
         return source
+
+    def add_patch(self, module_name, func):
+        """Adds patch to be applied to a module.
+
+        ``module_name``: the full name of the module to be patched
+        ``func``: a callable which takes as a single argument a module object
+        and returns a modified (patched) module object.
+
+        ``add_patch`` can be called multiple times; patches will be applied
+        sequentially.
+
+        If ``module_name`` has already been imported, it is deleted from
+        ``sys.modules`` so that it can be properly patched."""
+
+        print("\n  add_patch called with", module_name, func)
+
+        # We need at least one active hook to make transformations
+        if not self.hooks:
+            from .null_hook import add_hook
+
+            add_hook()
+
+        self.patches[module_name].append(func)
+        if module_name in sys.modules:
+            del sys.modules[module_name]
+
+    def remove_patches(self):
+        """Mainly for cleaning up after test"""
+        self.patches = defaultdict(list)
 
 
 current_state = State()

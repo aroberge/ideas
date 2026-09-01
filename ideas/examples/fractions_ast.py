@@ -70,6 +70,7 @@ import ast
 import sys
 
 from ideas import create_hook
+from ideas import utils
 
 
 class FractionWrapper(ast.NodeTransformer):
@@ -144,5 +145,6 @@ def add_hook():
         source_init=source_init,
         transform_ast=transform_ast,
         ipython_ast_node_transformer=ipython_ast_node_transformer,
+        excluded_paths=[utils.PYTHON],
     )
     return hook

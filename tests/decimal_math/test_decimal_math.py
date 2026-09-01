@@ -12,3 +12,6 @@ def test_import_with_encoding():
     decimal_math.register()
     from . import use_encoding  # noqa
 
+    from ideas import list_hooks
+    list_hooks()
+

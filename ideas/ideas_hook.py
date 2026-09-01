@@ -27,9 +27,11 @@ class IdeasHook:
         self.callback_params = callback_params
         self.create_module = create_module
         if excluded_paths is utils.DEFAULT:
-            self.excluded_paths = [utils.PYTHON, utils.IDEAS, utils.SITE_PACKAGES]
+            self.excluded_paths = []
         elif excluded_paths is None:
             self.excluded_paths = []
+        else:
+            self.excluded_paths = excluded_paths
         self.exec_ = exec_
         self.extensions = extensions if extensions is not None else [".py"]
         self.name = name

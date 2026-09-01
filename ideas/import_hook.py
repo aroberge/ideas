@@ -14,7 +14,6 @@ from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
 from . import console
-from . import session
 from . import utils
 from .ideas_hook import IdeasHook
 
@@ -23,7 +22,7 @@ from ideas import current_state
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
-    if session.current_state.verbose:
+    if current_state.verbose:
         print(text)
 
 
@@ -45,24 +44,33 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
         """finds the appropriate properties (spec) of a module, and sets
         its loader."""
         if not self.ideas_hook.enabled:
-            if session.current_state.verbose:
+            if current_state.verbose:
                 print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
             return None
 
         if not path:
-            path = [os.getcwd()]
+            path = [os.getcwd()] + sys.path
 
         if "." in fullname:
             module_name = fullname.split(".")[-1]
         else:
             module_name = fullname
 
+        if current_state.patches:
+            print(f"\n {current_state.patches=}\n")
+            if utils.PYTHON in self.ideas_hook.excluded_paths:
+                self.ideas_hook.excluded_paths.remove(utils.PYTHON)
+            if utils.SITE_PACKAGES in self.ideas_hook.excluded_paths:
+                self.ideas_hook.excluded_paths.remove(utils.SITE_PACKAGES)
+            if utils.IDEAS in self.ideas_hook.excluded_paths:
+                self.ideas_hook.excluded_paths.remove(utils.IDEAS)
+
         for entry in path:
             skip = False
             for sub_path in self.ideas_hook.excluded_paths:
                 if sub_path in entry.lower():
                     skip = True
-                    if session.current_state.verbose:
+                    if current_state.verbose:
                         print("    Skipping over:", utils.shorten_path(entry))
                     break
             if skip:
@@ -146,8 +154,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         it is known to Python.
         """
         if (
-            module.__name__ == session.current_state.source_argument
-            and session.current_state.run_as_main_argument
+            module.__name__ == current_state.source_argument
+            and current_state.run_as_main_argument
         ):
             module.__name__ = "__main__"
 
@@ -166,7 +174,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             callback_params=self.callback_params,
         )
 
-        if session.current_state.show_changes and original_source != source:
+        if current_state.show_changes and original_source != source:
             utils.print_source(original_source, header="Original")
             utils.print_source(source, header="New")
 
@@ -206,6 +214,17 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             except Exception:
                 print("Exception raised while executing code object.")
                 raise
+
+        if module.__name__ not in current_state.patches:
+            # current_state.patches is a defaultdict; looping over
+            # absent values can seemingly create default ones.
+            # So we check before doing a for loop.
+            return
+
+        for patch in current_state.patches[module.__name__]:
+            if current_state.verbose:
+                print("patching ", module.__name__)
+            module = patch(module)
 
 
 def create_hook(
@@ -293,7 +312,7 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    session.current_state._add_hook(hook)
+    current_state._add_hook(hook)
     hook.meta_path_finder = IdeasMetaFinder(ideas_hook=hook)
 
     if first:
@@ -301,7 +320,7 @@ def create_hook(
     else:
         sys.meta_path.append(hook.meta_path_finder)
 
-    if session.current_state.verbose and extensions is not None:
+    if current_state.verbose and extensions is not None:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in hook.excluded_paths:
