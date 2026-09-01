@@ -179,7 +179,6 @@ class State:
     ):
         for hook in self.hooks:
             if hook.enabled and hook.transform_source is not None:
-                print(f"Transforming from module {hook.name}")
                 source = hook.transform_source(
                     source,
                     filename=filename,

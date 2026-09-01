@@ -15,6 +15,7 @@ from ideas import current_state
 transforming_modules = []
 
 parser = argparse.ArgumentParser(
+    prog="[-i] -m ideas",
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description=__doc__,
 )
@@ -37,20 +38,10 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--run_as_main",
+    "--import_",
     action="store_true",
-    help="""Name of the main Python module (path.to.my_program) to be executed as a main scrit.
+    help="""Imports a module instead of executing it as the __main__ script.
     The extension (.py) must not be included.""",
-)
-
-parser.add_argument(
-    "-r",
-    "--register_codec",
-    nargs=1,
-    help="""Execute the named module to register a codec. The specified module
-    is either found in the current directory or, if not found,
-    from ideas.examples.""",
-    metavar="MODULE",
 )
 
 parser.add_argument(
@@ -71,7 +62,7 @@ parser.add_argument(
 parser.add_argument(
     "source",
     nargs="?",
-    help="""Name of the main Python module (path.to.my_program) to be imported.
+    help="""Name of the main Python module (path.to.my_program) to be run as the main script.
     The extension (.py) must not be included.
     """,
 )
@@ -108,65 +99,40 @@ def add_transform(transform):
         return module
 
 
-def register_codec(encoding):
-    """Executes a module that is expected to register a custom encoding."""
-    try:
-        import_module(encoding)
-    except (ImportError, ModuleNotFoundError):
-        pass
-
-    path = f"ideas.examples.{encoding}"
-    try:
-        import_module(path)
-    except ImportError:
-        print(f"{path} is not a known codec.")
-
-
 def main() -> None:
-    ideas_does_something = False
     args = parser.parse_args()
     if args.version:
         print(f"\nideas version {ideas.__version__}")
         return
 
-    current_state.show_changes = bool(args.show_changes)
-    current_state.verbose = bool(args.verbose)
+    ideas_does_something = False
+    run_as_main = not args.import_
+
+    current_state.show_changes = args.show_changes
+    current_state.verbose = args.verbose
     if current_state.verbose:
         current_state.show_changes = True
-
-    if args.add_hook and args.register_codec:
-        print("From the command line, you can only use one option at a time:")
-        print("- Either use one or more source transformations")
-        print("  with each transformation preceded by the -a (--add_hook) flag; or\n")
-        print("- Register a custom codec with -r (--register_codec),")
-        return
 
     if args.add_hook:
         for hook in args.add_hook:
             transforming_modules.append(add_transform(hook))
         ideas_does_something = True
 
-    if args.register_codec:
-        register_codec(args.register_codec[0])
-        ideas_does_something = True
-
-    if not (args.source or args.run_as_main):
+    if not args.source:
         console.start()
         return
 
     # The command used was something like:
     #     py [...] -m ideas [...] source
     # or
-    #     py [...] -m ideas [...] -m or --run_as_main source
+    #     py [...] -m ideas [...] -m or --import_ source
     # All that is left is figuring out how to run the source provided
 
-    if args.source:
-        current_state.source_argument = args.source
-    if args.run_as_main:
-        current_state.run_as_main_argument = args.run_as_main
+    current_state.source_argument = args.source
+    current_state.run_as_main_argument = run_as_main
 
     if not ideas_does_something and (sys.flags.interactive or args.i):
-        if args.run_as_main:
+        if run_as_main:
             source_dict = runpy.run_module(args.source, run_name="__main__")
         else:
             source_dict = runpy.run_module(args.source)
@@ -176,7 +142,7 @@ def main() -> None:
     if not ideas_does_something:
         print("\n***    `ideas` has been invoked but isn't doing anything.")
         print(f"***    Simply executing `{args.source}` as a main module.\n")
-        if args.run_as_main:
+        if run_as_main:
             source_dict = runpy.run_module(args.source, run_name="__main__")
         else:
             source_dict = runpy.run_module(args.source)
