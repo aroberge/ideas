@@ -148,16 +148,10 @@ Quick links to topics
 
 .. toctree::
    :maxdepth: 1
-   :caption: Custom encodings
-
-    Create your own codec <lambda>
-
-.. toctree::
-   :maxdepth: 1
    :caption: Other modules
 
     About tokens <tokenize>
-    <tokenize_notebook.ipynb>
+    Interactive session with token_utils <tokenize_notebook.ipynb>
     import_hook.py <import_hook>
     console.py <console>
 

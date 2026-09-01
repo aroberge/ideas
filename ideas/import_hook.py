@@ -31,7 +31,7 @@ def finder_inform(text):
 # TODO: Ensure that all existing hooks are tested.
 
 
-class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
+class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
     """A custom finder to locate modules. The main reason for this code
     is to ensure that our custom loader, which does the code transformations,
     is used."""
@@ -40,6 +40,9 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
         self.ideas_hook = ideas_hook
         if self.ideas_hook is None:
             raise RuntimeError("IdeasHook instance missing in IdeasMetaFinder().")
+
+    def __repr__(self):
+        return f"<IdeasMetaPathFinder: {self.ideas_hook.name}>"
 
     def find_spec(self, fullname, path, target=None):  # pylint: disable=W0613
         """finds the appropriate properties (spec) of a module, and sets
@@ -216,7 +219,7 @@ def create_hook(
     exec_: Optional[Callable[..., None]] = None,
     extensions: Optional[Sequence[str]] = None,
     excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
-    first: bool = True,
+    first: bool = False,
     ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
     module_class: Optional[type] = None,
     source_init: Optional[Callable[[], str]] = None,
@@ -294,7 +297,7 @@ def create_hook(
         parse_source=parse_source,
     )
     session.current_state._add_hook(hook)
-    hook.meta_path_finder = IdeasMetaFinder(ideas_hook=hook)
+    hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)
 
     if first:
         sys.meta_path.insert(0, hook.meta_path_finder)
