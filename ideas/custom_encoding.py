@@ -11,7 +11,7 @@ The source is assumed to be actually encoded in utf-8.
 import codecs
 import encodings
 
-from . import console
+from . import current_state
 
 utf8 = encodings.search_function("utf8")
 
@@ -58,7 +58,4 @@ def register_encoding(encoding_name=None, transform_source=None, name=None):
 
     codecs.register(search_function)
     print(f"{encoding_name} has been registered.")
-
-    if name is not None:
-        transform_source.name = name
-    console.configure(transform_source=transform_source)
+    current_state.custom_codecs_source_transform = transform_source

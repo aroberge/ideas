@@ -84,11 +84,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Custom encodings</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own codec</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lambda-codec-py">lambda_codec.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lambda-encoding-py">lambda_encoding.py</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own codec</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
@@ -129,82 +125,73 @@
 <h1>λ encoding<a class="headerlink" href="#encoding" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>Using a custom codec instead of an import hook.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_codec.py">Source code</a></p>
+<p>This shows the result of using a custom codec instead of an import hook.
+It is only included as a proof of concept, as it is not as versatile
+as the import hooks.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The following is just a quick first draft. The code shown here
-might be completely out of date and not work as written.
-As of version 0.0.17, the console example shown below did work.</p>
-</div>
-<p>Suppose we want to run a program that has a custom encoding;
-in this case, we use <code class="docutils literal notranslate"><span class="pre">λ</span></code> to represent Python’s <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: lambda-encoding</span>
+<p>Suppose we want to run a program that has a custom encoding:
+this is done in Python by inserting a special <code class="docutils literal notranslate"><span class="pre">coding</span></code> directive
+as the first line of our program.
+In this simple example as proof of concept,
+we use <code class="docutils literal notranslate"><span class="pre">λ</span></code> to represent Python’s <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: lambda_encoding</span>
 
 <span class="n">square</span> <span class="o">=</span> <span class="n">λ</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 
 <span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Using lambda-encoding: λ"</span><span class="p">)</span>  <span class="c1"># λ is not converted inside strings</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"The square of 5 is"</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The square of 5 is"</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Before we can do this, we need to make Python aware of the existence
-of our custom encoding. This can be done by having the following
-program:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># usercustomize.py</span>
-
+<p>The basic code required create the <code class="docutils literal notranslate"><span class="pre">lambda_encoding</span></code> codec, reading
+and decoding the file, is found in
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_codec.py">lambda_codec.py</a></p>
+<p>Before running our program with a custom encoding,
+we need to make Python aware of the existence
+of that encoding. Here is how we do it in the included
+test files, usually run by pytest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># test_lambda_encoding.py</span>
+<span class="c1"># The following import will automatically register a codec</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>  <span class="c1"># noqa</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"  --&gt; usercustomize.py was executed"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_import</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">short_program</span>  <span class="c1"># noqa</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">short_program</span>
 </pre></div>
 </div>
-<p>By setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> to a directory where a program named
-<code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found, any such program is automatically run before
-the main script.</p>
-<p>As we can see, when we run it, the source transformation is done
-correctly.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>TESTS:\lambda_encoding
-$ set PYTHONPATH=%CD%
-
-TESTS:\lambda_encoding
-$ python short_program.py
-  --&gt; usercustomize.py was executed
+<p>And here is the result:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
+&gt; py tests/lambda_encoding/test_lambda_encoding.py
+lambda_encoding has been registered.
 Using lambda-encoding: λ
 The square of 5 is 25
 </pre></div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>At this time, the <strong>ideas</strong> console cannot handle at the same time regular import hooks
+that are used to transform a source <strong>and</strong> transformations done using
+a custom codec: you can only use one or the other.</p>
+</div>
 <p>We can also use the <strong>ideas</strong> console and have our special encoding be used.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Configuration values for the console:</span>
-<span class="go">    transform_source from ideas.examples.lambda_codec</span>
-<span class="go">--------------------------------------------------</span>
-<span class="go">Ideas Console version 0.0.17. [Python version: 3.7.3]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">venv</span><span class="o">-</span><span class="n">ideas3</span><span class="mf">.11</span><span class="p">)</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Andre</span>\<span class="n">github</span>\<span class="n">ideas</span>
+<span class="o">&gt;</span> <span class="n">py</span>
+<span class="n">Python</span> <span class="mf">3.11.9</span> <span class="o">...</span>
 
-<span class="go">~&gt;&gt; sq = λ x: x*x</span>
-<span class="go">~&gt;&gt; sq(3)</span>
-<span class="go">9</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>
+<span class="n">lambda_encoding</span> <span class="n">has</span> <span class="n">been</span> <span class="n">registered</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span> <span class="o">=</span> <span class="n">λ</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">9</span>
+<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<section id="lambda-codec-py">
-<span id="module-ideas.examples.lambda_codec"></span><h2>lambda_codec.py<a class="headerlink" href="#lambda-codec-py" title="Link to this heading"></a></h2>
-<p>This codec replaces any Python identifier (token) represented by the
-single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
-the Python keyword.</p>
-<p>The source is assumed to be actually encoded in utf-8.</p>
-</section>
-<section id="lambda-encoding-py">
-<span id="module-ideas.custom_encoding"></span><h2>lambda_encoding.py<a class="headerlink" href="#lambda-encoding-py" title="Link to this heading"></a></h2>
-<p>This codec replaces any Python identifier (token) represented by the
-single Greek letter ‘λ’ by the corresponding string ‘lambda’ which is
-the Python keyword.</p>
-<p>The source is assumed to be actually encoded in utf-8.</p>
-</section>
 </section>
 
 

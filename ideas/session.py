@@ -24,6 +24,7 @@ class State:
         self.show_changes = False  # Do we print the transformed source code?
         self.transforming_modules = []
         self.hooks = []
+        self.custom_codecs_source_transform = None
         # The following is the source argument passed to __main__.py
         self.source_argument = None  # py [...] -m ideas [...] source_argument
         self.run_as_main_argument = False

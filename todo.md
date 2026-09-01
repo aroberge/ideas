@@ -5,11 +5,6 @@ Infrequently updated list ...
 - Mention https://www.python.org/dev/peps/pep-0511/
 - Mention that files are open using utf-8 by default.
 - Add requirements-dev.txt file
-- List cases/recipes to be included
-- Add support for `__main__`
-  - something like `import_as_main(module, name_to_use=__as_main__)` ... but
-    make an entry in sys.path so that two copies of this module are found,
-    once under its name, and once under `__as__main__`
 
 - use decode_source instead of straight read
   - perhaps use a custom encoding (lambda?) as an example

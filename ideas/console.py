@@ -93,9 +93,12 @@ class IdeasConsole(InteractiveConsole):
 
         last_line = source.endswith("\n")  # signals the end of a block
         try:
-            source = current_state.source_transforms(
-                source, filename=CONSOLE_NAME, callback_params=self.callback_params
-            )
+            if current_state.custom_codecs_source_transform is not None:
+                source = current_state.custom_codecs_source_transform(source)
+            else:
+                source = current_state.source_transforms(
+                    source, filename=CONSOLE_NAME, callback_params=self.callback_params
+                )
         except tokenize.TokenError:
             # Pass on the original source so that open (, or additional)
             # can be handled correctly as either SyntaxErrors or indication
