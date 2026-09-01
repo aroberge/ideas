@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ideas.examples.auto_self &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c7e4a82f" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guide.html"> Guide to the examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html#ideas.examples.nobreak.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nobreak.html#ideas.examples.nobreak.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.RepeatSyntaxError"><code class="docutils literal notranslate"><span class="pre">RepeatSyntaxError</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../repeat.html#ideas.examples.repeat.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html">French Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html#ideas.examples.french.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french.html#ideas.examples.french.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../french_repeat.html"> French repeat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html">Auto self</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html#ideas.examples.auto_self.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_self.html#ideas.examples.auto_self.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../decimal_math.html"> Decimal math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html">Fractional math (token based)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.source_init"><code class="docutils literal notranslate"><span class="pre">source_init()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_tok.html#ideas.examples.fractions_tok.transform_source"><code class="docutils literal notranslate"><span class="pre">transform_source()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../switch.html"> Switch statement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implicit_multiplication.html"> Implicit multiplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unnormalized_unicode.html"> Unnormalized unicode</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom parsing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html">Polish notation (parsing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.add_hook"><code class="docutils literal notranslate"><span class="pre">add_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../polish_expr.html#ideas.examples.polish_expr.parse_source"><code class="docutils literal notranslate"><span class="pre">parse_source()</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AST transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bytecode transformations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bytecode.html"> Confused math (Bytecode)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More complex examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../constants.html"> True constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../excluded.html"> Examples never included - first draft</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Custom encodings</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lambda.html"> Create your own codec</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html">import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.IdeasLoader"><code class="docutils literal notranslate"><span class="pre">IdeasLoader</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.IdeasMetaFinder"><code class="docutils literal notranslate"><span class="pre">IdeasMetaFinder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.create_hook"><code class="docutils literal notranslate"><span class="pre">create_hook()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../import_hook.html#ideas.import_hook.finder_inform"><code class="docutils literal notranslate"><span class="pre">finder_inform()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html">console.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.IdeasConsole"><code class="docutils literal notranslate"><span class="pre">IdeasConsole</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.configure"><code class="docutils literal notranslate"><span class="pre">configure()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../console.html#ideas.console.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ideas.examples.auto_self</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ideas.examples.auto_self</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+
+<span class="sd">.. admonition:: Summary</span>
+
+<span class="sd">   This example illustrates how one can change the indentation</span>
+<span class="sd">   of an entire block of code, eliminate lines, and change the</span>
+<span class="sd">   content much more drastically than what the previous</span>
+<span class="sd">   examples have done.</span>
+
+<span class="sd">   The idea behind this example is to help reduce the amount of typing</span>
+<span class="sd">   required and increases readability when assigning attributes in a</span>
+<span class="sd">   class's ``__init__()`` method.</span>
+
+<span class="sd">Auto self</span>
+<span class="sd">==========</span>
+
+<span class="sd">Python is known for its concise and readable syntax. One exception</span>
+<span class="sd">about the concisiveness is the boiler plate code that has to be</span>
+<span class="sd">written when defining one's own class, especially if it has</span>
+<span class="sd">many attributes, like::</span>
+
+<span class="sd">    self.this_variable = this_variable</span>
+<span class="sd">    self.that_variable = that_variable</span>
+<span class="sd">    self.this_other_variable = this_other_variable</span>
+<span class="sd">    self.foo = foo</span>
+<span class="sd">    self.bar = bar</span>
+
+<span class="sd">    self.baz = [] if baz is None else baz</span>
+<span class="sd">    self.spam = bread + ham</span>
+
+
+<span class="sd">This leads people to ask on various forums, such as</span>
+<span class="sd">`this question on StackOverflow &lt;https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a&gt;`_,</span>
+<span class="sd">how to do automatic assignment of attributes.  The answers most often given</span>
+<span class="sd">are:</span>
+
+<span class="sd">  - Don't do it; learn to live with the explicit ``self``.</span>
+<span class="sd">  - Use a decorator, with various examples provided.</span>
+
+
+<span class="sd">As programmers create more classes, they find the need to add their own</span>
+<span class="sd">dunder methods, such as ``__eq__(self, other)``, ``__repr__(self)``, etc.</span>
+<span class="sd">Eventually, they might get annoyed enough at having to re-create these methods</span>
+<span class="sd">too often, with the occasional typo causing bugs that they jump with</span>
+<span class="sd">joy when discovering `attrs: Classes Without Boilerplate &lt;https://www.attrs.org/en/stable/&gt;`_.</span>
+
+<span class="sd">Starting with Python 3.7, the standard library includes</span>
+<span class="sd">`dataclasses &lt;https://docs.python.org/3/library/dataclasses.html&gt;`_ which shares some</span>
+<span class="sd">similarity with ``attrs``. However, it does require to use type hints which,</span>
+<span class="sd">in my opinion, reduces readability; note that many (most?) programmers find that</span>
+<span class="sd">type hints do increase readability.</span>
+
+<span class="sd">As a concrete example of using traditional Python notation and</span>
+<span class="sd">dataclasses, let's consider the code given in</span>
+<span class="sd">`PEP 557  &lt;https://www.python.org/dev/peps/pep-0557/&gt;`_ but reformatted with Black::</span>
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            self,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path="",</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            self.name = name</span>
+<span class="sd">            self.requirements = requirements</span>
+<span class="sd">            self.constraints = {} if constraints is None else constraints</span>
+<span class="sd">            self.path = path</span>
+<span class="sd">            self.executable_links = [] if executable_links is None else executable_links</span>
+<span class="sd">            self.executables_dir = executables_dir</span>
+<span class="sd">            self.additional_items = []</span>
+
+<span class="sd">From the same PEP document, this is the proposed code</span>
+<span class="sd">which gives the same initialization, but using the ``@dataclass``</span>
+<span class="sd">decorator::</span>
+
+<span class="sd">    from dataclasses import dataclass</span>
+
+<span class="sd">    @dataclass</span>
+<span class="sd">    class Application:</span>
+<span class="sd">        name: str</span>
+<span class="sd">        requirements: List[Requirement]</span>
+<span class="sd">        constraints: Dict[str, str] = field(default_factory=dict)</span>
+<span class="sd">        path: str = ''</span>
+<span class="sd">        executable_links: List[str] = field(default_factory=list)</span>
+<span class="sd">        executable_dir: Tuple[str] = ()</span>
+<span class="sd">        additional_items: List[str] = field(init=False, default_factory=list)</span>
+
+
+<span class="sd">This code does more than simply initializing the variables, but I</span>
+<span class="sd">do not find it particularly readable.</span>
+
+<span class="sd">So, I was wondering if it might be possible to imagine a simpler syntax.</span>
+<span class="sd">``auto_self`` is what I came up with.</span>
+
+<span class="sd">.. admonition:: That ship has sailed ...</span>
+
+<span class="sd">    I realize that there is zero chance that the following syntax would</span>
+<span class="sd">    be adopted, especially now that the ``dataclasses`` module has been added to</span>
+<span class="sd">    the Python standard library. Still, you can try it out using</span>
+<span class="sd">    ``auto_self`` hook.</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            self,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path="",</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            self .= :</span>
+<span class="sd">                name</span>
+<span class="sd">                requirements</span>
+<span class="sd">                constraints = {} if __ is None else __</span>
+<span class="sd">                path</span>
+<span class="sd">                executable_links = [] if __ is None else __</span>
+<span class="sd">                executables_dir</span>
+<span class="sd">                additional_items = []</span>
+
+<span class="sd">Here, I am using a new operator, ``.=``, which is meant to represent</span>
+<span class="sd">the automatic assignment of a variable to the name that precedes</span>
+<span class="sd">it (``self`` in this example).  I have seen this idea for such an operator before on</span>
+<span class="sd">**python-ideas** but never for introducing a code block as I do here.</span>
+
+<span class="sd">By design, any *dunder* (double underscore), ``__``, is taken to be equivalent to the variable</span>
+<span class="sd">being initialized.  I chose a dunder instead of a single underscore ``_``</span>
+<span class="sd">so that it could be used in a REPL without creating conflicts with the</span>
+<span class="sd">existing use of a single underscore in Python's REPL.  I also find that it</span>
+<span class="sd">makes it more readable.</span>
+
+<span class="sd">Of course, one is not restricted to using ``self``, or having to use ``__``</span>
+<span class="sd">everywhere. The following is completely equivalent - although I now</span>
+<span class="sd">find it less readable, having been used to seeing ``__`` as easy to scan</span>
+<span class="sd">placeholder::</span>
+
+
+<span class="sd">    class Application:</span>
+<span class="sd">        def __init__(</span>
+<span class="sd">            cls,</span>
+<span class="sd">            name,</span>
+<span class="sd">            requirements,</span>
+<span class="sd">            constraints=None,</span>
+<span class="sd">            path="",</span>
+<span class="sd">            executable_links=None,</span>
+<span class="sd">            executables_dir=(),</span>
+<span class="sd">        ):</span>
+<span class="sd">            cls .= :</span>
+<span class="sd">                name</span>
+<span class="sd">                requirements</span>
+<span class="sd">                constraints = {} if constraints is None else constraints</span>
+<span class="sd">                path</span>
+<span class="sd">                executable_links = [] if __ is None else executable_links</span>
+<span class="sd">                executables_dir</span>
+
+<span class="sd">            cls.additional_items = []</span>
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    Unlike ``@dataclass`` or ``attrs``, no additional method is</span>
+<span class="sd">    created by ``auto_self``.</span>
+
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_hook</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">token_utils</span>
+
+
+<div class="viewcode-block" id="transform_source">
+<a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.transform_source">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Replaces code like::</span>
+
+<span class="sd">        self .= :</span>
+<span class="sd">            a</span>
+<span class="sd">            b</span>
+<span class="sd">            c = this if __ == that else ___</span>
+
+<span class="sd">    by::</span>
+
+<span class="sd">        self.a = a</span>
+<span class="sd">        self.b = b</span>
+<span class="sd">        self.c = this if c == that else c</span>
+<span class="sd">    """</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">auto_self_block</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">self_name</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="n">indentation</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">get_nb</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_number</span>
+    <span class="n">get_first</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span>
+    <span class="n">get_first_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span>
+
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">auto_self_block</span><span class="p">:</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="n">get_first</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># None would mean an empty line</span>
+                <span class="n">var_name</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">string</span>
+                <span class="n">block_indent</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">start_col</span>
+                <span class="k">if</span> <span class="n">block_indent</span> <span class="o">&gt;</span> <span class="n">indentation</span><span class="p">:</span>
+                    <span class="n">dedent</span> <span class="o">=</span> <span class="n">block_indent</span> <span class="o">-</span> <span class="n">indentation</span>
+                    <span class="k">if</span> <span class="n">get_nb</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">variable</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">self_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">"</span>
+                        <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">dedent</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">variable</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">self_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">"</span>
+                        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">"__"</span><span class="p">:</span>
+                                <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">var_name</span>
+                        <span class="n">tokens</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">dedent</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">auto_self_block</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">get_nb</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">get_first_index</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">is_identifier</span><span class="p">()</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"."</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"="</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">end_col</span> <span class="o">==</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_col</span>
+                <span class="ow">and</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">":"</span>
+            <span class="p">):</span>
+                <span class="n">self_name</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">string</span>
+                <span class="n">indentation</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">start_col</span>
+                <span class="n">auto_self_block</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">continue</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="add_hook">
+<a class="viewcode-back" href="../../../auto_self.html#ideas.examples.auto_self.add_hook">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Creates and adds the import hook in sys.meta_path"""</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span>
+        <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -264,6 +264,5 @@ def add_hook(on_prevent_change_feedback=None):
         callback_params=callback_params,
         console_dict=console_dict,
         name=__name__,
-        first=True,
     )
     return hook
