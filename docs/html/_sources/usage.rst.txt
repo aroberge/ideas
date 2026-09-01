@@ -1,6 +1,11 @@
 Usage
 =====
 
+.. important::
+
+    As of August 18 2026, I've started updating this project after a 4 year hiatus. 
+    The version that can be installed via pypi (using pip) has not been updated yet.
+
 .. admonition:: Hello World!
 
     All the examples below, as well as a few other mentioned later,
