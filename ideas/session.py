@@ -8,7 +8,6 @@ configuration choice during a single run/session."""
 # the interactive console in sync with changes introduced by
 # various transformers.
 
-from collections import defaultdict
 import sys
 
 from .ideas_hook import IdeasHook
@@ -31,7 +30,7 @@ class State:
         self.source_argument = None  # py [...] -m ideas [...] source_argument
         self.run_as_main_argument = False
         #
-        self.patches = defaultdict(list)
+        self.patches = {}
 
     def get_hook_by_name(self, name):
         """Finds a previously imported hook based on its name.
@@ -61,7 +60,8 @@ class State:
 
     def remove_hook(self, name_or_hook):
         """Removes completely a given import hook, either by its name
-        or by the an IdeasHook instance.
+        or by the an IdeasHook instance. Use name_or_hook="*" as a
+        shortcut for removing all hooks.
 
         Since many of the import hooks are found in the ideas.examples directory
         one can use "module_name" as an abbreviation of "ideas.examples.module_name".
@@ -128,7 +128,7 @@ class State:
 
     def enable_hook(self, name_or_hook):
         """Enables a given import hook, either by its name or by the IdeasHook
-        instance. Use name_or_hook="*" as a shortcut for disabling all hooks.
+        instance. Use name_or_hook="*" as a shortcut for enabling all hooks.
 
         Since many of the import hooks are found in the ideas.examples directory
         one can use "module_name" as an abbreviation of "ideas.examples.module_name".
@@ -220,13 +220,16 @@ class State:
 
             add_hook()
 
+        if module_name not in self.patches:
+            self.patches[module_name] = []
+
         self.patches[module_name].append(func)
         if module_name in sys.modules:
             del sys.modules[module_name]
 
     def remove_patches(self):
         """Mainly for cleaning up after test"""
-        self.patches = defaultdict(list)
+        self.patches = {}
 
 
 current_state = State()

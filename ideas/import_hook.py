@@ -216,9 +216,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                 raise
 
         if module.__name__ not in current_state.patches:
-            # current_state.patches is a defaultdict; looping over
-            # absent values can seemingly create default ones.
-            # So we check before doing a for loop.
             return
 
         for patch in current_state.patches[module.__name__]:
