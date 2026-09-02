@@ -203,6 +203,7 @@ class State:
         """Adds patch to be applied to a module.
 
         ``module_name``: the full name of the module to be patched
+
         ``func``: a callable which takes as a single argument a module object
         and returns a modified (patched) module object.
 
@@ -211,9 +212,6 @@ class State:
 
         If ``module_name`` has already been imported, it is deleted from
         ``sys.modules`` so that it can be properly patched."""
-
-        print("\n  add_patch called with", module_name, func)
-
         # We need at least one active hook to make transformations
         if not self.hooks:
             from .null_hook import add_hook

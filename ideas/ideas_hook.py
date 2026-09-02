@@ -27,7 +27,7 @@ class IdeasHook:
         self.callback_params = callback_params
         self.create_module = create_module
         if excluded_paths is utils.DEFAULT:
-            self.excluded_paths = []
+            self.excluded_paths = [utils.PYTHON, utils.SITE_PACKAGES, utils.IDEAS]
         elif excluded_paths is None:
             self.excluded_paths = []
         else:

@@ -9,7 +9,7 @@ import os
 import sys
 
 from importlib.abc import Loader, MetaPathFinder
-from importlib.util import spec_from_file_location, decode_source
+from importlib.util import spec_from_file_location, decode_source, find_spec
 from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
@@ -56,19 +56,18 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
         else:
             module_name = fullname
 
-        if current_state.patches:
-            print(f"\n {current_state.patches=}\n")
-            if utils.PYTHON in self.ideas_hook.excluded_paths:
-                self.ideas_hook.excluded_paths.remove(utils.PYTHON)
-            if utils.SITE_PACKAGES in self.ideas_hook.excluded_paths:
-                self.ideas_hook.excluded_paths.remove(utils.SITE_PACKAGES)
-            if utils.IDEAS in self.ideas_hook.excluded_paths:
-                self.ideas_hook.excluded_paths.remove(utils.IDEAS)
+        # When patching, we may want to consider modules that are normally excluded
+        # from import hooks
+        if current_state.patches and self.ideas_hook.excluded_paths:
+            temporary_inclusions = self.suspend_exclusions(fullname)
+        else:
+            temporary_inclusions = []
 
         for entry in path:
             skip = False
             for sub_path in self.ideas_hook.excluded_paths:
-                if sub_path in entry.lower():
+                if entry.lower().startswith(sub_path.lower()):
+                    print(f"\n {entry.lower()=}\n {sub_path.lower()=}\n")
                     skip = True
                     if current_state.verbose:
                         print("    Skipping over:", utils.shorten_path(entry))
@@ -96,6 +95,9 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             else:
                 continue
 
+            # Re-exclude paths as they were prior to attempting a patch
+            for pth in temporary_inclusions:
+                self.ideas_hook.excluded_paths.append(pth)
             return spec_from_file_location(
                 fullname,
                 filename,
@@ -112,7 +114,48 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
                     parse_source=self.ideas_hook.parse_source,
                 ),
             )
+        for pth in temporary_inclusions:
+            self.ideas_hook.excluded_paths.append(pth)
         return None  # we don't know how to import this
+
+    def suspend_exclusions(self, fullname):
+        """By default, import hooks do not process modules from the standard
+        library or site packages. Other folders could be excluded by a user
+        configuring an import hook.
+        However, we want to allow patching modules all modules. This is
+        the purpose of this function. It returns paths that were
+        temporarily allowed so that they can be re-excluded once the
+        required patches are applied."""
+
+        if "." in fullname:
+            module_name = fullname.split(".")[-1]
+            package_name = fullname.split(".")[:-1]
+        else:
+            module_name = fullname
+            package_name = None
+        enabled_status = []
+
+        # Ensure that our import hooks are disabled so that Python
+        # can find the required modules
+        for hook in current_state.hooks:
+            enabled_status.append(hook.enabled)
+            hook.enabled = False
+
+        spec = find_spec(module_name, package_name)
+        if spec is None:
+            return []
+
+        _excluded_paths = []
+        for excl_path in self.ideas_hook.excluded_paths:
+            if spec.origin.lower().startswith(excl_path):
+                self.ideas_hook.excluded_paths.remove(excl_path)
+                _excluded_paths.append(excl_path)
+
+        # Recover the original status for the hooks
+        for status, hook in zip(enabled_status, current_state.hooks):
+            hook.enabled = status
+
+        return _excluded_paths
 
 
 class IdeasLoader(Loader):  # pylint: disable=R0902
@@ -222,6 +265,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             if current_state.verbose:
                 print("patching ", module.__name__)
             module = patch(module)
+        else:
+            current_state.patches.pop(module.__name__)
 
 
 def create_hook(
@@ -262,9 +307,11 @@ def create_hook(
       a module's dict.
     * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,
       used to identify modules containing source code.
-    * ``excluded_paths``: a list of paths to be excluded for consideration.
-      If not specified, excluded paths include the location of the standard
+    * ``excluded_paths``: a list of paths, written as strings,
+      to be excluded for consideration.
+      If using the default argument, excluded paths include the location of the standard
       library, the site packages, as well as files from this project.
+      If the argument is None, this becomes an empty list.
     * ``first``: if ``True``, the custom hook will be used as the first
       location in ``sys.meta_path``, to look for source files.
     * ``ipython_ast_node_transformer``: used to do AST transformations in an
