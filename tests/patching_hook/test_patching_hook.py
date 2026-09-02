@@ -1,5 +1,5 @@
+import sys
 from ideas import add_patch, remove_hook, disable_hook, current_state
-
 from ideas.examples import function_keyword, nobreak
 
 def on_socket_import(module):
@@ -35,3 +35,31 @@ def test_patch():
     # Clean up
     remove_hook("*")
 
+def test_freeze():
+    from ideas.utils import freeze_globally
+    import math as original_math
+
+    pi = original_math.pi
+
+    math = freeze_globally("math")
+
+    exception_raised = False
+    try:
+        math.pi = 4
+    except AttributeError:
+        exception_raised = True
+    assert exception_raised, "Exception was raised when trying to change value"
+
+    original_math.pi = 4  # can change value of this object
+
+    assert math.pi != original_math.pi, "Value was changed in original"
+    assert math.sqrt(4) == original_math.sqrt(4)
+
+    # remove and import again: it should be the frozen module
+    del math
+    import math
+
+    assert math.pi == pi
+
+    # Clean up
+    sys.modules.pop("math")

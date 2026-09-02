@@ -31,8 +31,8 @@ def finder_inform(text):
 
 
 class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
-    """A custom finder to locate modules. The main reason for this code
-    is to ensure that our custom loader, which does the code transformations,
+    """A custom finder to locate modules. The main reason for this code is
+    to ensure that our custom loader, which does the code transformations,
     is used."""
 
     def __init__(self, ideas_hook=None):  # pylint: disable=R0913
@@ -58,7 +58,14 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
 
         # When patching, we may want to consider modules that are normally excluded
         # from import hooks
-        if current_state.patches and self.ideas_hook.excluded_paths:
+        if (
+            current_state.patches
+            and self.ideas_hook.excluded_paths
+            and (
+                fullname in current_state.patches
+                or module_name in current_state.patches
+            )
+        ):
             temporary_inclusions = self.suspend_exclusions(fullname)
         else:
             temporary_inclusions = []
@@ -67,7 +74,6 @@ class IdeasMetaFinder(MetaPathFinder):  # pylint: disable=R0902
             skip = False
             for sub_path in self.ideas_hook.excluded_paths:
                 if entry.lower().startswith(sub_path.lower()):
-                    print(f"\n {entry.lower()=}\n {sub_path.lower()=}\n")
                     skip = True
                     if current_state.verbose:
                         print("    Skipping over:", utils.shorten_path(entry))

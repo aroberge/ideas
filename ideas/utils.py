@@ -5,6 +5,7 @@ A few utility functions for this project.
 """
 
 import os
+import sys
 import uuid
 
 import token_utils  # to find the path of site-packages
@@ -105,3 +106,46 @@ def generate_predictable_names():
     while True:
         index += 1
         yield f"_{index}"
+
+
+class ReadOnly:
+    """
+    This class is used to make a module immutable (read-only),
+    preventing any change to its content. Use it as follows:
+
+    read_only_module = ReadOnly(module)
+    """
+
+    # Usually, one would write "module = ReadOnly(module)"
+
+    def __init__(self, module):
+        self.__dict__["_private_dict"] = module
+        self.__dict__.update(module.__dict__)
+
+    @property
+    def _private_dict(self):
+        return None
+
+    def __getattr__(self, name):
+        return getattr(self._private_dict, name)
+
+    def __setattr__(self, name, value):
+        raise AttributeError(f"You cannot change the value of {self.__name__}.{name}.")
+
+    def __delattr__(self, name):
+        raise AttributeError(f"You cannot delete {self.__name__}.{name}.")
+
+
+def freeze_globally(module_name):
+    """Imports a module, transforms it into a ReadOnly version,
+    and replaces the existing module in sys.modules[module_name]
+    by this frozen version so that any subsequent import will be
+    the frozen module.
+
+    This is used to freeze various modules including built-in ones
+    (like math) which our import hooks cannot import and modify.
+    """
+    module = __import__(module_name)
+    frozen_module = ReadOnly(module)
+    sys.modules[module_name] = frozen_module
+    return frozen_module
