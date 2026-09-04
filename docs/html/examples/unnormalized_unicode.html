@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unnormalized unicode &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Polish notation (parsing)" href="polish_expr.html" />
+    <link rel="prev" title="Implicit multiplication" href="implicit_multiplication.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Unnormalized unicode</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#more-to-come">More to come…</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Unnormalized unicode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/unnormalized_unicode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="polish_expr.html" class="btn btn-neutral float-right" title="Polish notation (parsing)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="unnormalized-unicode">
+<h1>Unnormalized unicode<a class="headerlink" href="#unnormalized-unicode" title="Link to this heading"></a></h1>
+<blockquote class="epigraph">
+<div><p><em>The idea for this example came from Sergey B. Kirpichev, who also
+wrote the first implementation.</em></p>
+</div></blockquote>
+<p>Consider the following examples from Julia’s repl.</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ℕ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="mi">1</span>
+
+<span class="n">julia</span><span class="o">&gt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="mi">2</span>
+
+<span class="n">julia</span><span class="o">&gt;</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">ℕ</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s attempt to do the same thing with Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ℕ</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">ℕ</span>
+<span class="go">(2, 2)</span>
+</pre></div>
+</div>
+<p>Clearly, something is very different between these two programming
+environments, both used heavily by scientists. It is possible to make
+Python’s output look similar to that of Julian.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a unnormalized_unicode
+   The following initializing code from ideas is included:
+
+true_dir = dir
+from ideas.examples.unnormalized_unicode import new_dir as dir
+
+Ideas Console version 0.0.34. [Python version: 3.8.10]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ℕ</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span><span class="p">,</span> <span class="n">ℕ</span>
+<span class="go">(2, 1)</span>
+</pre></div>
+</div>
+<p>To understand why Python normally consider <code class="docutils literal notranslate"><span class="pre">ℕ</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code> to be the
+same requires more knowledge about unicode than what is found in a typical
+tutorial.  But before we take a deeper dive into unicode land, let’s
+take a detour and talk about Julia.</p>
+<section id="more-to-come">
+<h2>More to come…<a class="headerlink" href="#more-to-come" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="polish_expr.html" class="btn btn-neutral float-right" title="Polish notation (parsing)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

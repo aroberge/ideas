@@ -6,106 +6,68 @@ Source transformations and AST transformations can be used interactively
 in IPython/Jupyter environments;  bytecode transformations and custom
 encoding cannot.
 
+.. sidebar:: Contribute!
+
+    Feel free to contribute your own examples. However, note that,
+    for safety reasons, I will not accept examples that result in 
+    importing arbitrary code/modules from the Internet, as demonstrated
+    in one of David Beazley's talks.
+
+
 Source transformations
 ----------------------
 
+Source transformations represent one of the easiest way to 
+introduce new experimental syntax in Python. 
+If you want to write your own import hook, it might be worth your while
+reading a few of the following examples, if not all of them,
+especially including examining the source code.
 
-nobreak as a keyword
-~~~~~~~~~~~~~~~~~~~~~
+.. toctree::
+    :maxdepth: 1
 
-This is a sligthly more complex example than 'function as a keyword',
-as it shows how to keep track of indentation
-level and only replace a keyword when some conditions are met.
+    nobreak as a keyword <examples/nobreak>
+    repeat as a keyword <examples/repeat>
+    French Python <examples/french>
+    French repeat <examples/french_repeat>
+    Auto-self <examples/auto_self>
+    Decimal math <examples/decimal_math>
+    Fractional math (token) <examples/fractional_math_tok>
+    Switch statement <examples/switch>
+    Implicit multiplication <examples/implicit_multiplication>
+    Unnormalized unicode <examples/unnormalized_unicode>
 
+Custom parsing
+--------------
 
-repeat as a keyword
-~~~~~~~~~~~~~~~~~~~~
+.. toctree::
+    :maxdepth: 1
 
-This includes four different transformations,
-one of which requires to add some extra variables to the original code.
-It is done in a way that avoid any conflict with existing variable names.
+    Polish expressions <examples/polish_expr>
 
-It also shows how to include some parameters that are passed back to the
-source transformation.
+AST transformations
+-------------------
 
-French Python
-~~~~~~~~~~~~~
+.. toctree::
+   :maxdepth: 1
 
-This is a source transformation that allows one
-to use French equivalent keywords to the existing ones.
-It shows how to make use of a different file extension (``.pyfr``),
-loading such files as if they were regular Python files.
-
-French repeat
-~~~~~~~~~~~~~~
-
-Extends the French keywords from **French Python** to include those
-in **repeat as a keyword**. It then combines both examples into
-a single transformation.
-
-Auto-self
-~~~~~~~~~~~~~~
-
-This is an example of a syntax that is intended to reduce
-boilerplate code when initializing a class instance.
-The code transformation is more complex than the previous ones and
-include a change of indentation of an entire block of code.
-
-Fractional math (token)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a functionally equivalent version to the AST proof of concept
-example [Fractional math (ast)] mentioned below.
-It demonstrates how to include
-supplementary code, such as importing a module or defining a function,
-in addition to the user code, while ensuring that the console (REPL)
-can still work properly.
-
-Switch statement
-~~~~~~~~~~~~~~~~~
-
-Implementing a switch statement as described in the rejected PEP 3103.
-This example was done quite a few years ago, well before the
-match statement was added to Python.
-
-Implicit multiplication
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Python's syntax does not allow to write a number followed by an
-non-keyword identifier or by a parenthesis, nor does it allow to write two
-non-keyword identifiers in a row. However, when writing equations on
-paper, these constructs are recognized as indicating a multiplication.
-This transformation does the same.
-
-Abstract Syntax Tree transformations
-------------------------------------
-
-Fractional math (AST)
-~~~~~~~~~~~~~~~~~~~~~~
-
-This is a proof-of-concept of a transformation
-at the Abstract Syntax Tree level. It also shows how to include
-supplementary code, such as importing a module or defining a function,
-in addition to the user code while ensuring that the console (REPL)
-can still work properly.
-
+    Fractional math (AST) <examples/fractional_math_ast>
 
 Bytecode transformations
--------------------------
+------------------------
 
-Confused math
-~~~~~~~~~~~~~~~~~
+.. toctree::
+   :maxdepth: 1
 
-This is a proof-of-concept demonstrating bytecode transformation.
+    Confused math (Bytecode) <examples/bytecode>
 
-Other types
-------------
+More complex examples
+---------------------
 
-True constants
-~~~~~~~~~~~~~~
+.. toctree::
+   :maxdepth: 2
 
-This is a fairly complex example that illustrates
-the use of a custom module dict and class.
+    True constants <examples/constants>
 
 Custom encoding
 ---------------
@@ -113,9 +75,8 @@ Custom encoding
 Import hooks are not the only way one can transform a source; this
 can also be done by custom encodings.
 
-λ encoding
-~~~~~~~~~~~~~~~
+.. toctree::
+   :maxdepth: 1
 
-This is an adaptation of our basic example, but using a custom
-encoding which needs to be explicitly declared in a file whose
-source must be transformed.
+    Create your own codec <examples/lambda>
+

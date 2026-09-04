@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fractional math (token based) &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Switch statement" href="switch.html" />
+    <link rel="prev" title="Decimal math" href="decimal_math.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Fractional math (token based)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/fractional_math_tok.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="decimal_math.html" class="btn btn-neutral float-left" title="Decimal math" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Switch statement" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This is a functionally equivalent version to the AST proof of concept
+example [Fractional math (ast)] mentioned below.
+It demonstrates how to include
+supplementary code, such as importing a module or defining a function,
+in addition to the user code, while ensuring that the console (REPL)
+can still work properly.</p>
+</div>
+<section id="fractional-math-token-based">
+<span id="module-ideas.examples.fractions_tok"></span><h1>Fractional math (token based)<a class="headerlink" href="#fractional-math-token-based" title="Link to this heading"></a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This is includes a source transformation that converts
+integers literals that are followed by the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator
+into instances of the Fraction class in the source using the tokenizer.</p>
+<p>In a later section, we do something similar but using an
+Abstract Syntax Tree (AST) transformation, which is a more robust
+approach for this type of example.</p>
+</div>
+<p>Consider the following standard Python code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0.0</span>
+<span class="go">0.1</span>
+<span class="go">0.2</span>
+<span class="go">0.30000000000000004</span>
+<span class="go">0.4</span>
+<span class="go">0.5</span>
+<span class="go">0.6000000000000001</span>
+<span class="go">0.7000000000000001</span>
+<span class="go">0.8</span>
+<span class="go">0.9</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>This is quite surprising for beginners, not familiar with the
+limitations of representing floating point numbers.</p>
+<p>However, we can “fix” this using an import hook that wraps
+integer, which are followed by a <code class="docutils literal notranslate"><span class="pre">/</span></code>, into a <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">fractions_tok</span>
+   <span class="n">The</span> <span class="n">following</span> <span class="n">initializing</span> <span class="n">code</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span> <span class="ow">is</span> <span class="n">included</span><span class="p">:</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fractions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fraction</span>
+
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.38</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span>  <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+  <span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+  <span class="o">...</span>
+<span class="mi">0</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">3</span><span class="o">/</span><span class="mi">10</span>
+<span class="mi">2</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">1</span><span class="o">/</span><span class="mi">2</span>
+<span class="mi">3</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">7</span><span class="o">/</span><span class="mi">10</span>
+<span class="mi">4</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">9</span><span class="o">/</span><span class="mi">10</span>
+<span class="mi">1</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
+<span class="n">new</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This example was created after a similar example using AST transformation
+was created as a proof of concept. For more details about the
+difference, please have a look at the AST-based example.</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.fractions_tok.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Link to this definition"></a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.fractions_tok.source_init">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Link to this definition"></a></dt>
+<dd><p>Adds required import so that <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> is a known object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.fractions_tok.transform_source">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.transform_source" title="Link to this definition"></a></dt>
+<dd><p>Replace integers (followed by /) by Fraction objects</p>
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="decimal_math.html" class="btn btn-neutral float-left" title="Decimal math" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Switch statement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

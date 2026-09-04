@@ -1,2 +1,0 @@
-.. automodule:: ideas.examples.french
-

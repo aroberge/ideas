@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Switch statement &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Implicit multiplication" href="implicit_multiplication.html" />
+    <link rel="prev" title="Fractional math (token based)" href="fractional_math_tok.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Switch statement</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#this-implementation">This implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Switch statement</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/switch.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-right" title="Implicit multiplication" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="switch-statement">
+<h1>Switch statement<a class="headerlink" href="#switch-statement" title="Link to this heading"></a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>Implementing a switch statement as described in the rejected PEP 3103.
+This example was done quite a few years ago, well before the
+match statement was added to Python.</p>
+<p><strong>Limitation</strong>: a switch statement cannot contain another switch statement.</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/switch.py">Source code</a></p>
+</div>
+<p>There have been 2 PEPs looking at the possibility of adding a <code class="docutils literal notranslate"><span class="pre">switch</span></code>
+statement to Python.
+First, in 2001, <a class="reference external" href="https://www.python.org/dev/peps/pep-0275/">PEP 275</a> made
+this suggestion. This was later superceded by <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a> written in 2006 by Guido van Rossum and, after a straw poll during
+his keynote at PyCon 2007, he rejected it.</p>
+<p>In order to “play” with the syntax and try to evaluate the benefit,
+I decided to implement it. PEP 3103 looks at various possible syntax,
+and I chose the one which seemed the most in line with normal Python syntax,
+namely version 1 B. The implementation meant to replace code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="k">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="n">SUITE</span>
+    <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_name</span> <span class="o">=</span> <span class="n">EXPR</span>
+<span class="k">if</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="p">(</span><span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+        <span class="n">SUITE</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">del</span> <span class="n">var_name</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">var_name</span></code> is a unique variable name chosen randomly.
+Note that I didn’t bother to dedent the inner <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> as it is
+never shown to the end user and would only complicate the code.</p>
+<section id="this-implementation">
+<h2>This implementation<a class="headerlink" href="#this-implementation" title="Link to this heading"></a></h2>
+<p>The actual result is not particularly enlightning.
+PEP 3103 considers the fact that each <code class="docutils literal notranslate"><span class="pre">SUITE</span></code> has two levels
+of indentation to be a downside. Personally, after writing some testing
+code with it (not saved anywhere), I found the fact that, due to having
+all the <code class="docutils literal notranslate"><span class="pre">case</span></code> statements indented make the code stand out better than
+having a traditional <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code> suite; so, I consider the extra
+indentation to be a bonus. However, perhaps I might feel otherwise if I
+always limited myself to having line with no more than 79 characters
+which was the norm when the PEP was written.</p>
+<section id="switch-py">
+<span id="module-ideas.examples.switch"></span><h3>switch.py<a class="headerlink" href="#switch-py" title="Link to this heading"></a></h3>
+<p>Implements something similar to version 1.B of
+<a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a></p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.switch.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Link to this definition"></a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.switch.transform_source">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Link to this definition"></a></dt>
+<dd><p>Replaces code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="k">case</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="n">case</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+    <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var_name</span> <span class="o">=</span> <span class="n">EXPR</span>
+<span class="k">if</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_1</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="o">==</span> <span class="n">EXPR_2</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">elif</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">EXPR_3</span><span class="p">,</span> <span class="n">EXPR_4</span><span class="p">,</span> <span class="o">...</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="n">SUITE</span>
+<span class="k">del</span> <span class="n">var_name</span>
+</pre></div>
+</div>
+<p>Limitation: switch blocks cannot be part of a SUITE of another switch block.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="implicit_multiplication.html" class="btn btn-neutral float-right" title="Implicit multiplication" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

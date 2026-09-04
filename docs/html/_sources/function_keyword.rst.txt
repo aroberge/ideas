@@ -45,7 +45,10 @@ Here's how we can do it using **ideas**::
     def some_arbitrary_name(source, **kwargs):
          return source.replace("function", "lambda")
 
-    import_hook.create_hook(transform_source=some_arbitrary_name)
+    import_hook.create_hook(
+        transform_source=some_arbitrary_name,
+        name=__name__  # required
+    )
 
 That's it! Prior to having Python execute the source code,
 ideas will take care of using the function ``some_arbitrary_name()``

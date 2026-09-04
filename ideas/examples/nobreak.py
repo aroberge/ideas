@@ -1,9 +1,4 @@
 """
-.. admonition:: Summary
-
-    This module enables someone to use ``nobreak`` as a keyword
-    equivalent to ``else`` in ``for`` and ``while`` loops.
-
 nobreak as a keyword
 ========================
 
@@ -22,8 +17,10 @@ When I first understood this, I thought *wouldn't it be nice if, instead
 of using* ``else:``, *one could write something like* ``if not break:`` which
 uses only existing Python keywords.
 For this example, I decided instead that a suggestion made by Raymond Hettinger
-to have ``nobreak`` as a keyword made the most sense.
-It can be used instead of ``else`` in the above example::
+to have ``nobreak`` as a keyword made the most sense, even though I could just
+as easily have used ``if no break`` instead.
+
+So, with this import hook, ``nobreak`` can be used instead of ``else`` in the above example::
 
     while condition:
         # some
@@ -32,6 +29,8 @@ It can be used instead of ``else`` in the above example::
     nobreak:
         # will be executed only if no
         # break statement occurred above
+
+This will be also the case for a ``for`` loop.
 
 
 ``nobreak`` instead of ``else`` in ``if/else``
@@ -67,28 +66,6 @@ From `Python's documentation <https://docs.python.org/3/reference/compound_stmts
 Since multiple causes can prevent the ``else`` clause from being executed,
 it makes little sense in this case to use a different keyword such as
 ``nobreak``, that would point to a specific cause which would likely be wrong.
-
-Useful function from ``token_utils``
--------------------------------------
-
-The code for ``nobreak`` makes use of the ``get_first`` function from
-``token_utils``. Here's some useful information about it.
-
-.. code-block::
-
-    >>> import token_utils
-    >>> help(token_utils.get_first)
-    Help on function get_first in module token_utils:
-
-    get_first(tokens, exclude_comment=True)
-        Given a list of tokens, find the first token which is not a space token
-        (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,
-        by default, also not a ``COMMMENT``.
-
-        ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.
-
-        Returns ``None`` if none is found.
-
 """
 
 from ideas import create_hook

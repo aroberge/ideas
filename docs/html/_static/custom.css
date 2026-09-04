@@ -23,9 +23,7 @@ h3 {background-color: #e7f5ff;
     .wy-menu-vertical li.toctree-l3 a:hover,
     .wy-menu-vertical li.toctree-l4 a:hover {background-color: #a5d8ff;}
 
-
 .wy-menu-vertical li.current a {border-right: none;}
-
 
 .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
     background-color: #f0f8ff;}

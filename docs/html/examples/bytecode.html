@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confused math &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="True constants" href="constants.html" />
+    <link rel="prev" title="Fractional math (AST)" href="fractional_math_ast.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"> Confused math (Bytecode)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-ideas.examples.confused_math_bc">API for <code class="docutils literal notranslate"><span class="pre">confused_math_bc</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Confused math</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/bytecode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This example is just a proof-of-concept that shows how to
+create an import hook that mutates a bytecode object.</p>
+</div>
+<section id="confused-math">
+<h1>Confused math<a class="headerlink" href="#confused-math" title="Link to this heading"></a></h1>
+<p>This demonstrates what happens if we swap the meaning of
+the <code class="docutils literal notranslate"><span class="pre">BINARY_ADD</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_MULTIPLY</span></code> bytecodes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a confused_math_bc
+Ideas Console version 0.0.34. [Python version: 3.10.2]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="go">21</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Python does simple mathematical operations *before*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generating bytecode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>Yes, it is a silly example. However, I cannot come up with anything
+possibly useful to demonstrate the value of changing bytecode.
+Feel free to submit a better example.</p>
+<section id="module-ideas.examples.confused_math_bc">
+<span id="api-for-confused-math-bc"></span><h2>API for <code class="docutils literal notranslate"><span class="pre">confused_math_bc</span></code><a class="headerlink" href="#module-ideas.examples.confused_math_bc" title="Link to this heading"></a></h2>
+<section id="confused-math-bc-py">
+<h3>confused_math_bc.py<a class="headerlink" href="#confused-math-bc-py" title="Link to this heading"></a></h3>
+<p>Import hook that performs bytecode changes,
+swapping BINARY_ADD and BINARY_MULTIPLY.</p>
+<p>Note: If code contains something like a + b, or a * b, where
+a and b are integer literals (e.g. 2 + 4), the operations are
+done prior to the creation of a code object and thus are
+not captured by this transformation.</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/confused_math_bc.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.add_hook" title="Link to this definition"></a></dt>
+<dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.create_new_co">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">create_new_co</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/confused_math_bc.html#create_new_co"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.create_new_co" title="Link to this definition"></a></dt>
+<dd><p>Recursively creates new code objects from old ones, swapping
+BINARY_ADD and BINARY_MULTIPLY.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.swap_add_mul">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">swap_add_mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytecode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/confused_math_bc.html#swap_add_mul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.swap_add_mul" title="Link to this definition"></a></dt>
+<dd><p>Interchange BINARY_ADD and BINARY_MULTIPLY</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.confused_math_bc.transform_bytecode">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.confused_math_bc.</span></span><span class="sig-name descname"><span class="pre">transform_bytecode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/confused_math_bc.html#transform_bytecode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.confused_math_bc.transform_bytecode" title="Link to this definition"></a></dt>
+<dd><p>Transforms the code object into a new code object</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constants.html" class="btn btn-neutral float-right" title="True constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

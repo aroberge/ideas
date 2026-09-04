@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is Ideas? &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Additional motivation for this project" href="motivation.html" />
+    <link rel="prev" title="Ideas: making it easier to extend Python’s syntax" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> What is ideas?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-an-import-hook">What is an import hook?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the many examples included</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">What is Ideas?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/what.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="index.html" class="btn btn-neutral float-left" title="Ideas: making it easier to extend Python’s syntax" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Additional motivation for this project" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="what-is-ideas">
+<h1>What is Ideas?<a class="headerlink" href="#what-is-ideas" title="Link to this heading"></a></h1>
+<p><strong>ideas</strong> is a package that makes it easier to write import hooks
+used to experiment with alternative to Python’s syntax.</p>
+<section id="what-is-an-import-hook">
+<h2>What is an import hook?<a class="headerlink" href="#what-is-an-import-hook" title="Link to this heading"></a></h2>
+<aside class="sidebar">
+<p class="sidebar-title">Skipping over details.</p>
+<p>This is a simplified description. A more detailed explanation will
+be given later.</p>
+</aside>
+<p>When you write something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">my_module</span>
+</pre></div>
+</div>
+<p>Python’s import machinery has to do the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Try to use various tools to find the module requested</p></li>
+<li><p>Get the source code of that module</p></li>
+<li><p>Execute that source code, subject to some information reported in step 1.</p></li>
+</ol>
+</div></blockquote>
+<p>An import hook is an additional tool that you create to do these three steps.
+Once written, you add it to <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code> so that Python’s import
+machinery can make use of it.</p>
+<p>Still, writing import hooks can be rather difficult.</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">[page 420] <em>…it should be emphasized that Python’s module, package and import
+mechanism is one of the most complicated parts of the entire language –
+often poorly understood by even the most seasoned Python programmers
+unless they’ve devoted effort to peeling back the covers.</em></div>
+<div class="line-block">
+<div class="line">… long discussion …</div>
+</div>
+<div class="line">[page 428] <em>Assuming that your head hasn’t completely exploded at this point, …
+Last, but not least, spending some time sleeping with PEP 302 and the
+documentation for</em> importlib <em>under your pillow may be advisable.</em></div>
+</div>
+<blockquote>
+<div><p><strong>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</strong></p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>ideas</strong> is designed to facilitate
+the creation of such import hooks, and be a repository for
+examples that can be used as starting points for new ideas.</p>
+<p>Instead of figuring out how to write an import hook, using <strong>ideas</strong> you
+can focus exclusively on what what might be needed to convert your proposed new
+syntax into something that Python can understand – <strong>ideas</strong> will
+take care of the rest, including inserting it in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Doing something like what is described in this documentation
+is not recommended for production code.</p>
+<p>But it can be fun! ;-)</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Ideas: making it easier to extend Python’s syntax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="motivation.html" class="btn btn-neutral float-right" title="Additional motivation for this project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

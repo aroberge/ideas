@@ -1,10 +1,10 @@
 @startuml
-    :Search for file;
+    #White :Search for file;
     note right #White
         We can specify a different file type. See example **french.py**.
         <back:lightblue> We could specify different search locations.</back>
     end note
-    :Return file spec & Loader;
+    #White :Return file spec & Loader;
     :Create a module object;
     note right #LightBlue
         We could substitute our own.
@@ -51,9 +51,13 @@
     }
     #White: We can modify the bytecode;
     note right #White: See example **confused_math_bc.py**
-    :Execute bytecode into module's dict;
+    #White :Execute bytecode into module's dict;
     note right #White
        We can substitute our own version.
        See example **constants.py**
+    end note
+    #White: We can modify (patch) a module after it has been created;
+    note right #White
+       See the Guide to examples.
     end note
 @enduml

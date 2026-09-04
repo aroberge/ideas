@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>λ encoding &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About tokens" href="../tokenize.html" />
+    <link rel="prev" title="Examples that will never be included" href="../excluded.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"> Create your own codec</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">λ encoding</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/lambda.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tokenize.html" class="btn btn-neutral float-right" title="About tokens" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="encoding">
+<h1>λ encoding<a class="headerlink" href="#encoding" title="Link to this heading"></a></h1>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This shows the result of using a custom codec instead of an import hook.
+It is only included as a proof of concept, as it is not as versatile
+as the import hooks.</p>
+</div>
+<p>Suppose we want to run a program that has a custom encoding:
+this is done in Python by inserting a special <code class="docutils literal notranslate"><span class="pre">coding</span></code> directive
+as the first line of our program.
+In this simple example as proof of concept,
+we use <code class="docutils literal notranslate"><span class="pre">λ</span></code> to represent Python’s <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: lambda_encoding</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">λ</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">assert</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Using lambda-encoding: λ"</span><span class="p">)</span>  <span class="c1"># λ is not converted inside strings</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The square of 5 is"</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The basic code required create the <code class="docutils literal notranslate"><span class="pre">lambda_encoding</span></code> codec, reading
+and decoding the file, is found in
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/lambda_codec.py">lambda_codec.py</a></p>
+<p>Before running our program with a custom encoding,
+we need to make Python aware of the existence
+of that encoding. Here is how we do it in the included
+test files, usually run by pytest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># test_lambda_encoding.py</span>
+<span class="c1"># The following import will automatically register a codec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>  <span class="c1"># noqa</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_import</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">short_program</span>  <span class="c1"># noqa</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">short_program</span>
+</pre></div>
+</div>
+<p>And here is the result:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
+&gt; py tests/lambda_encoding/test_lambda_encoding.py
+lambda_encoding has been registered.
+Using lambda-encoding: λ
+The square of 5 is 25
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>At this time, the <strong>ideas</strong> console cannot handle at the same time regular import hooks
+that are used to transform a source <strong>and</strong> transformations done using
+a custom codec: you can only use one or the other.</p>
+</div>
+<p>We can also use the <strong>ideas</strong> console and have our special encoding be used.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">venv</span><span class="o">-</span><span class="n">ideas3</span><span class="mf">.11</span><span class="p">)</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Andre</span>\<span class="n">github</span>\<span class="n">ideas</span>
+<span class="o">&gt;</span> <span class="n">py</span>
+<span class="n">Python</span> <span class="mf">3.11.9</span> <span class="o">...</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambda_codec</span>
+<span class="n">lambda_encoding</span> <span class="n">has</span> <span class="n">been</span> <span class="n">registered</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span> <span class="o">=</span> <span class="n">λ</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">9</span>
+<span class="n">ideas</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../excluded.html" class="btn btn-neutral float-left" title="Examples that will never be included" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tokenize.html" class="btn btn-neutral float-right" title="About tokens" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

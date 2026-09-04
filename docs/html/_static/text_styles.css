@@ -1,0 +1,43 @@
+.text-strike { text-decoration: line-through; }
+.text-mono { font-family: monospace; }
+.text-underline { text-decoration: underline; }
+.text-bold { font-weight: bold; }
+.text-italic { font-style: italic; }
+.text-red { color: red; }
+.bg-red { background-color: red; opacity: 0.5; }
+.text-green { color: green; }
+.bg-green { background-color: green; opacity: 0.5; }
+.text-blue { color: blue; }
+.bg-blue { background-color: blue; opacity: 0.5; }
+.text-cyan { color: cyan; }
+.bg-cyan { background-color: cyan; opacity: 0.5; }
+.text-magenta { color: magenta; }
+.bg-magenta { background-color: magenta; opacity: 0.5; }
+.text-yellow { color: yellow; }
+.bg-yellow { background-color: yellow; opacity: 0.5; }
+.text-black { color: black; }
+.bg-black { background-color: black; }
+.text-gray { color: gray; }
+.bg-gray { background-color: gray; opacity: 0.5; }
+.text-white { color: white; }
+.bg-white { background-color: white; opacity: 0.5; }
+.text-darkgray { color: darkgray; }
+.bg-darkgray { background-color: darkgray; opacity: 0.5; }
+.text-lightgray { color: lightgray; }
+.bg-lightgray { background-color: lightgray; opacity: 0.5; }
+.text-brown { color: brown; }
+.bg-brown { background-color: brown; opacity: 0.5; }
+.text-lime { color: lime; }
+.bg-lime { background-color: lime; opacity: 0.5; }
+.text-olive { color: olive; }
+.bg-olive { background-color: olive; opacity: 0.5; }
+.text-orange { color: orange; }
+.bg-orange { background-color: orange; opacity: 0.5; }
+.text-pink { color: pink; }
+.bg-pink { background-color: pink; opacity: 0.5; }
+.text-purple { color: purple; }
+.bg-purple { background-color: purple; opacity: 0.5; }
+.text-teal { color: teal; }
+.bg-teal { background-color: teal; opacity: 0.5; }
+.text-violet { color: violet; }
+.bg-violet { background-color: violet; opacity: 0.5; }

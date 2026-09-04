@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto self &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Decimal math" href="decimal_math.html" />
+    <link rel="prev" title="French repeat" href="french_repeat.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Auto self</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/auto_self.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="french_repeat.html" class="btn btn-neutral float-left" title="French repeat" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="decimal_math.html" class="btn btn-neutral float-right" title="Decimal math" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This is an example of a syntax that was intended to reduce
+boilerplate code when initializing a class instance;
+it has largely become irrelevant since the introduction of
+dataclasses.
+The code transformation is more complex than the previous ones and
+include a change of indentation of an entire block of code.</p>
+</div>
+<div class="admonition-summary admonition" id="module-ideas.examples.auto_self">
+<p class="admonition-title">Summary</p>
+<p>This example illustrates how one can change the indentation
+of an entire block of code, eliminate lines, and change the
+content much more drastically than what the previous
+examples have done.</p>
+<p>The idea behind this example is to help reduce the amount of typing
+required and increases readability when assigning attributes in a
+class’s <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method.</p>
+</div>
+<section id="auto-self">
+<h1>Auto self<a class="headerlink" href="#auto-self" title="Link to this heading"></a></h1>
+<p>Python is known for its concise and readable syntax. One exception
+about the concisiveness is the boiler plate code that has to be
+written when defining one’s own class, especially if it has
+many attributes, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">this_variable</span> <span class="o">=</span> <span class="n">this_variable</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">that_variable</span> <span class="o">=</span> <span class="n">that_variable</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">this_other_variable</span> <span class="o">=</span> <span class="n">this_other_variable</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="n">foo</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="n">bar</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">baz</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">baz</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">spam</span> <span class="o">=</span> <span class="n">bread</span> <span class="o">+</span> <span class="n">ham</span>
+</pre></div>
+</div>
+<p>This leads people to ask on various forums, such as
+<a class="reference external" href="https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a">this question on StackOverflow</a>,
+how to do automatic assignment of attributes.  The answers most often given
+are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Don’t do it; learn to live with the explicit <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p>Use a decorator, with various examples provided.</p></li>
+</ul>
+</div></blockquote>
+<p>As programmers create more classes, they find the need to add their own
+dunder methods, such as <code class="docutils literal notranslate"><span class="pre">__eq__(self,</span> <span class="pre">other)</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__(self)</span></code>, etc.
+Eventually, they might get annoyed enough at having to re-create these methods
+too often, with the occasional typo causing bugs that they jump with
+joy when discovering <a class="reference external" href="https://www.attrs.org/en/stable/">attrs: Classes Without Boilerplate</a>.</p>
+<p>Starting with Python 3.7, the standard library includes
+<a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a> which shares some
+similarity with <code class="docutils literal notranslate"><span class="pre">attrs</span></code>. However, it does require to use type hints which,
+in my opinion, reduces readability; note that many (most?) programmers find that
+type hints do increase readability.</p>
+<p>As a concrete example of using traditional Python notation and
+dataclasses, let’s consider the code given in
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">requirements</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">requirements</span> <span class="o">=</span> <span class="n">requirements</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">constraints</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">executable_links</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">executable_links</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">executables_dir</span> <span class="o">=</span> <span class="n">executables_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>From the same PEP document, this is the proposed code
+which gives the same initialization, but using the <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code>
+decorator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">requirements</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Requirement</span><span class="p">]</span>
+    <span class="n">constraints</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="n">executable_links</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">executable_dir</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">additional_items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This code does more than simply initializing the variables, but I
+do not find it particularly readable.</p>
+<p>So, I was wondering if it might be possible to imagine a simpler syntax.
+<code class="docutils literal notranslate"><span class="pre">auto_self</span></code> is what I came up with.</p>
+<div class="admonition-that-ship-has-sailed admonition">
+<p class="admonition-title">That ship has sailed …</p>
+<p>I realize that there is zero chance that the following syntax would
+be adopted, especially now that the <code class="docutils literal notranslate"><span class="pre">dataclasses</span></code> module has been added to
+the Python standard library. Still, you can try it out using
+<code class="docutils literal notranslate"><span class="pre">auto_self</span></code> hook.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">requirements</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
+            <span class="n">name</span>
+            <span class="n">requirements</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">path</span>
+            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">__</span>
+            <span class="n">executables_dir</span>
+            <span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Here, I am using a new operator, <code class="docutils literal notranslate"><span class="pre">.=</span></code>, which is meant to represent
+the automatic assignment of a variable to the name that precedes
+it (<code class="docutils literal notranslate"><span class="pre">self</span></code> in this example).  I have seen this idea for such an operator before on
+<strong>python-ideas</strong> but never for introducing a code block as I do here.</p>
+<p>By design, any <em>dunder</em> (double underscore), <code class="docutils literal notranslate"><span class="pre">__</span></code>, is taken to be equivalent to the variable
+being initialized.  I chose a dunder instead of a single underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>
+so that it could be used in a REPL without creating conflicts with the
+existing use of a single underscore in Python’s REPL.  I also find that it
+makes it more readable.</p>
+<p>Of course, one is not restricted to using <code class="docutils literal notranslate"><span class="pre">self</span></code>, or having to use <code class="docutils literal notranslate"><span class="pre">__</span></code>
+everywhere. The following is completely equivalent - although I now
+find it less readable, having been used to seeing <code class="docutils literal notranslate"><span class="pre">__</span></code> as easy to scan
+placeholder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">requirements</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">executable_links</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">executables_dir</span><span class="o">=</span><span class="p">(),</span>
+    <span class="p">):</span>
+        <span class="bp">cls</span> <span class="o">.=</span> <span class="p">:</span>
+            <span class="n">name</span>
+            <span class="n">requirements</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">constraints</span>
+            <span class="n">path</span>
+            <span class="n">executable_links</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">__</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">executable_links</span>
+            <span class="n">executables_dir</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">additional_items</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unlike <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code> or <code class="docutils literal notranslate"><span class="pre">attrs</span></code>, no additional method is
+created by <code class="docutils literal notranslate"><span class="pre">auto_self</span></code>.</p>
+</div>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.auto_self.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.auto_self.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/auto_self.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.auto_self.add_hook" title="Link to this definition"></a></dt>
+<dd><p>Creates and adds the import hook in sys.meta_path</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ideas.examples.auto_self.transform_source">
+<span class="sig-prename descclassname"><span class="pre">ideas.examples.auto_self.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/auto_self.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.auto_self.transform_source" title="Link to this definition"></a></dt>
+<dd><p>Replaces code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span> <span class="o">.=</span> <span class="p">:</span>
+    <span class="n">a</span>
+    <span class="n">b</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">this</span> <span class="k">if</span> <span class="n">__</span> <span class="o">==</span> <span class="n">that</span> <span class="k">else</span> <span class="n">___</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">this</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">that</span> <span class="k">else</span> <span class="n">c</span>
+</pre></div>
+</div>
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="french_repeat.html" class="btn btn-neutral float-left" title="French repeat" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="decimal_math.html" class="btn btn-neutral float-right" title="Decimal math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

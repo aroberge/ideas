@@ -48,8 +48,8 @@ on various parts over which we can have control.
 Options to create a custom hook
 --------------------------------
 
-.. autofunction:: ideas.import_hook.create_hook
-   :noindex:
+`Use the source! <https://github.com/aroberge/ideas/blob/master/ideas/import_hook.py>`_
+
 
 About Decode
 ------------
@@ -59,4 +59,4 @@ Changing the way that Python processes code during this phase
 does not require the creation of an import hook; instead,
 it requires the use of a custom codec.
 
-An example is shown in a later section.
+An example is shown in the Guide to examples.

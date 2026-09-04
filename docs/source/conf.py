@@ -40,6 +40,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "nbsphinx",
     "sphinx.ext.mathjax",
+    "sphinxcontrib_text_styles",
 ]
 exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 nbsphinx_allow_errors = True
@@ -51,7 +52,7 @@ templates_path = ["_templates"]
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
+source_suffix = {".rst": "restructuredtext"}
 
 # The master toctree document.
 master_doc = "index"
@@ -114,6 +115,8 @@ html_css_files = [
     "custom.css",
 ]
 
+
+toc_object_entries = False
 
 # -- Options for HTMLHelp output ------------------------------------------
 
