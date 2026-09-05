@@ -45,6 +45,12 @@ AST transformations
 
     Fractional math (AST) <examples/fractional_math_ast>
 
+.. todo::
+
+    Currently, only one AST example exists and only one 
+    AST transformation can be done. A second example should 
+    be created and find a way to ensure that both could be applied.
+
 
 AST creation
 --------------
@@ -63,6 +69,13 @@ Bytecode transformations
 
     Confused math (Bytecode) <examples/bytecode>
 
+.. todo::
+
+    Currently, only one Bytecode example exists and only one 
+    Bytecode transformation can be done. A second example should 
+    be created and find a way to ensure that both could be applied.
+
+
 More complex examples
 ---------------------
 
@@ -78,6 +91,13 @@ Tranforming a module after creation
    :maxdepth: 1
 
     Patching a module <examples/patching>
+
+.. todo::
+
+    Currently, a patch requires to specify a module name for it to be applied
+    to that module.
+    It might be worthwhile exploring a case where we use ``"*"``
+    to specify that the patch should be applied to all modules.
 
 Custom encoding
 ---------------

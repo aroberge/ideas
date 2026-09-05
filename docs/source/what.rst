@@ -90,8 +90,7 @@ on reading a few examples.**  This is what **ideas** can help accomplish.
 .. tip::
 
     You can skip the rest of this section if you already know that you want to
-    use an import hook and are not interested in the origin of this project,
-    nor about its intended usage.
+    use an import hook and are not interested in the origin of this project.
 
 Original motivation
 -------------------
