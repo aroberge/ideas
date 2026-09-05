@@ -125,6 +125,9 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             )
         for pth in temporary_inclusions:
             self.ideas_hook.excluded_paths.append(pth)
+
+        if current_state.verbose:
+            print(f"{self.__repr__()} cannot import {fullname}")
         return None  # we don't know how to import this
 
     def suspend_exclusions(self, fullname):
