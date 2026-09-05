@@ -45,6 +45,12 @@ on various parts over which we can have control.
    :alt: ideas import hook possibilities
    :align: center
 
+
+.. todo::
+
+   Write an example where we include different locations to search.
+
+
 Options to create a custom hook
 --------------------------------
 

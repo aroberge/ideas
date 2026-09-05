@@ -1,11 +1,6 @@
 """
-.. admonition:: Summary
-
-    - Demonstrates how to use an import hook to do custom parsing
-
-Polish notation (parsing)
-=========================
-
+Polish notation (AST creation)
+==============================
 
 Expressions in Polish (prefix) notation are written with each
 operator preceding its operands, allowing unambiguous expressions

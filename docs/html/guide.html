@@ -9,7 +9,7 @@
   <title>Guide to the examples &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
@@ -69,12 +68,12 @@
 <li class="toctree-l3"><a class="reference internal" href="examples/unnormalized_unicode.html">Unnormalized unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-parsing">Custom parsing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#ast-transformations">AST transformations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="examples/fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ast-creation">AST creation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#bytecode-transformations">Bytecode transformations</a><ul>
@@ -83,6 +82,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#more-complex-examples">More complex examples</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="examples/constants.html"> True constants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tranforming-a-module-after-creation">Tranforming a module after creation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/patching.html"> Patching a module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-encoding">Custom encoding</a><ul>
@@ -162,19 +165,19 @@ especially including examining the source code.</p>
 </ul>
 </div>
 </section>
-<section id="custom-parsing">
-<h2>Custom parsing<a class="headerlink" href="#custom-parsing" title="Link to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
-</ul>
-</div>
-</section>
 <section id="ast-transformations">
 <h2>AST transformations<a class="headerlink" href="#ast-transformations" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+</div>
+</section>
+<section id="ast-creation">
+<h2>AST creation<a class="headerlink" href="#ast-creation" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
 </ul>
 </div>
 </section>
@@ -190,13 +193,15 @@ especially including examining the source code.</p>
 <h2>More complex examples<a class="headerlink" href="#more-complex-examples" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/constants.html"> True constants</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/constants.html#consenting-adults">Consenting adults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/constants.html#demonstration">Demonstration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/constants.html#how-does-it-work">How does it work</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/constants.html#suggestion-for-you">Suggestion for you</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/constants.html"> True constants</a></li>
 </ul>
-</li>
+</div>
+</section>
+<section id="tranforming-a-module-after-creation">
+<h2>Tranforming a module after creation<a class="headerlink" href="#tranforming-a-module-after-creation" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/patching.html"> Patching a module</a></li>
 </ul>
 </div>
 </section>

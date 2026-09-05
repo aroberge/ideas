@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Polish notation (parsing) &mdash; ideas 0.2.0 documentation</title>
+  <title>Polish notation (AST creation) &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
-    <link rel="prev" title="Unnormalized unicode" href="unnormalized_unicode.html" /> 
+    <link rel="next" title="Confused math" href="bytecode.html" />
+    <link rel="prev" title="Fractional math (AST)" href="fractional_math_ast.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -57,13 +56,14 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Polish expressions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -71,7 +71,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -91,27 +91,39 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
-      <li class="breadcrumb-item active">Polish notation (parsing)</li>
+      <li class="breadcrumb-item active">Polish notation (AST creation)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/polish_expr.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bytecode.html" class="btn btn-neutral float-right" title="Confused math" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="admonition-summary admonition" id="module-ideas.examples.polish_expr">
+  <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<ul class="simple">
-<li><p>Demonstrates how to use an import hook to do custom parsing</p></li>
-</ul>
+<blockquote>
+<div><p>Demonstrates how to use an import hook to do custom parsing
+and create an Abstract Syntax Tree (AST)</p>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/polish_expr.py">Source code for polish_expr</a></p>
 </div>
-<section id="polish-notation-parsing">
-<h1>Polish notation (parsing)<a class="headerlink" href="#polish-notation-parsing" title="Link to this heading"></a></h1>
+<p>So far, our examples have consisted of transforming the program source before
+Python created an AST, or transforming the AST after its creation by Python.</p>
+<p>This example, created by Devin J. Pohly, demonstrates how we can bypass Python to create an AST.</p>
+<img alt="From source as a string to an AST" class="align-center" src="../_images/import_hook4.png" />
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This example cannot be combined with (most) other types of transformations.
+Furthermore, the interactive console turns into a Polish expression calculator
+and most Python syntax, including the use of <code class="docutils literal notranslate"><span class="pre">exit()</span></code>, becomes a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>.</p>
+</div>
+<section id="polish-notation-ast-creation">
+<span id="module-ideas.examples.polish_expr"></span><h1>Polish notation (AST creation)<a class="headerlink" href="#polish-notation-ast-creation" title="Link to this heading"></a></h1>
 <p>Expressions in Polish (prefix) notation are written with each
 operator preceding its operands, allowing unambiguous expressions
 with no need for parentheses or precedence rules.  For example:</p>
@@ -145,8 +157,8 @@ assignment in prefix form:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-left" title="Fractional math (AST)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bytecode.html" class="btn btn-neutral float-right" title="Confused math" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

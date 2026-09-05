@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Create your first import hook: the basics" href="function_keyword.html" />
-    <link rel="prev" title="Additional motivation for this project" href="motivation.html" /> 
+    <link rel="prev" title="What is Ideas?" href="what.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-ideas-enabled-interactive-console">Using the ideas-enabled interactive console</a></li>
@@ -55,6 +54,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#starting-from-a-standard-cpython-interpreter">Starting from a standard CPython interpreter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-with-pypy">Using with Pypy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-import-hooks">Multiple import hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#always-running-by-default">Always running by default</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#import-hook">Import hook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-codec">Custom codec</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
@@ -68,7 +73,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
@@ -92,7 +97,7 @@
             <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="what.html" class="btn btn-neutral float-left" title="What is Ideas?" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="function_keyword.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
@@ -144,39 +149,29 @@ include a <code class="docutils literal notranslate"><span class="pre">.py</span
 Python <strong>import hooks</strong>, by definition, only work on modules that are
 imported. Yet, you may have also noticed that it is imported with
 the name <code class="docutils literal notranslate"><span class="pre">'__main__'</span></code>, so that it is run as though it is the main script.</p>
-<aside class="sidebar">
-<p class="sidebar-title">.py extension?</p>
-<p>Ideas is quite forgiving. If you invoke it adding a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension
-to the main script, as in:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas my_program.py -a function_keyword
-</pre></div>
-</div>
-<p>it will work the same way as if you left out the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension.</p>
-</aside>
 </section>
 <section id="using-the-ideas-enabled-interactive-console">
 <h2>Using the ideas-enabled interactive console<a class="headerlink" href="#using-the-ideas-enabled-interactive-console" title="Link to this heading"></a></h2>
 <p>Ideas comes with its own interactive console.  Here’s a sample session:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">function_keyword</span>
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.31</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.10.2</span><span class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cube</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="mi">27</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">Ideas</span> <span class="kn">import</span><span class="w"> </span><span class="nn">hook</span><span class="p">:</span> <span class="n">ideas</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">9</span>
 </pre></div>
 </div>
 <p>Just like with the normal CPython console, using the -i flag,
 you can run a main script and continue with the interactive console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">im</span> <span class="n">ideas</span> <span class="n">my_program</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">a</span> <span class="n">function_keyword</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">im</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">function_keyword</span> <span class="n">my_program</span>
 <span class="mi">16</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="mf">4.</span>
 <span class="n">And</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="mi">5</span> <span class="ow">is</span> <span class="mi">25</span>
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.31</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.10.2</span><span class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">square</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">square</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="mi">36</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cube</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="mi">216</span>
 </pre></div>
 </div>
 </section>
@@ -204,17 +199,15 @@ It is however possible to start the ideas console from the CPython
 interactive interpreter.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;IdeasMetaFinder object for ideas.examples.function_keyword&gt;</span>
+<span class="go">&lt;Ideas import hook: ideas.examples.function_keyword&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Ideas Console version 0.0.34. [Python version: 3.10.2]</span>
-
-<span class="go">~&gt;&gt; sq = function x: x**2</span>
-<span class="go">~&gt;&gt; sq(3)</span>
+<span class="go">Ideas Console version 0.2.0. [Python version: 3.11.9]</span>
+<span class="go">ideas&gt; sq = function x: x*x</span>
+<span class="go">ideas&gt; sq(3)</span>
 <span class="go">9</span>
 </pre></div>
 </div>
-<p>In this case, the ideas prompt <code class="docutils literal notranslate"><span class="pre">~&gt;&gt;</span></code> is different from the CPython one.</p>
 </section>
 <section id="using-with-pypy">
 <h2>Using with Pypy<a class="headerlink" href="#using-with-pypy" title="Link to this heading"></a></h2>
@@ -229,13 +222,129 @@ You can also do the following in a terminal:</p>
 </pre></div>
 </div>
 </section>
+<section id="multiple-import-hooks">
+<h2>Multiple import hooks<a class="headerlink" href="#multiple-import-hooks" title="Link to this heading"></a></h2>
+<p>You can have multiple import hooks added; for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
+&gt; py -m ideas -a function_keyword -a nobreak
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; import sys
+ideas&gt; for finder in sys.meta_path:
+...    print(finder)
+...
+&lt;IdeasMetaPathFinder for ideas.examples.nobreak&gt;
+&lt;IdeasMetaPathFinder for ideas.examples.function_keyword&gt;
+&lt;class '_frozen_importlib.BuiltinImporter'&gt;
+&lt;class '_frozen_importlib.FrozenImporter'&gt;
+&lt;class '_frozen_importlib_external.PathFinder'&gt;
+</pre></div>
+</div>
+<p>Note that once a meta_path finder finds the desired file to
+import, no other finder will be invoked. However, internally
+<strong>ideas</strong> will do its best to combine all the required
+transformations from all the <code class="docutils literal notranslate"><span class="pre">IdeasHooks</span></code> that will have
+been activated.</p>
+</section>
+<section id="always-running-by-default">
+<h2>Always running by default<a class="headerlink" href="#always-running-by-default" title="Link to this heading"></a></h2>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>I do not recommend to install import hooks or codecs in you Python
+default installation.</p>
+</div>
+<p>If you <strong>really</strong> like to have your custom hook or custom encoding
+enabled by default, it is possible to do so, provided you
+are not using a virtual environment. <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<aside class="sidebar">
+<p>In the description below, setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> in a terminal
+will only work as described
+if you install ideas in a normal (not virtual) environment.</p>
+</aside>
+<p>In what follows, I will use the <code class="docutils literal notranslate"><span class="pre">decimal_math</span></code> example which
+can be used either as an import hook or as a custom encoding.
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math.py">Source code</a></p>
+<section id="import-hook">
+<h3>Import hook<a class="headerlink" href="#import-hook" title="Link to this heading"></a></h3>
+<p>To have decimal math working default, you can do the following.</p>
+<ol class="arabic simple">
+<li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
+<span class="n">decimal_math</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Assuming you are not in virtual environment, set the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>
+environment variable to the path where <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found.
+On Windows, this is most done by navigating where this file is found
+and typing: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=%cd%</span></code></p></li>
+</ol>
+<p>You can now invoke your module doing the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import my_script"</span>
+</pre></div>
+</div>
+<p><strong>I do not recommend that you do this.</strong></p>
+</section>
+<section id="custom-codec">
+<h3>Custom codec<a class="headerlink" href="#custom-codec" title="Link to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Starting with Python 3.9, encodings cannot have an hyphen in their name
+such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal-math</span>
+</pre></div>
+</div>
+<p>Instead, they need to be normalized to using an underscore, as in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
+</pre></div>
+</div>
+</div>
+<p>To have it useable by default as a custom codec, you can do the following.</p>
+<ol class="arabic simple">
+<li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
+<span class="n">decimal_math</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p>Assuming you are not in virtual environment, set the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>
+environment variable to the path where <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found.
+On Windows, this is most done by navigating where this file is found
+and typing: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=%cd%</span></code></p></li>
+<li><p>At the top of the module you wish to be run with the special codec,
+add the following two lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>You can now invoke your module doing the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">my_script</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><strong>Again, I do not recommend that you do this.</strong></p>
+<hr><aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">2</a><span class="fn-bracket">]</span></span>
+<p>After not working on <strong>ideas</strong> for more than 4 years, I wanted to work on
+the code again and make sure that everything was working correctly and couldn’t figure
+out why the <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> idea did not work. I deleted parts of the documentation
+where I had mentioned it until I remembered that it wouldn’t work in a virtual
+environment.  Note that I didn’t check that it <strong>would</strong> work in my main python
+setup … If it no longer works, please file an issue.</p>
+</aside>
+</aside>
+</section>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="motivation.html" class="btn btn-neutral float-left" title="Additional motivation for this project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="what.html" class="btn btn-neutral float-left" title="What is Ideas?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="function_keyword.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

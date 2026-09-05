@@ -4,7 +4,7 @@ Ideas: making it easier to extend Python's syntax
 
 .. warning::
 
-    As of August 18 2026, I've started updating this project after a 4 year hiatus. 
+    As of August 18 2026, I've started updating this project after a 4 year-long hiatus. 
     The version that can be installed via pypi (using pip) has not been updated yet.
 
 `Code on Github <https://github.com/aroberge/ideas>`_
@@ -34,8 +34,7 @@ but it will still remain a major task. Furthermore, it would not be easy
 to share your work with others so that they can try it out.
 
 However, **there is a simpler way:** it is possible to run code with a
-modified syntax using import hooks [*or, in some cases as shown later,
-using a custom codec*.]
+modified syntax using import hooks. [1]_ 
 
 
 Quick links to topics
@@ -46,7 +45,6 @@ Quick links to topics
    :maxdepth: 2
     
     What is ideas? <what>
-    Additional motivation <motivation>
     Usage  <usage>
     Create your own import hook <function_keyword>
     Improving function as a keyword <function>
@@ -74,3 +72,5 @@ To do
 
 
 .. |tm| unicode:: U+000AE .. REGISTERED SIGN
+
+.. [1] Or, in some cases as shown later, using a custom codec.

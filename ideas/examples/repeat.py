@@ -1,10 +1,4 @@
 """
-.. admonition:: Summary
-
-    Introduces four different forms using a ``repeat`` keyword.
-    It also demonstrates how to use a callback parameters.
-
-
 repeat as a keyword
 =======================
 
@@ -13,21 +7,18 @@ Let's begin with an example.
 .. code-block::
 
     > python -m ideas -a repeat --show
-    Ideas Console version 0.0.38. [Python version: 3.9.10]
-
+    Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> repeat 3:
-       ...     print('Hello')
-       ...
+    ...     print("Hello")
+    ...
     ===========Transformed============
-    for _9e4a6946f8d44ffca90dc9475537d39a in range( 3):
-        print('Hello')
+    for _f6e2a07472364c32866ce473ee705576 in range( 3):
+        print("Hello")
 
     -----------------------------
     Hello
     Hello
     Hello
-
-    ideas>
 
 As you can see, ``repeat n``, where ``n`` is an integer,
 is converted into a for loop, with a randomly named
@@ -49,37 +40,51 @@ Here's a second example using it.
 
     >>> from ideas.examples import repeat
     >>> from ideas.console import start
-    >>> from ideas.session import config
-    >>> config.show_changes = True
+    >>> from ideas import current_state
+    >>> current_state.show_changes = True
     >>> repeat.add_hook(predictable_names=True)
-    <IdeasMetaFinder object for ideas.examples.repeat>
+    <Ideas import hook: ideas.examples.repeat>
     >>> start()
-    Ideas Console version 0.0.38. [Python version: 3.9.10]
-
-    ideas> repeat 3:
-       ...     print('Hello')
-       ...
+    Ideas Console version 0.2.0. [Python version: 3.11.9]
+    ideas> output = ""
+    ideas> repeat 4:
+    ...     output += "*"
+    ...     repeat 3:
+    ...         print(output)
+    ...
     ===========Transformed============
-    for _1 in range( 3):
-        print('Hello')
+    for _1 in range( 4):
+        output += "*"
+        for _2 in range( 3):
+            print(output)
 
     -----------------------------
-    Hello
-    Hello
-    Hello
+    *
+    *
+    *
+    **
+    **
+    **
+    ***
+    ***
+    ***
+    ****
+    ****
+    ****
 
-    ideas>
+As you can see, the name of the for loop variables, ``_1, _2``,
+are much simpler ... and predictable.
 
-As you can see, the name of the for loop variable, ``_1``,
-is much simpler ... and predictable.
-
+In the above example, ``predictable_names`` is a
+*callback parameter*.
 You will need to have a look at the code for ``repeat.py`` to
 fully understand how to use such callback parameters in your
 own import hooks.
 
+Four different cases
+--------------------
 
-Adds ``repeat`` as a keyword to write loops. The four constructs supported
-are::
+The four constructs supported are::
 
     repeat n:
         # code
@@ -92,20 +97,6 @@ are::
 
     repeat forever:
         # code
-
-For example::
-
-    repeat 3:
-        a = 2
-        repeat a*a:
-            pass
-
-is equivalent to::
-
-    for unique_variable_name_1 in range(3):
-        a = 2
-        for unique_variable_name_2 in range(a*a):
-            pass
 """
 
 from ideas import create_hook, utils

@@ -37,14 +37,6 @@ especially including examining the source code.
     Implicit multiplication <examples/implicit_multiplication>
     Unnormalized unicode <examples/unnormalized_unicode>
 
-Custom parsing
---------------
-
-.. toctree::
-    :maxdepth: 1
-
-    Polish expressions <examples/polish_expr>
-
 AST transformations
 -------------------
 
@@ -52,6 +44,16 @@ AST transformations
    :maxdepth: 1
 
     Fractional math (AST) <examples/fractional_math_ast>
+
+
+AST creation
+--------------
+
+.. toctree::
+    :maxdepth: 1
+
+    Polish expressions <examples/polish_expr>
+
 
 Bytecode transformations
 ------------------------
@@ -65,9 +67,17 @@ More complex examples
 ---------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
     True constants <examples/constants>
+
+Tranforming a module after creation
+-----------------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+    Patching a module <examples/patching>
 
 Custom encoding
 ---------------

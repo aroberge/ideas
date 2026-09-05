@@ -1,0 +1,18 @@
+@startuml
+    :This is the Python source as a string;
+    note right #White
+        Most of our examples so far have dealt with
+        transforming this source.
+    end note
+    partition AST {
+        note right #White
+           This example deals with the substitution of
+           this entire block, where we transform a source
+           as a string into an AST.
+        end note
+        :Convert the source into a series of tokens;
+        :Transform into a Concrete Parse Tree (CPT);
+        :Transform the CPT into an Abstract Syntax Tree (AST);
+    }
+    :The source has become an AST;
+@enduml

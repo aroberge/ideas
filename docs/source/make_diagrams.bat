@@ -1,2 +1,2 @@
-java -jar plantuml.jar import_hook3.puml
-move import_hook3.png _static\import_hook3.png
+java -jar plantuml.jar import_hook4.puml
+move import_hook4.png _static\import_hook4.png

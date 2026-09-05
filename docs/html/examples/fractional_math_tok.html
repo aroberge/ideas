@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -69,10 +68,11 @@
 <li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -80,7 +80,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -115,24 +115,15 @@
              
   <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
-<p>This is a functionally equivalent version to the AST proof of concept
-example [Fractional math (ast)] mentioned below.
-It demonstrates how to include
-supplementary code, such as importing a module or defining a function,
-in addition to the user code, while ensuring that the console (REPL)
-can still work properly.</p>
+<p>This is an example of doing “exact” fractional integer calculations by default.</p>
+<p>This is a functionally equivalent version to the Abstract Syntax Tree (AST) proof of concept
+example [Fractional math (ast)] mentioned in a later section.</p>
+<p>Note that the AST transformation is a more robust approach for this type of
+example.
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_tok.py">Source code for fractions_tok</a></p>
 </div>
 <section id="fractional-math-token-based">
 <span id="module-ideas.examples.fractions_tok"></span><h1>Fractional math (token based)<a class="headerlink" href="#fractional-math-token-based" title="Link to this heading"></a></h1>
-<div class="admonition-summary admonition">
-<p class="admonition-title">Summary</p>
-<p>This is includes a source transformation that converts
-integers literals that are followed by the <code class="docutils literal notranslate"><span class="pre">/</span></code> operator
-into instances of the Fraction class in the source using the tokenizer.</p>
-<p>In a later section, we do something similar but using an
-Abstract Syntax Tree (AST) transformation, which is a more robust
-approach for this type of example.</p>
-</div>
 <p>Consider the following standard Python code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
@@ -160,13 +151,11 @@ integer, which are followed by a <code class="docutils literal notranslate"><spa
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">fractions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fraction</span>
 
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.38</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
-
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span>  <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
-
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
-  <span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-  <span class="o">...</span>
+<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="o">...</span>
 <span class="mi">0</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
@@ -178,39 +167,16 @@ integer, which are followed by a <code class="docutils literal notranslate"><spa
 <span class="mi">4</span><span class="o">/</span><span class="mi">5</span>
 <span class="mi">9</span><span class="o">/</span><span class="mi">10</span>
 <span class="mi">1</span>
-
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.session</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
-
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
-
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">current_state</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">current_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">10</span>
-<span class="n">new</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
-
-<span class="n">ideas</span><span class="o">&gt;</span>
+<span class="n">new</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This example was created after a similar example using AST transformation
 was created as a proof of concept. For more details about the
 difference, please have a look at the AST-based example.</p>
 </section>
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_tok.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.add_hook" title="Link to this definition"></a></dt>
-<dd><p>Creates and automatically adds the import hook in sys.meta_path.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_tok.source_init">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.source_init" title="Link to this definition"></a></dt>
-<dd><p>Adds required import so that <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> is a known object.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_tok.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_tok.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_tok.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_tok.transform_source" title="Link to this definition"></a></dt>
-<dd><p>Replace integers (followed by /) by Fraction objects</p>
-</dd></dl>
-
 
 
            </div>

@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -69,10 +68,11 @@
 <li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -80,7 +80,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -116,11 +116,9 @@
   <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This example re-uses two existing transformations:</p>
-<ul class="simple">
-<li><p><strong>French Python</strong>, which uses a non-standard file extension <code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>
-as an indication that an import hook must be used.</p></li>
-<li><p><strong>repeat as a keyword</strong></p></li>
-</ul>
+<p><strong>French Python</strong>, which uses a non-standard file extension <code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>
+as an indication that an import hook must be used; and <strong>repeat as a keyword</strong>.</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/french_repeat.py">Source code</a></p>
 </div>
 <section id="french-repeat">
 <h1>French repeat<a class="headerlink" href="#french-repeat" title="Link to this heading"></a></h1>
@@ -128,7 +126,17 @@ as an indication that an import hook must be used.</p></li>
 </a>
 <p>To produce the above image, you can use the following (files found
 in usage_demo directory):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tortue_demo</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span> <span class="c1"># ideas is not installed</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">".."</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
+
 
 <span class="n">french_repeat</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 
@@ -159,20 +167,11 @@ in usage_demo directory):</p>
 <span class="nb">input</span><span class="p">(</span><span class="s2">"Press any key to quit."</span><span class="p">)</span>
 </pre></div>
 </div>
-<p id="module-ideas.examples.french_repeat">Demonstrates how we can simply combine source transformations.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.french_repeat.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.french_repeat.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/french_repeat.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french_repeat.add_hook" title="Link to this definition"></a></dt>
-<dd><p>Creates and adds the import hook in sys.meta_path</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.french_repeat.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.french_repeat.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/french_repeat.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.french_repeat.transform_source" title="Link to this definition"></a></dt>
-<dd><p>This function is called by the import hook loader and uses
-transformations from two other examples.</p>
-</dd></dl>
-
+<p>This is how I executed them:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas\usage_demo
+&gt; py tortue_demo.py
+</pre></div>
+</div>
 </section>
 
 

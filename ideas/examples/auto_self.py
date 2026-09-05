@@ -1,16 +1,4 @@
 """
-
-.. admonition:: Summary
-
-   This example illustrates how one can change the indentation
-   of an entire block of code, eliminate lines, and change the
-   content much more drastically than what the previous
-   examples have done.
-
-   The idea behind this example is to help reduce the amount of typing
-   required and increases readability when assigning attributes in a
-   class's ``__init__()`` method.
-
 Auto self
 ==========
 
@@ -47,11 +35,11 @@ joy when discovering `attrs: Classes Without Boilerplate <https://www.attrs.org/
 Starting with Python 3.7, the standard library includes
 `dataclasses <https://docs.python.org/3/library/dataclasses.html>`_ which shares some
 similarity with ``attrs``. However, it does require to use type hints which,
-in my opinion, reduces readability; note that many (most?) programmers find that
+**in my opinion**, reduces readability; note that many (most?) programmers find that
 type hints do increase readability.
 
 As a concrete example of using traditional Python notation and
-dataclasses, let's consider the code given in
+dataclasses, let's consider the example given in
 `PEP 557  <https://www.python.org/dev/peps/pep-0557/>`_ but reformatted with Black::
 
     class Application:
@@ -88,19 +76,18 @@ decorator::
         executable_dir: Tuple[str] = ()
         additional_items: List[str] = field(init=False, default_factory=list)
 
+.. sidebar:: That ship has sailed ...
+
+    I realize that there is zero chance that the following syntax would
+    be adopted, especially now that the ``dataclasses`` module has been added to
+    the Python standard library. Still, you can try it out using
+    ``auto_self`` hook.
 
 This code does more than simply initializing the variables, but I
 do not find it particularly readable.
 
 So, I was wondering if it might be possible to imagine a simpler syntax.
 ``auto_self`` is what I came up with.
-
-.. admonition:: That ship has sailed ...
-
-    I realize that there is zero chance that the following syntax would
-    be adopted, especially now that the ``dataclasses`` module has been added to
-    the Python standard library. Still, you can try it out using
-    ``auto_self`` hook.
 
 .. code-block:: python
 
@@ -128,7 +115,7 @@ the automatic assignment of a variable to the name that precedes
 it (``self`` in this example).  I have seen this idea for such an operator before on
 **python-ideas** but never for introducing a code block as I do here.
 
-By design, any *dunder* (double underscore), ``__``, is taken to be equivalent to the variable
+By design, any bare *dunder* (double underscore), ``__``, is taken to be equivalent to the variable
 being initialized.  I chose a dunder instead of a single underscore ``_``
 so that it could be used in a REPL without creating conflicts with the
 existing use of a single underscore in Python's REPL.  I also find that it
@@ -163,7 +150,8 @@ placeholder::
 .. warning::
 
     Unlike ``@dataclass`` or ``attrs``, no additional method is
-    created by ``auto_self``.
+    created by ``auto_self``. This is something that could easily be
+    added.
 
 """
 

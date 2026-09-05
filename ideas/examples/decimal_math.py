@@ -1,5 +1,8 @@
 """
-This replaces any explicit float by a Decimal.
+decimal_math.py
+---------------
+
+This simply replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.
 """
 

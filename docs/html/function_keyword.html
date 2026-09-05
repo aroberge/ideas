@@ -9,7 +9,7 @@
   <title>Create your first import hook: the basics &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own import hook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-do-this">How to do this</a></li>
@@ -219,19 +218,20 @@ Each of these is an individual <strong>token</strong>.</p>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
 <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, and return the hook that was created.
-This has at least three benefits:</p>
+This has at least four benefits:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>We can control when the hook is created.</p></li>
-<li><p>We can use the return value to remove the hook when it is no longer
-needed. This can be useful for testing.</p></li>
+<li><p>We can use the return value to change some of its parameters,
+for example to temporarily disable it, or to remove it
+altogether. This can be particularly useful for testing.</p></li>
 <li><p>We can optionally add arguments to <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>; we will do so
 in more complex examples</p></li>
+<li><p>Perhaps the most import benefit is that, as we have seen before,
+we can invoke ideas from the command line with the
+<code class="docutils literal notranslate"><span class="pre">-a</span></code> or <code class="docutils literal notranslate"><span class="pre">--add_hook</span></code> flag,</p></li>
 </ol>
 </div></blockquote>
-<p>Furthermore, as we have seen before,
-we can invoke ideas from the command line with the
-<code class="docutils literal notranslate"><span class="pre">-a</span></code> or <code class="docutils literal notranslate"><span class="pre">--add_hook</span></code> flag,</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m ideas --add_hook function_keyword
 </pre></div>
 </div>

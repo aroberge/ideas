@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Polish notation (parsing)" href="polish_expr.html" />
+    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
     <link rel="prev" title="Implicit multiplication" href="implicit_multiplication.html" /> 
 </head>
 
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -72,10 +71,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -83,7 +83,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -109,7 +109,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="polish_expr.html" class="btn btn-neutral float-right" title="Polish notation (parsing)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -172,7 +172,7 @@ take a detour and talk about Julia.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="implicit_multiplication.html" class="btn btn-neutral float-left" title="Implicit multiplication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="polish_expr.html" class="btn btn-neutral float-right" title="Polish notation (parsing)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

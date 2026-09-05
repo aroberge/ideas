@@ -1,13 +1,4 @@
 """
-.. admonition:: Summary
-
-    This example demonstrates the how to use a non-standard file
-    extension (``.pyfr``) as an indication that an import hook must
-    be used.
-
-    It also demonstrates how to use the ``verbose`` configuration option
-    gives us information about how the finder searches for files.
-
 French Python
 ==============
 
@@ -22,19 +13,15 @@ with most of them being identical to what you were using in the
 block-based environment.
 This is what this import hook example allows one to do.
 
-A more elaborate example is that given by
-`AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_.
-
 Let's see it in action:
 
 .. code-block:: none
 
-    > python -m ideas -a french --show
-    Ideas Console version 0.0.38. [Python version: 3.9.10]
-
+        > py -m ideas -a french --show
+    Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> pourchaque lettre dans 'Bonjour':
-       ...     afficher(lettre)
-       ...
+    ...     afficher(lettre)
+    ...
     ===========Transformed============
     for lettre in 'Bonjour':
         print(lettre)
@@ -47,14 +34,13 @@ Let's see it in action:
     o
     u
     r
-
     ideas>
 
 
 Importing .pyfr files
 ----------------------
 
-Suppose we have the following two files:
+Suppose we have the following two files in the usage_demo folder:
 
 .. code-block:: python
 
@@ -75,30 +61,60 @@ and
 
 Let's see if we attempt to import ``my_program`` after
 setting up the ``french`` import hook and enabling the
-verbose finder::
+verbose finder:
 
+.. code-block:: none
 
-   >>> from ideas.session import current_state
-   >>> current_state.verbose = True
-   >>> from ideas.examples import french
-   >>> hook = french.add_hook()
-   Looking for files with extensions:  ['.pyfr']
-   The following paths will not be included in the search:
-      PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python37\\lib
-      IDEAS: c:\\users\\andre\\github\\ideas\\ideas
-      SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.7\\lib\\site-packages
-   >>> import my_program
-       Searching for ~\\github\\ideas\\my_program.pyfr
-       Found: ~\\github\\ideas\\my_program.pyfr
+    (venv-ideas3.11) C:\\Users\\Andre\\github\\ideas
+    > py
+    Python 3.11.9...
+    >>> from ideas import current_state
+    >>> current_state.verbose = True
+    >>> from ideas.examples import french
+    >>> french.add_hook()
+    Added hook ideas.examples.french
+    Looking for files with extensions:  ['.pyfr']
+    The following paths will not be included in the search:
+        PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python311\\lib
+        SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.11\\lib\\site-packages
+        IDEAS: c:\\users\\andre\\github\\ideas\\ideas
+    <Ideas import hook: ideas.examples.french>
 
-   Bonjour !
-   >>> import math
-       Searching for ~\\github\\ideas\\math.pyfr
-       IdeasMetaFinder did not find math.pyfr
+    >>> from usage_demo import my_program
+        Searching for ~\\github\\ideas\\usage_demo.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
 
-   >>> math.pi
-   3.141592653589793
-   >>>
+        Searching for usage_demo.pyfr.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
+
+        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip\\usage_demo.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
+
+        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\DLLs\\usage_demo.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
+
+        Skipping over: PYTHON:
+        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\usage_demo.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
+
+        Searching for ~\\github\\ideas\\venv-ideas3.11\\usage_demo.pyfr
+        IdeasMetaFinder did not find usage_demo.pyfr
+
+        Skipping over: SITE-PACKAGES:
+        Searching for ~\\github\\ideas\\usage_demo\\my_program.pyfr
+        Found: ~\\github\\ideas\\usage_demo\\my_program.pyfr
+
+    Bonjour !
+    >>> import math
+    >>> math.pi
+    3.141592653589793
+
+.. caution::
+
+    If you use two or more import hooks, only one of them will find your programs.
+    If you have programs with different extensions, the order in which you add
+    the import hooks may yield different results.
+
 """
 
 from ideas import create_hook

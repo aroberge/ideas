@@ -101,17 +101,17 @@ Here's the content of our real simplest example.
 Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
 ``add_hook``, and return the hook that was created.
-This has at least three benefits:
+This has at least four benefits:
 
     1. We can control when the hook is created.
-    2. We can use the return value to remove the hook when it is no longer
-       needed. This can be useful for testing.
+    2. We can use the return value to change some of its parameters,
+       for example to temporarily disable it, or to remove it 
+       altogether. This can be particularly useful for testing.
     3. We can optionally add arguments to ``add_hook``; we will do so
        in more complex examples
-
-Furthermore, as we have seen before,
-we can invoke ideas from the command line with the
-``-a`` or ``--add_hook`` flag,
+    4. Perhaps the most import benefit is that, as we have seen before,
+       we can invoke ideas from the command line with the
+       ``-a`` or ``--add_hook`` flag,
 
 .. code-block:: none
 

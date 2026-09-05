@@ -1,8 +1,24 @@
-"""decimal_math_with.py
+"""
+decimal_math_with.py
 ------------------------
 
 Defines a fake context environment in which explicit floats are
 replaced by decimals.
+
+It does the following transformation::
+
+    with float_as_Decimal:
+        a = 1.0
+        b = 2.0
+    c = 3.0
+
+to::
+
+    if True: # with float_as_Decimal:
+        a = Decimal('1.0')
+        b = Decimal('2.0')
+    c = 3.0
+
 """
 
 from ideas import create_hook

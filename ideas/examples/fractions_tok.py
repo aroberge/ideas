@@ -2,16 +2,6 @@
 Fractional math (token based)
 =============================
 
-.. admonition:: Summary
-
-   This is includes a source transformation that converts
-   integers literals that are followed by the ``/`` operator
-   into instances of the Fraction class in the source using the tokenizer.
-
-   In a later section, we do something similar but using an
-   Abstract Syntax Tree (AST) transformation, which is a more robust
-   approach for this type of example.
-
 Consider the following standard Python code::
 
     >>> x = 1/10
@@ -41,13 +31,11 @@ integer, which are followed by a ``/``, into a ``Fraction`` instance::
 
     from fractions import Fraction
 
-    Ideas Console version 0.0.38. [Python version: 3.7.9]
-
-    ideas> x =  1 / 10
-
+    Ideas Console version 0.2.0. [Python version: 3.11.9]
+    ideas> x = 1/10
     ideas> for i in range(11):
-      ...     print(i * x)
-      ...
+    ...     print(i * x)
+    ...
     0
     1/10
     1/5
@@ -59,15 +47,10 @@ integer, which are followed by a ``/``, into a ``Fraction`` instance::
     4/5
     9/10
     1
-
-    ideas> from ideas.session import config
-
-    ideas> config.show_changes = True
-
+    ideas> from ideas import current_state
+    ideas> current_state.show_changes = True
     ideas> x = 1 / 10
-    new: x = Fraction(1) / 10
-
-    ideas>
+    new: x = Fraction(1) / Fraction(10)
 
 This example was created after a similar example using AST transformation
 was created as a proof of concept. For more details about the

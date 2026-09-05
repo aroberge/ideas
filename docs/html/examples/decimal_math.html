@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -63,8 +62,9 @@
 <li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Decimal math</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#import-hook">Import hook</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#custom-codec">Custom codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decimal-math-py">decimal_math.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decimal-math-d-py">decimal_math_d.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decimal-math-with-py">decimal_math_with.py</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
@@ -73,10 +73,11 @@
 <li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -84,7 +85,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -119,13 +120,6 @@
              
   <section id="decimal-math">
 <h1>Decimal math<a class="headerlink" href="#decimal-math" title="Link to this heading"></a></h1>
-<div class="admonition-summary admonition">
-<p class="admonition-title">Summary</p>
-<p>Does decimal math automatically.</p>
-<p>Adds the required import of the the decimal module automatically.</p>
-<p>Can be used either as an import hook or as a custom codec.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math.py">Source code</a></p>
-</div>
 <p>On Python-ideas, the <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/thread/7EF5MOJK5GOQZZEZXQ7DKM2N52JZ7VNB/">following question was recently asked</a></p>
 <blockquote>
 <div><p>Wouldn’t it be possible to have something along the lines of:</p>
@@ -139,90 +133,94 @@
 </div>
 </div></blockquote>
 <p>The answer is yes, using either an import hook or a custom encoding already
-implemented as an example. Here we show it in action using the ideas repl:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">t</span> <span class="n">decimal_math</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+implemented as an example. Here we show it in action using the ideas repl:
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math.py">Source code for decimal_math</a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math
+    The following initializing code from ideas is included:
 
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.0.30</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.7.9</span><span class="p">]</span>
+from decimal import Decimal
 
-<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">==</span> <span class="mf">0.3</span>
-<span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span>
-<span class="n">Decimal</span><span class="p">(</span><span class="s1">'0.1'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.100</span>
-<span class="n">Decimal</span><span class="p">(</span><span class="s1">'0.200'</span><span class="p">)</span>
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; 0.1 + 0.2 == 0.3
+True
+ideas&gt; 0.1 * 10 == 1
+True
+ideas&gt; 0.1
+Decimal('0.1')
+ideas&gt; 0.1 + 0.100
+Decimal('0.200')
 </pre></div>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In the description below, setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> in a terminal
-will only work as described
-if you install ideas in a normal (not virtual) environment.</p>
-</div>
-<section id="import-hook">
-<h2>Import hook<a class="headerlink" href="#import-hook" title="Link to this heading"></a></h2>
-<p>To use and test it easily as an import hook, you can do the following.</p>
-<ol class="arabic simple">
-<li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
-<span class="n">decimal_math</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
+<p>There is a second version of decimal math, whith requires a <code class="docutils literal notranslate"><span class="pre">D</span></code> suffix after a
+float to transform it into a python Decimal.:
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math_d.py">Source code for decimal_math_d</a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math_d
+    The following initializing code from ideas is included:
+
+from decimal import Decimal
+
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; 0.1 + 0.2
+0.30000000000000004
+ideas&gt; 0.1D + 0.2D
+Decimal('0.3')
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
-<li><p>Assuming you are not in virtual environment, set the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>
-environment variable to the path where <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found.
-On Windows, this is most done by navigating where this file is found
-and typing: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=%cd%</span></code></p></li>
-</ol>
-<p>You can now invoke your module doing the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import my_script"</span>
+<p>There is actually a third version of decimal math:
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/decimal_math_with.py">Source code for decimal_math_with</a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math_with
+    The following initializing code from ideas is included:
+
+from decimal import Decimal
+
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; with float_as_decimal:
+...     a = 1.0
+...     b = 2.0
+...
+Traceback (most recent call last):
+File "*Ideas Console*", line 1, in &lt;module&gt;
+NameError: name 'float_as_decimal' is not defined
+ideas&gt; with float_as_Decimal:
+...     a = 1.0
+...     b = 2.0
+...
+ideas&gt; a, b
+(Decimal('1.0'), Decimal('2.0'))
+ideas&gt; c = 3.0
+ideas&gt; c
+3.0
+ideas&gt; a, b, c
+(Decimal('1.0'), Decimal('2.0'), 3.0)
 </pre></div>
 </div>
-</section>
-<section id="custom-codec">
-<h2>Custom codec<a class="headerlink" href="#custom-codec" title="Link to this heading"></a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Starting with Python 3.9, encodings cannot have an hyphen in their name
-such as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal-math</span>
-</pre></div>
-</div>
-<p>Instead, they need to be normalized to using an underscore, as in:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
-</pre></div>
-</div>
-</div>
-<p>To use and test it easily as a custom codec, you can do the following.</p>
-<ol class="arabic simple">
-<li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
-<span class="n">decimal_math</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
-</pre></div>
-</div>
-<ol class="arabic" start="2">
-<li><p>Assuming you are not in virtual environment, set the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>
-environment variable to the path where <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> is found.
-On Windows, this is most done by navigating where this file is found
-and typing: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=%cd%</span></code></p></li>
-<li><p>At the top of the module you wish to be run with the special codec,
-add the following two lines:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># coding: decimal_math</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
-</pre></div>
-</div>
-</li>
-</ol>
-<p>You can now invoke your module doing the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">my_script</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p id="module-ideas.examples.decimal_math">This replaces any explicit float by a Decimal.
+<section id="decimal-math-py">
+<span id="module-ideas.examples.decimal_math"></span><h2>decimal_math.py<a class="headerlink" href="#decimal-math-py" title="Link to this heading"></a></h2>
+<p>This simply replaces any explicit float by a Decimal.
 It can be used either as a custom codec or import hook.</p>
+</section>
+<section id="decimal-math-d-py">
+<span id="module-ideas.examples.decimal_math_d"></span><h2>decimal_math_d.py<a class="headerlink" href="#decimal-math-d-py" title="Link to this heading"></a></h2>
+<p>This replaces any explicit float followed by <code class="docutils literal notranslate"><span class="pre">D</span></code>, by a Decimal.</p>
+</section>
+<section id="decimal-math-with-py">
+<span id="module-ideas.examples.decimal_math_with"></span><h2>decimal_math_with.py<a class="headerlink" href="#decimal-math-with-py" title="Link to this heading"></a></h2>
+<p>Defines a fake context environment in which explicit floats are
+replaced by decimals.</p>
+<p>It does the following transformation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">float_as_Decimal</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">3.0</span>
+</pre></div>
+</div>
+<p>to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># with float_as_Decimal:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">'1.0'</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s1">'2.0'</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">3.0</span>
+</pre></div>
+</div>
 </section>
 </section>
 

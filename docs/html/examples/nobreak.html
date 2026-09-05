@@ -9,7 +9,7 @@
   <title>nobreak as a keyword &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -47,7 +47,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
@@ -73,10 +72,11 @@
 <li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-parsing">Custom parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
 </ul>
 </li>
@@ -84,7 +84,7 @@
 <p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
 </ul>
@@ -144,8 +144,9 @@ whose meaning is not immediately obvious:</p>
 of using</em> <code class="docutils literal notranslate"><span class="pre">else:</span></code>, <em>one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">break:</span></code> which
 uses only existing Python keywords.
 For this example, I decided instead that a suggestion made by Raymond Hettinger
-to have <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword made the most sense.
-It can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
+to have <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword made the most sense, even though I could just
+as easily have used <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">no</span> <span class="pre">break</span></code> instead.</p>
+<p>So, with this import hook, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
     <span class="c1"># some</span>
     <span class="c1"># code</span>
@@ -155,6 +156,7 @@ It can be used instead of <code class="docutils literal notranslate"><span class
     <span class="c1"># break statement occurred above</span>
 </pre></div>
 </div>
+<p>This will be also the case for a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
 <section id="nobreak-instead-of-else-in-if-else">
 <h2><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code><a class="headerlink" href="#nobreak-instead-of-else-in-if-else" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">else</span></code> keyword has a very different meaning when used as part

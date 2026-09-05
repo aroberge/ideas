@@ -1,7 +1,7 @@
 
 .. admonition:: Summary
 
-    This example shows how a new keyword, namely `repeat`, could
+    This example shows how a new keyword, namely ``repeat``, could
     be introduced to simplify learning Python by beginners.
 
     To do this, we include four different transformations,
@@ -11,6 +11,6 @@
     It also shows how to include some parameters that are passed back to the
     source transformation.
 
+   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
 
 .. automodule:: ideas.examples.repeat
-   :members:

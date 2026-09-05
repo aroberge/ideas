@@ -1,10 +1,12 @@
 .. admonition:: Summary
 
-    This example re-uses two existing transformations:
+   This example re-uses two existing transformations:
 
-    - **French Python**, which uses a non-standard file extension ``.pyfr``
-      as an indication that an import hook must be used.
-    - **repeat as a keyword**
+   **French Python**, which uses a non-standard file extension ``.pyfr``
+   as an indication that an import hook must be used; and **repeat as a keyword**.
+
+   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/french_repeat.py>`_
+
 
 French repeat
 ==============
@@ -23,5 +25,10 @@ and
 
 .. literalinclude:: ../../../usage_demo/tortue.pyfr
 
-.. automodule:: ideas.examples.french_repeat
-   :members:
+This is how I executed them:
+
+.. code-block:: none
+
+   (venv-ideas3.11) C:\Users\Andre\github\ideas\usage_demo
+   > py tortue_demo.py
+

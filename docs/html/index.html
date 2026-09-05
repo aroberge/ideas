@@ -9,7 +9,7 @@
   <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -48,7 +48,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
@@ -96,7 +95,7 @@
 <h1>Ideas: making it easier to extend Python’s syntax<a class="headerlink" href="#ideas-making-it-easier-to-extend-python-s-syntax" title="Link to this heading"></a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>As of August 18 2026, I’ve started updating this project after a 4 year hiatus.
+<p>As of August 18 2026, I’ve started updating this project after a 4 year-long hiatus.
 The version that can be installed via pypi (using pip) has not been updated yet.</p>
 </div>
 <p><a class="reference external" href="https://github.com/aroberge/ideas">Code on Github</a></p>
@@ -123,20 +122,17 @@ you grab a copy of the currently unpublished book by Anthony Shaw,
 but it will still remain a major task. Furthermore, it would not be easy
 to share your work with others so that they can try it out.</p>
 <p>However, <strong>there is a simpler way:</strong> it is possible to run code with a
-modified syntax using import hooks [<em>or, in some cases as shown later,
-using a custom codec</em>.]</p>
+modified syntax using import hooks. <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <section id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="what.html#what-is-an-import-hook">What is an import hook?</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="motivation.html"> Additional motivation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="motivation.html#original-motivation">Original motivation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motivation.html#additional-motivation">Additional motivation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="motivation.html#about-the-name">About the name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what.html#additional-motivation-for-this-project">Additional motivation for this project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what.html#original-motivation">Original motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what.html#additional-motivation">Additional motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="what.html#about-the-name">About the name</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a><ul>
@@ -146,6 +142,8 @@ using a custom codec</em>.]</p>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#starting-from-a-standard-cpython-interpreter">Starting from a standard CPython interpreter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#using-with-pypy">Using with Pypy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#advanced-usage">Advanced usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#multiple-import-hooks">Multiple import hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#always-running-by-default">Always running by default</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="function_keyword.html"> Create your own import hook</a><ul>
@@ -177,7 +175,10 @@ using a custom codec</em>.]</p>
 <li class="toctree-l4"><a class="reference internal" href="examples/nobreak.html#what-about-try-except">What about try/except?</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="examples/repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/repeat.html">repeat as a keyword</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="examples/repeat.html#four-different-cases">Four different cases</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="examples/french.html">French Python</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="examples/french.html#importing-pyfr-files">Importing .pyfr files</a></li>
 </ul>
@@ -185,8 +186,9 @@ using a custom codec</em>.]</p>
 <li class="toctree-l3"><a class="reference internal" href="examples/french_repeat.html">French repeat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples/auto_self.html">Auto-self</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples/decimal_math.html">Decimal math</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="examples/decimal_math.html#import-hook">Import hook</a></li>
-<li class="toctree-l4"><a class="reference internal" href="examples/decimal_math.html#custom-codec">Custom codec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/decimal_math.html#decimal-math-py">decimal_math.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/decimal_math.html#decimal-math-d-py">decimal_math_d.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/decimal_math.html#decimal-math-with-py">decimal_math_with.py</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="examples/fractional_math_tok.html">Fractional math (token)</a></li>
@@ -204,12 +206,12 @@ using a custom codec</em>.]</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="guide.html#custom-parsing">Custom parsing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="guide.html#ast-transformations">AST transformations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="examples/fractional_math_ast.html"> Fractional math (AST)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#ast-creation">AST creation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/polish_expr.html">Polish expressions</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="guide.html#bytecode-transformations">Bytecode transformations</a><ul>
@@ -230,6 +232,10 @@ using a custom codec</em>.]</p>
 <li class="toctree-l4"><a class="reference internal" href="examples/constants.html#suggestion-for-you">Suggestion for you</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/patching.html"> Patching a module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="guide.html#custom-encoding">Custom encoding</a><ul>
@@ -266,6 +272,22 @@ using a custom codec</em>.]</p>
 <p>Try to create a different module object.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="examples/constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\examples\constants.rst, line 123.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Write this up.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="examples/patching.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\examples\patching.rst, line 4.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Write an example where we include different locations to search.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\possible.rst, line 49.)</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Or, in some cases as shown later, using a custom codec.</p>
+</aside>
+</aside>
 </section>
 </section>
 
