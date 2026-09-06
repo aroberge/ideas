@@ -59,6 +59,13 @@ import tokenize as py_tokenize
 from io import StringIO
 
 
+def is_identical(self, other):
+    return repr(self) == repr(other)
+
+
+token_utils.Token.is_identical = is_identical
+
+
 class ExportInfo:
     def __init__(self, source):
         self.source = source
@@ -85,7 +92,6 @@ class ExportInfo:
 
     def get_info(self):
         for self.token in self.get_significant_tokens():
-            print(self.token)
             if self.token == "from":
                 self.init_from_statement()
                 continue
@@ -103,7 +109,6 @@ class ExportInfo:
                 continue
 
             self.process_end_of_from_statement()
-            print(self.token, f"{self.from_stmt_info=}")
 
         # if from statement was last statement of source, we need to add it.
         if self.from_stmt_info:
@@ -161,16 +166,16 @@ class ExportInfo:
         self.prev_token = self.token
 
 
-def display_location(info):
-    """used for doing quick test at the terminal"""
+# def display_location(info):
+#     """used for doing quick test at the terminal"""
 
-    for entry in info:
-        for item in entry:
-            if item == "indentation":
-                print(item, f"|{entry[item]}|")
-            else:
-                print(item, entry[item])
-        print()
+#     for entry in info:
+#         for item in entry:
+#             if item == "indentation":
+#                 print(item, f"|{entry[item]}|")
+#             else:
+#                 print(item, entry[item])
+#         print()
 
 
 def transform_source(source, **kwargs):
@@ -184,14 +189,20 @@ def transform_source(source, **kwargs):
 
     current_info = None
 
+    if info:
+        current_info = info.pop(0)
+
     for tokens in token_utils.get_lines(source):
-        if info and current_info is None:
-            current_info = info.pop(0)
         for token in tokens:
             if current_info is not None:
-                if token == "export":
+                if token.is_identical(current_info["export token"]):
                     token.string = "import"
+                    new_tokens.append(token)
+                    continue
+
                 if token.start_row == current_info["next row"]:
+                    if new_tokens[-1] == "\n":
+                        new_tokens.pop()
                     new_tokens.append(
                         new_all.format(
                             current_info["indentation"], current_info["public names"]
@@ -202,16 +213,18 @@ def transform_source(source, **kwargs):
                             current_info["indentation"], current_info["public names"]
                         )
                     )
-                    current_info = None
+                    if info:
+                        current_info = info.pop(0)
+                    else:
+                        current_info = None
             new_tokens.append(token)
 
     if current_info is not None:
         new_tokens.append(
-            current_info["indentation"] + new_all.format(current_info["public names"])
+            new_all.format(current_info["indentation"], current_info["public names"])
         )
         new_tokens.append(
-            current_info["indentation"]
-            + all_append.format(current_info["public names"])
+            all_append.format(current_info["indentation"], current_info["public names"])
         )
     new_source = token_utils.untokenize(new_tokens)
     # print("======New source")
