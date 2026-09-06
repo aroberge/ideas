@@ -227,11 +227,24 @@ def display_location(info):
         print()
 
 
-def transform_source(source, **kwargs):
-    new_tokens = []
+def insert_all_info(new_tokens, current_info):
     new_all = '\n{indent}__all__ = globals().setdefault("__all__", [])\n'
     all_as_list = "{indent}__all__ = list(__all__)\n"
     all_append = "{indent}__all__.extend({names})\n"
+
+    new_tokens.append(new_all.format(indent=current_info["indentation"]))
+    new_tokens.append(all_as_list.format(indent=current_info["indentation"]))
+    new_tokens.append(
+        all_append.format(
+            indent=current_info["indentation"],
+            names=current_info["public names"],
+        )
+    )
+    return new_tokens
+
+
+def transform_source(source, **kwargs):
+    new_tokens = []
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
@@ -262,16 +275,7 @@ def transform_source(source, **kwargs):
             if token.start_row == current_info["next row"]:
                 if new_tokens[-1] == "\n":
                     new_tokens.pop()
-                new_tokens.append(new_all.format(indent=current_info["indentation"]))
-                new_tokens.append(
-                    all_as_list.format(indent=current_info["indentation"])
-                )
-                new_tokens.append(
-                    all_append.format(
-                        indent=current_info["indentation"],
-                        names=current_info["public names"],
-                    )
-                )
+                new_tokens = insert_all_info(new_tokens, current_info)
                 if info:
                     current_info = info.pop(0)
                 else:
@@ -279,13 +283,7 @@ def transform_source(source, **kwargs):
             new_tokens.append(token)
 
     if current_info is not None:
-        new_tokens.append(new_all.format(indent=current_info["indentation"]))
-        new_tokens.append(all_as_list.format(indent=current_info["indentation"]))
-        new_tokens.append(
-            all_append.format(
-                indent=current_info["indentation"], names=current_info["public names"]
-            )
-        )
+        new_tokens = insert_all_info(new_tokens, current_info)
     new_source = token_utils.untokenize(new_tokens)
 
     if "pytest" in sys.modules:
