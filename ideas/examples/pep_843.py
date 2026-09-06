@@ -39,12 +39,12 @@ should be equivalent to::
     exported_names.append("<alias>")
 
 We avoid introducing ``exported_names`` as an intermediary
-variable by doing the following instead::
+variable by doing something like the following instead::
 
     from <module> import <name> as <alias>
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
-    __all__.append("<alias>")
+    __all__.extend(["<alias>"])
 
 PEP 843 also states that
 *unlike ``import``, ``export`` is restricted to module level:
@@ -76,9 +76,10 @@ class ExportInfo:
         self.current_row = -1
         self.begin_from = False
         self.inside_class_or_def = []
-        self.open_brackets = []
+        self.open_brackets = []  # Any ([{ open but not closed
         self.class_or_def_indent = -1
         self.prev_token = None
+        self.open_parens = []  # inside from ... import (...)
 
     def get_significant_tokens(self):
         """Gets a list of tokens from a source (str), ignoring comments
@@ -109,7 +110,7 @@ class ExportInfo:
                 self.prev_token = self.token
                 continue
 
-            if self.token.start_row > self.current_row:
+            if self.token.start_row > self.current_row and not self.open_parens:
                 self.begin_new_statement()
                 self.prev_token = self.token
                 continue
@@ -199,29 +200,38 @@ class ExportInfo:
 
     def process_end_of_from_statement(self):
         """Identify public names after export keyword"""
+        self.current_row = self.token.start_row
         if self.token.is_identifier():
             if self.prev_token == "as":
                 self.from_stmt_info["public names"].pop()
             self.from_stmt_info["public names"].append(self.token.string)
+        elif self.token == "(":
+            self.open_parens.append(self.token)
+        elif self.token == ")":
+            self.open_parens.pop()
+            if not self.open_parens:  # this should be the case
+                self.from_stmt_info["next row"] = self.current_row + 1
 
 
-# def display_location(info):
-#     """used for doing quick test at the terminal"""
+def display_location(info):
+    """used for doing quick test at the terminal"""
 
-#     for entry in info:
-#         for item in entry:
-#             if item == "indentation":
-#                 print(item, f"|{entry[item]}|")
-#             else:
-#                 print(item, entry[item])
-#         print()
+    for entry in info:
+        for item in entry:
+            if item == "indentation":
+                print(item, f"|{entry[item]}|")
+            elif item == "export token":
+                print(item, repr(entry[item]))
+            else:
+                print(item, entry[item])
+        print()
 
 
 def transform_source(source, **kwargs):
     new_tokens = []
-    new_all = '\n{}__all__ = globals().setdefault("__all__", {})\n'
-    all_as_list = "{}__all__ = list(__all__)\n"
-    all_append = "{}__all__.extend({})\n"
+    new_all = '\n{indent}__all__ = globals().setdefault("__all__", [])\n'
+    all_as_list = "{indent}__all__ = list(__all__)\n"
+    all_append = "{indent}__all__.extend({names})\n"
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
@@ -252,15 +262,14 @@ def transform_source(source, **kwargs):
             if token.start_row == current_info["next row"]:
                 if new_tokens[-1] == "\n":
                     new_tokens.pop()
+                new_tokens.append(new_all.format(indent=current_info["indentation"]))
                 new_tokens.append(
-                    new_all.format(
-                        current_info["indentation"], current_info["public names"]
-                    )
+                    all_as_list.format(indent=current_info["indentation"])
                 )
-                new_tokens.append(all_as_list.format(current_info["indentation"]))
                 new_tokens.append(
                     all_append.format(
-                        current_info["indentation"], current_info["public names"]
+                        indent=current_info["indentation"],
+                        names=current_info["public names"],
                     )
                 )
                 if info:
@@ -270,12 +279,12 @@ def transform_source(source, **kwargs):
             new_tokens.append(token)
 
     if current_info is not None:
+        new_tokens.append(new_all.format(indent=current_info["indentation"]))
+        new_tokens.append(all_as_list.format(indent=current_info["indentation"]))
         new_tokens.append(
-            new_all.format(current_info["indentation"], current_info["public names"])
-        )
-        new_tokens.append(all_as_list.format(current_info["indentation"]))
-        new_tokens.append(
-            all_append.format(current_info["indentation"], current_info["public names"])
+            all_append.format(
+                indent=current_info["indentation"], names=current_info["public names"]
+            )
         )
     new_source = token_utils.untokenize(new_tokens)
 
