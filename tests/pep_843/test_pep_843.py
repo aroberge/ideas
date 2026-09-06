@@ -104,3 +104,19 @@ c,
 """
 
     assert pep_843.transform_source(source) == expected_output
+
+
+def test_star_import():
+    source = "from a.b export *"
+    expected_output = (
+"""from a.b import *
+__all__ = globals().setdefault("__all__", [])
+__all__ = list(__all__)
+if hasattr(a.b, "__all__"):
+    __all__.extend(list(a.b.__all__))
+else:
+    for _ in dir(a.b):
+        if not _.startswith("_"):
+            __all__.append(_)
+""")
+    assert pep_843.transform_source(source) == expected_output

@@ -50,8 +50,27 @@ PEP 843 also states that
 *unlike ``import``, ``export`` is restricted to module level:
 it’s a ``SyntaxError`` inside a ``def`` or ``class`` body.*
 
-As such, we will not transform "export" if it occurs within
+As such, we will **not** transform "export" if it occurs within
 a class or function body.
+
+Star version
+-----------
+
+For the star version::
+
+    from module export *
+
+we believe that the following should do what is expected::
+
+    from module import *
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    if hasattr(module, "__all__"):
+        __all__.extend(list(module.__all__))
+    else:
+        for _ in dir(module):
+            if not _.startswith("_"):
+                __all__.append(_)
 """
 
 import token_utils
@@ -172,7 +191,7 @@ class ExportInfo:
             "row": self.current_row,
             "next row": self.current_row + 1,
             "public names": [],
-            "module name": [],
+            "module name": "",
             "export token": None,
         }
         self.export_found = False
@@ -195,7 +214,7 @@ class ExportInfo:
             self.from_stmt_info["export token"] = self.token
             return
 
-        self.from_stmt_info["module name"].append(self.token.string)
+        self.from_stmt_info["module name"] += self.token.string
         return
 
     def process_end_of_from_statement(self):
@@ -211,6 +230,8 @@ class ExportInfo:
             self.open_parens.pop()
             if not self.open_parens:  # this should be the case
                 self.from_stmt_info["next row"] = self.current_row + 1
+        elif self.token == "*":
+            self.from_stmt_info["public names"] = "*"
 
 
 def display_location(info):
@@ -228,18 +249,39 @@ def display_location(info):
 
 
 def insert_all_info(new_tokens, current_info):
-    new_all = '\n{indent}__all__ = globals().setdefault("__all__", [])\n'
-    all_as_list = "{indent}__all__ = list(__all__)\n"
-    all_append = "{indent}__all__.extend({names})\n"
 
-    new_tokens.append(new_all.format(indent=current_info["indentation"]))
-    new_tokens.append(all_as_list.format(indent=current_info["indentation"]))
-    new_tokens.append(
-        all_append.format(
-            indent=current_info["indentation"],
-            names=current_info["public names"],
+    new_all = """
+{indent}__all__ = globals().setdefault("__all__", [])
+{indent}__all__ = list(__all__)
+{indent}__all__.extend({names})
+"""
+
+    new_all_star = """
+{indent}__all__ = globals().setdefault("__all__", [])
+{indent}__all__ = list(__all__)
+{indent}if hasattr({module}, "__all__"):
+{indent}    __all__.extend(list({module}.__all__))
+{indent}else:
+{indent}    for _ in dir({module}):
+{indent}        if not _.startswith("_"):
+{indent}            __all__.append(_)
+"""
+
+    if current_info["public names"] == "*":
+        new_tokens.append(
+            new_all_star.format(
+                indent=current_info["indentation"],
+                module=current_info["module name"],
+            )
         )
-    )
+    else:
+        new_tokens.append(
+            new_all.format(
+                indent=current_info["indentation"],
+                names=current_info["public names"],
+            )
+        )
+
     return new_tokens
 
 
@@ -248,7 +290,7 @@ def transform_source(source, **kwargs):
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
-    # display_location(info)
+    display_location(info)
 
     current_info = None
 
