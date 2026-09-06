@@ -70,9 +70,14 @@ class ExportInfo:
     def __init__(self, source):
         self.source = source
         self.from_statements_info = []
+        self.from_stmt_info = {}
         self.indentation = 0
         self.current_row = -1
         self.begin_from = False
+        self.inside_class_or_def = []
+        self.open_brackets = []
+        self.class_or_def_indent = -1
+        self.prev_token = None
 
     def get_significant_tokens(self):
         """Gets a list of tokens from a source (str), ignoring comments
@@ -92,12 +97,20 @@ class ExportInfo:
 
     def get_info(self):
         for self.token in self.get_significant_tokens():
+
+            if not self.begin_from:
+                if self.skip_over_irrelevant_token():
+                    self.prev_token = self.token
+                    continue
+
             if self.token == "from":
                 self.init_from_statement()
+                self.prev_token = self.token
                 continue
 
             if self.token.start_row > self.current_row:
                 self.begin_new_statement()
+                self.prev_token = self.token
                 continue
 
             if not self.begin_from:
@@ -106,14 +119,42 @@ class ExportInfo:
 
             if not self.export_found:
                 self.process_until_export_statement()
+                self.prev_token = self.token
                 continue
 
             self.process_end_of_from_statement()
+            self.prev_token = self.token
 
         # if from statement was last statement of source, we need to add it.
         if self.from_stmt_info:
             self.from_statements_info.append(self.from_stmt_info)
         return self.from_statements_info
+
+    def skip_over_irrelevant_token(self):
+        if self.token.string in "([{":
+            self.open_brackets.append(self.token.string)
+            return True
+        elif self.token.string in ")]}":
+            self.open_brackets.pop()
+            return True
+        elif self.open_brackets:
+            return True
+
+        if self.token.string in ["class", "def"]:
+            self.inside_class_or_def.append(self.token)
+            self.class_or_def_indent = self.token.start_col
+            return True
+
+        if self.inside_class_or_def:
+            if self.token.start_col > self.class_or_def_indent:
+                return True
+            while self.inside_class_or_def:
+                prev_class_or_def = self.inside_class_or_def.pop()
+                self.class_or_def_indent = prev_class_or_def.start_col
+                if self.token.start_col > self.class_or_def_indent:
+                    return True
+
+        return False
 
     def init_from_statement(self):
         """Initialize relevant variables when a new from statement is found."""
@@ -122,6 +163,8 @@ class ExportInfo:
         self.begin_from = True
         self.current_row = self.token.start_row
         self.indentation = self.token.start_col
+        if self.prev_token == "lazy":
+            self.indentation = self.prev_token.start_col
         self.from_stmt_info = {
             "indentation": self.indentation * " ",
             "row": self.current_row,
@@ -130,7 +173,6 @@ class ExportInfo:
             "module name": [],
             "export token": None,
         }
-        self.prev_token = self.token
         self.export_found = False
 
     def begin_new_statement(self):
@@ -138,20 +180,17 @@ class ExportInfo:
             self.from_statements_info.append(self.from_stmt_info)
             self.from_stmt_info = {}
         self.current_row = self.token.start_row
-        self.prev_token = self.token
 
     def process_until_export_statement(self):
         """Identify module name and if export/import is used"""
         if self.token == "import":  # drop everything for this line
             self.begin_from = False
             self.from_stmt_info = {}
-            self.prev_token = self.token
             return
 
         elif self.token == "export":
             self.export_found = True
             self.from_stmt_info["export token"] = self.token
-            self.prev_token = self.token
             return
 
         self.from_stmt_info["module name"].append(self.token.string)
@@ -163,7 +202,6 @@ class ExportInfo:
             if self.prev_token == "as":
                 self.from_stmt_info["public names"].pop()
             self.from_stmt_info["public names"].append(self.token.string)
-        self.prev_token = self.token
 
 
 # def display_location(info):
@@ -194,29 +232,32 @@ def transform_source(source, **kwargs):
 
     for tokens in token_utils.get_lines(source):
         for token in tokens:
-            if current_info is not None:
-                if token.is_identical(current_info["export token"]):
-                    token.string = "import"
-                    new_tokens.append(token)
-                    continue
+            if current_info is None or current_info["row"] > token.start_row:
+                new_tokens.append(token)
+                continue
 
-                if token.start_row == current_info["next row"]:
-                    if new_tokens[-1] == "\n":
-                        new_tokens.pop()
-                    new_tokens.append(
-                        new_all.format(
-                            current_info["indentation"], current_info["public names"]
-                        )
+            if token.is_identical(current_info["export token"]):
+                token.string = "import"
+                new_tokens.append(token)
+                continue
+
+            if token.start_row == current_info["next row"]:
+                if new_tokens[-1] == "\n":
+                    new_tokens.pop()
+                new_tokens.append(
+                    new_all.format(
+                        current_info["indentation"], current_info["public names"]
                     )
-                    new_tokens.append(
-                        all_append.format(
-                            current_info["indentation"], current_info["public names"]
-                        )
+                )
+                new_tokens.append(
+                    all_append.format(
+                        current_info["indentation"], current_info["public names"]
                     )
-                    if info:
-                        current_info = info.pop(0)
-                    else:
-                        current_info = None
+                )
+                if info:
+                    current_info = info.pop(0)
+                else:
+                    current_info = None
             new_tokens.append(token)
 
     if current_info is not None:
@@ -227,9 +268,9 @@ def transform_source(source, **kwargs):
             all_append.format(current_info["indentation"], current_info["public names"])
         )
     new_source = token_utils.untokenize(new_tokens)
-    # print("======New source")
-    # print(new_source)
-    # print("-----------------")
+    print("======New source")
+    print(new_source)
+    print("-----------------")
     return new_source
 
 
