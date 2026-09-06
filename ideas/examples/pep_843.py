@@ -79,11 +79,47 @@ from io import StringIO
 import sys
 
 
+# token_utils.Tokens determine equality by comparing with a string
+# or an other Token's string. Using its custom repr is a quick
+# way to confirm that we are looking at the same token which
+# could have been obtained at different times.
+# This is a method which I should have added to token_utils.Token
+
+
 def is_identical(self, other):
     return repr(self) == repr(other)
 
 
 token_utils.Token.is_identical = is_identical
+
+
+def get_significant_tokens(source):  # adapted from friendly-traceback
+    """Gets a list of tokens from a source (str), ignoring comments
+    as well as any token whose string value is either null or
+    consists of spaces, newline or tab characters.
+
+    If an exception is raised by Python's tokenize module, the list of tokens
+    accumulated up to that point is returned.
+    """
+    for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+        token = token_utils.Token(tok)
+        if not token.string.strip():
+            continue
+        if token.is_comment():
+            continue
+        yield token
+
+
+# A better programmer would likely have written a recursive descent parser,
+# or something similar, to process the source, extract the relevant information
+# to make the appropriate change.
+#
+# what I did instead is to proceed in two parts, going through the entire source once
+# and extracting the relevant information, before going through the entire source
+# a second time to make the appropriate changes.
+#
+# When I have more time, I plan to add comments below to explain
+# the reasoning behind this code.
 
 
 class ExportInfo:
@@ -100,24 +136,8 @@ class ExportInfo:
         self.prev_token = None
         self.open_parens = []  # inside from ... import (...)
 
-    def get_significant_tokens(self):
-        """Gets a list of tokens from a source (str), ignoring comments
-        as well as any token whose string value is either null or
-        consists of spaces, newline or tab characters.
-
-        If an exception is raised by Python's tokenize module, the list of tokens
-        accumulated up to that point is returned.
-        """
-        for tok in py_tokenize.generate_tokens(StringIO(self.source).readline):
-            token = token_utils.Token(tok)
-            if not token.string.strip():
-                continue
-            if token.is_comment():
-                continue
-            yield token
-
     def get_info(self):
-        for self.token in self.get_significant_tokens():
+        for self.token in get_significant_tokens(self.source):
 
             if not self.begin_from:
                 if self.skip_over_irrelevant_token():
@@ -234,8 +254,8 @@ class ExportInfo:
             self.from_stmt_info["public names"] = "*"
 
 
-def display_location(info):
-    """used for doing quick test at the terminal"""
+def _display_location(info):
+    """used for doing quick test at the terminal or debugging tests"""
 
     for entry in info:
         for item in entry:
@@ -290,7 +310,7 @@ def transform_source(source, **kwargs):
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
-    display_location(info)
+    # _display_location(info)
 
     current_info = None
 
@@ -302,27 +322,25 @@ def transform_source(source, **kwargs):
         print(source)
         print("-----------------")
 
-    for tokens in token_utils.get_lines(source):
-
-        for token in tokens:
-            if current_info is None or current_info["row"] > token.start_row:
-                new_tokens.append(token)
-                continue
-
-            if token.is_identical(current_info["export token"]):
-                token.string = "import"
-                new_tokens.append(token)
-                continue
-
-            if token.start_row == current_info["next row"]:
-                if new_tokens[-1] == "\n":
-                    new_tokens.pop()
-                new_tokens = insert_all_info(new_tokens, current_info)
-                if info:
-                    current_info = info.pop(0)
-                else:
-                    current_info = None
+    for token in token_utils.tokenize(source):
+        if current_info is None or current_info["row"] > token.start_row:
             new_tokens.append(token)
+            continue
+
+        if token.is_identical(current_info["export token"]):
+            token.string = "import"
+            new_tokens.append(token)
+            continue
+
+        if token.start_row == current_info["next row"]:
+            if new_tokens[-1] == "\n":
+                new_tokens.pop()
+            new_tokens = insert_all_info(new_tokens, current_info)
+            if info:
+                current_info = info.pop(0)
+            else:
+                current_info = None
+        new_tokens.append(token)
 
     if current_info is not None:
         new_tokens = insert_all_info(new_tokens, current_info)
