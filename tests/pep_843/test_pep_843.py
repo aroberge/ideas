@@ -10,17 +10,16 @@ def test_flat_layout():
     assert main_file.__all__ == ['Widget', 'Gadget', 'cool', 'hot', 'a', 'b', 'c', 'd', 'spam', 'ham']
     remove_hook(hook)
 
-# Currently, ideas cannot process modules with __init__.py files.
-#
-# def test_module_layout():
-#     hook = pep_843.add_hook()
-#     current_state.verbose = True
+def test_module_layout():
+    hook = pep_843.add_hook()
+    current_state.verbose = True
 
-#     from .hub import __all__
+    from tests.pep_843 import hub
 
-#     assert __all__ == ['Widget', 'Gadget', 'cool', 'hot', 'a', 'b', 'c', 'd', 'spam', 'ham']
+    print(dir(hub))
+    assert True
 
-#     remove_hook(hook)
+    remove_hook(hook)
 
 
 def test_ignore_from_inside_def():

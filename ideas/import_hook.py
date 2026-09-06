@@ -128,6 +128,47 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
         if current_state.verbose:
             print(f"{self.__repr__()} cannot import {fullname}")
+
+        return self.basic_find_spec(fullname=fullname, path=path, target=None)
+        # return None  # we don't know how to import this
+
+    def basic_find_spec(self, fullname, path, target=None):
+        if path is None or path == "":
+            path = [os.getcwd()]  # top level import --
+        if "." in fullname:
+            *parents, name = fullname.split(".")
+        else:
+            name = fullname
+        for entry in path:
+            if os.path.isdir(os.path.join(entry, name)):
+                # this module has child modules
+                filename = os.path.join(entry, name, "__init__.py")
+                submodule_locations = [os.path.join(entry, name)]
+            else:
+                filename = os.path.join(entry, name + ".py")
+                submodule_locations = None
+
+            if not os.path.exists(filename):
+                continue
+
+            return spec_from_file_location(
+                fullname,
+                filename,
+                loader=IdeasLoader(
+                    filename,
+                    ideas_hook=self.ideas_hook,
+                    callback_params=self.ideas_hook.callback_params,
+                    create_module=self.ideas_hook.create_module,
+                    exec_=self.ideas_hook.exec_,
+                    module_class=self.ideas_hook.module_class,
+                    source_init=self.ideas_hook.source_init,
+                    transform_ast=self.ideas_hook.transform_ast,
+                    transform_bytecode=self.ideas_hook.transform_bytecode,
+                    parse_source=self.ideas_hook.parse_source,
+                ),
+                submodule_search_locations=submodule_locations,
+            )
+
         return None  # we don't know how to import this
 
     def suspend_exclusions(self, fullname):

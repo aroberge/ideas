@@ -22,6 +22,11 @@ would be equivalent to
     from x import y
     __all__.append(y)
 
+.. caution::
+
+    Currently, it does not handle packages well at all, and cannot
+    transform code found in __init__.py files.
+
 Implementation
 --------------
 
