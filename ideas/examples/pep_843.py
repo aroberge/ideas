@@ -38,12 +38,12 @@ should be equivalent to::
         __all__ = exported_names
     exported_names.append("<alias>")
 
-For simplicity, we will only consider cases where ``__all__``
-is a list, and not a tuple as preferred by some programmers.
-This will allow us to simplify the above to::
+We avoid introducing ``exported_names`` as an intermediary
+variable by doing the following instead::
 
     from <module> import <name> as <alias>
     __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
     __all__.append("<alias>")
 
 PEP 843 also states that
@@ -57,6 +57,7 @@ a class or function body.
 import token_utils
 import tokenize as py_tokenize
 from io import StringIO
+import sys
 
 
 def is_identical(self, other):
@@ -218,8 +219,9 @@ class ExportInfo:
 
 def transform_source(source, **kwargs):
     new_tokens = []
-    new_all = '\n{}__all__ = globals().setdefault("__all__", {})'
-    all_append = "\n{}__all__.extend({})\n"
+    new_all = '\n{}__all__ = globals().setdefault("__all__", {})\n'
+    all_as_list = "{}__all__ = list(__all__)\n"
+    all_append = "{}__all__.extend({})\n"
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
@@ -230,7 +232,13 @@ def transform_source(source, **kwargs):
     if info:
         current_info = info.pop(0)
 
+    if "pytest" in sys.modules:
+        print("\n====== Original source for pep_843 ============")
+        print(source)
+        print("-----------------")
+
     for tokens in token_utils.get_lines(source):
+
         for token in tokens:
             if current_info is None or current_info["row"] > token.start_row:
                 new_tokens.append(token)
@@ -249,6 +257,7 @@ def transform_source(source, **kwargs):
                         current_info["indentation"], current_info["public names"]
                     )
                 )
+                new_tokens.append(all_as_list.format(current_info["indentation"]))
                 new_tokens.append(
                     all_append.format(
                         current_info["indentation"], current_info["public names"]
@@ -264,13 +273,16 @@ def transform_source(source, **kwargs):
         new_tokens.append(
             new_all.format(current_info["indentation"], current_info["public names"])
         )
+        new_tokens.append(all_as_list.format(current_info["indentation"]))
         new_tokens.append(
             all_append.format(current_info["indentation"], current_info["public names"])
         )
     new_source = token_utils.untokenize(new_tokens)
-    print("======New source")
-    print(new_source)
-    print("-----------------")
+
+    if "pytest" in sys.modules:
+        print("\n====== New source ============")
+        print(new_source)
+        print("-----------------")
     return new_source
 
 
