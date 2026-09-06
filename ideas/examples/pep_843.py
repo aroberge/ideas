@@ -65,12 +65,31 @@ we believe that the following should do what is expected::
     from module import *
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
+    import module
     if hasattr(module, "__all__"):
         __all__.extend(list(module.__all__))
     else:
         for _ in dir(module):
             if not _.startswith("_"):
                 __all__.append(_)
+
+lazy keyword
+------------
+
+While this transformation will insert "the right code" to replace::
+
+    lazy from ... export ...
+
+by::
+
+    lazy from ... import ...
+    # some additional code here
+
+the additional code inserted in the case of an ``export *`` will result
+in a non-lazy import. However, since this is just to provide a way to
+test the syntax proposed in PEP 843, and not actually be used in production,
+it should be no cause for concerns.
+
 """
 
 import token_utils
@@ -279,6 +298,7 @@ def insert_all_info(new_tokens, current_info):
     new_all_star = """
 {indent}__all__ = globals().setdefault("__all__", [])
 {indent}__all__ = list(__all__)
+{indent}import {module}
 {indent}if hasattr({module}, "__all__"):
 {indent}    __all__.extend(list({module}.__all__))
 {indent}else:
@@ -355,5 +375,10 @@ def transform_source(source, **kwargs):
 
 def add_hook():
     from ideas import create_hook  # noqa
+    from ideas import utils
 
-    pass
+    return create_hook(
+        transform_source=transform_source,
+        name=__name__,
+        excluded_paths=[utils.PYTHON, utils.SITE_PACKAGES],
+    )

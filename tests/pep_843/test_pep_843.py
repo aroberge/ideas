@@ -1,4 +1,26 @@
 from ideas.examples import pep_843
+from ideas import remove_hook, current_state
+
+
+def test_flat_layout():
+    hook = pep_843.add_hook()
+
+    from . import main_file
+
+    assert main_file.__all__ == ['Widget', 'Gadget', 'cool', 'hot', 'a', 'b', 'c', 'd', 'spam', 'ham']
+    remove_hook(hook)
+
+# Currently, ideas cannot process modules with __init__.py files.
+#
+# def test_module_layout():
+#     hook = pep_843.add_hook()
+#     current_state.verbose = True
+
+#     from .hub import __all__
+
+#     assert __all__ == ['Widget', 'Gadget', 'cool', 'hot', 'a', 'b', 'c', 'd', 'spam', 'ham']
+
+#     remove_hook(hook)
 
 
 def test_ignore_from_inside_def():
@@ -112,6 +134,7 @@ def test_star_import():
 """from a.b import *
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
+import a.b
 if hasattr(a.b, "__all__"):
     __all__.extend(list(a.b.__all__))
 else:
