@@ -1,7 +1,7 @@
 .. admonition:: Summary
 
    This import hook enables someone to try out the syntax
-   ``from ... export ...`` proposed `in PEP 883 <https://peps.python.org/pep-0843/>`_.
+   ``from ... export ...`` proposed `in PEP 843 <https://peps.python.org/pep-0843/>`_.
    It is a first draft which is likely buggy. The ``import_hook.py`` code has grown
    organically as more examples were added and is in need of a serious cleanup.
 

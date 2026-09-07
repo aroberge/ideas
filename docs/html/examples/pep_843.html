@@ -124,7 +124,7 @@
   <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This import hook enables someone to try out the syntax
-<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> proposed <a class="reference external" href="https://peps.python.org/pep-0843/">in PEP 883</a>.
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> proposed <a class="reference external" href="https://peps.python.org/pep-0843/">in PEP 843</a>.
 It is a first draft which is likely buggy. The <code class="docutils literal notranslate"><span class="pre">import_hook.py</span></code> code has grown
 organically as more examples were added and is in need of a serious cleanup.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/pep_843.py">Source code</a></p>
@@ -145,11 +145,6 @@ used in expressions of the basic form:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">x</span><span class="w"> </span><span class="kn">import</span> <span class="n">y</span>
 <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<p>Currently, it does not handle packages well at all, and cannot
-transform code found in __init__.py files.</p>
 </div>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
@@ -175,9 +170,9 @@ variable by doing something like the following instead:</p>
 </pre></div>
 </div>
 <p>PEP 843 also states that
-<em>unlike ``import``, ``export`` is restricted to module level:
-it’s a ``SyntaxError`` inside a ``def`` or ``class`` body.</em></p>
-<p>As such, we will <strong>not</strong> transform <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span></code> if it occurs within
+“unlike <code class="docutils literal notranslate"><span class="pre">import</span></code>, <code class="docutils literal notranslate"><span class="pre">export</span></code> is restricted to module level:
+it’s a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> inside a <code class="docutils literal notranslate"><span class="pre">def</span></code> or <code class="docutils literal notranslate"><span class="pre">class</span></code> body.”</p>
+<p>As such, we do <strong>not</strong> transform <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">..</span></code> if it occurs within
 a class or function body.</p>
 </section>
 <section id="star-version">
