@@ -51,6 +51,10 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                 print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
             return None
 
+        # avoid lots of spurious print statements when running verbose tests
+        if fullname == "pygments":
+            return None
+
         if not path:
             path = [os.getcwd()] + sys.path
 
@@ -133,6 +137,9 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         # return None  # we don't know how to import this
 
     def basic_find_spec(self, fullname, path, target=None):
+
+        if fullname in utils.std_lib_names:  # Avoid circular imports for some hooks
+            return None
         if path is None or path == "":
             path = [os.getcwd()]  # top level import --
         if "." in fullname:

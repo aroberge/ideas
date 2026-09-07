@@ -1,3 +1,4 @@
+# flake8: noqa
 # For all the files in these tests, in order
 # to help identify that we exported the right variables,
 # we name variables that should not be exported starting

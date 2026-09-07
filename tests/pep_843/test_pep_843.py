@@ -133,12 +133,25 @@ def test_star_import():
 """from a.b import *
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
-import a.b
-if hasattr(a.b, "__all__"):
-    __all__.extend(list(a.b.__all__))
+from . import b
+if hasattr(b, "__all__"):
+    __all__.extend(list(b.__all__))
 else:
-    for _ in dir(a.b):
+    for _ in dir(b):
         if not _.startswith("_"):
             __all__.append(_)
+    del _
 """)
     assert pep_843.transform_source(source) == expected_output
+
+def test_export_as_identifier():
+    # 
+
+    source = "from module export name\nexport = 3\n"
+    expected_output =(
+"""from module import name
+__all__ = globals().setdefault("__all__", [])
+__all__ = list(__all__)
+__all__.extend(['name'])
+export = 3
+""")

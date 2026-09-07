@@ -36,6 +36,7 @@ especially including examining the source code.
     Switch statement <examples/switch>
     Implicit multiplication <examples/implicit_multiplication>
     Unnormalized unicode <examples/unnormalized_unicode>
+    PEP 843 implementation <examples/pep_843>
 
 AST transformations
 -------------------

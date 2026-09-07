@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PEP 843 &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
+    <link rel="prev" title="Unnormalized unicode" href="unnormalized_unicode.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PEP 843 implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#star-version">Star version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lazy-keyword">lazy keyword</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#export-as-identifier">export as identifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">PEP 843</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/pep_843.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>This import hook enables someone to try out the syntax
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> proposed <a class="reference external" href="https://peps.python.org/pep-0843/">in PEP 883</a>.
+It is a first draft which is likely buggy. The <code class="docutils literal notranslate"><span class="pre">import_hook.py</span></code> code has grown
+organically as more examples were added and is in need of a serious cleanup.</p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/pep_843.py">Source code</a></p>
+</div>
+<section id="pep-843">
+<span id="module-ideas.examples.pep_843"></span><h1>PEP 843<a class="headerlink" href="#pep-843" title="Link to this heading"></a></h1>
+<p>PEP 843 suggests the addition of <code class="docutils literal notranslate"><span class="pre">export</span></code> as a soft keyword to be
+used in expressions of the basic form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">x</span> <span class="n">export</span> <span class="n">y</span> <span class="p">[</span><span class="k">as</span> <span class="n">z</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>with other slight variations described below. Assuming that
+<code class="docutils literal notranslate"><span class="pre">__all__</span> <span class="pre">=</span> <span class="pre">[...]</span></code> is already defined, the statement</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">x</span> <span class="n">export</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>would be equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">x</span><span class="w"> </span><span class="kn">import</span> <span class="n">y</span>
+<span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Currently, it does not handle packages well at all, and cannot
+transform code found in __init__.py files.</p>
+</div>
+<section id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
+<p>We implement this as a source transformation. PEP 843 suggests that:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="n">alias</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>should be equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="n">alias</span><span class="o">&gt;</span>
+<span class="n">exported_names</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exported_names</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="n">exported_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">exported_names</span><span class="p">)</span>
+    <span class="n">__all__</span> <span class="o">=</span> <span class="n">exported_names</span>
+<span class="n">exported_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"&lt;alias&gt;"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We avoid introducing <code class="docutils literal notranslate"><span class="pre">exported_names</span></code> as an intermediary
+variable by doing something like the following instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="n">alias</span><span class="o">&gt;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
+<span class="n">__all__</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">"&lt;alias&gt;"</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>PEP 843 also states that
+<em>unlike ``import``, ``export`` is restricted to module level:
+it’s a ``SyntaxError`` inside a ``def`` or ``class`` body.</em></p>
+<p>As such, we will <strong>not</strong> transform <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span></code> if it occurs within
+a class or function body.</p>
+</section>
+<section id="star-version">
+<h2>Star version<a class="headerlink" href="#star-version" title="Link to this heading"></a></h2>
+<p>For the star version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">module</span> <span class="n">export</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>we believe that something like the following should do what is expected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="n">module</span> <span class="kn">import</span><span class="w"> </span><span class="o">*</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="p">{</span><span class="n">relative</span><span class="p">}</span> <span class="kn">import</span><span class="w"> </span><span class="p">{</span><span class="n">module</span><span class="p">}</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">({</span><span class="n">module</span><span class="p">},</span> <span class="s2">"__all__"</span><span class="p">):</span>
+    <span class="n">__all__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">({</span><span class="n">module</span><span class="p">}</span><span class="o">.</span><span class="n">__all__</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">({</span><span class="n">module</span><span class="p">}):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_"</span><span class="p">):</span>
+            <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">_</span>
+</pre></div>
+</div>
+</section>
+<section id="lazy-keyword">
+<h2>lazy keyword<a class="headerlink" href="#lazy-keyword" title="Link to this heading"></a></h2>
+<p>While this transformation will insert “the right code” to replace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">lazy</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="nn">...</span> <span class="n">export</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">lazy</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="nn">...</span><span class="w"> </span><span class="kn">import</span> <span class="o">...</span>
+<span class="c1"># some additional code here</span>
+</pre></div>
+</div>
+<p>the additional code inserted in the case of an <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">*</span></code> will result
+in a non-lazy import. However, since this is just to provide a way to
+test the syntax proposed in PEP 843, and not actually be used in production,
+it should be no cause for concerns.</p>
+</section>
+<section id="export-as-identifier">
+<h2>export as identifier<a class="headerlink" href="#export-as-identifier" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">export</span></code> can still be used as an identifier: it is only replaced by <code class="docutils literal notranslate"><span class="pre">import</span></code>
+on a top-level <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> statement.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>Suppose that we have the following file structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>hub/
+   __init__.py
+   mod_a.py
+   mod_b.py
+   mod_c.py
+   subhub/
+       __init__.py
+       mod_d.py
+</pre></div>
+</div>
+<p>with the following file contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># hub/__init__.py</span>
+
+<span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.mod_a</span> <span class="n">export</span> <span class="n">Widget</span><span class="p">,</span> <span class="n">Gadget</span><span class="p">,</span> <span class="n">export</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.mod_a</span> <span class="n">export</span> <span class="n">NotWidget</span><span class="p">,</span> <span class="n">NotGadget</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.mod_b</span> <span class="n">export</span> <span class="o">*</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.mod_c</span> <span class="n">export</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span>
+    <span class="n">b</span><span class="p">,</span>
+<span class="n">c</span>
+<span class="p">)</span>
+
+<span class="c1"># mod_d defines __all__ as a tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.subhub.mod_d</span> <span class="n">export</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_a.py</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NotWidget</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NotGadget</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">export</span> <span class="o">=</span> <span class="s2">"safe name"</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_b.py</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cool</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cool</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hot</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_hot</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_c.py</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span> <span class="o">=</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_d.py</span>
+
+<span class="n">spam</span> <span class="o">=</span> <span class="s2">"spam"</span>
+<span class="n">ham</span> <span class="o">=</span> <span class="s2">"ham"</span>
+<span class="n">not_spam</span> <span class="o">=</span> <span class="s2">"not_spam"</span>
+<span class="n">not_ham</span> <span class="o">=</span> <span class="s2">"not_ham"</span>
+
+<span class="c1"># Note the use of a tuple instead of a list.</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"spam"</span><span class="p">,</span> <span class="s2">"ham"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is what an interactive session with the Ideas console
+looks like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
+&gt; python -i -m ideas -a pep_843
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; from hub import *
+ideas&gt; dir()
+['Gadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'cool', 'current_state', 'export', 'ham', 'hot', 'spam']
+ideas&gt; export
+'safe name'
+ideas&gt;
+</pre></div>
+</div>
+<p>And here’s a similar experiment done within the normal Python repl:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py
+Python 3.11.9 ...
+&gt;&gt;&gt; from ideas.examples.pep_843 import add_hook
+&gt;&gt;&gt; hook = add_hook()
+&gt;&gt;&gt; from hub import *
+&gt;&gt;&gt; dir()
+['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', 
+'__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 
+'export', 'ham', 'hook', 'hot', 'spam']
+&gt;&gt;&gt; export
+'safe name'
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

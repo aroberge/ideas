@@ -9,7 +9,7 @@
   <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -204,6 +204,14 @@ modified syntax using import hooks. <a class="footnote-reference brackets" href=
 <li class="toctree-l4"><a class="reference internal" href="examples/unnormalized_unicode.html#more-to-come">More to come…</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="examples/pep_843.html">PEP 843 implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#star-version">Star version</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#lazy-keyword">lazy keyword</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#export-as-identifier">export as identifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#example">Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="guide.html#ast-transformations">AST transformations</a><ul>
@@ -282,6 +290,28 @@ modified syntax using import hooks. <a class="footnote-reference brackets" href=
 <p>Write an example where we include different locations to search.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\possible.rst, line 49.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Currently, only one AST example exists and only one
+AST transformation can be done. A second example should
+be created and find a way to ensure that both could be applied.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 49.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Currently, only one Bytecode example exists and only one
+Bytecode transformation can be done. A second example should
+be created and find a way to ensure that both could be applied.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id2"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 73.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Currently, a patch requires to specify a module name for it to be applied
+to that module.
+It might be worthwhile exploring a case where we use <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
+to specify that the patch should be applied to all modules.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id3"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 96.)</p>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id2" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>

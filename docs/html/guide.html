@@ -9,7 +9,7 @@
   <title>Guide to the examples &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -66,6 +66,7 @@
 <li class="toctree-l3"><a class="reference internal" href="examples/switch.html">Switch statement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples/implicit_multiplication.html">Implicit multiplication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples/unnormalized_unicode.html">Unnormalized unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/pep_843.html">PEP 843 implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ast-transformations">AST transformations</a><ul>
@@ -162,6 +163,7 @@ especially including examining the source code.</p>
 <li class="toctree-l1"><a class="reference internal" href="examples/switch.html">Switch statement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/implicit_multiplication.html">Implicit multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/unnormalized_unicode.html">Unnormalized unicode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/pep_843.html">PEP 843 implementation</a></li>
 </ul>
 </div>
 </section>
@@ -171,6 +173,12 @@ especially including examining the source code.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/fractional_math_ast.html"> Fractional math (AST)</a></li>
 </ul>
+</div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Currently, only one AST example exists and only one
+AST transformation can be done. A second example should
+be created and find a way to ensure that both could be applied.</p>
 </div>
 </section>
 <section id="ast-creation">
@@ -188,6 +196,12 @@ especially including examining the source code.</p>
 <li class="toctree-l1"><a class="reference internal" href="examples/bytecode.html"> Confused math (Bytecode)</a></li>
 </ul>
 </div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Currently, only one Bytecode example exists and only one
+Bytecode transformation can be done. A second example should
+be created and find a way to ensure that both could be applied.</p>
+</div>
 </section>
 <section id="more-complex-examples">
 <h2>More complex examples<a class="headerlink" href="#more-complex-examples" title="Link to this heading"></a></h2>
@@ -203,6 +217,13 @@ especially including examining the source code.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/patching.html"> Patching a module</a></li>
 </ul>
+</div>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Currently, a patch requires to specify a module name for it to be applied
+to that module.
+It might be worthwhile exploring a case where we use <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
+to specify that the patch should be applied to all modules.</p>
 </div>
 </section>
 <section id="custom-encoding">
