@@ -209,51 +209,16 @@ And here's a similar experiment done within the normal Python repl:
     >>> hook = add_hook()
     >>> from hub import *
     >>> dir()
-    ['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', 
-    '__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 
-    'export', 'ham', 'hook', 'hot', 'spam']
+    ['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 'export', 'ham', 'hook', 'hot', 'spam']
     >>> export
     'safe name'
     >>>
 
 """
 
-import token_utils
-import tokenize as py_tokenize
-from io import StringIO
 import sys
-
-
-# token_utils.Tokens determine equality by comparing with a string
-# or an other Token's string. Using its custom repr is a quick
-# way to confirm that we are looking at the same token which
-# could have been obtained at different times.
-# This is a method which I should have added to token_utils.Token
-
-
-def is_identical(self, other):
-    return repr(self) == repr(other)
-
-
-token_utils.Token.is_identical = is_identical
-
-
-def get_significant_tokens(source):  # adapted from friendly-traceback
-    """Gets a list of tokens from a source (str), ignoring comments
-    as well as any token whose string value is either null or
-    consists of spaces, newline or tab characters.
-
-    If an exception is raised by Python's tokenize module, the list of tokens
-    accumulated up to that point is returned.
-    """
-    for tok in py_tokenize.generate_tokens(StringIO(source).readline):
-        token = token_utils.Token(tok)
-        if not token.string.strip():
-            continue
-        if token.is_comment():
-            continue
-        yield token
-
+from ideas.utils import get_significant_tokens
+import token_utils
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information

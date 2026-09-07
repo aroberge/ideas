@@ -9,6 +9,9 @@ import sys
 import uuid
 
 import token_utils  # to find the path of site-packages
+import tokenize as py_tokenize
+from io import StringIO
+
 
 PYTHON = os.path.dirname(os.__file__).lower()
 SITE_PACKAGES = os.path.dirname(token_utils.__file__).lower()
@@ -149,6 +152,37 @@ def freeze_globally(module_name):
     frozen_module = ReadOnly(module)
     sys.modules[module_name] = frozen_module
     return frozen_module
+
+
+# token_utils.Tokens determine equality by comparing with a string
+# or an other Token's string. Using its custom repr is a quick
+# way to confirm that we are looking at the same token which
+# could have been obtained at different times.
+# This is a method which I should have added to token_utils.Token
+
+
+def is_identical(self, other):
+    return repr(self) == repr(other)
+
+
+token_utils.Token.is_identical = is_identical
+
+
+def get_significant_tokens(source):  # adapted from friendly-traceback
+    """Gets a list of tokens from a source (str), ignoring comments
+    as well as any token whose string value is either null or
+    consists of spaces, newline or tab characters.
+
+    If an exception is raised by Python's tokenize module, the list of tokens
+    accumulated up to that point is returned.
+    """
+    for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+        token = token_utils.Token(tok)
+        if not token.string.strip():
+            continue
+        if token.is_comment():
+            continue
+        yield token
 
 
 # The following is used to avoid circular imports (during tests?) when
