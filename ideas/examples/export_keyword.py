@@ -10,11 +10,11 @@ More to come.
     Do not use continuation characters. The current transformation might not handle
     them correctly.
 
-
-.. warning::
-
     A line that startswith an export statement may not contain a triple quoted string
     that spans multiple lines.
+
+    A decorated class or function cannot be "exported"
+
 
 """
 
