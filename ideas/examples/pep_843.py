@@ -214,6 +214,11 @@ And here's a similar experiment done within the normal Python repl:
     'safe name'
     >>>
 
+.. warning::
+
+    Do not use continuation characters. The current transformation might not handle
+    them correctly.
+
 """
 
 import sys
@@ -479,11 +484,6 @@ def transform_source(source, **kwargs):
 
 
 def add_hook():
-    from ideas import create_hook  # noqa
-    from ideas import utils
+    from ideas import create_hook
 
-    return create_hook(
-        transform_source=transform_source,
-        name=__name__,
-        excluded_paths=[utils.PYTHON, utils.SITE_PACKAGES],
-    )
+    return create_hook(transform_source=transform_source, name=__name__)

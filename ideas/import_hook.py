@@ -28,12 +28,17 @@ def finder_inform(text):
 
 # TODO: Add test for french_repeat
 # TODO: Ensure that all existing hooks are tested.
+# TODO: Refactor and clean-up the code
 
 
 class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
     """A custom finder to locate modules. The main reason for this code is
     to ensure that our custom loader, which does the code transformations,
-    is used."""
+    is used.
+
+    This single metapath finder is meant to cover all existing examples
+    and has become nearly unreadable. It definitely needs a serious rewrite.
+    """
 
     def __init__(self, ideas_hook=None):  # pylint: disable=R0913
         self.ideas_hook = ideas_hook
@@ -219,7 +224,11 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
 
 class IdeasLoader(Loader):  # pylint: disable=R0902
-    """A custom loader which will transform the source prior to its execution"""
+    """A custom loader which will transform the source prior to its execution
+
+    While not as bad as the code used in the current metapath finder,
+    it also needs to be rewritten to be more readable.
+    """
 
     def __init__(
         self,

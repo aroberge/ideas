@@ -23,6 +23,13 @@ If you want to write your own import hook, it might be worth your while
 reading a few of the following examples, if not all of them,
 especially including examining the source code.
 
+.. important::
+
+    This entire project is meant as enabling **easy experiments** with
+    changes to Python's normal syntax. Some (most?) of the examples
+    are definitely not reliable enough to be included in code used by
+    anyone other than yourself.
+
 .. toctree::
     :maxdepth: 1
 
@@ -37,6 +44,7 @@ especially including examining the source code.
     Implicit multiplication <examples/implicit_multiplication>
     Unnormalized unicode <examples/unnormalized_unicode>
     PEP 843 implementation <examples/pep_843>
+    export as a soft keyword <examples/export_keyword>
 
 AST transformations
 -------------------

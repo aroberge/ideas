@@ -7,6 +7,10 @@ Ideas: making it easier to extend Python's syntax
     As of August 18 2026, I've started updating this project after a 4 year-long hiatus. 
     The version that can be installed via pypi (using pip) has not been updated yet.
 
+.. todo::
+
+    Remove the above note when the project is uploaded to pypi.
+
 `Code on Github <https://github.com/aroberge/ideas>`_
 
 .. image:: _static/ideas.png
@@ -35,6 +39,13 @@ to share your work with others so that they can try it out.
 
 However, **there is a simpler way:** it is possible to run code with a
 modified syntax using import hooks. [1]_ 
+
+.. important::
+
+    This entire project is meant as enabling **easy experiments** with
+    changes to Python's normal syntax. Some (most?) of the examples
+    are definitely not reliable enough to be included in code used by
+    anyone other than yourself.
 
 
 Quick links to topics

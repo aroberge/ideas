@@ -2,7 +2,7 @@ What is Ideas?
 ===============
 
 **ideas** is a package that makes it easier to write import hooks 
-used to experiment with alternative to Python's syntax.
+used to **experiment** with alternative to Python's syntax.
 
 What is an import hook?
 -----------------------

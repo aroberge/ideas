@@ -98,6 +98,10 @@
 <p>As of August 18 2026, I’ve started updating this project after a 4 year-long hiatus.
 The version that can be installed via pypi (using pip) has not been updated yet.</p>
 </div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Remove the above note when the project is uploaded to pypi.</p>
+</div>
 <p><a class="reference external" href="https://github.com/aroberge/ideas">Code on Github</a></p>
 <a class="reference internal image-reference" href="_images/ideas.png"><img alt="ideas logo" class="align-center" src="_images/ideas.png" style="width: 740.0px; height: 516.4px;" />
 </a>
@@ -122,7 +126,14 @@ you grab a copy of the currently unpublished book by Anthony Shaw,
 but it will still remain a major task. Furthermore, it would not be easy
 to share your work with others so that they can try it out.</p>
 <p>However, <strong>there is a simpler way:</strong> it is possible to run code with a
-modified syntax using import hooks. <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+modified syntax using import hooks. <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This entire project is meant as enabling <strong>easy experiments</strong> with
+changes to Python’s normal syntax. Some (most?) of the examples
+are definitely not reliable enough to be included in code used by
+anyone other than yourself.</p>
+</div>
 <section id="quick-links-to-topics">
 <h2>Quick links to topics<a class="headerlink" href="#quick-links-to-topics" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -212,6 +223,7 @@ modified syntax using import hooks. <a class="footnote-reference brackets" href=
 <li class="toctree-l4"><a class="reference internal" href="examples/pep_843.html#example">Example</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="examples/export_keyword.html">export as a soft keyword</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="guide.html#ast-transformations">AST transformations</a><ul>
@@ -296,14 +308,14 @@ modified syntax using import hooks. <a class="footnote-reference brackets" href=
 AST transformation can be done. A second example should
 be created and find a way to ensure that both could be applied.</p>
 </div>
-<p class="todo-source">(The <a class="reference internal" href="guide.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 49.)</p>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 57.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p>Currently, only one Bytecode example exists and only one
 Bytecode transformation can be done. A second example should
 be created and find a way to ensure that both could be applied.</p>
 </div>
-<p class="todo-source">(The <a class="reference internal" href="guide.html#id2"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 73.)</p>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id2"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 81.)</p>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
 <p>Currently, a patch requires to specify a module name for it to be applied
@@ -311,10 +323,20 @@ to that module.
 It might be worthwhile exploring a case where we use <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
 to specify that the patch should be applied to all modules.</p>
 </div>
-<p class="todo-source">(The <a class="reference internal" href="guide.html#id3"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 96.)</p>
+<p class="todo-source">(The <a class="reference internal" href="guide.html#id3"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 104.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Remove the above note when the project is uploaded to pypi.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\index.rst, line 10.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Remove the above note when the project is uploaded to pypi.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="usage.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\usage.rst, line 9.)</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>Or, in some cases as shown later, using a custom codec.</p>
 </aside>
 </aside>

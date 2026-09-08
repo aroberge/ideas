@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Fractional math (AST)" href="fractional_math_ast.html" />
+    <link rel="next" title="Export as a soft keyword" href="export_keyword.html" />
     <link rel="prev" title="Unnormalized unicode" href="unnormalized_unicode.html" /> 
 </head>
 
@@ -74,6 +74,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="export_keyword.html">export as a soft keyword</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
@@ -114,7 +115,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="export_keyword.html" class="btn btn-neutral float-right" title="Export as a soft keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -317,13 +318,16 @@ Python 3.11.9 ...
 &gt;&gt;&gt; hook = add_hook()
 &gt;&gt;&gt; from hub import *
 &gt;&gt;&gt; dir()
-['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', 
-'__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 
-'export', 'ham', 'hook', 'hot', 'spam']
+['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 'export', 'ham', 'hook', 'hot', 'spam']
 &gt;&gt;&gt; export
 'safe name'
 &gt;&gt;&gt;
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not use continuation characters. The current transformation might not handle
+them correctly.</p>
 </div>
 </section>
 </section>
@@ -333,7 +337,7 @@ Python 3.11.9 ...
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="unnormalized_unicode.html" class="btn btn-neutral float-left" title="Unnormalized unicode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="fractional_math_ast.html" class="btn btn-neutral float-right" title="Fractional math (AST)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="export_keyword.html" class="btn btn-neutral float-right" title="Export as a soft keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
