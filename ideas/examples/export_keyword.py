@@ -222,7 +222,7 @@ def transform_source(source, **kwargs):
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
-    _display_location(info)
+    # _display_location(info)
 
     current_info = None
     prev_token = None
@@ -257,8 +257,6 @@ def transform_source(source, **kwargs):
 
         new_tokens.append(token)
     new_source = token_utils.untokenize(new_tokens)
-    for tok in new_tokens:
-        print(repr(tok))
 
     if "pytest" in sys.modules:
         if source != new_source:
