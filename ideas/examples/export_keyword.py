@@ -49,7 +49,7 @@ class ExportInfo:
     def reset_flags(self):
         self.begin_export = False
         self.export_class_or_def_name = False
-        self.export_identifier = False
+        self.export_variable = False
         self.export_stmt_info = {}
 
     def get_info(self):
@@ -66,9 +66,9 @@ class ExportInfo:
                 self.prev_token = self.token
                 continue
 
+            # Restrict "export identifier ... = " to be on a single line.
             if self.token.start_row > self.current_row:
                 self.begin_new_statement()
-                self.current_row = self.token.start_row
                 self.prev_token = self.token
                 continue
 
@@ -125,6 +125,8 @@ class ExportInfo:
     def begin_new_statement(self):
         self.reset_flags()
         self.current_row = self.token.start_row
+        if self.token == "export":
+            self.begin_export = True
 
     def process_until_name_found(self):
         """Identify name to be exported"""
@@ -132,9 +134,6 @@ class ExportInfo:
             self.token == "def" or self.token == "class"
         ) and self.prev_token == "export":
             self.export_class_or_def_name = True
-            return
-        if self.token == "def" or self.token == "class":  # should never happen
-            self.reset_flags()
             return
 
         if (
@@ -144,49 +143,40 @@ class ExportInfo:
             self.export_statements_info.append(self.export_stmt_info)
             self.reset_flags()
             return
+
         if (
             self.prev_token == "def" or self.prev_token == "class"
-        ):  # should never happen
+        ) and not self.token.is_identifier():
             self.reset_flags()
             return
 
+        if self.export_class_or_def_name:  # We should not reach this
+            self.reset_flags()
+            return
+
+        # Next, it's finding a variable name
         if (
             self.prev_token == "export"
             and self.token.is_identifier()
-            and not self.export_identifier
+            and not self.export_variable
         ):
-            self.export_identifier = True
-            return
-
-        if not self.export_identifier:
-            self.reset_flags()
-
-        if self.prev_token == "export" and self.token.is_identifier():
+            self.export_variable = True
             if not self.export_stmt_info["name"]:
-                self.export_stmt_info["name"] = self.token.string
-            # else, export is the (potential) identifier and we have "export export ..."
+                # else, export is the (potential) identifier and we have "export export ..."
+                self.export_stmt_info["name"] = str(self.token.string)
+                # this token string needs to be converted as it will be altered later
             return
+
+        if not self.export_variable:  # should not happen ... just to be safe ..
+            self.reset_flags()
 
         if self.token == "=":
             self.export_statements_info.append(self.export_stmt_info)
             self.reset_flags()
         return
 
-    # def process_end_of_from_statement(self):
-    #     """Identify public names after export keyword"""
-    #     self.current_row = self.token.start_row
-    #     if self.token.is_identifier():
-    #         if self.prev_token == "as":
-    #             self.export_stmt_info["public names"].pop()
-    #         self.export_stmt_info["public names"].append(self.token.string)
-    #     elif self.token == "(":
-    #         self.open_parens.append(self.token)
-    #     elif self.token == ")":
-    #         self.open_parens.pop()
-    #         if not self.open_parens:  # this should be the case
-    #             self.export_stmt_info["next row"] = self.current_row + 1
-    #     elif self.token == "*":
-    #         self.export_stmt_info["public names"] = "*"
+    def find_def_or_class_name(self):
+        pass
 
 
 def _display_location(info):
@@ -206,7 +196,7 @@ def insert_all_info(new_tokens, current_info):
     new_all = """
 {indent}__all__ = globals().setdefault("__all__", [])
 {indent}__all__ = list(__all__)
-{indent}__all__.append({name})
+{indent}__all__.append('{name}')
 """
     new_tokens.append(
         new_all.format(
@@ -222,7 +212,7 @@ def transform_source(source, **kwargs):
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
-    # _display_location(info)
+    _display_location(info)
 
     current_info = None
     prev_token = None
