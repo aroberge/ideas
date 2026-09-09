@@ -18,7 +18,6 @@ More to come.
 
 """
 
-import sys
 from ideas.utils import get_significant_tokens
 import token_utils
 
@@ -150,10 +149,6 @@ class ExportInfo:
             self.reset_flags()
             return
 
-        if self.export_class_or_def_name:  # We should not reach this
-            self.reset_flags()
-            return
-
         # Next, it's finding a variable name
         if (
             self.prev_token == "export"
@@ -170,7 +165,7 @@ class ExportInfo:
         if not self.export_variable:  # should not happen ... just to be safe ..
             self.reset_flags()
 
-        if self.token == "=":
+        if self.token == "=" and self.export_variable:
             self.export_statements_info.append(self.export_stmt_info)
             self.reset_flags()
         return
@@ -188,7 +183,7 @@ def _display_location(info):
                 print(item, f"|{entry[item]}|")
             else:
                 print(item, repr(entry[item]))
-        print()
+    print("-------------------")
 
 
 def insert_all_info(new_tokens, current_info):
@@ -214,50 +209,61 @@ def transform_source(source, **kwargs):
     info = info_locator.get_info()
     _display_location(info)
 
+    current_line = -1
     current_info = None
     prev_token = None
+    changes_should_be_made = False
 
     if info:
-        current_info = info.pop(0)
+        changes_should_be_made = True
+        current_info = info.pop(0)  # important: need to pop from the beginning
 
     for token in token_utils.tokenize(source):
-        if prev_token is not None:
-            prev_token.string = token.string
-            token.string = "      "  # length of export
-            new_tokens.append(prev_token)
+        if prev_token is None:
             new_tokens.append(token)
-            prev_token = None
+            prev_token = token
             continue
 
-        if current_info is not None and token.is_identical(
-            current_info["export token"]
-        ):
+        if current_line != token.start_row:
+            current_line = token.start_row
+
+        if not current_info:  # we are done
+            new_tokens.append(token)
+            continue
+
+        if current_info and prev_token.is_identical(current_info["export token"]):
             same_line_tokens = []
             while new_tokens:
                 tok = new_tokens.pop()
                 if tok.start_row == token.start_row:
-                    same_line_tokens.append(tok)
+                    if tok.is_identical(current_info["export token"]):
+                        tok.string = token.string  # change export name
+                    same_line_tokens.insert(0, tok)
                 else:
                     new_tokens.append(tok)
                     break
+
             new_tokens = insert_all_info(new_tokens, current_info)
             new_tokens.extend(same_line_tokens)
+            token.string = "      "  # length of export
+            new_tokens.append(token)
             prev_token = token
+            if info:
+                current_info = info.pop(0)  # important: need to pop from the beginning
+            else:
+                current_info = None
             continue
 
         new_tokens.append(token)
+        prev_token = token
+
     new_source = token_utils.untokenize(new_tokens)
 
-    if "pytest" in sys.modules:
-        if source != new_source:
-            print("\n====== Original source for export keyword ============")
-            print(source)
-            print("-----------------")
-            print("\n====== New source ============")
-            print(new_source)
-            print("-----------------")
-        else:
-            print("No change in source")
+    if changes_should_be_made:
+        if new_source == source:
+            print(
+                "PROBLEM: changes to the source should have been made since 'info' is not empty!"
+            )
     return new_source
 
 

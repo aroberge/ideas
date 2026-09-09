@@ -69,3 +69,33 @@ expected_9 = """
     __all__ = list(__all__)
     __all__.append('variable')
     variable        = 3"""
+
+source_10 = """
+# In the following, all of the occurrences of 'export' should be left untouched
+
+from math export pi
+
+export = True
+
+def export():
+    return True
+
+def test():
+
+    export def inner_test():
+        pass
+        
+class One:
+
+    export def function():
+        pass
+
+class Two:
+
+    export class Three():
+    
+        export def function():
+           pass
+"""
+
+expected_10 = source_10
