@@ -287,8 +287,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         )
 
         if current_state.show_changes and original_source != source:
-            utils.print_source(original_source, header="Original")
-            utils.print_source(source, header="New")
+            utils.print_source(original_source, header="Original source")
+            utils.print_source(source, header="Transformed source")
 
         if self.source_init is not None:
             source = self.source_init() + source
@@ -297,7 +297,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             tree = parse_source(source, self.filename, "exec")
         except Exception:
-            print("Exception raised while parsing source.")
+            print("An exception was raised while attempting to produce an AST.")
             raise
 
         if self.transform_ast is not None:
@@ -306,11 +306,15 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             code_object = compile(tree, self.filename, "exec")
         except Exception:
-            print("Exception raised while compiling tree.")
+            print("An exception was raised while attempting to produce an AST.")
             raise
 
         if self.transform_bytecode is not None:
-            code_object = self.transform_bytecode(code_object)
+            try:
+                code_object = self.transform_bytecode(code_object)
+            except Exception:
+                print("An exception was raised while trying to modify the bytecode.")
+                raise
 
         if self.exec_ is not None:
             self.exec_(
@@ -324,7 +328,9 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             try:
                 exec(code_object, module.__dict__)  # pylint: disable=W0122
             except Exception:
-                print("Exception raised while executing code object.")
+                print(
+                    "An exception was raised while attempting to execute the code object."
+                )
                 raise
 
         if module.__name__ not in current_state.patches:
