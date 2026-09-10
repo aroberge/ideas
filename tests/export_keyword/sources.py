@@ -77,7 +77,10 @@ from math export pi
 
 export = True
 
+export variable # no assignment
+
 def export():
+    export variable = 4
     return True
 
 def test():
@@ -86,7 +89,7 @@ def test():
         pass
         
 class One:
-
+    export variable = True
     export def function():
         pass
 
@@ -99,3 +102,47 @@ class Two:
 """
 
 expected_10 = source_10
+
+source_11 = """
+if True:
+    export variable1 = 1
+"""
+
+expected_11 = """
+if True:
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('variable1')
+    variable1        = 1
+"""
+
+source_12 = """
+if True:
+    def test():
+        export var = 2
+    export def test2():
+        export name = 5
+else:
+    export class Name:
+        pass
+"""
+
+expected_12 = """
+if True:
+    def test():
+        export var = 2
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('test2')
+    def        test2():
+        export name = 5
+else:
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('Name')
+    class        Name:
+        pass
+"""

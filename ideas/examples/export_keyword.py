@@ -16,7 +16,7 @@ to be used in the following three cases::
 
    We note that `PEP 844 <https://peps.python.org/pep-0844/>`_
    propose the inclusion of functions defined in the
-   ``at_public`` project as Python builtins with a 
+   ``at_public`` project as Python builtins with a
    similar goal, i.e. automatically updating ``__all__``
    while enabling people reading the source code to
    easily identify which names are meant to be public.
@@ -24,8 +24,8 @@ to be used in the following three cases::
    We do acknowledge that adding a builtin rather than
    introducing a new syntax, would be much less disruptive,
    and much easier to adopt overall.
-   
-The result of using this soft keyword is to automatically 
+
+The result of using this soft keyword is to automatically
 add the name of the object to ``__all__``.
 
 An additional option that we included, also inspired by
@@ -33,7 +33,7 @@ PEP 842, is the possibility to automatically define a custom
 ``__dir__`` which would result in only the "exported"
 identifiers to be visible within an REPL.
 
-This import hook complements well and can easily be combined 
+This import hook complements well and can easily be combined
 the pep_843 import hook described in a previous section.
 
 .. important::
@@ -164,9 +164,9 @@ class ExportInfo:
         self.export_statements_info = []
         self.indentation = 0
         self.current_row = -1
-        self.inside_class_or_def = []
+        self.inside_class_or_def = False
         self.open_brackets = []  # Any ([{ open but not closed
-        self.class_or_def_indent = -1
+        self.class_or_def_indent = 0
         self.prev_token = None
         self.reset_flags()
 
@@ -215,21 +215,18 @@ class ExportInfo:
         elif self.open_brackets:
             return True
 
-        # if self.token.string in ["class", "def"]:
-        #     self.inside_class_or_def.append(self.token)
-        #     self.class_or_def_indent = self.token.start_col
-        #     return True
+        if not self.inside_class_or_def:
+            return False
 
-        # if self.inside_class_or_def:
-        #     if self.token.start_col > self.class_or_def_indent:
-        #         return True
-        #     while self.inside_class_or_def:
-        #         prev_class_or_def = self.inside_class_or_def.pop()
-        #         self.class_or_def_indent = prev_class_or_def.start_col
-        #         if self.token.start_col > self.class_or_def_indent:
-        #             return True
+        if self.token.start_col > self.class_or_def_indent:
+            return True
 
-        return False
+        if self.token.string in ["class", "def"]:
+            self.class_or_def_indent = self.token.start_col
+            return True
+        else:
+            self.inside_class_or_def = False
+            return False
 
     def init_export_statement(self):
         """Initialize relevant variables when a new potentially valid export
@@ -251,6 +248,9 @@ class ExportInfo:
         self.current_row = self.token.start_row
         if self.token == "export":
             self.begin_export = True
+        elif self.token.string in ["class", "def"]:
+            self.class_or_def_indent = self.token.start_col
+            self.inside_class_or_def = True
 
     def process_until_name_found(self):
         """Identify name to be exported"""
@@ -258,6 +258,10 @@ class ExportInfo:
             self.token == "def" or self.token == "class"
         ) and self.prev_token == "export":
             self.export_class_or_def_name = True
+            if not self.inside_class_or_def:
+                self.inside_class_or_def = True
+                # the indentation was determined by "export"
+                self.class_or_def_indent = self.prev_token.start_col
             return
 
         if (
@@ -294,9 +298,6 @@ class ExportInfo:
             self.export_statements_info.append(self.export_stmt_info)
             self.reset_flags()
         return
-
-    def find_def_or_class_name(self):
-        pass
 
 
 def _display_location(info):
