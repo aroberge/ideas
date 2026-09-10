@@ -2,5 +2,5 @@
 from ideas import create_hook
 
 
-def add_hook(**kwargs):
+def add_hook(**_kwargs):
     return create_hook(name=__name__, first=True)

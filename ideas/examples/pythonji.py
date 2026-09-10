@@ -39,7 +39,7 @@ def transform_ast(tree, **_kwargs):
     return tree_or_node
 
 
-def add_hook(**kwargs):
+def add_hook(**_kwargs):
     """Creates and adds the import hook in sys.meta_path.
     Uses a custom extension for the exception hook."""
     hook = create_hook(

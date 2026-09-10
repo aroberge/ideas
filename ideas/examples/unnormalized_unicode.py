@@ -90,7 +90,7 @@ from {name} import new_dir as dir
 """
 
 
-def add_hook(**kwargs):
+def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     return create_hook(
         transform_source=transform_source, source_init=source_init, name=__name__

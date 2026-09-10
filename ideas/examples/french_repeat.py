@@ -23,7 +23,7 @@ def transform_source(source, **_kwargs):
     return source
 
 
-def add_hook(**kwargs):
+def add_hook(**_kwargs):
     """Creates and adds the import hook in sys.meta_path"""
     hook = create_hook(
         transform_source=transform_source,

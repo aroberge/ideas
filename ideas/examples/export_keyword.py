@@ -267,7 +267,7 @@ def transform_source(source, **kwargs):
     return new_source
 
 
-def add_hook(**kwargs):
+def add_hook(**_kwargs):
     from ideas import create_hook
 
     return create_hook(transform_source=transform_source, name=__name__)
