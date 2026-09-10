@@ -20,6 +20,7 @@ More to come.
 
 from ideas.utils import get_significant_tokens
 import token_utils
+from ideas import current_state
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information
@@ -202,12 +203,22 @@ def insert_all_info(new_tokens, current_info):
     return new_tokens
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, filename=None, callback_params=None, **kwargs):
     new_tokens = []
+
+    if (
+        filename != current_state.console_name
+        and callback_params is not None
+        and "public_dir" in callback_params
+        and callback_params["public_dir"]
+    ):
+        intro = "__all__ = globals().setdefault('__all__', [])\n"
+        intro += "__dir__ = lambda: __all__\n"
+        source = intro + source
 
     info_locator = ExportInfo(source)
     info = info_locator.get_info()
-    _display_location(info)
+    # _display_location(info)
 
     current_line = -1
     current_info = None
@@ -267,7 +278,13 @@ def transform_source(source, **kwargs):
     return new_source
 
 
-def add_hook(**_kwargs):
+def add_hook(public_dir=False, **_kwargs):
     from ideas import create_hook
 
-    return create_hook(transform_source=transform_source, name=__name__)
+    callback_params = {"public_dir": public_dir}
+
+    return create_hook(
+        transform_source=transform_source,
+        callback_params=callback_params,
+        name=__name__,
+    )

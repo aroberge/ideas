@@ -53,7 +53,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--custom_params",
+    "--callback_params",
     nargs="*",
     action=ParseKwargs,
     help="""puts the arguments (key=value [, key2=value2 ...]) into a dict.
@@ -96,7 +96,7 @@ parser.add_argument(
 )
 
 
-def add_transform(transform, custom_params={}):
+def add_transform(transform, callback_params={}):
     """Call the add_hook function for the named module.
     Returns the module object.
     """
@@ -110,7 +110,7 @@ def add_transform(transform, custom_params={}):
         except AttributeError:
             print(f"Module {module} does not contain a function named add_hook")
             return
-        add_hook(**custom_params)
+        add_hook(**callback_params)
         return module
 
     path = f"ideas.examples.{transform}"
@@ -119,7 +119,7 @@ def add_transform(transform, custom_params={}):
     except ImportError:
         print(f"{path} is not a known transformer.")
     else:
-        getattr(module, "add_hook")(**custom_params)
+        getattr(module, "add_hook")(**callback_params)
         return module
 
 
@@ -137,14 +137,14 @@ def main() -> None:
     if current_state.verbose:
         current_state.show_changes = True
 
-    custom_params = {}
-    if args.custom_params:
-        custom_params = args.custom_params
+    callback_params = {}
+    if args.callback_params:
+        callback_params = args.callback_params
 
     if args.add_hook:
         for hook in args.add_hook:
             transforming_modules.append(
-                add_transform(hook, custom_params=custom_params)
+                add_transform(hook, callback_params=callback_params)
             )
         ideas_does_something = True
 
