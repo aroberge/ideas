@@ -240,7 +240,7 @@ def on_change_print(filename=None, key=None, value=None, kind=None, in_final=Fal
         print(f"`{key}` has been declared final.")
 
 
-def add_hook(on_prevent_change_feedback=None):
+def add_hook(on_prevent_change_feedback=None, **kwargs):
     """Creates and adds the import hook in sys.meta_path
 
     When an attempt is made to change the value of a constant, ``on_prevent_change_feedback``

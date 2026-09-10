@@ -536,7 +536,7 @@ def transform_source(source: str, **_kwargs) -> str:
     return new_source
 
 
-def add_hook():
+def add_hook(**kwargs):
     """
     Install the embedded_html transform.
     """

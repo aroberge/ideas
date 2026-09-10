@@ -95,7 +95,7 @@ def transform_source(source, callback_params=None, **_kwargs):
     return token_utils.untokenize(new_tokens)
 
 
-def add_hook(predictable_names=False):
+def add_hook(predictable_names=False, **kwargs):
     """Creates and adds the import hook in sys.meta_path"""
     callback_params = {"predictable_names": predictable_names}
     hook = create_hook(
