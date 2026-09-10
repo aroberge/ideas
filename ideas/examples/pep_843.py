@@ -224,6 +224,7 @@ And here's a similar experiment done within the normal Python repl:
 import sys
 from ideas.utils import get_significant_tokens
 import token_utils
+from ideas import current_state
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information
@@ -434,7 +435,7 @@ def insert_all_info(new_tokens, current_info):
     return new_tokens
 
 
-def transform_source(source, **kwargs):
+def transform_source(source, filename=None, **kwargs):
     new_tokens = []
 
     info_locator = ExportInfo(source)
@@ -459,14 +460,15 @@ def transform_source(source, **kwargs):
         if token.start_row == current_info["next row"]:
             if new_tokens[-1] == "\n":
                 new_tokens.pop()
-            new_tokens = insert_all_info(new_tokens, current_info)
+            if filename != current_state.console_name:
+                new_tokens = insert_all_info(new_tokens, current_info)
             if info:
                 current_info = info.pop(0)
             else:
                 current_info = None
         new_tokens.append(token)
 
-    if current_info is not None:
+    if current_info is not None and filename != current_state.console_name:
         new_tokens = insert_all_info(new_tokens, current_info)
     new_source = token_utils.untokenize(new_tokens)
 
