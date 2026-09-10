@@ -169,6 +169,7 @@ class ExportInfo:
         self.class_or_def_indent = 0
         self.prev_token = None
         self.reset_flags()
+        self.first_row_token = None
 
     def reset_flags(self):
         self.begin_export = False
@@ -178,6 +179,8 @@ class ExportInfo:
 
     def get_info(self):
         for self.token in get_significant_tokens(self.source):
+            if self.prev_token and self.token.start_row != self.prev_token.start_row:
+                self.first_row_token = self.token
 
             if not self.begin_export:
                 if self.skip_over_irrelevant_token():
@@ -223,6 +226,10 @@ class ExportInfo:
 
         if self.token.string in ["class", "def"]:
             self.class_or_def_indent = self.token.start_col
+            return True
+        elif not (
+            self.first_row_token.is_keyword() or self.first_row_token.is_identifier()
+        ):
             return True
         else:
             self.inside_class_or_def = False

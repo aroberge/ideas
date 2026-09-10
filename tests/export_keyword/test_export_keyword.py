@@ -23,3 +23,6 @@ def test_indented_export_var():
 def test_indented_class_or_def():
     assert export_keyword.transform_source(sources.source_12) == sources.expected_12
 
+def test_weird_indentation():
+    assert export_keyword.transform_source(sources.source_13) == sources.expected_13
+

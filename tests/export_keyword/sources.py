@@ -146,3 +146,12 @@ else:
     class        Name:
         pass
 """
+
+# Weird indentation
+source_13 = """
+if True:
+    def test(
+):           # ends left of "def"
+        export name = 3
+"""
+expected_13 = source_13
