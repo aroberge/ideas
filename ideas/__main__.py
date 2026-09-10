@@ -12,6 +12,21 @@ import ideas
 from ideas import console
 from ideas import current_state
 
+
+class ParseKwargs(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        setattr(namespace, self.dest, dict())
+        for value in values:
+            key, value = value.split("=")
+            if value == "True":
+                value = True
+            elif value == "False":
+                value = False
+            elif value.isdigit():
+                value = int(value)
+            getattr(namespace, self.dest)[key] = value
+
+
 transforming_modules = []
 
 parser = argparse.ArgumentParser(
@@ -35,6 +50,15 @@ parser.add_argument(
     usual entries in sys.path; if it not found, it is then
     imported from ideas.examples.""",
     metavar="MODULE",
+)
+
+parser.add_argument(
+    "--custom_params",
+    nargs="*",
+    action=ParseKwargs,
+    help="""puts the arguments (key=value [, key2=value2 ...]) into a dict.
+    The strings 'True' and 'False' will be converted to their
+    Python values, and integers will be stored as such.""",
 )
 
 parser.add_argument(
@@ -72,7 +96,7 @@ parser.add_argument(
 )
 
 
-def add_transform(transform):
+def add_transform(transform, custom_params={}):
     """Call the add_hook function for the named module.
     Returns the module object.
     """
@@ -86,7 +110,7 @@ def add_transform(transform):
         except AttributeError:
             print(f"Module {module} does not contain a function named add_hook")
             return
-        add_hook()
+        add_hook(**custom_params)
         return module
 
     path = f"ideas.examples.{transform}"
@@ -95,7 +119,7 @@ def add_transform(transform):
     except ImportError:
         print(f"{path} is not a known transformer.")
     else:
-        getattr(module, "add_hook")()
+        getattr(module, "add_hook")(**custom_params)
         return module
 
 
@@ -113,9 +137,15 @@ def main() -> None:
     if current_state.verbose:
         current_state.show_changes = True
 
+    custom_params = {}
+    if args.custom_params:
+        custom_params = args.custom_params
+
     if args.add_hook:
         for hook in args.add_hook:
-            transforming_modules.append(add_transform(hook))
+            transforming_modules.append(
+                add_transform(hook, custom_params=custom_params)
+            )
         ideas_does_something = True
 
     if not args.source:
