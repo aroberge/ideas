@@ -100,7 +100,7 @@
              
   <section id="what-is-ideas">
 <h1>What is Ideas?<a class="headerlink" href="#what-is-ideas" title="Link to this heading"></a></h1>
-<p><strong>ideas</strong> is a package that makes it easier to write import hooks
+<p><strong>ideas</strong> is a package that makes it easier to write <em>import hooks</em>
 used to <strong>experiment</strong> with alternative to Python’s syntax.</p>
 <section id="what-is-an-import-hook">
 <h2>What is an import hook?<a class="headerlink" href="#what-is-an-import-hook" title="Link to this heading"></a></h2>
@@ -142,6 +142,11 @@ documentation for</em> importlib <em>under your pillow may be advisable.</em></d
 <div><p><strong>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</strong></p>
 </div></blockquote>
 </div></blockquote>
+<aside class="sidebar">
+<p>The code I wrote for the general <em>import hook</em> has grown “organically”,
+adding or modifying features with almost every new examples. It works
+but is in great need of refactoring.</p>
+</aside>
 <p><strong>ideas</strong> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
@@ -149,8 +154,8 @@ examples that can be used as starting points for new ideas.</p>
 can focus exclusively on what what might be needed to convert your proposed new
 syntax into something that Python can understand – <strong>ideas</strong> will
 take care of the rest, including inserting it in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<div class="admonition-reminder admonition">
+<p class="admonition-title">Reminder</p>
 <p>Doing something like what is described in this documentation
 is not recommended for production code.
 But it can be fun! ;-)</p>

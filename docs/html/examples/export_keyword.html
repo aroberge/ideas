@@ -67,7 +67,10 @@
 <li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
 <li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pep_843.html">PEP 843 implementation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">export as a soft keyword</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">export as a soft keyword</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#first-example-export-keyword-only">First example: export keyword only</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
@@ -131,17 +134,133 @@
 </div>
 <section id="export-as-a-soft-keyword">
 <span id="module-ideas.examples.export_keyword"></span><h1>Export as a soft keyword<a class="headerlink" href="#export-as-a-soft-keyword" title="Link to this heading"></a></h1>
-<p>More to come.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Do not use continuation characters. The current transformation might not handle
-them correctly.</p>
+<p>This import hook was <strong>inspired</strong> by
+<a class="reference external" href="https://peps.python.org/pep-0842/">PEP 842 (withdrawn)</a>
+which suggested the addition of <code class="docutils literal notranslate"><span class="pre">export</span></code> as a soft keyword
+to be used in the following three cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">identifier</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">export</span> <span class="k">def</span><span class="w"> </span><span class="nf">function_name</span><span class="p">():</span> <span class="o">...</span>
+<span class="n">export</span> <span class="k">class</span><span class="w"> </span><span class="nc">ClassName</span><span class="p">():</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>The result of using this soft keyword is to automatically 
+add the name of the object to <code class="docutils literal notranslate"><span class="pre">__all__</span></code>.</p>
+<aside class="sidebar">
+<p class="sidebar-title">Competing PEP</p>
+<p>We note that <a class="reference external" href="https://peps.python.org/pep-0844/">PEP 844</a>
+propose the inclusion of functions defined in the
+<code class="docutils literal notranslate"><span class="pre">at_public</span></code> project as Python builtins with a 
+similar goal, i.e. automatically updating <code class="docutils literal notranslate"><span class="pre">__all__</span></code>
+while enabling people reading the source code to
+easily identify which names are meant to be public.</p>
+<p>We do acknowledge that adding a builtin rather than
+introducing a new syntax, would be much less disruptive,
+and much easier to adopt overall.</p>
+</aside>
+<p>An additional option that we included, also inspired by
+PEP 842, is the possibility to automatically define a custom
+<code class="docutils literal notranslate"><span class="pre">__dir__</span></code> which would result in only the “exported”
+identifiers to be visible within an REPL.</p>
+<p>This import hook complements well and can easily be combined 
+the pep_843 import hook described in a previous section.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The goal of <strong>ideas</strong> is to offer the possibility to
+easily experiment with alternatives
+to Python’s normal syntax, exploring various “what if”
+scenarios.</p>
+<p>Unusually for this project, since two related examples
+are inspired by actual proposed PEPs, we give a
+<strong>highly subjective</strong> evaluation of what the proposed
+syntax would achieve.</p>
+</div>
+<p>Combining the import hooks export_keyword and pep_843
+would result in the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Reduce the work required in creating a public interface
+by adding names to <code class="docutils literal notranslate"><span class="pre">__all__</span></code> by hand while reducing
+the possibility of errors.</p></li>
+<li><p>Enabling anyone reading source code to easily identify
+which names are meant to be part of the public
+interface.</p></li>
+<li><p>Enable developers to easily change names in their
+various subdirectories while maintaining a stable
+public API.</p></li>
+<li><p>With the inclusion of a an optional custom <code class="docutils literal notranslate"><span class="pre">__dir__</span></code>
+as described below, enable programmers to use a REPL
+to explore the various files of a project and, know
+which names can likely be safely used as they have
+been declared to be “public” via an <code class="docutils literal notranslate"><span class="pre">export</span></code>
+statement.</p></li>
+</ol>
+</div></blockquote>
+<section id="first-example-export-keyword-only">
+<h2>First example: export keyword only<a class="headerlink" href="#first-example-export-keyword-only" title="Link to this heading"></a></h2>
+<p>Consider the following case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample_file.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi</span>
+
+<span class="n">export</span> <span class="n">PI</span> <span class="o">=</span> <span class="n">pi</span>
+
+<span class="n">export</span> <span class="n">public</span> <span class="o">=</span> <span class="s2">"public variable"</span>
+
+<span class="n">export</span> <span class="k">def</span><span class="w"> </span><span class="nf">useful_fn</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"This is a very useful function"</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">private</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"I want to be able to change my name."</span><span class="p">)</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="s2">"Ideas's code is a mess."</span>
+</pre></div>
+</div>
+<p>We will import and explore the content of this file in two
+different sessions. First, with the default Python <code class="docutils literal notranslate"><span class="pre">dir</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Let's first see what's already here</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="vm">__name__</span>
+<span class="go">'__main__'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Let's import a sample file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sample_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">sample_file</span><span class="p">)</span>
+<span class="go">['PI', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'pi', 'private', 'public', 'secret', 'useful_fn']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_file</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">'sample_file'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We see many names; let's import "everything"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sample_file</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We did not import pi, private and secret. Did anything else change?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="vm">__name__</span>
+<span class="go">'__main__'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Python does the right thing when it comes to dunders ...</span>
+</pre></div>
+</div>
+<p>Let’s try again, using the <code class="docutils literal notranslate"><span class="pre">public_dir</span></code> option.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">(</span><span class="n">public_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># optional argument</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sample_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">sample_file</span><span class="p">)</span>
+<span class="go">['PI', 'public', 'useful_fn']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># much cleaner; let's import everything</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sample_file</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_file</span><span class="o">.</span><span class="n">secret</span>
+<span class="go">"Ideas's code is a mess."</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Even though it was hidden, the secret is not safe if you are determined enough</span>
+</pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>A line that startswith an export statement may not contain a triple quoted string
-that spans multiple lines.</p>
+<p>Do not use continuation characters in your sample code.
+The current transformation might not handle them correctly.</p>
 </div>
+</section>
 </section>
 
 

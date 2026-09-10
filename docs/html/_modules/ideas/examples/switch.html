@@ -8,7 +8,7 @@
   <title>ideas.examples.switch &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css?v=3481f5a2" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=4fe1afaf" />
 
   
@@ -188,7 +188,7 @@
 
 <div class="viewcode-block" id="add_hook">
 <a class="viewcode-back" href="../../../examples/switch.html#ideas.examples.switch.add_hook">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">predictable_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Creates and adds the import hook in sys.meta_path"""</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"predictable_names"</span><span class="p">:</span> <span class="n">predictable_names</span><span class="p">}</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span>

@@ -1,7 +1,7 @@
 What is Ideas?
 ===============
 
-**ideas** is a package that makes it easier to write import hooks 
+**ideas** is a package that makes it easier to write *import hooks* 
 used to **experiment** with alternative to Python's syntax.
 
 What is an import hook?
@@ -41,6 +41,12 @@ Still, writing import hooks can be rather difficult.
 
         **Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones**
 
+.. sidebar::
+
+    The code I wrote for the general *import hook* has grown "organically",
+    adding or modifying features with almost every new examples. It works
+    but is in great need of refactoring. 
+
 **ideas** is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.
@@ -50,7 +56,7 @@ can focus exclusively on what what might be needed to convert your proposed new
 syntax into something that Python can understand -- **ideas** will
 take care of the rest, including inserting it in ``sys.meta_path``.
 
-.. warning::
+.. admonition:: Reminder
 
     Doing something like what is described in this documentation
     is not recommended for production code.

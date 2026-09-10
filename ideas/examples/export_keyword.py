@@ -2,19 +2,143 @@
 Export as a soft keyword
 ========================
 
-More to come.
+This import hook was **inspired** by
+`PEP 842 (withdrawn) <https://peps.python.org/pep-0842/>`_
+which suggested the addition of ``export`` as a soft keyword
+to be used in the following three cases::
+
+    export identifier = ...
+    export def function_name(): ...
+    export class ClassName(): ...
+
+
+.. sidebar:: Competing PEP
+
+   We note that `PEP 844 <https://peps.python.org/pep-0844/>`_
+   propose the inclusion of functions defined in the
+   ``at_public`` project as Python builtins with a 
+   similar goal, i.e. automatically updating ``__all__``
+   while enabling people reading the source code to
+   easily identify which names are meant to be public.
+
+   We do acknowledge that adding a builtin rather than
+   introducing a new syntax, would be much less disruptive,
+   and much easier to adopt overall.
+   
+The result of using this soft keyword is to automatically 
+add the name of the object to ``__all__``.
+
+An additional option that we included, also inspired by
+PEP 842, is the possibility to automatically define a custom
+``__dir__`` which would result in only the "exported"
+identifiers to be visible within an REPL.
+
+This import hook complements well and can easily be combined 
+the pep_843 import hook described in a previous section.
+
+.. important::
+
+    The goal of **ideas** is to offer the possibility to
+    easily experiment with alternatives
+    to Python's normal syntax, exploring various "what if"
+    scenarios.
+
+    Unusually for this project, since two related examples
+    are inspired by actual proposed PEPs, we give a
+    **highly subjective** evaluation of what the proposed
+    syntax would achieve.
+
+Combining the import hooks export_keyword and pep_843
+would result in the following:
+
+    1. Reduce the work required in creating a public interface
+       by adding names to ``__all__`` by hand while reducing
+       the possibility of errors.
+    2. Enabling anyone reading source code to easily identify
+       which names are meant to be part of the public
+       interface.
+    3. Enable developers to easily change names in their
+       various subdirectories while maintaining a stable
+       public API.
+    4. With the inclusion of a an optional custom ``__dir__``
+       as described below, enable programmers to use a REPL
+       to explore the various files of a project and, know
+       which names can likely be safely used as they have
+       been declared to be "public" via an ``export``
+       statement.
+
+
+First example: export keyword only
+-----------------------------------
+
+Consider the following case::
+
+    # sample_file.py
+
+    from math import pi
+
+    export PI = pi
+
+    export public = "public variable"
+
+    export def useful_fn():
+        print("This is a very useful function")
+
+    def private():
+        print("I want to be able to change my name.")
+
+    secret = "Ideas's code is a mess."
+
+We will import and explore the content of this file in two
+different sessions. First, with the default Python ``dir``.
+
+.. code-block::
+
+    >>> from ideas.examples.export_keyword import add_hook
+    >>> hook = add_hook()
+    >>> # Let's first see what's already here
+    >>> dir()
+    ['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook']
+    >>> __name__
+    '__main__'
+    >>> # Let's import a sample file
+    >>> import sample_file
+    >>> dir(sample_file)
+    ['PI', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'pi', 'private', 'public', 'secret', 'useful_fn']
+    >>> sample_file.__name__
+    'sample_file'
+    >>> # We see many names; let's import "everything"
+    >>> from sample_file import *
+    >>> dir()
+    ['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']
+    >>> # We did not import pi, private and secret. Did anything else change?
+    >>> __name__
+    '__main__'
+    >>> # Python does the right thing when it comes to dunders ...
+
+Let's try again, using the ``public_dir`` option.
+
+.. code-block::
+
+    >>> from ideas.examples.export_keyword import add_hook
+    >>> hook = add_hook(public_dir=True)  # optional argument
+    >>> import sample_file
+    >>> dir(sample_file)
+    ['PI', 'public', 'useful_fn']
+    >>> # much cleaner; let's import everything
+    >>> from sample_file import *
+    >>> dir()
+    ['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']
+    >>> sample_file.secret
+    "Ideas's code is a mess."
+    >>> # Even though it was hidden, the secret is not safe if you are determined enough
+
 
 
 .. warning::
 
-    Do not use continuation characters. The current transformation might not handle
-    them correctly.
-
-    A line that startswith an export statement may not contain a triple quoted string
-    that spans multiple lines.
-
-    A decorated class or function cannot be "exported"
-
+    Do not use continuation characters in your sample code.
+    The current transformation might not handle them correctly.
 
 """
 

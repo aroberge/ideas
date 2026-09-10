@@ -3,7 +3,8 @@
 PEP 843
 =======
 
-PEP 843 suggests the addition of ``export`` as a soft keyword to be
+`PEP 843 <https://peps.python.org/pep-0843/>`_  
+suggests the addition of ``export`` as a soft keyword to be
 used in expressions of the basic form::
 
     from x export y [as z]
@@ -22,83 +23,22 @@ would be equivalent to
     from x import y
     __all__.append(y)
 
-Implementation
---------------
+The main motivation of this PEP appears to be facilitating the
+maintenance of "large projects" which define their public interface
+within an ``__init__.py`` file, by importing various objects
+from the "private" subdirectories and exposing them to the public.
+This requires updating ``__all__`` each time a new variable is
+to be made public.
 
-We implement this as a source transformation. PEP 843 suggests that::
+This import hook implements a source transformation that aims
+to mimic the proposed changes described in PEP 843.
 
-    from <module> import <name> as <alias>
-
-should be equivalent to::
-
-    from <module> import <name> as <alias>
-    exported_names = globals().setdefault("__all__", [])
-    if not isinstance(exported_names, list):
-        exported_names = list(exported_names)
-        __all__ = exported_names
-    exported_names.append("<alias>")
-
-We avoid introducing ``exported_names`` as an intermediary
-variable by doing something like the following instead::
-
-    from <module> import <name> as <alias>
-    __all__ = globals().setdefault("__all__", [])
-    __all__ = list(__all__)
-    __all__.extend(["<alias>"])
-
-PEP 843 also states that
-"unlike ``import``, ``export`` is restricted to module level:
-it’s a ``SyntaxError`` inside a ``def`` or ``class`` body."
-
-As such, we do **not** transform ``from ... export ..`` if it occurs within
-a class or function body.
-
-Star version
--------------
-
-For the star version::
-
-    from module export *
-
-we believe that something like the following should do what is expected::
-
-    from [...]module import *
-    __all__ = globals().setdefault("__all__", [])
-    __all__ = list(__all__)
-    from {relative} import {module}
-    if hasattr({module}, "__all__"):
-        __all__.extend(list({module}.__all__))
-    else:
-        for _ in dir({module}):
-            if not _.startswith("_"):
-                __all__.append(_)
-        del _
-
-lazy keyword
-------------
-
-While this transformation will insert "the right code" to replace::
-
-    lazy from ... export ...
-
-by::
-
-    lazy from ... import ...
-    # some additional code here
-
-the additional code inserted in the case of an ``export *`` will result
-in a non-lazy import. However, since this is just to provide a way to
-test the syntax proposed in PEP 843, and not actually be used in production,
-it should be no cause for concerns.
-
-export as identifier
---------------------
-
-``export`` can still be used as an identifier: it is only replaced by ``import``
-on a top-level ``from ... export ...`` statement.
 
 Example
 -------
+
+The code in this section is from an example that we currently
+did with this import hook.
 
 Suppose that we have the following file structure:
 
@@ -214,10 +154,94 @@ And here's a similar experiment done within the normal Python repl:
     'safe name'
     >>>
 
+Implementation
+--------------
+
+We implement this as a source transformation. PEP 843 suggests that::
+
+    from <module> import <name> as <alias>
+
+should be equivalent to::
+
+    from <module> import <name> as <alias>
+    exported_names = globals().setdefault("__all__", [])
+    if not isinstance(exported_names, list):
+        exported_names = list(exported_names)
+        __all__ = exported_names
+    exported_names.append("<alias>")
+
+We avoid introducing ``exported_names`` as an intermediary
+variable by doing something like the following instead::
+
+    from <module> import <name> as <alias>
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.extend(["<alias>"])
+
+PEP 843 also states that
+"unlike ``import``, ``export`` is restricted to module level:
+it’s a ``SyntaxError`` inside a ``def`` or ``class`` body."
+
+As such, we do **not** transform ``from ... export ..`` if it occurs within
+a class or function body. 
+
+Star version
+-------------
+
+For the star version::
+
+    from module export *
+
+we believe that something like the following should do what is expected::
+
+    from [...]module import *
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    from {relative} import {module}
+    if hasattr({module}, "__all__"):
+        __all__.extend(list({module}.__all__))
+    else:
+        for _ in dir({module}):
+            if not _.startswith("_"):
+                __all__.append(_)
+        del _
+
+lazy keyword
+------------
+
+While this transformation will insert "the right code" to replace::
+
+    lazy from ... export ...
+
+by::
+
+    lazy from ... import ...
+    # some additional code here
+
+the additional code inserted in the case of an ``export *`` will result
+in a non-lazy import. However, since this is just to provide a way to
+test the syntax proposed in PEP 843, and not actually be used in production,
+it should be no cause for concerns.
+
+export as identifier
+--------------------
+
+``export`` can still be used as an identifier: it is only replaced by ``import``
+on a top-level ``from ... export ...`` statement.
+
+
+
 .. warning::
 
-    Do not use continuation characters. The current transformation might not handle
-    them correctly.
+    Do not use continuation characters in your sample code.
+    The current transformation might not handle them correctly.
+
+    Please report any bug you find.
+
+.. tip::
+
+    You might want to combine this import hook with ``export keyword`` one
+    described in the following section.
 
 """
 
