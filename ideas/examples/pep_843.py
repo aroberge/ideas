@@ -76,17 +76,13 @@ with the following file contents::
 
     # mod_a.py
 
-    class Widget:
-        pass
+    class Widget: pass
 
-    class Gadget:
-        pass
+    class Gadget: pass
 
-    class NotWidget:
-        pass
+    class NotWidget: pass
 
-    class NotGadget:
-        pass
+    class NotGadget: pass
 
     export = "safe name"
 
@@ -94,17 +90,13 @@ with the following file contents::
 
     # mod_b.py
 
-    def cool():
-        pass
+    def cool(): pass
 
-    def _cool():
-        pass
+    def _cool() pass
 
-    def hot():
-        pass
+    def hot(): pass
 
-    def _hot():
-        pass
+    def _hot(): pass
 
 .. code-block::
 
