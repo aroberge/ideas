@@ -335,7 +335,9 @@ def insert_all_info(new_tokens, current_info):
     return new_tokens
 
 
-def transform_source(source, filename=None, callback_params=None, **kwargs):
+def transform_source(
+    source, filename=None, callback_params=None, console_dict=None, **kwargs
+):
     new_tokens = []
 
     if (
@@ -388,7 +390,12 @@ def transform_source(source, filename=None, callback_params=None, **kwargs):
 
             if filename != current_state.console_name:
                 new_tokens = insert_all_info(new_tokens, current_info)
-                new_tokens.extend(same_line_tokens)
+            elif console_dict is not None:
+                if "__all__" not in console_dict:
+                    console_dict["__all__"] = [current_info["name"]]
+                else:
+                    console_dict["__all__"].append[current_info["name"]]
+            new_tokens.extend(same_line_tokens)
             token.string = "      "  # length of export
             new_tokens.append(token)
             prev_token = token

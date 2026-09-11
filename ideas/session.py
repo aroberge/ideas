@@ -8,6 +8,7 @@ configuration choice during a single run/session."""
 # the interactive console in sync with changes introduced by
 # various transformers.
 
+import os
 import sys
 
 from .ideas_hook import IdeasHook
@@ -186,8 +187,21 @@ class State:
             print("-----------------------------")
 
     def source_transforms(
-        self, source, filename=None, module=None, callback_params=None
+        self,
+        source,
+        filename=None,
+        module=None,
+        callback_params=None,
+        console_dict=None,
+        **kwargs,
     ):
+        if kwargs:
+            print(
+                "FatalError: unkown argument in session.State.source_transform:", kwargs
+            )
+            print("This argument cannot be handled correctly.")
+            print("Shutting down ...")
+            os._exit(1)
         for hook in self.hooks:
             if hook.enabled and hook.transform_source is not None:
                 source = hook.transform_source(
@@ -195,6 +209,7 @@ class State:
                     filename=filename,
                     module=module,
                     callback_params=callback_params,
+                    console_dict=console_dict,
                 )
 
         return source
