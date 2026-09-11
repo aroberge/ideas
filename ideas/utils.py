@@ -154,6 +154,25 @@ def freeze_globally(module_name):
     return frozen_module
 
 
+def pdir(obj=None):
+    """Returns the contents of ``__all__`` if available,
+    if not returns what ``dir`` would."""
+    import inspect
+
+    if obj is not None:
+        if hasattr(obj, "__all__"):
+            return obj.__all__
+        return dir(obj)
+
+    caller_frame = inspect.currentframe().f_back
+    caller_locals = caller_frame.f_locals if caller_frame else {}
+    if obj is None:
+        if "__all__" in caller_locals:
+            return caller_locals["__all__"]
+        else:
+            return list(caller_locals)  # only the keys
+
+
 # token_utils.Tokens determine equality by comparing with a string
 # or an other Token's string. Using its custom repr is a quick
 # way to confirm that we are looking at the same token which
