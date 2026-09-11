@@ -32,6 +32,7 @@ class State:
         self.run_as_main_argument = False
         #
         self.patches = {}
+        self.console_source_inits = []
 
     def get_hook_by_name(self, name):
         """Finds a previously imported hook based on its name.

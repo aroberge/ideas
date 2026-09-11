@@ -65,14 +65,17 @@ class IdeasConsole(InteractiveConsole):
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
-        if source_init is not None:
+        if current_state.console_source_inits:
+            print(
+                "\nThe following initializing code has been executed in the Ideas console:\n"
+            )
+        for s_init in current_state.console_source_inits:
             try:
-                exec(source_init(), self.locals)  # pylint: disable=W0122
+                exec(s_init(), self.locals)  # pylint: disable=W0122
             except Exception:  # pylint: disable=W0703
                 self.showtraceback()
             else:
-                print("   The following initializing code from ideas is included:\n")
-                print(source_init())
+                print(s_init())
 
     def push(self, line):
         """Push a line to the interpreter.

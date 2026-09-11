@@ -450,13 +450,14 @@ def create_hook(
     console.configure(
         callback_params=callback_params,
         console_dict=console_dict,
-        source_init=source_init,
         transform_ast=transform_ast,
         transform_bytecode=transform_bytecode,
         parse_source=parse_source,
     )
 
     ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
+    if source_init is not None:
+        current_state.console_source_inits.append(source_init)
     try:
         ipython_shell = get_ipython()  # type: ignore # noqa
     except NameError:
