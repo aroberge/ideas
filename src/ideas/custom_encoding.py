@@ -11,7 +11,7 @@ The source is assumed to be actually encoded in utf-8.
 import codecs
 import encodings
 
-from . import current_state
+from ideas import current_state
 
 utf8 = encodings.search_function("utf8")
 

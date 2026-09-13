@@ -11,7 +11,7 @@ configuration choice during a single run/session."""
 import os
 import sys
 
-from .ideas_hook import IdeasHook
+from ideas.ideas_hook import IdeasHook
 
 
 class State:

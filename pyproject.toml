@@ -1,20 +1,40 @@
-[tool.poetry]
-name = "ideas"
-version = "0.0.40"
-description = "Easy creation of custom import hooks to experiment on alternatives to Python's syntax."
-authors = ["André Roberge <andre.roberge@gmail.com>"]
-license = "MIT"
-
-[tool.poetry.dependencies]
-python = "^3.7"
-token-utils = "^0.1.8"
-
-[tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
-black = "^22.3.0"
-pre-commit = "^2.19.0"
-flake8 = "^4.0.1"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ideas"
+dynamic = ["version"]
+description = 'Easy creation of import hooks to test ideas.'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "André Roberge", email = "andre.roberge@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["token-utils"]
+
+[project.urls]
+Documentation = "https://github.com/aroberge/ideas#readme"
+Issues = "https://github.com/aroberge/ideas/issues"
+Source = "https://github.com/aroberge/ideas"
+
+[tool.hatch.version]
+path = "src/ideas/__about__.py"
+
+[project.scripts]
+ideas = "ideas.__main__:main"

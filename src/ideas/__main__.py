@@ -8,7 +8,6 @@ from importlib import import_module
 import runpy
 import sys
 
-import ideas
 from ideas import console
 from ideas import current_state
 
@@ -124,7 +123,9 @@ def add_transform(transform, callback_params={}):
 def main() -> None:
     args = parser.parse_args()
     if args.version:
-        print(f"\nideas version {ideas.__version__}")
+        from ideas.__about__ import version
+
+        print(f"\nideas version {version}")
         return
 
     ideas_does_something = False

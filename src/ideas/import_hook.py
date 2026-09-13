@@ -13,9 +13,9 @@ from importlib.util import spec_from_file_location, decode_source, find_spec
 from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
-from . import console
-from . import utils
-from .ideas_hook import IdeasHook
+from ideas import console
+from ideas import utils
+from ideas.ideas_hook import IdeasHook
 
 from ideas import current_state
 
@@ -465,7 +465,7 @@ def create_hook(
     except NameError:
         pass
     else:
-        from .ipython_utils import set_up_ipython_shell
+        from ideas.ipython_utils import set_up_ipython_shell
 
         set_up_ipython_shell(
             ipython_shell,

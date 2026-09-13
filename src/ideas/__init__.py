@@ -2,8 +2,8 @@ __version__ = "0.2.0"
 import sys
 import traceback
 
-from .session import current_state
-from .import_hook import create_hook
+from ideas.session import current_state
+from ideas.import_hook import create_hook
 
 
 __all__ = [

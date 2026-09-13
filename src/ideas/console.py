@@ -14,11 +14,11 @@ import tokenize
 
 from code import InteractiveConsole
 
-from . import __version__
-from .session import current_state
+from ideas.__about__ import version
+from ideas.session import current_state
 
 BANNER = (
-    f"Ideas Console version {__version__}. "
+    f"Ideas Console version {version}. "
     + f"[Python version: {platform.python_version()}]"
 )
 _CONFIG = {}

@@ -3,7 +3,7 @@ import sys
 from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
-from . import utils
+from ideas import utils
 
 
 class IdeasHook:
