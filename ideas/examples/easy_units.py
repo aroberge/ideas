@@ -9,7 +9,7 @@ In the meantime, see
 https://aroberge.blogspot.com/2022/04/natural-syntax-for-units-in-python.html
 """
 
-from ideas import create_hook, utils
+from ideas import create_hook, current_state
 import token_utils
 
 PREFIX = {}
@@ -48,7 +48,7 @@ def transform_source(
     if prefix and hasattr(module, "__name__") and module.__name__ == "__main__":
         PREFIX["main"] = prefix
         if callback_params["show_changes"]:
-            utils.print_source(prefix, "Prefix")
+            current_state.print_source(prefix, "Prefix")
             PREFIX_SHOWN = True
     elif prefix and filename == CONSOLE_NAME:
         PREFIX["main"] = prefix
@@ -62,17 +62,17 @@ def transform_source(
         and filename == CONSOLE_NAME
         and callback_params["show_changes"]
     ):
-        utils.print_source(prefix, "Prefix")
+        current_state.print_source(prefix, "Prefix")
         PREFIX_SHOWN = True
 
     original = source
     if callback_params["show_original"]:
-        utils.print_source(source, "Original")
+        current_state.print_source(source, "Original")
 
     source = transform_units(source, prefix)
 
     if callback_params["show_changes"] and original != source:
-        utils.print_source(source, "New")
+        current_state.print_source(source, "New")
 
     return source
 

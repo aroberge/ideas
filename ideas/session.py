@@ -32,6 +32,7 @@ class State:
         #
         self.patches = {}
         self.console_source_inits = []
+        self.max_nb_lines = 8
 
     def get_hook_by_name(self, name):
         """Finds a previously imported hook based on its name.
@@ -153,19 +154,7 @@ class State:
         print(f"Could not find hook {name_or_hook}. Here are the known hooks:")
         self.list_hooks()
 
-    def print_original(self, source, header="Original"):
-        """Depending on configuration, can print the original source
-        code of a module that was imported."""
-        self.original = source
-        if self.active_console:  # We just typed the original; no need to print again
-            return
-        if not self.show_original:
-            return
-        print(f"==========={header}============")
-        print(source)
-        print("-----------------------------")
-
-    def print_transformed(self, source, header="Transformed"):
+    def print_transformed(self, source, header="New"):
         """Depending on the configuration, can print the transformed
         output if it differs from the original source.
         """
@@ -174,17 +163,46 @@ class State:
         if source == self.original:
             return
 
+        self.print_source(source, header=header)
+
+    def print_source(self, source, header="Original/New"):
+        """Prints a maximum of N or N+1 lines of the source code
+        where N is ``current_state.max_nb_lines``.
+
+        If there is a single line, it is prefixed by ``header: `.
+        Otherwise, it is surrounded by dividers.
+
+        ``header`` is usually either ``"Original"`` or ``"New"``
+        """
         lines = source.split("\n")
         if len(lines) == 1:
-            print(f"new: {lines[0]}")
+            print(f"{header}: {source}")
             return
-        if self.active_console:
-            for line in lines:
-                print(f"new: {line}")
-        else:
-            print(f"==========={header}============")
-            print(source)
-            print("-----------------------------")
+
+        max_nb_lines = current_state.max_nb_lines
+        nb_lines = len(lines)
+        if nb_lines == max_nb_lines + 1:
+            # We don't want to see an information line stating
+            # " ... 1 line not shown"
+            max_nb_lines += 1
+
+        shortened_source_indicator = ""
+        if nb_lines > max_nb_lines:
+            shortened_source_indicator = (
+                f" ... {nb_lines - max_nb_lines} lines not shown"
+            )
+        lines = lines[:max_nb_lines]
+        if len(lines) > 10:
+            lines = lines[:10]
+        while not lines[-1]:
+            lines.pop()
+        source = "\n".join(lines[:10]) + shortened_source_indicator
+        print(f"\n#========== {header} ====")
+        for line in lines:
+            print(line)
+        if shortened_source_indicator:
+            print(shortened_source_indicator)
+        print(f"#=== End of {header} ====\n")
 
     def source_transforms(
         self,

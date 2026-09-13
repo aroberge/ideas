@@ -69,29 +69,6 @@ def print_paths():
         print(f"TESTS: {TESTS}")
 
 
-def print_source(source, header="Source"):
-    """Prints a maximum of 10 lines of the source code.
-
-    If there is a single line, it is prefixed by ``header: `.
-    Otherwise, it is surrounded by dividers.
-
-    ``header`` is usually either ``"Original"`` or ``"New"``
-    """
-    lines = source.split("\n")
-    if len(lines) > 1:
-        shortened_source_indicator = "\n..." if len(lines) > 10 else ""
-        if len(lines) > 10:
-            lines = lines[:10]
-        while not lines[-1]:
-            lines.pop()
-        source = "\n".join(lines[:10]) + shortened_source_indicator
-        print(f"\n#========== {header} ====")
-        print(source)
-        print(f"#=== End of {header} ====\n")
-    else:
-        print(f"{header}: {source}")
-
-
 def generate_variable_names():
     """Generator that yields random variable names"""
     while True:

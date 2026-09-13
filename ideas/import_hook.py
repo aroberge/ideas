@@ -287,8 +287,10 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         )
 
         if current_state.show_changes and original_source != source:
-            utils.print_source(original_source, header="Original source")
-            utils.print_source(source, header="Transformed source")
+            current_state.print_source(
+                original_source, header=f"Original source from {self.filename}"
+            )
+            current_state.print_source(source, header="Transformed source")
 
         if self.source_init is not None:
             source = self.source_init() + source
