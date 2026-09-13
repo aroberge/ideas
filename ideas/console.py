@@ -211,7 +211,7 @@ class IdeasConsole(InteractiveConsole):
         return False
 
 
-def start(banner=BANNER, prompt="ideas> ", locals_=None, transforming_modules=None):
+def start(banner=BANNER, prompt="ideas> ", locals_=None):
     """Starts a special console that works with import hooks."""
     if len(prompt) >= 4:
         sys.ps2 = (len(prompt) - 4) * " " + "... "

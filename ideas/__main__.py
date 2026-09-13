@@ -27,8 +27,6 @@ class ParseKwargs(argparse.Action):
             getattr(namespace, self.dest)[key] = value
 
 
-transforming_modules = []
-
 parser = argparse.ArgumentParser(
     prog="[-i] -m ideas",
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -143,9 +141,7 @@ def main() -> None:
 
     if args.add_hook:
         for hook in args.add_hook:
-            transforming_modules.append(
                 add_transform(hook, callback_params=callback_params)
-            )
         ideas_does_something = True
 
     if not args.source:
@@ -195,9 +191,7 @@ def main() -> None:
         raise
 
     if sys.flags.interactive or args.i:
-        console.start(
-            locals_=module.__dict__, transforming_modules=transforming_modules
-        )
+        console.start(locals_=module.__dict__)
 
 
 main()

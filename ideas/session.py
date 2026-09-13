@@ -24,7 +24,6 @@ class State:
         self.original = ""  # code prior to transformation
         self.verbose = False  # diagnostic
         self.show_changes = False  # Do we print the transformed source code?
-        self.transforming_modules = []
         self.hooks = []
         self.custom_codecs_source_transform = None
         # The following is the source argument passed to __main__.py
