@@ -9,7 +9,7 @@
   <title>Switch statement &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -177,19 +177,19 @@ indentation to be a bonus. However, perhaps I might feel otherwise if I
 always limited myself to having line with no more than 79 characters
 which was the norm when the PEP was written.</p>
 <section id="switch-py">
-<span id="module-ideas.examples.switch"></span><h3>switch.py<a class="headerlink" href="#switch-py" title="Link to this heading"></a></h3>
+<span id="module-ideas.included.switch"></span><h3>switch.py<a class="headerlink" href="#switch-py" title="Link to this heading"></a></h3>
 <p>Implements something similar to version 1.B of
 <a class="reference external" href="https://www.python.org/dev/peps/pep-3103">PEP 3103</a></p>
 </section>
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.switch.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/switch.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.add_hook" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.switch.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.included.switch.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictable_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/included/switch.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.switch.add_hook" title="Link to this definition"></a></dt>
 <dd><p>Creates and adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.switch.transform_source">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.switch.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/switch.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.switch.transform_source" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.switch.transform_source">
+<span class="sig-prename descclassname"><span class="pre">ideas.included.switch.</span></span><span class="sig-name descname"><span class="pre">transform_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/included/switch.html#transform_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.switch.transform_source" title="Link to this definition"></a></dt>
 <dd><p>Replaces code like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span> <span class="n">EXPR</span><span class="p">:</span>
     <span class="k">case</span> <span class="n">EXPR_1</span><span class="p">:</span>

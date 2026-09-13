@@ -9,7 +9,7 @@
   <title>French repeat &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -130,14 +130,14 @@ as an indication that an import hook must be used; and <strong>repeat as a keywo
 in usage_demo directory):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tortue_demo</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span> <span class="c1"># ideas is not installed</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">".."</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 
-    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">french_repeat</span>
 
 
 <span class="n">french_repeat</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>

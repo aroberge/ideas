@@ -33,7 +33,7 @@ test files, usually run by pytest::
 
     # test_lambda_encoding.py
     # The following import will automatically register a codec
-    from ideas.examples import lambda_codec  # noqa
+    from ideas.included import lambda_codec  # noqa
 
     def test_import():
         from . import short_program  # noqa
@@ -64,7 +64,7 @@ We can also use the :small-caps-bold:`ideas` console and have our special encodi
     > py
     Python 3.11.9 ...
 
-    >>> from ideas.examples import lambda_codec
+    >>> from ideas.included import lambda_codec
     lambda_encoding has been registered.
     >>> from ideas import console
     >>> console.start()

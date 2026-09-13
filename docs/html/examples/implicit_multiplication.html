@@ -9,7 +9,7 @@
   <title>Implicit multiplication &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -200,7 +200,7 @@ and wrote as:</p>
 <p>would be valid Python code?</p>
 <p>This can be done with the <code class="docutils literal notranslate"><span class="pre">implicit_multiplication</span></code> import hook.
 Here’s a simple example done as an interactive session.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">implicit_multiplication</span> <span class="k">as</span> <span class="n">mul</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">implicit_multiplication</span> <span class="k">as</span> <span class="n">mul</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">mul</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>

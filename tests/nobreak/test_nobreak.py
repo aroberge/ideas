@@ -1,4 +1,4 @@
-from ideas.examples import nobreak
+from ideas.included import nobreak
 
 def test_for():
     source_for = """

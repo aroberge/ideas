@@ -9,7 +9,7 @@
   <title>Fractional math (AST) &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -112,7 +112,7 @@ supplementary code, such as importing a module or defining a function,
 in addition to the user code while ensuring that the console (REPL)
 can still work properly.</p>
 </div>
-<div class="admonition-summary admonition" id="module-ideas.examples.fractions_ast">
+<div class="admonition-summary admonition" id="module-ideas.included.fractions_ast">
 <p class="admonition-title">Summary</p>
 <ul class="simple">
 <li><p>Demonstrates how to use an import hook that does an AST transformation</p></li>
@@ -178,27 +178,27 @@ and Abstract Syntax Tree (AST) transformation:</p>
 </div>
 </section>
 <dl class="py class">
-<dt class="sig sig-object py" id="ideas.examples.fractions_ast.FractionWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">FractionWrapper</span></span><a class="reference internal" href="../_modules/ideas/examples/fractions_ast.html#FractionWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.FractionWrapper" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.fractions_ast.FractionWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ideas.included.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">FractionWrapper</span></span><a class="reference internal" href="../_modules/ideas/included/fractions_ast.html#FractionWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.fractions_ast.FractionWrapper" title="Link to this definition"></a></dt>
 <dd><p>Wrap all int divisions in a call to Fractions.</p>
 <p>Adapted from <a class="reference external" href="https://github.com/diofant/diofant">https://github.com/diofant/diofant</a></p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_ast.add_hook">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_ast.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.add_hook" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.fractions_ast.add_hook">
+<span class="sig-prename descclassname"><span class="pre">ideas.included.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">add_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/included/fractions_ast.html#add_hook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.fractions_ast.add_hook" title="Link to this definition"></a></dt>
 <dd><p>Creates and automatically adds the import hook in sys.meta_path</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_ast.source_init">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_ast.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.source_init" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.fractions_ast.source_init">
+<span class="sig-prename descclassname"><span class="pre">ideas.included.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">source_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/included/fractions_ast.html#source_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.fractions_ast.source_init" title="Link to this definition"></a></dt>
 <dd><p>Adds required import so that <code class="docutils literal notranslate"><span class="pre">Fraction</span></code> is a known object.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="ideas.examples.fractions_ast.transform_ast">
-<span class="sig-prename descclassname"><span class="pre">ideas.examples.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">transform_ast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/examples/fractions_ast.html#transform_ast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.examples.fractions_ast.transform_ast" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ideas.included.fractions_ast.transform_ast">
+<span class="sig-prename descclassname"><span class="pre">ideas.included.fractions_ast.</span></span><span class="sig-name descname"><span class="pre">transform_ast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ideas/included/fractions_ast.html#transform_ast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ideas.included.fractions_ast.transform_ast" title="Link to this definition"></a></dt>
 <dd><p>Transforms the Abstract Syntax Tree or a single node</p>
 </dd></dl>
 

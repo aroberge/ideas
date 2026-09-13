@@ -1,6 +1,6 @@
 import sys
 from ideas import add_patch, remove_hook, disable_hook, current_state
-from ideas.examples import function_keyword, nobreak
+from ideas.included import function_keyword, nobreak
 
 def on_socket_import(module):
     setattr(module, "gethostname", lambda: "fake_hostname")

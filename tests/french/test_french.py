@@ -1,4 +1,4 @@
-from ideas.examples import french
+from ideas.included import french
 from ideas import remove_hook
 
 

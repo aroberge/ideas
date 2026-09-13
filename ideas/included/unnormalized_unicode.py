@@ -1,13 +1,12 @@
-"""Python does 'NFKC normalization' of unicode names by default.
+"""Python does 'normalization' of unicode names by default.
 As a result, some different unicode names can end up representing
 the same object.
 
-This example demonstrates what could happen if we used
-'NFC' normalization instead.
+This example demonstrates how different names can be prevented
+from being 'normalized'.
 
-Adapted from unnormalized_unicode which was an
-original idea from Sergey B. Kirpichev and is found as
-anoter example.
+Original idea from Sergey B. Kirpichev.
+See https://github.com/aroberge/ideas/issues/13 for a reference.
 """
 
 import io
@@ -40,11 +39,10 @@ def transform_source(source, **_kwargs):
     g = tokenize.tokenize(io.BytesIO(source.encode()).readline)
     for token_type, token_string, _, _, _ in g:
         if token_type == tokenize.NAME:
-            nkfc_name = unicodedata.normalize("NFKC", token_string)
-            nfc_name = unicodedata.normalize("NFC", token_string)
-            if nkfc_name != nfc_name:
+            normalized_name = unicodedata.normalize("NFKC", token_string)
+            if normalized_name != token_string:
                 if token_string not in _NAMES_MAP:
-                    _NAMES_MAP[token_string] = f"{nkfc_name}_{uuid.uuid4().hex!s}"
+                    _NAMES_MAP[token_string] = f"{normalized_name}_{uuid.uuid4().hex!s}"
                 new_strings.append(_NAMES_MAP[token_string])
                 done_normalization = True
             else:
@@ -74,13 +72,21 @@ def new_dir(obj=None):
     else:
         names = list(inspect.currentframe().f_back.f_locals)
     for k, v in _NAMES_MAP.items():
-        names = [name.replace(v, k) for name in names]
+        names = [
+            name.replace(v, k)
+            for name in names
+            if not (name.startswith("__") and name.endswith("__"))
+        ]
     return sorted(names)
 
 
+true_dir = dir
+
+
 def source_init():
-    return """true_dir = dir
-from ideas.examples.nfc_normalization import new_dir as dir
+    name = "ideas.included.unnormalized_unicode"
+    return f"""from {name} import true_dir
+from {name} import new_dir as dir
 """
 
 

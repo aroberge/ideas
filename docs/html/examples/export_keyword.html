@@ -9,7 +9,7 @@
   <title>Export as a soft keyword &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -133,7 +133,7 @@
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/export_keyword.py">Source code</a></p>
 </div>
 <section id="export-as-a-soft-keyword">
-<span id="module-ideas.examples.export_keyword"></span><h1>Export as a soft keyword<a class="headerlink" href="#export-as-a-soft-keyword" title="Link to this heading"></a></h1>
+<span id="module-ideas.included.export_keyword"></span><h1>Export as a soft keyword<a class="headerlink" href="#export-as-a-soft-keyword" title="Link to this heading"></a></h1>
 <p>This import hook was <strong>inspired</strong> by
 <a class="reference external" href="https://peps.python.org/pep-0842/">PEP 842 (withdrawn)</a>
 which suggested the addition of <code class="docutils literal notranslate"><span class="pre">export</span></code> as a soft keyword
@@ -219,7 +219,7 @@ will describe below.</p>
 </div>
 <p>We will import and explore the content of this file in two
 different sessions. First, with the default Python <code class="docutils literal notranslate"><span class="pre">dir</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Let's first see what's already here</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
@@ -243,7 +243,7 @@ different sessions. First, with the default Python <code class="docutils literal
 </pre></div>
 </div>
 <p>Let’s try again, using the <code class="docutils literal notranslate"><span class="pre">public_dir</span></code> option.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">(</span><span class="n">public_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># optional argument</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sample_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">sample_file</span><span class="p">)</span>

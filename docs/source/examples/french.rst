@@ -7,4 +7,4 @@
 
    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/french.py>`_
 
-.. automodule:: ideas.examples.french
+.. automodule:: ideas.included.french

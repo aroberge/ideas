@@ -1,4 +1,4 @@
-from ideas.examples import fractions_tok
+from ideas.included import fractions_tok
 from ideas import remove_hook
 
 

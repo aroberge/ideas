@@ -1,7 +1,7 @@
 import sys
 
 if sys.version_info >= (3, 8):
-    from ideas.examples import polish_expr
+    from ideas.included import polish_expr
 from ideas import remove_hook
 
 import pytest

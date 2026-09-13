@@ -15,7 +15,7 @@ Improving function as a keyword
 
 Basic usage::
 
-    from ideas.examples import function_keyword
+    from ideas.included import function_keyword
     function_keyword.add_hook()
 
     import my_program
@@ -76,7 +76,7 @@ an extra parameter to ``add_hook`` and
 Here's a sample session from a different example, where the import hook
 is looking for files with a custom extension::
 
-    >>> from ideas.examples import french
+    >>> from ideas.included import french
     >>> hook = french.add_hook(verbose_finder=True)
     Looking for files with extensions:  ['.pyfr']
     The following paths will not be included in the search:
@@ -140,13 +140,13 @@ Here's the basic **pattern** used in almost all the examples::
 Here's an actual example using one such parameter to show the transformed
 source::
 
-    >>> from ideas.examples import function_keyword
+    >>> from ideas.included import function_keyword
     >>> hook = function.add_hook(show_changes=True)
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
         callback_params: {'show_original': False, 'show_changes': True}
-        transform_source from ideas.examples.function
+        transform_source from ideas.included.function
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
 

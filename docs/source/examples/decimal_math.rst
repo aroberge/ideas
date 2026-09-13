@@ -84,8 +84,8 @@ There is actually a third version of decimal math:
 
 
 
-.. automodule:: ideas.examples.decimal_math
+.. automodule:: ideas.included.decimal_math
 
-.. automodule:: ideas.examples.decimal_math_d
+.. automodule:: ideas.included.decimal_math_d
 
-.. automodule:: ideas.examples.decimal_math_with
+.. automodule:: ideas.included.decimal_math_with

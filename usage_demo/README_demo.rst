@@ -23,7 +23,7 @@ You can run this program in a terminal as follows::
 The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
-current directory, it is assumed to exists in the ``ideas.examples``
+current directory, it is assumed to exists in the ``ideas.included``
 directory included with :small-caps-bold:`ideas`.
 
 You may have noticed in the above that ``my_program`` does not
@@ -82,7 +82,7 @@ Here is an example using IPython in a terminal.
 
 .. code-block:: ipython
 
-    In [1]: from ideas.examples import function_keyword
+    In [1]: from ideas.included import function_keyword
 
     In [2]: function_keyword.add_hook()
     Out[2]: <ideas.import_hook.IdeasMetaFinder at 0x1e562eebf40>
@@ -104,7 +104,7 @@ interactive interpreter.
 
 .. code-block:: python
 
-    >>> from ideas.examples import function_keyword
+    >>> from ideas.included import function_keyword
     >>> function_keyword.add_hook()
     <ideas.import_hook.IdeasMetaFinder object at 0x000001CBFB4E5130>
     >>> from ideas import console

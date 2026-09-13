@@ -1,4 +1,4 @@
-from ideas.examples import fractions_ast
+from ideas.included import fractions_ast
 from ideas import remove_hook
 
 

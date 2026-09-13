@@ -88,7 +88,7 @@ Actual code
 
 Here's the content of our real simplest example.
 
-.. literalinclude:: ../../ideas/examples/function_keyword.py
+.. literalinclude:: ../../ideas/included/function_keyword.py
    :linenos:
 
 .. sidebar:: Tokens?
@@ -218,7 +218,7 @@ as follows::
 API for ``function_keyword``
 ----------------------------
 
-.. automodule:: ideas.examples.function_keyword
+.. automodule:: ideas.included.function_keyword
    :members:
 
 

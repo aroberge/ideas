@@ -1,4 +1,4 @@
-from ideas.examples import export_keyword
+from ideas.included import export_keyword
 from tests.export_keyword import sources
 
 def test_single_line_transformations():

@@ -56,7 +56,7 @@ class IdeasConsole(InteractiveConsole):
         self.callback_params = callback_params
 
         # console_dict can be a custom dict-like object.
-        # See ideas.examples.constants.py for an example.
+        # See ideas.included.constants.py for an example.
         if console_dict is None:
             console_dict = {}
         if locals_ is not None:

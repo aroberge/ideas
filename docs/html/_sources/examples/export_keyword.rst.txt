@@ -13,4 +13,4 @@
 
    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/export_keyword.py>`_
 
-.. automodule:: ideas.examples.export_keyword
+.. automodule:: ideas.included.export_keyword

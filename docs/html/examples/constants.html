@@ -9,7 +9,7 @@
   <title>True constants &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -174,14 +174,14 @@ As Raymond Hettinger often says: <strong>there must be a better way</strong>. ;-
 <section id="demonstration">
 <h2>Demonstration<a class="headerlink" href="#demonstration" title="Link to this heading"></a></h2>
 <p>I can think of nothing better than a quick demonstration using the console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
 <span class="go">    callback_params: {'on_prevent_change': &lt;function on_change_print ...&gt;}</span>
 <span class="go">    console_dict: {}</span>
-<span class="go">    transform_source from ideas.examples.constants</span>
+<span class="go">    transform_source from ideas.included.constants</span>
 <span class="go">--------------------------------------------------</span>
 <span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
 
@@ -253,7 +253,7 @@ as a new keyword:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">this_variable</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># this_variable is thus declared as constant</span>
 </pre></div>
 </div>
-<p id="module-ideas.examples.constants">This import hook makes it possible to define constants, that is variables
+<p id="module-ideas.included.constants">This import hook makes it possible to define constants, that is variables
 which cannot have their initial value changed.</p>
 <p>In this import hook, constants are identified in two ways:</p>
 <ol class="arabic simple">

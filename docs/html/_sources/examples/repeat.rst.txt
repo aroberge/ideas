@@ -13,4 +13,4 @@
 
    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/repeat.py>`_
 
-.. automodule:: ideas.examples.repeat
+.. automodule:: ideas.included.repeat

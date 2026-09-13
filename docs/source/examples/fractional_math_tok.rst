@@ -9,4 +9,4 @@
     example.
     `Source code for fractions_tok <https://github.com/aroberge/ideas/blob/master/ideas/examples/fractions_tok.py>`_
 
-.. automodule:: ideas.examples.fractions_tok
+.. automodule:: ideas.included.fractions_tok

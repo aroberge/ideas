@@ -1,4 +1,4 @@
-from ideas.examples import nfc_normalization
+from ideas.included import nfc_normalization
 from ideas import remove_hook
 
 

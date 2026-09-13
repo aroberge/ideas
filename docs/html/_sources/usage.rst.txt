@@ -49,7 +49,7 @@ Actually, with :small-caps-bold:`ideas`, you can run this program in a terminal 
 The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
-current directory, it is assumed to exists in the ``ideas.examples``
+current directory, it is assumed to exists in the ``ideas.included``
 directory included with :small-caps-bold:`ideas`.
 
 You may have noticed in the above that ``my_program`` does not
@@ -66,9 +66,9 @@ Using the ideas-enabled interactive console
 Ideas comes with its own interactive console.  Here's a sample session::
 
 
-    >> from ideas.examples import function_keyword
+    >> from ideas.included import function_keyword
     >>> function_keyword.add_hook()
-    <Ideas import hook: ideas.examples.function_keyword>
+    <Ideas import hook: ideas.included.function_keyword>
     >>> from ideas import console
     >>> console.start()
     Ideas Console version 0.2.0. [Python version: 3.11.9]
@@ -97,10 +97,10 @@ Here is an example using IPython in a terminal.
 
 .. code-block:: ipython
 
-    In [1]: from ideas.examples import function_keyword
+    In [1]: from ideas.included import function_keyword
 
     In [2]: function_keyword.add_hook()
-    Out[2]: <IdeasMetaFinder object for ideas.examples.function_keyword>
+    Out[2]: <IdeasMetaFinder object for ideas.included.function_keyword>
 
     In [3]: cube = function x: x** 3
 
@@ -117,9 +117,9 @@ interactive interpreter.
 
 .. code-block:: python
 
-    >>> from ideas.examples import function_keyword
+    >>> from ideas.included import function_keyword
     >>> function_keyword.add_hook()
-    <Ideas import hook: ideas.examples.function_keyword>
+    <Ideas import hook: ideas.included.function_keyword>
     >>> from ideas import console
     >>> console.start()
     Ideas Console version 0.2.0. [Python version: 3.11.9]
@@ -159,8 +159,8 @@ You can have multiple import hooks added; for example::
     ideas> for finder in sys.meta_path:
     ...    print(finder)
     ...
-    <IdeasMetaPathFinder for ideas.examples.nobreak>
-    <IdeasMetaPathFinder for ideas.examples.function_keyword>
+    <IdeasMetaPathFinder for ideas.included.nobreak>
+    <IdeasMetaPathFinder for ideas.included.function_keyword>
     <class '_frozen_importlib.BuiltinImporter'>
     <class '_frozen_importlib.FrozenImporter'>
     <class '_frozen_importlib_external.PathFinder'>
@@ -205,7 +205,7 @@ To have decimal math working default, you can do the following.
 
 .. code-block:: python
 
-    from ideas.examples import decimal_math
+    from ideas.included import decimal_math
     decimal_math.add_hook()
 
 2. Assuming you are not in virtual environment, set the ``PYTHONPATH``
@@ -240,7 +240,7 @@ To have it useable by default as a custom codec, you can do the following.
 
 .. code-block:: python
 
-    from ideas.examples import decimal_math
+    from ideas.included import decimal_math
     decimal_math.register()
 
 2. Assuming you are not in virtual environment, set the ``PYTHONPATH``

@@ -10,7 +10,7 @@ transformations. It can be invoked on the command line using::
 
 or using something like the following::
 
-    >>> from ideas.examples import experimental_syntax
+    >>> from ideas.included import experimental_syntax
     >>> experimental_syntax.add_hook()
 
 From that point on, you can add transformations to be applied using
@@ -19,7 +19,7 @@ the following normally invalid Python syntax::
     from experimental-syntax import module
 
 Here, ``module`` will be either imported from the current working directory
-or from the ``ideas.examples`` subdirectory. After being imported,
+or from the ``ideas.included`` subdirectory. After being imported,
 the ``module`` is scanned to look for the following functions:
 
     - ``transform_source``
@@ -55,7 +55,7 @@ def find_module(module_name):
     try:
         module = import_module(module_name)
     except (ImportError, ModuleNotFoundError):
-        path = f"ideas.examples.{module_name}"
+        path = f"ideas.included.{module_name}"
         try:
             module = import_module(path)
         except ImportError:

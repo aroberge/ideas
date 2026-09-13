@@ -1,4 +1,4 @@
-from ideas.examples import unnormalized_unicode
+from ideas.included import unnormalized_unicode
 from ideas import remove_hook
 
 

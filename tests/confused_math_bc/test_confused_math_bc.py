@@ -1,4 +1,4 @@
-from ideas.examples import confused_math_bc
+from ideas.included import confused_math_bc
 from ideas import remove_hook
 
 

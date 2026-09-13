@@ -1,4 +1,4 @@
-from ideas.examples import switch
+from ideas.included import switch
 from ideas import remove_hook
 
 

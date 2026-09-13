@@ -6,5 +6,5 @@
     in addition to the user code while ensuring that the console (REPL)
     can still work properly.
 
-.. automodule:: ideas.examples.fractions_ast
+.. automodule:: ideas.included.fractions_ast
    :members:

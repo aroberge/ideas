@@ -104,7 +104,7 @@ Here's a simple example done as an interactive session.
 
 .. code-block:: python
 
-    >>> from ideas.examples import implicit_multiplication as mul
+    >>> from ideas.included import implicit_multiplication as mul
     >>> hook = mul.add_hook()
     >>> from ideas import console
     >>> console.start()

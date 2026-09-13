@@ -24,4 +24,4 @@ This example, created by Devin J. Pohly, demonstrates how we can bypass Python t
     and most Python syntax, including the use of ``exit()``, becomes a ``SyntaxError``.
 
 
-.. automodule:: ideas.examples.polish_expr
+.. automodule:: ideas.included.polish_expr

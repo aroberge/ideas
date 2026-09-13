@@ -1,5 +1,5 @@
 from ideas import remove_hook
-from ideas.examples import decimal_math
+from ideas.included import decimal_math
 
 
 def test_import_with_hook():

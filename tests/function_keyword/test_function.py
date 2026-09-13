@@ -1,4 +1,4 @@
-from ideas.examples import function_keyword
+from ideas.included import function_keyword
 from ideas import remove_hook
 
 

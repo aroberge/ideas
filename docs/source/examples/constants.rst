@@ -65,14 +65,14 @@ Demonstration
 
 I can think of nothing better than a quick demonstration using the console::
 
-    >>> from ideas.examples import constants
+    >>> from ideas.included import constants
     >>> hook = constants.add_hook()
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
         callback_params: {'on_prevent_change': <function on_change_print ...>}
         console_dict: {}
-        transform_source from ideas.examples.constants
+        transform_source from ideas.included.constants
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]
 
@@ -144,5 +144,5 @@ as a new keyword::
 
     let this_variable = 3  # this_variable is thus declared as constant
 
-.. automodule:: ideas.examples.constants
+.. automodule:: ideas.included.constants
 

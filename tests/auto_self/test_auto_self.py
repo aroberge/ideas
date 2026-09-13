@@ -1,4 +1,4 @@
-from ideas.examples import auto_self
+from ideas.included import auto_self
 
 from ideas import remove_hook
 

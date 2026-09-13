@@ -46,7 +46,7 @@ parser.add_argument(
     help="""Execute add_hook() from the specified module.
     An attempt is made to import the specified module from the
     usual entries in sys.path; if it not found, it is then
-    imported from ideas.examples.""",
+    imported from ideas.included.""",
     metavar="MODULE",
 )
 
@@ -111,7 +111,7 @@ def add_transform(transform, callback_params={}):
         add_hook(**callback_params)
         return module
 
-    path = f"ideas.examples.{transform}"
+    path = f"ideas.included.{transform}"
     try:
         module = import_module(path)
     except ImportError:

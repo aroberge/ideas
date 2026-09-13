@@ -12,4 +12,4 @@
    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/auto_self.py>`_
 
 
-.. automodule:: ideas.examples.auto_self
+.. automodule:: ideas.included.auto_self

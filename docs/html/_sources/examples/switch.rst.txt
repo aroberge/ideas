@@ -67,5 +67,5 @@ always limited myself to having line with no more than 79 characters
 which was the norm when the PEP was written.
 
 
-.. automodule:: ideas.examples.switch
+.. automodule:: ideas.included.switch
    :members:

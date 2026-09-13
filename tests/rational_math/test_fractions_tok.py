@@ -1,4 +1,4 @@
-from ideas.examples import rational_math
+from ideas.included import rational_math
 from ideas import remove_hook
 
 

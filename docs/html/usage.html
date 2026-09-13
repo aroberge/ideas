@@ -146,7 +146,7 @@ And the square of 5 is 25
 <p>The argument following <code class="docutils literal notranslate"><span class="pre">-a</span></code> is the name of a module that contains
 a function named <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>.  A search for such a module is first
 done in the current directory. If the module is not found in the
-current directory, it is assumed to exists in the <code class="docutils literal notranslate"><span class="pre">ideas.examples</span></code>
+current directory, it is assumed to exists in the <code class="docutils literal notranslate"><span class="pre">ideas.included</span></code>
 directory included with <span class="text-small-caps text-bold">ideas</span>.</p>
 <p>You may have noticed in the above that <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not
 include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension. This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
@@ -158,9 +158,9 @@ run as though it is the main script.</p>
 <section id="using-the-ideas-enabled-interactive-console">
 <h2>Using the ideas-enabled interactive console<a class="headerlink" href="#using-the-ideas-enabled-interactive-console" title="Link to this heading"></a></h2>
 <p>Ideas comes with its own interactive console.  Here’s a sample session:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="o">&lt;</span><span class="n">Ideas</span> <span class="kn">import</span><span class="w"> </span><span class="nn">hook</span><span class="p">:</span> <span class="n">ideas</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">Ideas</span> <span class="kn">import</span><span class="w"> </span><span class="nn">hook</span><span class="p">:</span> <span class="n">ideas</span><span class="o">.</span><span class="n">included</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
@@ -184,10 +184,10 @@ you can run a main script and continue with the interactive console:</p>
 <h2>Using with IPython or Jupyter notebook/lab<a class="headerlink" href="#using-with-ipython-or-jupyter-notebook-lab" title="Link to this heading"></a></h2>
 <p>You can also use it with IPython, either in a terminal or in a Jupyter environment.
 Here is an example using IPython in a terminal.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">IdeasMetaFinder</span> <span class="nb">object</span> <span class="k">for</span> <span class="n">ideas</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">IdeasMetaFinder</span> <span class="nb">object</span> <span class="k">for</span> <span class="n">ideas</span><span class="o">.</span><span class="n">included</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span> <span class="mi">3</span>
 
@@ -202,9 +202,9 @@ Here is an example using IPython in a terminal.</p>
 interpreter (aka REPL) does not support directly transformations done by ideas.
 It is however possible to start the ideas console from the CPython
 interactive interpreter.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;Ideas import hook: ideas.examples.function_keyword&gt;</span>
+<span class="go">&lt;Ideas import hook: ideas.included.function_keyword&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Ideas Console version 0.2.0. [Python version: 3.11.9]</span>
@@ -239,8 +239,8 @@ ideas&gt; import sys
 ideas&gt; for finder in sys.meta_path:
 ...    print(finder)
 ...
-&lt;IdeasMetaPathFinder for ideas.examples.nobreak&gt;
-&lt;IdeasMetaPathFinder for ideas.examples.function_keyword&gt;
+&lt;IdeasMetaPathFinder for ideas.included.nobreak&gt;
+&lt;IdeasMetaPathFinder for ideas.included.function_keyword&gt;
 &lt;class '_frozen_importlib.BuiltinImporter'&gt;
 &lt;class '_frozen_importlib.FrozenImporter'&gt;
 &lt;class '_frozen_importlib_external.PathFinder'&gt;
@@ -276,7 +276,7 @@ can be used either as an import hook or as a custom encoding.
 <ol class="arabic simple">
 <li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
 <span class="n">decimal_math</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -310,7 +310,7 @@ such as:</p>
 <ol class="arabic simple">
 <li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> containing the following:</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">decimal_math</span>
 <span class="n">decimal_math</span><span class="o">.</span><span class="n">register</span><span class="p">()</span>
 </pre></div>
 </div>

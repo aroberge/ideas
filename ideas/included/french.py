@@ -70,15 +70,15 @@ verbose finder:
     Python 3.11.9...
     >>> from ideas import current_state
     >>> current_state.verbose = True
-    >>> from ideas.examples import french
+    >>> from ideas.included import french
     >>> french.add_hook()
-    Added hook ideas.examples.french
+    Added hook ideas.included.french
     Looking for files with extensions:  ['.pyfr']
     The following paths will not be included in the search:
         PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python311\\lib
         SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.11\\lib\\site-packages
         IDEAS: c:\\users\\andre\\github\\ideas\\ideas
-    <Ideas import hook: ideas.examples.french>
+    <Ideas import hook: ideas.included.french>
 
     >>> from usage_demo import my_program
         Searching for ~\\github\\ideas\\usage_demo.pyfr

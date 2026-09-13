@@ -1,6 +1,6 @@
 import pytest
 
-from ideas.examples import repeat
+from ideas.included import repeat
 from ideas import remove_hook
 
 

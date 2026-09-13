@@ -38,12 +38,12 @@ Here's a second example using it.
 
 .. code-block::
 
-    >>> from ideas.examples import repeat
+    >>> from ideas.included import repeat
     >>> from ideas.console import start
     >>> from ideas import current_state
     >>> current_state.show_changes = True
     >>> repeat.add_hook(predictable_names=True)
-    <Ideas import hook: ideas.examples.repeat>
+    <Ideas import hook: ideas.included.repeat>
     >>> start()
     Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> output = ""

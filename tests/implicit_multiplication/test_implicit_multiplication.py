@@ -1,4 +1,4 @@
-from ideas.examples import implicit_multiplication
+from ideas.included import implicit_multiplication
 
 add_mul = implicit_multiplication.transform_source
 

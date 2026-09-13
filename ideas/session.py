@@ -38,13 +38,13 @@ class State:
         """Finds a previously imported hook based on its name.
 
         If it is one of the included examples, the name can be written
-        as 'module_name' to be equivalent to 'ideas.examples.module_name'."""
+        as 'module_name' to be equivalent to 'ideas.included.module_name'."""
         for hook in self.hooks:
             if hook.name == name:
                 return hook
         # Perhaps we're trying to find a hook from the examples folder
         if "." not in name:
-            name = "ideas.examples." + name
+            name = "ideas.included." + name
         for hook in self.hooks:
             if hook.name == name:
                 return hook
@@ -65,8 +65,8 @@ class State:
         or by the an IdeasHook instance. Use name_or_hook="*" as a
         shortcut for removing all hooks.
 
-        Since many of the import hooks are found in the ideas.examples directory
-        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        Since many of the import hooks are found in the ideas.included directory
+        one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
             for hook in self.hooks:
@@ -106,8 +106,8 @@ class State:
         """Disables a given import hook, either by its name or by the IdeasHook
         instance. Use name_or_hook="*" as a shortcut for disabling all hooks.
 
-        Since many of the import hooks are found in the ideas.examples directory
-        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        Since many of the import hooks are found in the ideas.included directory
+        one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
             for hook in self.hooks:
@@ -119,7 +119,7 @@ class State:
             if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = False
                 return
-            elif hook.name == "ideas.examples." + name_or_hook:
+            elif hook.name == "ideas.included." + name_or_hook:
                 potential_hook = hook
         else:
             if potential_hook is not None:
@@ -132,8 +132,8 @@ class State:
         """Enables a given import hook, either by its name or by the IdeasHook
         instance. Use name_or_hook="*" as a shortcut for enabling all hooks.
 
-        Since many of the import hooks are found in the ideas.examples directory
-        one can use "module_name" as an abbreviation of "ideas.examples.module_name".
+        Since many of the import hooks are found in the ideas.included directory
+        one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
             for hook in self.hooks:
@@ -145,7 +145,7 @@ class State:
             if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = True
                 return
-            elif hook.name == "ideas.examples." + name_or_hook:
+            elif hook.name == "ideas.included." + name_or_hook:
                 potential_hook = hook
         else:
             if potential_hook is not None:

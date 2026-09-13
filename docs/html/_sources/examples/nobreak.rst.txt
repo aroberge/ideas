@@ -10,4 +10,4 @@
 
    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/examples/nobreak.py>`_
 
-.. automodule:: ideas.examples.nobreak
+.. automodule:: ideas.included.nobreak

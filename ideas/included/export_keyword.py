@@ -97,7 +97,7 @@ different sessions. First, with the default Python ``dir``.
 
 .. code-block::
 
-    >>> from ideas.examples.export_keyword import add_hook
+    >>> from ideas.included.export_keyword import add_hook
     >>> hook = add_hook()
     >>> # Let's first see what's already here
     >>> dir()
@@ -123,7 +123,7 @@ Let's try again, using the ``public_dir`` option.
 
 .. code-block::
 
-    >>> from ideas.examples.export_keyword import add_hook
+    >>> from ideas.included.export_keyword import add_hook
     >>> hook = add_hook(public_dir=True)  # optional argument
     >>> import sample_file
     >>> dir(sample_file)

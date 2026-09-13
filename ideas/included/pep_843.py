@@ -136,7 +136,7 @@ And here's a similar experiment done within the normal Python repl:
 
     > py
     Python 3.11.9 ...
-    >>> from ideas.examples.pep_843 import add_hook
+    >>> from ideas.included.pep_843 import add_hook
     >>> hook = add_hook()
     >>> from hub import *
     >>> dir()

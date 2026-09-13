@@ -3,7 +3,7 @@ Demonstrates how we can simply combine source transformations.
 """
 
 from ideas import create_hook
-from ideas.examples import french, repeat
+from ideas.included import french, repeat
 
 additional_vocab = {
     "répéter": "repeat",

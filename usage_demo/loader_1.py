@@ -1,6 +1,6 @@
 # loader_1.py
 
-from ideas.examples import function_keyword
+from ideas.included import function_keyword
 
 function_keyword.add_hook()
 
