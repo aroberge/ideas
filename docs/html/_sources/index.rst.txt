@@ -2,6 +2,8 @@
 Ideas: making it easier to extend Python's syntax
 ==================================================
 
+.. |ideas| replace:: :small-caps-bold:`ideas`
+
 .. warning::
 
     As of August 18 2026, I've started updating this project after a 4 year-long hiatus. 

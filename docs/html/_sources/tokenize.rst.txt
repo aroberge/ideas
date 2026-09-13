@@ -7,7 +7,7 @@ About tokens
      It should be installed automatically when installing ideas.
      You can get it on its own using ``python -m pip install token-utils``
 
-While **ideas** aims to provide support for all kinds of transformations,
+While :small-caps-bold:`ideas` aims to provide support for all kinds of transformations,
 including those that affect the Abstract Syntax Tree or the bytecode,
 most transformations deal with exploring alternative syntax that is
 not compatible with Python's current syntax defined by its

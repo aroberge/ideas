@@ -45,6 +45,12 @@ extensions = [
 exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 nbsphinx_allow_errors = True
 
+text_styles_styles = {
+    "text-small-caps": ("font-variant: small-caps;", r"\textsc{"),
+}
+
+text_styles_roles = {"small-caps-bold": ["text-small-caps", "text-bold"]}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

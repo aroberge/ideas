@@ -41,3 +41,4 @@
 .bg-teal { background-color: teal; opacity: 0.5; }
 .text-violet { color: violet; }
 .bg-violet { background-color: violet; opacity: 0.5; }
+.text-small-caps { font-variant: small-caps; }

@@ -54,11 +54,11 @@ And here is the result:
 
 .. warning::
 
-    At this time, the **ideas** console cannot handle at the same time regular import hooks
+    At this time, the :small-caps-bold:`ideas` console cannot handle at the same time regular import hooks
     that are used to transform a source **and** transformations done using
     a custom codec: you can only use one or the other.
 
-We can also use the **ideas** console and have our special encoding be used.::
+We can also use the :small-caps-bold:`ideas` console and have our special encoding be used.::
 
     (venv-ideas3.11) C:\Users\Andre\github\ideas
     > py

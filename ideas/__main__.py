@@ -141,7 +141,7 @@ def main() -> None:
 
     if args.add_hook:
         for hook in args.add_hook:
-                add_transform(hook, callback_params=callback_params)
+            add_transform(hook, callback_params=callback_params)
         ideas_does_something = True
 
     if not args.source:

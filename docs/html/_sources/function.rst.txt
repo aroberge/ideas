@@ -1,6 +1,8 @@
 Improving function as a keyword
 ================================
 
+.. |ideas| replace:: :small-caps-bold:`ideas`
+
 .. admonition:: Summary
 
     This builds upon our previous example of allowing
@@ -22,7 +24,7 @@ Basic usage::
 Building a complete example
 ----------------------------
 
-In addition to making it easy to create import hooks, **ideas** also
+In addition to making it easy to create import hooks, :small-caps-bold:`ideas` also
 attempts to make it easy to include diagnostic "tools".
 The ``function_keyword`` example, whose API listed below includes
 links to the actual source, includes such "tools".
@@ -37,7 +39,7 @@ but without some diagnostic options included::
 
     from ideas import import_hook, token_utils
 
-    def transform_source(source, **kwargs):
+    def transform_source(source, **_kwargs):
         new_tokens = []
         for token in token_utils.tokenize(source):
             if token == "function":
@@ -46,11 +48,12 @@ but without some diagnostic options included::
         return token_utils.untokenize(new_tokens)
 
 
-    def add_hook():
+    def add_hook(**_kwargs):
         return import_hook.create_hook(transform_source=transform_source)
 
 
-Note the unused ``**kwargs`` in the definition of ``transform_source``:
+Note the unused ``**_kwargs`` in the definition of ``transform_source``
+and ``add_hook``:
 you should ensure to add something similar when creating your own import hook
 even if you do not plan to make use of extra parameters.
 
@@ -63,7 +66,7 @@ files that are searched by your Finder: you can do this by adding
 an extra parameter to ``add_hook`` and
 ``import_hook.create_hook`` as follows::
 
-    def add_hook(verbose_finder=False):
+    def add_hook(verbose_finder=False, **_kwargs):
 
         return import_hook.create_hook(
             transform_source=transform_source,
@@ -95,12 +98,17 @@ Comparing the original and the transformed source
 
 .. sidebar:: pattern != actual code
 
-    The code used is slightly different than was is shown here.
+    You don't need to implement this as there already
+    exists something similar available within |ideas|.
+
+    This examples demonstrates how to create your own version
+    of ``callback_params``, if there isn't already something that
+    you need available within |ideas|.
 
 It might be sometimes useful to compare the original source with
 the transformed one. Instead of actually adding ``print`` statements
-when needed, we can use some callback parameters to enable or disable
-such ``print`` statemeent.  **ideas** makes it fairly easy to
+when needed, we could use some callback parameters to enable or disable
+such ``print`` statemeent.  |ideas| makes it fairly easy to
 do this using callback parameters.
 Here's the basic **pattern** used in almost all the examples::
 
@@ -112,15 +120,15 @@ Here's the basic **pattern** used in almost all the examples::
         new_source = do_transform(source)
 
         if callback_params is not None:
-            if callback_params["show_transformed"]:
+            if callback_params["show_changes"]:
                 print(new_source)
         return new_source
 
 
-    def add_hook(show_original=False, show_transformed=False):
+    def add_hook(show_original=False, show_changes=False):
         callback_params = {
             "show_original": show_original,
-            "show_transformed": show_transformed,
+            "show_changes": show_changes,
         }
         hook = import_hook.create_hook(
             transform_source=transform_source,
@@ -133,11 +141,11 @@ Here's an actual example using one such parameter to show the transformed
 source::
 
     >>> from ideas.examples import function_keyword
-    >>> hook = function.add_hook(show_transformed=True)
+    >>> hook = function.add_hook(show_changes=True)
     >>> from ideas import console
     >>> console.start()
     Configuration values for the console:
-        callback_params: {'show_original': False, 'show_transformed': True}
+        callback_params: {'show_original': False, 'show_changes': True}
         transform_source from ideas.examples.function
     --------------------------------------------------
     Ideas Console version 0.0.4. [Python version: 3.7.3]

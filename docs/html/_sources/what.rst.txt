@@ -1,7 +1,9 @@
 What is Ideas?
 ===============
 
-**ideas** is a package that makes it easier to write *import hooks* 
+.. |ideas| replace:: :small-caps-bold:`ideas`
+
+|ideas| is a package that makes it easier to write *import hooks* 
 used to **experiment** with alternative to Python's syntax.
 
 What is an import hook?
@@ -41,26 +43,21 @@ Still, writing import hooks can be rather difficult.
 
         **Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones**
 
-.. sidebar::
+.. sidebar:: A bit of a mess
 
-    The code I wrote for the general *import hook* has grown "organically",
+    The code I wrote for the general ``import_hook.py`` code has grown "organically",
     adding or modifying features with almost every new examples. It works
-    but is in great need of refactoring. 
+    but is in great need of refactoring. Readers beware...
 
-**ideas** is designed to facilitate
+|ideas| is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.
 
-Instead of figuring out how to write an import hook, using **ideas** you
+Instead of figuring out how to write an import hook, using |ideas| you
 can focus exclusively on what what might be needed to convert your proposed new
-syntax into something that Python can understand -- **ideas** will
+syntax into something that Python can understand: |ideas| will
 take care of the rest, including inserting it in ``sys.meta_path``.
 
-.. admonition:: Reminder
-
-    Doing something like what is described in this documentation
-    is not recommended for production code.
-    But it can be fun! ;-)
 
 Additional motivation for this project
 --------------------------------------
@@ -74,13 +71,19 @@ following explanation added in `PEP 572 <https://www.python.org/dev/peps/pep-057
 
     **The importance of real code**
 
-    *During the development of this PEP many people (supporters and critics both) have had a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.*
+    *During the development of this PEP many people (supporters and critics both) have had
+    a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.*
 
-    *The danger of toy examples is twofold: they are often too abstract to make anyone go "ooh, that's compelling", and they are easily refuted with "I would never write it that way anyway".*
+    *The danger of toy examples is twofold: they are often too abstract to make anyone go
+    "ooh, that's compelling", and they are easily refuted with "I would never write it that way anyway".*
 
-    *The danger of overly complex examples is that they provide a convenient strawman for critics of the proposal to shoot down ("that's obfuscated").*
+    *The danger of overly complex examples is that they provide a convenient strawman for critics
+    of the proposal to shoot down ("that's obfuscated").*
 
-    *Yet there is some use for both extremely simple and extremely complex examples: they are helpful to clarify the intended semantics.*
+    *Yet there is some use for both extremely simple and extremely complex examples: they are helpful
+    to clarify the intended semantics.*
+
+    -- `PEP 572 <https://www.python.org/dev/peps/pep-0572/#the-importance-of-real-code>`_
 
 
 However, once it became possible for programmers to write their own code using
@@ -90,7 +93,7 @@ everyone became enthusiastic about them.
 
 **If only it were possible to write short programs using currently invalid
 syntax to truly get a feel for it rather than just complaining based
-on reading a few examples.**  This is what **ideas** can help accomplish.
+on reading a few examples.**  This is what |ideas| can help accomplish.
 
 
 .. tip::
@@ -101,7 +104,13 @@ on reading a few examples.**  This is what **ideas** can help accomplish.
 Original motivation
 -------------------
 
-Programming in Python has been for more than 20 years my main hobby.
+For more than 20 years, programming in Python has been my main hobby.
+Other than for a few minor scripts, I did not use Python for my job,
+rather I tried to focus on creating project to help Python learners
+with `Reeborg's World <https://reeborg.ca>`_ and
+`Friendly/friendly-traceback <https://friendly-traceback.github.io/docs/index.html>`_
+being the best known ones.
+
 As an amateur, I like to explore various ideas, learning along the way.
 As I found myself doing a lot of copy-paste-modify on the various import
 hooks experiments, including on some published projects such as the now
@@ -149,11 +158,11 @@ About the name
 --------------
 
 For this project, I was thinking of using ``importhook`` (singular) or
-``importhooks`` (plural). However, there is already a package named
+``importhooks`` (plural). However, there was already a package named
 ``importhook`` on Pypi and I thought that using the plural form would
 likely be just too confusing.
 
-I settled on **ideas** as I am guessing that the main application would be
+I settled on |ideas| as I am guessing that the main application would be
 for people to try out suggestions from or for Python-ideas.
 
 As I was looking at including other examples than the ones
@@ -161,4 +170,4 @@ I mentioned previously, I came accross Andrew Barnert's
 `Stupid Python Ideas <http://stupidpythonideas.blogspot.com/>`_ blog,
 which includes an older post about `Hacking Python with import hooks <http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html>`_.
 I have been thinking about adopting some of his examples, which I would not describe
-as **stupid** but rather as **entertaining** ideas.
+as *stupid* but rather as *entertaining* ideas.

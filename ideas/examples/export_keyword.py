@@ -67,6 +67,9 @@ would result in the following:
        been declared to be "public" via an ``export``
        statement.
 
+There is perhaps a better alternative to item 4 above, as I
+will describe below.
+
 
 First example: export keyword only
 -----------------------------------
@@ -133,12 +136,12 @@ Let's try again, using the ``public_dir`` option.
     "Ideas's code is a mess."
     >>> # Even though it was hidden, the secret is not safe if you are determined enough
 
+    
+.. tip::
 
-
-.. warning::
-
-    Do not use continuation characters in your sample code.
-    The current transformation might not handle them correctly.
+    IPython/Jupyter users: I have not updated Ideas to make sure that multiple
+    transformations could be combined in those environment. Please file an issue
+    if this affects you.
 
 """
 

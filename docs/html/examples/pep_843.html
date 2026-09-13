@@ -125,9 +125,7 @@
   <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This import hook enables someone to try out the syntax
-<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> proposed <a class="reference external" href="https://peps.python.org/pep-0843/">in PEP 843</a>.
-It is a first draft which is likely buggy. The <code class="docutils literal notranslate"><span class="pre">import_hook.py</span></code> code has grown
-organically as more examples were added and is in need of a serious cleanup.</p>
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> proposed <a class="reference external" href="https://peps.python.org/pep-0843/">in PEP 843</a>.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/examples/pep_843.py">Source code</a></p>
 </div>
 <section id="pep-843">
@@ -192,34 +190,26 @@ did with this import hook.</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_a.py</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">:</span>
-    <span class="k">pass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">:</span> <span class="k">pass</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">:</span>
-    <span class="k">pass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Gadget</span><span class="p">:</span> <span class="k">pass</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">NotWidget</span><span class="p">:</span>
-    <span class="k">pass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotWidget</span><span class="p">:</span> <span class="k">pass</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">NotGadget</span><span class="p">:</span>
-    <span class="k">pass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotGadget</span><span class="p">:</span> <span class="k">pass</span>
 
 <span class="n">export</span> <span class="o">=</span> <span class="s2">"safe name"</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_b.py</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">cool</span><span class="p">():</span>
-    <span class="k">pass</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cool</span><span class="p">():</span> <span class="k">pass</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_cool</span><span class="p">():</span>
-    <span class="k">pass</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_cool</span><span class="p">()</span> <span class="k">pass</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">hot</span><span class="p">():</span>
-    <span class="k">pass</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hot</span><span class="p">():</span> <span class="k">pass</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_hot</span><span class="p">():</span>
-    <span class="k">pass</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_hot</span><span class="p">():</span> <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mod_c.py</span>
@@ -240,8 +230,7 @@ did with this import hook.</p>
 </div>
 <p>Here is what an interactive session with the Ideas console
 looks like:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
-&gt; python -i -m ideas -a pep_843
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -i -m ideas -a pep_843
 Ideas Console version 0.2.0. [Python version: 3.11.9]
 ideas&gt; from hub import *
 ideas&gt; dir()
@@ -267,7 +256,9 @@ Python 3.11.9 ...
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
-<p>We implement this as a source transformation. PEP 843 suggests that:</p>
+<section id="proposed-implementation">
+<h3>Proposed implementation<a class="headerlink" href="#proposed-implementation" title="Link to this heading"></a></h3>
+<p>PEP 843 suggests that:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="n">alias</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -280,19 +271,28 @@ Python 3.11.9 ...
 <span class="n">exported_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"&lt;alias&gt;"</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We avoid introducing <code class="docutils literal notranslate"><span class="pre">exported_names</span></code> as an intermediary
-variable by doing something like the following instead:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">as</span> <span class="o">&lt;</span><span class="n">alias</span><span class="o">&gt;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
-<span class="n">__all__</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">"&lt;alias&gt;"</span><span class="p">])</span>
-</pre></div>
-</div>
+<p>We implement something similar as a source transformation. 
+However, we avoid introducing <code class="docutils literal notranslate"><span class="pre">exported_names</span></code> as an intermediary.</p>
 <p>PEP 843 also states that
 “unlike <code class="docutils literal notranslate"><span class="pre">import</span></code>, <code class="docutils literal notranslate"><span class="pre">export</span></code> is restricted to module level:
 it’s a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> inside a <code class="docutils literal notranslate"><span class="pre">def</span></code> or <code class="docutils literal notranslate"><span class="pre">class</span></code> body.”</p>
 <p>As such, we do <strong>not</strong> transform <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">..</span></code> if it occurs within
-a class or function body.</p>
+a class or function body. Such code <strong>will</strong> result in a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>.</p>
+</section>
+<section id="actual-implementation">
+<h3>Actual implementation<a class="headerlink" href="#actual-implementation" title="Link to this heading"></a></h3>
+<p>We will use a separate module, <code class="docutils literal notranslate"><span class="pre">ignore.py</span></code>
+(name chosen so that it is ignored locally by git)
+to use various variants of the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code>
+statement to demonstrate what is being done.</p>
+<p>Within a Python repl, we will use an option which</p>
+<blockquote>
+<div><p>from &lt;module&gt; import &lt;name&gt; as &lt;alias&gt;
+__all__ = globals().setdefault(“__all__”, [])
+__all__ = list(__all__)
+__all__.extend([“&lt;alias&gt;”])</p>
+</div></blockquote>
+</section>
 </section>
 <section id="star-version">
 <h2>Star version<a class="headerlink" href="#star-version" title="Link to this heading"></a></h2>

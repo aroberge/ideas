@@ -9,7 +9,7 @@
   <title>What is Ideas? &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -100,7 +100,7 @@
              
   <section id="what-is-ideas">
 <h1>What is Ideas?<a class="headerlink" href="#what-is-ideas" title="Link to this heading"></a></h1>
-<p><strong>ideas</strong> is a package that makes it easier to write <em>import hooks</em>
+<p><span class="text-small-caps text-bold">ideas</span> is a package that makes it easier to write <em>import hooks</em>
 used to <strong>experiment</strong> with alternative to Python’s syntax.</p>
 <section id="what-is-an-import-hook">
 <h2>What is an import hook?<a class="headerlink" href="#what-is-an-import-hook" title="Link to this heading"></a></h2>
@@ -143,23 +143,18 @@ documentation for</em> importlib <em>under your pillow may be advisable.</em></d
 </div></blockquote>
 </div></blockquote>
 <aside class="sidebar">
-<p>The code I wrote for the general <em>import hook</em> has grown “organically”,
+<p class="sidebar-title">A bit of a mess</p>
+<p>The code I wrote for the general <code class="docutils literal notranslate"><span class="pre">import_hook.py</span></code> code has grown “organically”,
 adding or modifying features with almost every new examples. It works
-but is in great need of refactoring.</p>
+but is in great need of refactoring. Readers beware…</p>
 </aside>
-<p><strong>ideas</strong> is designed to facilitate
+<p><span class="text-small-caps text-bold">ideas</span> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
-<p>Instead of figuring out how to write an import hook, using <strong>ideas</strong> you
+<p>Instead of figuring out how to write an import hook, using <span class="text-small-caps text-bold">ideas</span> you
 can focus exclusively on what what might be needed to convert your proposed new
-syntax into something that Python can understand – <strong>ideas</strong> will
+syntax into something that Python can understand: <span class="text-small-caps text-bold">ideas</span> will
 take care of the rest, including inserting it in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>.</p>
-<div class="admonition-reminder admonition">
-<p class="admonition-title">Reminder</p>
-<p>Doing something like what is described in this documentation
-is not recommended for production code.
-But it can be fun! ;-)</p>
-</div>
 </section>
 <section id="additional-motivation-for-this-project">
 <h2>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Link to this heading"></a></h2>
@@ -169,10 +164,15 @@ opposed to them being added to Python. This likely lead to the
 following explanation added in <a class="reference external" href="https://www.python.org/dev/peps/pep-0572/#the-importance-of-real-code">PEP 572</a>:</p>
 <blockquote>
 <div><p><strong>The importance of real code</strong></p>
-<p><em>During the development of this PEP many people (supporters and critics both) have had a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.</em></p>
-<p><em>The danger of toy examples is twofold: they are often too abstract to make anyone go “ooh, that’s compelling”, and they are easily refuted with “I would never write it that way anyway”.</em></p>
-<p><em>The danger of overly complex examples is that they provide a convenient strawman for critics of the proposal to shoot down (“that’s obfuscated”).</em></p>
-<p><em>Yet there is some use for both extremely simple and extremely complex examples: they are helpful to clarify the intended semantics.</em></p>
+<p><em>During the development of this PEP many people (supporters and critics both) have had
+a tendency to focus on toy examples on the one hand, and on overly complex examples on the other.</em></p>
+<p><em>The danger of toy examples is twofold: they are often too abstract to make anyone go
+“ooh, that’s compelling”, and they are easily refuted with “I would never write it that way anyway”.</em></p>
+<p><em>The danger of overly complex examples is that they provide a convenient strawman for critics
+of the proposal to shoot down (“that’s obfuscated”).</em></p>
+<p><em>Yet there is some use for both extremely simple and extremely complex examples: they are helpful
+to clarify the intended semantics.</em></p>
+<p class="attribution">—<a class="reference external" href="https://www.python.org/dev/peps/pep-0572/#the-importance-of-real-code">PEP 572</a></p>
 </div></blockquote>
 <p>However, once it became possible for programmers to write their own code using
 either the f-strings or the walrus operator instead of just reading
@@ -180,7 +180,7 @@ examples from PEP 572, it seems that
 everyone became enthusiastic about them.</p>
 <p><strong>If only it were possible to write short programs using currently invalid
 syntax to truly get a feel for it rather than just complaining based
-on reading a few examples.</strong>  This is what <strong>ideas</strong> can help accomplish.</p>
+on reading a few examples.</strong>  This is what <span class="text-small-caps text-bold">ideas</span> can help accomplish.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can skip the rest of this section if you already know that you want to
@@ -189,8 +189,13 @@ use an import hook and are not interested in the origin of this project.</p>
 </section>
 <section id="original-motivation">
 <h2>Original motivation<a class="headerlink" href="#original-motivation" title="Link to this heading"></a></h2>
-<p>Programming in Python has been for more than 20 years my main hobby.
-As an amateur, I like to explore various ideas, learning along the way.
+<p>For more than 20 years, programming in Python has been my main hobby.
+Other than for a few minor scripts, I did not use Python for my job,
+rather I tried to focus on creating project to help Python learners
+with <a class="reference external" href="https://reeborg.ca">Reeborg’s World</a> and
+<a class="reference external" href="https://friendly-traceback.github.io/docs/index.html">Friendly/friendly-traceback</a>
+being the best known ones.</p>
+<p>As an amateur, I like to explore various ideas, learning along the way.
 As I found myself doing a lot of copy-paste-modify on the various import
 hooks experiments, including on some published projects such as the now
 <strong>deprecated/obsolete/abandoned</strong>
@@ -236,17 +241,17 @@ make suggestions as to how to improve this project.</p>
 <section id="about-the-name">
 <h2>About the name<a class="headerlink" href="#about-the-name" title="Link to this heading"></a></h2>
 <p>For this project, I was thinking of using <code class="docutils literal notranslate"><span class="pre">importhook</span></code> (singular) or
-<code class="docutils literal notranslate"><span class="pre">importhooks</span></code> (plural). However, there is already a package named
+<code class="docutils literal notranslate"><span class="pre">importhooks</span></code> (plural). However, there was already a package named
 <code class="docutils literal notranslate"><span class="pre">importhook</span></code> on Pypi and I thought that using the plural form would
 likely be just too confusing.</p>
-<p>I settled on <strong>ideas</strong> as I am guessing that the main application would be
+<p>I settled on <span class="text-small-caps text-bold">ideas</span> as I am guessing that the main application would be
 for people to try out suggestions from or for Python-ideas.</p>
 <p>As I was looking at including other examples than the ones
 I mentioned previously, I came accross Andrew Barnert’s
 <a class="reference external" href="http://stupidpythonideas.blogspot.com/">Stupid Python Ideas</a> blog,
 which includes an older post about <a class="reference external" href="http://stupidpythonideas.blogspot.com/2015/06/hacking-python-without-hacking-python.html">Hacking Python with import hooks</a>.
 I have been thinking about adopting some of his examples, which I would not describe
-as <strong>stupid</strong> but rather as <strong>entertaining</strong> ideas.</p>
+as <em>stupid</em> but rather as <em>entertaining</em> ideas.</p>
 </section>
 </section>
 

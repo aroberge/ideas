@@ -1,6 +1,8 @@
 Usage
 =====
 
+.. |ideas| replace:: :small-caps-bold:`ideas`
+
 .. important::
 
     As of August 18 2026, I've started updating this project after a 4 year hiatus. 
@@ -13,7 +15,7 @@ Usage
 .. admonition:: Hello World!
 
     All the examples below, as well as a few other mentioned later,
-    are based on an import hook which makes
+    are based on writing and/or using an import hook which makes
     it possible to use the word ``function`` as being equivalent
     to the Python keyword ``lambda``.
 
@@ -35,9 +37,11 @@ the same thing as ``lambda``, enabling you to write::
         print(f"And the square of 5 is {square(5)}")
 
 
-You can run this program in a terminal as follows::
+Actually, with :small-caps-bold:`ideas`, you can run this program in a terminal as follows:
 
-    > python -m ideas my_program -a function_keyword
+.. code-block:: none
+
+    > python -m ideas -a function_keyword my_program
     16 is the square of 4.
     And the square of 5 is 25
 
@@ -46,13 +50,14 @@ The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the ``ideas.examples``
-directory included with **ideas**.
+directory included with :small-caps-bold:`ideas`.
 
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:
 Python **import hooks**, by definition, only work on modules that are
 imported. Yet, you may have also noticed that it is imported with
-the name ``'__main__'``, so that it is run as though it is the main script.
+the name ``'__main__'``, so that it is nonetheless 
+run as though it is the main script.
 
 
 Using the ideas-enabled interactive console
@@ -106,7 +111,7 @@ Starting from a standard CPython interpreter
 ----------------------------------------------
 
 Unlike the IPython interactive interpreter (aka 'shell'), the CPython
-interpreter does not support directly transformations done by ideas.
+interpreter (aka REPL) does not support directly transformations done by ideas.
 It is however possible to start the ideas console from the CPython
 interactive interpreter.
 
@@ -122,11 +127,15 @@ interactive interpreter.
     ideas> sq(3)
     9
 
+While one cannot use the REPL to use non-standard syntax written *in interactive mode*
+transformed by |ideas|, it can be used to import files modified by |ideas|.
+
+.. code
 
 Using with Pypy
 -----------------
 
-According to a few quick tests we did, **ideas** works with Pypy just
+According to a few quick tests we did, |ideas| works with Pypy just
 as well as it does with CPython.
 
 
@@ -158,7 +167,7 @@ You can have multiple import hooks added; for example::
 
 Note that once a meta_path finder finds the desired file to 
 import, no other finder will be invoked. However, internally
-**ideas** will do its best to combine all the required
+|ideas| will do its best to combine all the required
 transformations from all the ``IdeasHooks`` that will have
 been activated.
 
@@ -180,7 +189,7 @@ are not using a virtual environment. [2]_
 
     In the description below, setting ``PYTHONPATH`` in a terminal
     will only work as described
-    if you install ideas in a normal (not virtual) environment.
+    if you install |ideas| in a normal (not virtual) environment.
 
 
 In what follows, I will use the ``decimal_math`` example which
@@ -256,7 +265,7 @@ You can now invoke your module doing the following::
 
     <hr>
 
-.. [2] After not working on **ideas** for more than 4 years, I wanted to work on 
+.. [2] After not working on :small-caps-bold:`ideas` for more than 4 years, I wanted to work on 
        the code again and make sure that everything was working correctly and couldn't figure 
        out why the ``usercustomize.py`` idea did not work. I deleted parts of the documentation
        where I had mentioned it until I remembered that it wouldn't work in a virtual

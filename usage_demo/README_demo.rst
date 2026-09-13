@@ -24,7 +24,7 @@ The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the ``ideas.examples``
-directory included with **ideas**.
+directory included with :small-caps-bold:`ideas`.
 
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:
@@ -122,5 +122,5 @@ In this case, the ideas prompt ``~>>`` is different from the CPython one.
 Using with Pypy
 -----------------
 
-According to a few quick tests we did, **ideas** works with Pypy just
+According to a few quick tests we did, :small-caps-bold:`ideas` works with Pypy just
 as well as it does with CPython.

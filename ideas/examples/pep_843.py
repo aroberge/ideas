@@ -121,7 +121,6 @@ looks like:
 
 .. code-block:: none
 
-    (venv-ideas3.11) C:\\Users\\Andre\\github\\ideas
     > python -i -m ideas -a pep_843
     Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> from hub import *
@@ -149,7 +148,10 @@ And here's a similar experiment done within the normal Python repl:
 Implementation
 --------------
 
-We implement this as a source transformation. PEP 843 suggests that::
+Proposed implementation
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+PEP 843 suggests that::
 
     from <module> import <name> as <alias>
 
@@ -162,20 +164,34 @@ should be equivalent to::
         __all__ = exported_names
     exported_names.append("<alias>")
 
-We avoid introducing ``exported_names`` as an intermediary
-variable by doing something like the following instead::
-
-    from <module> import <name> as <alias>
-    __all__ = globals().setdefault("__all__", [])
-    __all__ = list(__all__)
-    __all__.extend(["<alias>"])
+We implement something similar as a source transformation. 
+However, we avoid introducing ``exported_names`` as an intermediary.
 
 PEP 843 also states that
 "unlike ``import``, ``export`` is restricted to module level:
 it’s a ``SyntaxError`` inside a ``def`` or ``class`` body."
 
 As such, we do **not** transform ``from ... export ..`` if it occurs within
-a class or function body. 
+a class or function body. Such code **will** result in a ``SyntaxError``.
+
+Actual implementation
+~~~~~~~~~~~~~~~~~~~~~
+
+We will use a separate module, ``ignore.py``
+(name chosen so that it is ignored locally by git)
+to use various variants of the ``from ... export ...``
+statement to demonstrate what is being done.
+
+Within a Python repl, we will use an option which
+
+    from <module> import <name> as <alias>
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.extend(["<alias>"])
+
+
+
+
 
 Star version
 -------------

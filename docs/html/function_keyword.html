@@ -9,7 +9,7 @@
   <title>Create your first import hook: the basics &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=3481f5a2" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -113,7 +113,7 @@ debugging information.</p></li>
 </div>
 <section id="create-your-first-import-hook-the-basics">
 <h1>Create your first import hook: the basics<a class="headerlink" href="#create-your-first-import-hook-the-basics" title="Link to this heading"></a></h1>
-<p>You’ve seen how to use <strong>ideas</strong> import hooks; now it is time to
+<p>You’ve seen how to use <span class="text-small-caps text-bold">ideas</span> import hooks; now it is time to
 create your first one.  Se use our <code class="docutils literal notranslate"><span class="pre">&quot;Hello</span> <span class="pre">world&quot;</span></code> example,
 which uses <code class="docutils literal notranslate"><span class="pre">function</span></code> as equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 <section id="how-to-do-this">
@@ -135,7 +135,7 @@ Perhaps something like the following:</p>
 </pre></div>
 </div>
 <p>and have Python execute <code class="docutils literal notranslate"><span class="pre">modified_source</span></code> instead of the original <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
-<p>Here’s how we can do it using <strong>ideas</strong>:</p>
+<p>Here’s how we can do it using <span class="text-small-caps text-bold">ideas</span>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_hook</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">some_arbitrary_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -265,7 +265,7 @@ utility function <code class="docutils literal notranslate"><span class="pre">un
 same name, <code class="docutils literal notranslate"><span class="pre">transform_source</span></code> that is used as a keyword
 argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code>;
 unlike <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, using the specific name <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>
-is not required by <strong>ideas</strong>.</p>
+is not required by <span class="text-small-caps text-bold">ideas</span>.</p>
 </section>
 <section id="debugging-help">
 <h3>Debugging help<a class="headerlink" href="#debugging-help" title="Link to this heading"></a></h3>
@@ -340,16 +340,19 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">lambd
 <h2>Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code><a class="headerlink" href="#complete-argument-list-for-transform-source" title="Link to this heading"></a></h2>
 <p>In the above example, we had some unspecified keywords arguments
 passed to <code class="docutils literal notranslate"><span class="pre">transformed_source</span></code>.</p>
-<p>At present, the complete list of <strong>possible</strong> arguments is as follows:</p>
+<p>At I am writing this, the complete list of <strong>possible</strong> arguments is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">full_path</span><span class="p">,</span>
-    <span class="n">module</span> <span class="o">=</span> <span class="n">module_object</span><span class="p">,</span>
-    <span class="n">callback_params</span> <span class="o">=</span> <span class="n">user_defined_dict</span><span class="p">):</span>
-    <span class="o">...</span>
+    <span class="n">source</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+    <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
+    <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
+    <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">full_path</span></code> can be simply the name of the ideas console.
-When using IPython or Jupyter, only the <code class="docutils literal notranslate"><span class="pre">source</span></code> is passed back to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">filename</span></code> can sometimes be the name of the <span class="text-small-caps text-bold">ideas</span> console.
+See <code class="xref py py-meth docutils literal notranslate"><span class="pre">ideas.session.State.source_transforms()</span></code> for the most current version.</p>
+<p>When using IPython or Jupyter, only the <code class="docutils literal notranslate"><span class="pre">source</span></code> is passed back to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 </section>
 </section>
 

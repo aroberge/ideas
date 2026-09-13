@@ -1,3 +1,5 @@
+.. |ideas| replace:: :small-caps-bold:`ideas`
+
 .. admonition:: Summary
 
    + We explain how to create a basic import hook.
@@ -10,7 +12,7 @@
 Create your first import hook: the basics
 =========================================
 
-You've seen how to use **ideas** import hooks; now it is time to
+You've seen how to use |ideas| import hooks; now it is time to
 create your first one.  Se use our ``"Hello world"`` example,
 which uses ``function`` as equivalent to ``lambda``.
 
@@ -38,7 +40,7 @@ Given access to that source, all you'd need to do is::
 and have Python execute ``modified_source`` instead of the original ``source``.
 
 
-Here's how we can do it using **ideas**::
+Here's how we can do it using |ideas|::
 
     from ideas import import_hook
 
@@ -151,7 +153,7 @@ Finally, **by convention**, we use the
 same name, ``transform_source`` that is used as a keyword
 argument for ``import_hook.create_hook``;
 unlike ``add_hook``, using the specific name ``transform_source``
-is not required by **ideas**.
+is not required by :small-caps-bold:`ideas`.
 
 Debugging help
 ~~~~~~~~~~~~~~
@@ -226,13 +228,17 @@ Complete argument list for ``transform_source``
 In the above example, we had some unspecified keywords arguments
 passed to ``transformed_source``.
 
-At present, the complete list of **possible** arguments is as follows::
+At I am writing this, the complete list of **possible** arguments is as follows::
 
     def transform_source(source,
-        filename = full_path,
-        module = module_object,
-        callback_params = user_defined_dict):
-        ...
+        source,
+        filename=filename,
+        module=module,
+        callback_params=callback_params,
+        console_dict=console_dict,
+    )
 
-``full_path`` can be simply the name of the ideas console.
+``filename`` can sometimes be the name of the |ideas| console.
+See :meth:`ideas.session.State.source_transforms` for the most current version.
+
 When using IPython or Jupyter, only the ``source`` is passed back to ``transform_source``.

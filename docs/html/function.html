@@ -9,7 +9,7 @@
   <title>Improving function as a keyword &mdash; ideas 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -117,7 +117,7 @@ to an import hook and some possible usage.</p>
 </div>
 <section id="building-a-complete-example">
 <h2>Building a complete example<a class="headerlink" href="#building-a-complete-example" title="Link to this heading"></a></h2>
-<p>In addition to making it easy to create import hooks, <strong>ideas</strong> also
+<p>In addition to making it easy to create import hooks, <span class="text-small-caps text-bold">ideas</span> also
 attempts to make it easy to include diagnostic “tools”.
 The <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> example, whose API listed below includes
 links to the actual source, includes such “tools”.
@@ -129,7 +129,7 @@ equivalent the <code class="docutils literal notranslate"><span class="pre">func
 but without some diagnostic options included:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_hook</span><span class="p">,</span> <span class="n">token_utils</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">"function"</span><span class="p">:</span>
@@ -138,11 +138,12 @@ but without some diagnostic options included:</p>
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Note the unused <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> in the definition of <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>:
+<p>Note the unused <code class="docutils literal notranslate"><span class="pre">**_kwargs</span></code> in the definition of <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>
+and <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>:
 you should ensure to add something similar when creating your own import hook
 even if you do not plan to make use of extra parameters.</p>
 <section id="verbose-finder">
@@ -151,7 +152,7 @@ even if you do not plan to make use of extra parameters.</p>
 files that are searched by your Finder: you can do this by adding
 an extra parameter to <code class="docutils literal notranslate"><span class="pre">add_hook</span></code> and
 <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code> as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
 
     <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
@@ -182,12 +183,16 @@ standard library; it was found by a “normal” finder used by Python.</p>
 <h3>Comparing the original and the transformed source<a class="headerlink" href="#comparing-the-original-and-the-transformed-source" title="Link to this heading"></a></h3>
 <aside class="sidebar">
 <p class="sidebar-title">pattern != actual code</p>
-<p>The code used is slightly different than was is shown here.</p>
+<p>You don’t need to implement this as there already
+exists something similar available within <span class="text-small-caps text-bold">ideas</span>.</p>
+<p>This examples demonstrates how to create your own version
+of <code class="docutils literal notranslate"><span class="pre">callback_params</span></code>, if there isn’t already something that
+you need available within <span class="text-small-caps text-bold">ideas</span>.</p>
 </aside>
 <p>It might be sometimes useful to compare the original source with
 the transformed one. Instead of actually adding <code class="docutils literal notranslate"><span class="pre">print</span></code> statements
-when needed, we can use some callback parameters to enable or disable
-such <code class="docutils literal notranslate"><span class="pre">print</span></code> statemeent.  <strong>ideas</strong> makes it fairly easy to
+when needed, we could use some callback parameters to enable or disable
+such <code class="docutils literal notranslate"><span class="pre">print</span></code> statemeent.  <span class="text-small-caps text-bold">ideas</span> makes it fairly easy to
 do this using callback parameters.
 Here’s the basic <strong>pattern</strong> used in almost all the examples:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -198,15 +203,15 @@ Here’s the basic <strong>pattern</strong> used in almost all the examples:</p>
     <span class="n">new_source</span> <span class="o">=</span> <span class="n">do_transform</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">callback_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">"show_transformed"</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">callback_params</span><span class="p">[</span><span class="s2">"show_changes"</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">new_source</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">new_source</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_transformed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="n">show_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_changes</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">callback_params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">"show_original"</span><span class="p">:</span> <span class="n">show_original</span><span class="p">,</span>
-        <span class="s2">"show_transformed"</span><span class="p">:</span> <span class="n">show_transformed</span><span class="p">,</span>
+        <span class="s2">"show_changes"</span><span class="p">:</span> <span class="n">show_changes</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
         <span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span>
@@ -218,11 +223,11 @@ Here’s the basic <strong>pattern</strong> used in almost all the examples:</p>
 <p>Here’s an actual example using one such parameter to show the transformed
 source:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.examples</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_transformed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">show_changes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="go">Configuration values for the console:</span>
-<span class="go">    callback_params: {'show_original': False, 'show_transformed': True}</span>
+<span class="go">    callback_params: {'show_original': False, 'show_changes': True}</span>
 <span class="go">    transform_source from ideas.examples.function</span>
 <span class="go">--------------------------------------------------</span>
 <span class="go">Ideas Console version 0.0.4. [Python version: 3.7.3]</span>
