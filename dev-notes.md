@@ -31,7 +31,11 @@ of the existing batch file.
         python -m pip install -r requirements.txt
 
 
-5. If desired, deactivate the virtual environment and create new ones for
+5. (Now that I am using the src layout) In the root directory of the project,
+   do `py -m pip install --editable .` to install ideas as an editable project.
+   Do this for every virtual environments (see next). 
+
+6. If desired, deactivate the virtual environment and create new ones for
    other Python versions
 
         deactivate

@@ -195,4 +195,5 @@ def main() -> None:
         console.start(locals_=module.__dict__)
 
 
-main()
+if __name__ == "__main__":
+    main()

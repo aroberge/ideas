@@ -247,7 +247,7 @@ class State:
         ``sys.modules`` so that it can be properly patched."""
         # We need at least one active hook to make transformations
         if not self.hooks:
-            from .null_hook import add_hook
+            from ideas.null_hook import add_hook
 
             add_hook()
 
