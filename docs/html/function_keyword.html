@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -352,6 +353,10 @@ below.</p>
         <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Applies a source transformation from the installed import hooks.</span>
+
+<span class="sd">        Returns a new source.</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="s2">"FatalError: unkown argument in session.State.source_transform:"</span><span class="p">,</span> <span class="n">kwargs</span>

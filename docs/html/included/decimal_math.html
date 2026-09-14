@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -123,7 +124,7 @@
              
   <section id="decimal-math">
 <h1>Decimal math<a class="headerlink" href="#decimal-math" title="Link to this heading"></a></h1>
-<p>On Python-ideas, the <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/thread/7EF5MOJK5GOQZZEZXQ7DKM2N52JZ7VNB/">following question was recently asked</a></p>
+<p>On Python-ideas, the <a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/thread/7EF5MOJK5GOQZZEZXQ7DKM2N52JZ7VNB/" rel="noreferrer" target="_blank">following question was recently asked</a></p>
 <blockquote>
 <div><p>Wouldn’t it be possible to have something along the lines of:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">TreatFloatsAsDecimal</span>
@@ -137,7 +138,7 @@
 </div></blockquote>
 <p>The answer is yes, using either an import hook or a custom encoding already
 implemented as an example. Here we show it in action using the ideas repl:
-<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math.py">Source code for decimal_math</a></p>
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math.py" rel="noreferrer" target="_blank">Source code for decimal_math</a></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math
     The following initializing code from ideas is included:
 
@@ -156,7 +157,7 @@ Decimal('0.200')
 </div>
 <p>There is a second version of decimal math, whith requires a <code class="docutils literal notranslate"><span class="pre">D</span></code> suffix after a
 float to transform it into a python Decimal.:
-<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math_d.py">Source code for decimal_math_d</a></p>
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math_d.py" rel="noreferrer" target="_blank">Source code for decimal_math_d</a></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math_d
     The following initializing code from ideas is included:
 
@@ -170,7 +171,7 @@ Decimal('0.3')
 </pre></div>
 </div>
 <p>There is actually a third version of decimal math:
-<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math_with.py">Source code for decimal_math_with</a></p>
+<a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math_with.py" rel="noreferrer" target="_blank">Source code for decimal_math_with</a></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py -m ideas -a decimal_math_with
     The following initializing code from ideas is included:
 

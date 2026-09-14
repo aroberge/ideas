@@ -45,7 +45,7 @@ especially including examining the source code.
     Unnormalized unicode <included/unnormalized_unicode>
     from-export: PEP 843 <included/from_export>
     export-name: PEP 842 <included/export_name>
-    export as a soft keyword (PEPs 842 + 843) <included/export_keyword>
+    export as a (soft) keyword (PEPs 842 + 843) <included/export_keyword>
 
 AST transformations
 -------------------

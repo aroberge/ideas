@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -123,7 +124,7 @@ to be attribute of an object.</p>
 <li><p>Custom module class</p></li>
 <li><p>Specialized dict to temporarily replace the read-only module dict.</p></li>
 </ul>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/constants.py">Source code</a></p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/constants.py" rel="noreferrer" target="_blank">Source code</a></p>
 </div>
 <p>It took me quite a while to come up with the solution described below,
 and I learned a fair bit along the way.  Given the relative complexity of
@@ -149,17 +150,17 @@ Instead, Pythonistas rely on conventions to indicate their intent.</p>
 </li>
 <li><p>You want to indicate that a variable should be constant? Just write its name in UPPERCASE_LETTERS.</p>
 <ul class="simple">
-<li><p>For Python 3.8, use a <code class="docutils literal notranslate"><span class="pre">Final</span></code> qualifier type hint as per <a class="reference external" href="https://www.python.org/dev/peps/pep-0591/">PEP 591</a></p></li>
+<li><p>For Python 3.8, use a <code class="docutils literal notranslate"><span class="pre">Final</span></code> qualifier type hint as per <a class="reference external" href="https://www.python.org/dev/peps/pep-0591/" rel="noreferrer" target="_blank">PEP 591</a></p></li>
 </ul>
 </li>
 </ul>
 <p>Still, this does not prevent people from asking <em>“How do I create a constant in Python?”</em>
-such as <a class="reference external" href="https://stackoverflow.com/questions/2682745/how-do-i-create-a-constant-in-python">was asked on StackOverflow</a>
+such as <a class="reference external" href="https://stackoverflow.com/questions/2682745/how-do-i-create-a-constant-in-python" rel="noreferrer" target="_blank">was asked on StackOverflow</a>
 some 9 years ago, which has resulted in 34 different answers so far,
 all of which indicate that you cannot enforce this convention in Python at a module level.
 Answers that were provided are still actively edited as new features get added to Python,
 including recent comments about using the <code class="docutils literal notranslate"><span class="pre">Final</span></code> qualifier.</p>
-<p>While it is noted that you can use tools such as <a class="reference external" href="http://mypy-lang.org/">mypy</a>
+<p>While it is noted that you can use tools such as <a class="reference external" href="http://mypy-lang.org/" rel="noreferrer" target="_blank">mypy</a>
 <strong>only to check</strong> without running the program
 that a variable meant to be used as a constant is not expected to change,
 all the other answers rely, in one way or another, on creating an object,

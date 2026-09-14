@@ -194,7 +194,7 @@ are not using a virtual environment. [2]_
 
 In what follows, I will use the ``decimal_math`` example which
 can be used either as an import hook or as a custom encoding.
-`Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math.py>`_
+`Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math.py>`_
 
 Import hook
 ~~~~~~~~~~~

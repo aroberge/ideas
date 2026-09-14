@@ -4,7 +4,7 @@
     Demonstrates how to use an import hook to do custom parsing
     and create an Abstract Syntax Tree (AST)
 
-   `Source code for polish_expr <https://github.com/aroberge/ideas/blob/master/ideas/included/polish_expr.py>`_
+   `Source code for polish_expr <https://github.com/aroberge/ideas/blob/master/src/ideas/included/polish_expr.py>`_
 
 So far, our examples have consisted of transforming the program source before
 Python created an AST, or transforming the AST after its creation by Python.

@@ -9,7 +9,7 @@ Switch statement
 
     **Limitation**: a switch statement cannot contain another switch statement.
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/switch.py>`_
+    `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/switch.py>`_
 
 
 There have been 2 PEPs looking at the possibility of adding a ``switch``

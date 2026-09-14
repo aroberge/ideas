@@ -1,4 +1,4 @@
-What is Ideas?
+What is ideas?
 ===============
 
 .. |ideas| replace:: :small-caps-bold:`ideas`
@@ -105,8 +105,8 @@ Original motivation
 -------------------
 
 For more than 20 years, programming in Python has been my main hobby.
-Other than for a few minor scripts, I did not use Python for my job,
-rather I tried to focus on creating project to help Python learners
+Other than for a few minor scripts, I did not use Python for my job.
+However, for my hobby, I tried to focus on creating project to help Python learners
 with `Reeborg's World <https://reeborg.ca>`_ and
 `Friendly/friendly-traceback <https://friendly-traceback.github.io/docs/index.html>`_
 being the best known ones.
@@ -126,7 +126,9 @@ take the time to make concrete suggestions as to how to improve it.
 Additional motivation
 ---------------------
 
-Often, on Python-ideas, a suggestion is made to someone that proposes something
+Often, on the old Python-ideas mailing list,
+and possibly on the `Python discuss ideas <https://discuss.python.org/c/ideas/6>`_` , 
+a suggestion is made to someone that proposes something
 new to try it by modifying Python using an import hook. For example:
 
     *You can pretty easily write an import hook to intercept module loading

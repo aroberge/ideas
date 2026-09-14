@@ -8,6 +8,6 @@
    as it shows how to keep track of indentation
    level and only replace a keyword when some conditions are met.
 
-   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/nobreak.py>`_
+   `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/nobreak.py>`_
 
 .. automodule:: ideas.included.nobreak

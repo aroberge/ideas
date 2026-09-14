@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -23,7 +24,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tokenizing notebook" href="tokenize_notebook.html" />
-    <link rel="prev" title="λ encoding" href="examples/lambda.html" /> 
+    <link rel="prev" title="λ encoding" href="included/lambda.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -90,7 +91,7 @@
             <a href="_sources/tokenize.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="examples/lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="included/lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="tokenize_notebook.html" class="btn btn-neutral float-right" title="Tokenizing notebook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
@@ -110,15 +111,15 @@ You can get it on its own using <code class="docutils literal notranslate"><span
 including those that affect the Abstract Syntax Tree or the bytecode,
 most transformations deal with exploring alternative syntax that is
 not compatible with Python’s current syntax defined by its
-<a class="reference external" href="https://docs.python.org/3/reference/grammar.html">grammar</a>.
+<a class="reference external" href="https://docs.python.org/3/reference/grammar.html" rel="noreferrer" target="_blank">grammar</a>.
 Such alternative syntax cannot be parsed by Python without generating
 a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> thus preventing the execution of the code.
 For this reason, almost all of our examples transform the code
 prior to letting Python parse it.  We do this using a set of tools
-built upon Python’s <a class="reference external" href="https://docs.python.org/3/library/tokenize.html">tokenize module</a>.</p>
+built upon Python’s <a class="reference external" href="https://docs.python.org/3/library/tokenize.html" rel="noreferrer" target="_blank">tokenize module</a>.</p>
 <aside class="sidebar">
 <p class="sidebar-title">An excellent tutorial</p>
-<p><a class="reference external" href="https://www.asmeurer.com/brown-water-python/">Brown Water Python</a>, written by Aaron Meurer, is an excellent and very comprehensive tutorial about Python’s
+<p><a class="reference external" href="https://www.asmeurer.com/brown-water-python/" rel="noreferrer" target="_blank">Brown Water Python</a>, written by Aaron Meurer, is an excellent and very comprehensive tutorial about Python’s
 tokenize module.</p>
 </aside>
 <p>In our description of these tools below, we assume that you are
@@ -161,7 +162,7 @@ tests about the expected results for some source transformation.</p>
 <section id="about-ideas-tokens">
 <h2>About Ideas’ tokens<a class="headerlink" href="#about-ideas-tokens" title="Link to this heading"></a></h2>
 <p>Recently (Feb. 21, 2020), on the Python-ideas mailing list,
-<a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/message/UNL62EMSNPA5USUS7SCEQZQ63PVP2FDL/">Andrew Barnert wrote</a>:</p>
+<a class="reference external" href="https://mail.python.org/archives/list/python-ideas&#64;python.org/message/UNL62EMSNPA5USUS7SCEQZQ63PVP2FDL/" rel="noreferrer" target="_blank">Andrew Barnert wrote</a>:</p>
 <blockquote>
 <div><p><em>Unfortunately, the boilerplate to write an import hook is more complicated than you’d
 like (and pretty hard to figure out the first time),</em> <strong>and the support for filtering on the
@@ -404,7 +405,7 @@ accumulated up to that point is returned.</p>
 <dt class="sig sig-object py" id="token_utils.untokenize">
 <span class="sig-prename descclassname"><span class="pre">token_utils.</span></span><span class="sig-name descname"><span class="pre">untokenize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/token_utils.html#untokenize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#token_utils.untokenize" title="Link to this definition"></a></dt>
 <dd><p>Return source code based on tokens.</p>
-<p>Adapted from <a class="reference external" href="https://github.com/myint/untokenize">https://github.com/myint/untokenize</a>,
+<p>Adapted from <a class="reference external" href="https://github.com/myint/untokenize" rel="noreferrer" target="_blank">https://github.com/myint/untokenize</a>,
 Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).</p>
 <p>This is similar to Python’s own tokenize.untokenize(), except that it
 preserves spacing between tokens, by using the line
@@ -427,7 +428,7 @@ into account when it comes with figuring out spacing between tokens.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="examples/lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="included/lambda.html" class="btn btn-neutral float-left" title="λ encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="tokenize_notebook.html" class="btn btn-neutral float-right" title="Tokenizing notebook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

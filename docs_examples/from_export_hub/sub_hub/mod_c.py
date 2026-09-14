@@ -1,4 +1,5 @@
-# mod_d.py
+# # flake8: noqa
+# from_export_hub/sub_hub/mod_c.py
 
 spam = "spam"
 ham = "ham"

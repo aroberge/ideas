@@ -41,6 +41,7 @@ extensions = [
     "nbsphinx",
     "sphinx.ext.mathjax",
     "sphinxcontrib_text_styles",
+    "sphinx_new_tab_link",
 ]
 exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 nbsphinx_allow_errors = True
@@ -99,8 +100,9 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
+
 html_theme = "sphinx_rtd_theme"  # installed separately
+
 
 
 # Theme options are theme-specific and customize the look and feel of a theme

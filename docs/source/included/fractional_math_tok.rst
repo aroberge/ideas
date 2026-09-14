@@ -7,6 +7,6 @@
 
     Note that the AST transformation is a more robust approach for this type of 
     example.
-    `Source code for fractions_tok <https://github.com/aroberge/ideas/blob/master/ideas/included/fractions_tok.py>`_
+    `Source code for fractions_tok <https://github.com/aroberge/ideas/blob/master/src/ideas/included/fractions_tok.py>`_
 
 .. automodule:: ideas.included.fractions_tok

@@ -15,7 +15,7 @@ Implicit multiplication
     since a multiplication operator ``*`` would be considered
     to be missing.
 
-    `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/implicit_multiplication.py>`_
+    `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/implicit_multiplication.py>`_
 
 
 Let's talk about algebra.  Consider the following set of equations.

@@ -9,7 +9,7 @@
    The code transformation is more complex than the previous ones and
    include a change of indentation of an entire block of code.
 
-   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/auto_self.py>`_
+   `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/auto_self.py>`_
 
 
 .. automodule:: ideas.included.auto_self

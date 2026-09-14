@@ -5,6 +5,6 @@
     It also demonstrates how to make use of a different file extension (``.pyfr``),
     loading such files as if they were regular Python files.
 
-   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/french.py>`_
+   `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/french.py>`_
 
 .. automodule:: ideas.included.french

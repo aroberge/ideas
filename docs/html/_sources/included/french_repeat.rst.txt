@@ -5,7 +5,7 @@
    **French Python**, which uses a non-standard file extension ``.pyfr``
    as an indication that an import hook must be used; and **repeat as a keyword**.
 
-   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/french_repeat.py>`_
+   `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/french_repeat.py>`_
 
 
 French repeat

@@ -1,0 +1,14 @@
+a.reference.external.image-reference img {
+  transition: filter 150ms ease-in-out;
+}
+
+a.reference.external.image-reference:hover img,
+a.reference.external.image-reference:focus-visible img {
+  filter: brightness(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.reference.external.image-reference img {
+    transition: none;
+  }
+}

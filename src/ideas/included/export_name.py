@@ -1,13 +1,10 @@
 """
-Export as a soft keyword
-========================
-
 This import hook was **inspired** by
 `PEP 842 (withdrawn) <https://peps.python.org/pep-0842/>`_
 which suggested the addition of ``export`` as a soft keyword
 to be used in the following three cases::
 
-    export identifier = ...
+    export name ... = ...
     export def function_name(): ...
     export class ClassName(): ...
 
@@ -21,62 +18,20 @@ to be used in the following three cases::
    while enabling people reading the source code to
    easily identify which names are meant to be public.
 
-   We do acknowledge that adding a builtin rather than
-   introducing a new syntax, would be much less disruptive,
-   and much easier to adopt overall.
+Note that PEP 842 suggests a lot more than what we wrote above:
 
-The result of using this soft keyword is to automatically
-add the name of the object to ``__all__``.
++ It suggest the creation of an ``__export__`` list.
++ It suggest that using ``export`` other than in top-level statement
+  should result in an ``ExportError``.
++ It suggests the creation of a modified ``__dir__``.
++ etc.
 
-An additional option that we included, also inspired by
-PEP 842, is the possibility to automatically define a custom
-``__dir__`` which would result in only the "exported"
-identifiers to be visible within an REPL.
+We will first start with an example that implements only the
+three cases we mentioned. Consider the following file:
 
-This import hook complements well and can easily be combined
-the pep_843 import hook described in a previous section.
+.. code-block::
 
-.. important::
-
-    The goal of **ideas** is to offer the possibility to
-    easily experiment with alternatives
-    to Python's normal syntax, exploring various "what if"
-    scenarios.
-
-    Unusually for this project, since two related examples
-    are inspired by actual proposed PEPs, we give a
-    **highly subjective** evaluation of what the proposed
-    syntax would achieve.
-
-Combining the import hooks export_name and pep_843
-would result in the following:
-
-    1. Reduce the work required in creating a public interface
-       by adding names to ``__all__`` by hand while reducing
-       the possibility of errors.
-    2. Enabling anyone reading source code to easily identify
-       which names are meant to be part of the public
-       interface.
-    3. Enable developers to easily change names in their
-       various subdirectories while maintaining a stable
-       public API.
-    4. With the inclusion of a an optional custom ``__dir__``
-       as described below, enable programmers to use a REPL
-       to explore the various files of a project and, know
-       which names can likely be safely used as they have
-       been declared to be "public" via an ``export``
-       statement.
-
-There is perhaps a better alternative to item 4 above, as I
-will describe below.
-
-
-First example: export keyword only
------------------------------------
-
-Consider the following case::
-
-    # sample_file.py
+    # export_name_1.py
 
     from math import pi
 
@@ -92,56 +47,192 @@ Consider the following case::
 
     secret = "Ideas's code is a mess."
 
-We will import and explore the content of this file in two
-different sessions. First, with the default Python ``dir``.
+Let's use our import hook to import this function using a
+standard Python interpreter.
 
 .. code-block::
 
+    > py
+    Python 3.11.9 ...
     >>> from ideas.included.export_name import add_hook
     >>> hook = add_hook()
-    >>> # Let's first see what's already here
-    >>> dir()
-    ['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook']
-    >>> __name__
-    '__main__'
-    >>> # Let's import a sample file
-    >>> import sample_file
-    >>> dir(sample_file)
+    >>> import export_name_1
+    >>> dir(export_name_1)
     ['PI', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'pi', 'private', 'public', 'secret', 'useful_fn']
-    >>> sample_file.__name__
-    'sample_file'
-    >>> # We see many names; let's import "everything"
-    >>> from sample_file import *
-    >>> dir()
-    ['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']
-    >>> # We did not import pi, private and secret. Did anything else change?
-    >>> __name__
-    '__main__'
-    >>> # Python does the right thing when it comes to dunders ...
 
-Let's try again, using the ``public_dir`` option.
+Looking closely at the output, we can see that ``private``, ``pi``, and ``secret`` are not exposed, but
+it is not easy to see. However, they are still available.
 
 .. code-block::
 
+    >>> export_name_1.secret
+    "Ideas's code is a mess."
+    
+And, ``__all__`` only shows the names we want, so we could quickly determine
+if it is safe to use a star-import.
+
+    >>> export_name_1.__all__
+    ['PI', 'public', 'useful_fn']
+
+A restricted ``dir``
+--------------------
+
+As we can see from the example above, when simply using ``dir`` it might be difficult to identify
+which names are "public". Presumably for this reason, PEP 842 suggests that using ``export``
+in a module should also result in creating a ``__dir__`` function within this module so that
+Python's ``dir`` function can be restricted to only show the desired names.
+
+We have implemented a version of this idea, available as an option, demonstrated 
+below.
+
+.. code-block::
+
+    > py
+    Python 3.11.9 ...
     >>> from ideas.included.export_name import add_hook
     >>> hook = add_hook(public_dir=True)  # optional argument
-    >>> import sample_file
-    >>> dir(sample_file)
+    >>> import export_name_1
+    >>> dir(export_name_1)
     ['PI', 'public', 'useful_fn']
-    >>> # much cleaner; let's import everything
-    >>> from sample_file import *
-    >>> dir()
-    ['PI', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'add_hook', 'hook', 'public', 'sample_file', 'useful_fn']
-    >>> sample_file.secret
-    "Ideas's code is a mess."
-    >>> # Even though it was hidden, the secret is not safe if you are determined enough
 
-    
-.. tip::
+We can nonetheless still see all the available names that ``dir`` would have shown us before,
+and then some ...
 
-    IPython/Jupyter users: I have not updated Ideas to make sure that multiple
-    transformations could be combined in those environment. Please file an issue
-    if this affects you.
+.. code-block::
+
+    >>> list(vars(export_name_1))
+    ['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', '__all__', '__dir__', 'pi', 'PI', 'public', 'useful_fn', 'private', 'secret']
+        
+Instead of creating a ``__dir__`` function within the module, we prefer to use a simple function
+that we have written, which extracts the content of ``__all__`` if it exists, otherwise it
+gives us what ``dir`` would give us normally, but not always in the same order.
+
+.. code-block::
+
+    > py
+    Python 3.11.9 ...
+    >>> from ideas.utils import pdir
+    >>> pdir()
+    ['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__annotations__', '__builtins__', 'pdir']
+    >>> pdir().sort() == dir().sort()
+    True
+    >>> from ideas.included.export_name import add_hook
+    >>> hook = add_hook()
+    >>> import export_name_1
+    >>> pdir(export_name_1)
+    ['PI', 'public', 'useful_fn']
+
+As we can see, with a simple utility function, like ``pdir``, we do not use to create a special
+``__dir__`` within a module.
+
+
+Implementation
+---------------
+
+Let's explore how this is implemented, like we did in the 
+:doc:`from ... export (PEP 843) <./from_export>` import hook.
+
+.. code-block::
+
+    > py
+    Python 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)] on win32
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> from ideas import transform
+    >>> from ideas.included.export_name import add_hook
+    >>> hook = add_hook()
+    >>> transform("export def test(): ...")
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('test')
+    def        test(): ...
+
+We would have a similar result with ``class`` instead of ``def``.
+The situation is slightly different for variables.
+First, a proper declaration.
+
+.. code-block::
+
+    >>> transform("export name = ...")
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('name')
+    name        = ...
+
+However, if not assignment is done using an ``=`` sign,
+no transformation takes place.
+
+
+    >>> transform("export name ...")
+    export name ...
+
+The same occurs if an ``export`` keyword is not used at the top level.
+
+.. code-block::
+
+    >>> transform("export name ...")
+    export name ...
+    >>> source = '''
+    ... def test():
+    ...     export name = 'Bob'
+    ... '''
+    >>> transform(source)
+
+    def test():
+        export name = 'Bob'
+
+This would clearly cause a syntax error if it were to be executed.
+
+Finally, let us give a single additional example with the ``public_dir``
+option. However, we can't simply use the ``transform`` function as
+it only takes a source as an argument and we need to tell
+our import hook other arguments to take into account.
+However, we can import a file, defined as follows:
+
+.. code-block::
+
+    # export_name_2.py
+    export name = 'Bob'
+
+Here's a sample session.
+
+.. code-block::
+
+    > py
+    Python 3.11.9 ...
+    >>> from ideas.included.export_name import add_hook
+    >>> from ideas import current_state
+    >>> current_state.show_changes = True
+    >>> hook = add_hook(public_dir=True)
+    >>> import export_name_2
+
+    #========== Original source from C:\\Users\\Andre\\github\\ideas\\docs_examples\\export_name_2.py ====
+    # flake8: noqa
+    # export_name_2.py
+    export name = 'Bob'
+    #=== End of Original source from C:\\Users\\Andre\\github\\ideas\\docs_examples\\export_name_2.py ====
+
+
+    #========== Transformed source ====
+    __all__ = globals().setdefault('__all__', [])
+    __dir__ = lambda: __all__
+    # flake8: noqa
+    # export_name_2.py
+
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.append('name')
+    name        = 'Bob'
+    #=== End of Transformed source ====
+
+As we can see, at the top of the transformed source, a new ``__dir__`` function
+has been introduced.
+
+
+
+
+
 
 """
 

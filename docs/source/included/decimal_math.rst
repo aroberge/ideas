@@ -15,7 +15,7 @@ On Python-ideas, the `following question was recently asked <https://mail.python
 
 The answer is yes, using either an import hook or a custom encoding already
 implemented as an example. Here we show it in action using the ideas repl:
-`Source code for decimal_math <https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math.py>`_
+`Source code for decimal_math <https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math.py>`_
 
 .. code-block:: none
     
@@ -36,7 +36,7 @@ implemented as an example. Here we show it in action using the ideas repl:
 
 There is a second version of decimal math, whith requires a ``D`` suffix after a 
 float to transform it into a python Decimal.:
-`Source code for decimal_math_d <https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math_d.py>`_
+`Source code for decimal_math_d <https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math_d.py>`_
 
 .. code-block:: none
     
@@ -52,7 +52,7 @@ float to transform it into a python Decimal.:
     Decimal('0.3')
 
 There is actually a third version of decimal math:
-`Source code for decimal_math_with <https://github.com/aroberge/ideas/blob/master/ideas/included/decimal_math_with.py>`_
+`Source code for decimal_math_with <https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math_with.py>`_
 
 
 .. code-block:: none

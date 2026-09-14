@@ -24,7 +24,7 @@ we use ``λ`` to represent Python's ``lambda`` keyword::
 
 The basic code required create the ``lambda_encoding`` codec, reading
 and decoding the file, is found in
-`lambda_codec.py <https://github.com/aroberge/ideas/blob/master/ideas/included/lambda_codec.py>`_
+`lambda_codec.py <https://github.com/aroberge/ideas/blob/master/src/ideas/included/lambda_codec.py>`_
 
 Before running our program with a custom encoding,
 we need to make Python aware of the existence

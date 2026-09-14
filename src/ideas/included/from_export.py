@@ -1,8 +1,4 @@
 """
-
-PEP 843
-=======
-
 `PEP 843 <https://peps.python.org/pep-0843/>`_  
 suggests the addition of ``export`` as a soft keyword to be
 used in expressions of the basic form::
@@ -44,37 +40,31 @@ Suppose that we have the following file structure:
 
 .. code-block:: none
 
-    hub/
+    from_export_hub/
        __init__.py
        mod_a.py
        mod_b.py
-       mod_c.py
-       subhub/
+       sub_hub/
            __init__.py
-           mod_d.py
+           mod_c.py
 
 with the following file contents::
 
-    # hub/__init__.py
+    # from_export_hub/__init__.py
 
-    if True:
-        from .mod_a export Widget, Gadget, export
-    else:
-        from .mod_a export NotWidget, NotGadget
+    from from_export_hub.mod_a export Widget, Gadget as NewGadget, export
 
-    from .mod_b export *
-
-    from .mod_c export (a,
+    from from_export_hub.mod_b export (a,
         b,
-    c
+        c,
     )
 
-    # mod_d defines __all__ as a tuple
-    from .subhub.mod_d export *
+    # mod_c defines __all__ as a tuple
+    from from_export_hub.sub_hub.mod_c export *
 
 .. code-block::
 
-    # mod_a.py
+    # from_export_hub/mod_a.py
 
     class Widget: pass
 
@@ -84,29 +74,17 @@ with the following file contents::
 
     class NotGadget: pass
 
-    export = "safe name"
+    export = "A safe name"
 
 .. code-block::
 
-    # mod_b.py
+    # from_export_hub/mod_b.py
 
-    def cool(): pass
-
-    def _cool() pass
-
-    def hot(): pass
-
-    def _hot(): pass
+    a = b = c = d = e = f = g = 1
 
 .. code-block::
 
-    # mod_c.py
-
-    a = b = c = d = e = 1
-
-.. code-block::
-
-    # mod_d.py
+    # from_export_hub/sub_hub/mod_c.py
 
     spam = "spam"
     ham = "ham"
@@ -121,14 +99,17 @@ looks like:
 
 .. code-block:: none
 
-    > python -i -m ideas -a from_export
+    > ideas -a from_export
     Ideas Console version 0.2.0. [Python version: 3.11.9]
-    ideas> from hub import *
     ideas> dir()
-    ['Gadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'cool', 'current_state', 'export', 'ham', 'hot', 'spam']
+    ['__builtins__', 'current_state']
+    ideas> from from_export_hub import *
+    ideas> dir()
+    ['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'current_state', 'export', 'ham', 'spam']
     ideas> export
-    'safe name'
-    ideas>
+    'A safe name'
+
+As we can verify, only the names that were "exported" have been imported.
 
 And here's a similar experiment done within the normal Python repl:
 
@@ -138,22 +119,16 @@ And here's a similar experiment done within the normal Python repl:
     Python 3.11.9 ...
     >>> from ideas.included.from_export import add_hook
     >>> hook = add_hook()
-    >>> from hub import *
-    >>> dir()
-    ['Gadget', 'Widget', '__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'a', 'add_hook', 'b', 'c', 'cool', 'export', 'ham', 'hook', 'hot', 'spam']
-    >>> export
-    'safe name'
-    >>>
-
-Implementation
---------------
+    >>> import from_export_hub
+    >>> from_export_hub.__all__
+    ['Widget', 'NewGadget', 'export', 'a', 'b', 'c', 'spam', 'ham']
 
 Proposed implementation
-~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 PEP 843 suggests that::
 
-    from <module> import <name> as <alias>
+    from <module> export <name> as <alias>
 
 should be equivalent to::
 
@@ -175,81 +150,92 @@ As such, we do **not** transform ``from ... export ..`` if it occurs within
 a class or function body. Such code **will** result in a ``SyntaxError``.
 
 Actual implementation
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
-We will use a separate module, ``ignore.py``
-(name chosen so that it is ignored locally by git)
-to use various variants of the ``from ... export ...``
-statement to demonstrate what is being done.
+To see the actual implementation, we can use the function ``transform``
+which is available for that purpose.
 
-Within a Python repl, we will use an option which
+First, we consider an "export" statement with names fully specified.
 
-    from <module> import <name> as <alias>
+.. code-block::
+
+    > py
+    Python 3.11.9 ...
+    >>> from ideas.included.from_export import add_hook
+    >>> hook = add_hook()
+    >>> from ideas import transform
+    >>> transform("    from a.b export A, B as C")
+        from a.b import A, B as C
+        __all__ = globals().setdefault("__all__", [])
+        __all__ = list(__all__)
+        __all__.extend(['A', 'C'])
+
+Next, we look at the star version:
+
+.. code-block::
+
+    >>> transform("from module export *")
+    from module import *
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
-    __all__.extend(["<alias>"])
-
-
-
-
-
-Star version
--------------
-
-For the star version::
-
-    from module export *
-
-we believe that something like the following should do what is expected::
-
-    from [...]module import *
-    __all__ = globals().setdefault("__all__", [])
-    __all__ = list(__all__)
-    from {relative} import {module}
-    if hasattr({module}, "__all__"):
-        __all__.extend(list({module}.__all__))
+    from . import module
+    if hasattr(module, "__all__"):
+        __all__.extend(list(module.__all__))
     else:
-        for _ in dir({module}):
+        for _ in dir(module):
             if not _.startswith("_"):
                 __all__.append(_)
         del _
 
-lazy keyword
-------------
+    >>>
 
-While this transformation will insert "the right code" to replace::
+Looking ahead we can also support the ``lazy`` keyword.
 
-    lazy from ... export ...
+.. code-block::
 
-by::
-
-    lazy from ... import ...
-    # some additional code here
-
-the additional code inserted in the case of an ``export *`` will result
-in a non-lazy import. However, since this is just to provide a way to
-test the syntax proposed in PEP 843, and not actually be used in production,
-it should be no cause for concerns.
-
-export as identifier
---------------------
-
-``export`` can still be used as an identifier: it is only replaced by ``import``
-on a top-level ``from ... export ...`` statement.
+    >>> transform("lazy from math export pi")
+    lazy from math import pi
+    __all__ = globals().setdefault("__all__", [])
+    __all__ = list(__all__)
+    __all__.extend(['pi'])
 
 
+export as an identifier
+------------------------
 
-.. warning::
+As we have seen in the example above ``export`` can still be used as an identifier: 
+it is only replaced by ``import``
+**on a top-level** ``from ... export ...`` statement.
+Using such a statement anywhere else will result in a ``SyntaxError`` when
+the code is executed by Python.
 
-    Do not use continuation characters in your sample code.
-    The current transformation might not handle them correctly.
+.. code-block::
 
-    Please report any bug you find.
+    >>> source = '''
+    ... def test():
+    ...     from math export pi
+    ... '''
+    >>> transform(source)
 
-.. tip::
+    def test():
+        from math export pi
 
-    You might want to combine this import hook with ``export keyword`` one
-    described in the following section.
+As we can see, it has not changed. If we put this code in a file named
+``from_export_1.py`` and try to import it, here is the result.
+
+... code-block::
+
+    >>> import from_export_1
+    An exception was raised while attempting to produce an AST.
+    File "C:/Users/Andre/github/ideas/docs_examples/from_export_1.py", line 5
+        from math export pi
+                  ^^^^^^
+    SyntaxError: invalid syntax
+
+
+    You might want to use the command line flag --verbose or setting
+    session.current_state.verbose=True to get more details.
+    >>>
 
 """
 

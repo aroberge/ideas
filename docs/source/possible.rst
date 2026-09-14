@@ -54,7 +54,7 @@ on various parts over which we can have control.
 Options to create a custom hook
 --------------------------------
 
-`Use the source! <https://github.com/aroberge/ideas/blob/master/ideas/import_hook.py>`_
+`Use the source! <https://github.com/aroberge/ideas/blob/master/src/ideas/import_hook.py>`_
 
 
 About Decode

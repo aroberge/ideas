@@ -11,6 +11,6 @@
     It also shows how to include some parameters that are passed back to the
     source transformation.
 
-   `Source code <https://github.com/aroberge/ideas/blob/master/ideas/included/repeat.py>`_
-
+   `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/repeat.py>`_
+   
 .. automodule:: ideas.included.repeat

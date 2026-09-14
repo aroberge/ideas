@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
   
@@ -125,7 +126,7 @@ it has largely become irrelevant since the introduction of
 dataclasses.</p>
 <p>The code transformation is more complex than the previous ones and
 include a change of indentation of an entire block of code.</p>
-<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/auto_self.py">Source code</a></p>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/auto_self.py" rel="noreferrer" target="_blank">Source code</a></p>
 </div>
 <section id="auto-self">
 <span id="module-ideas.included.auto_self"></span><h1>Auto self<a class="headerlink" href="#auto-self" title="Link to this heading"></a></h1>
@@ -144,7 +145,7 @@ many attributes, like:</p>
 </pre></div>
 </div>
 <p>This leads people to ask on various forums, such as
-<a class="reference external" href="https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a">this question on StackOverflow</a>,
+<a class="reference external" href="https://stackoverflow.com/questions/3652851/what-is-the-best-way-to-do-automatic-attribute-assignment-in-python-and-is-it-a" rel="noreferrer" target="_blank">this question on StackOverflow</a>,
 how to do automatic assignment of attributes.  The answers most often given
 are:</p>
 <blockquote>
@@ -157,15 +158,15 @@ are:</p>
 dunder methods, such as <code class="docutils literal notranslate"><span class="pre">__eq__(self,</span> <span class="pre">other)</span></code>, <code class="docutils literal notranslate"><span class="pre">__repr__(self)</span></code>, etc.
 Eventually, they might get annoyed enough at having to re-create these methods
 too often, with the occasional typo causing bugs that they jump with
-joy when discovering <a class="reference external" href="https://www.attrs.org/en/stable/">attrs: Classes Without Boilerplate</a>.</p>
+joy when discovering <a class="reference external" href="https://www.attrs.org/en/stable/" rel="noreferrer" target="_blank">attrs: Classes Without Boilerplate</a>.</p>
 <p>Starting with Python 3.7, the standard library includes
-<a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a> which shares some
+<a class="reference external" href="https://docs.python.org/3/library/dataclasses.html" rel="noreferrer" target="_blank">dataclasses</a> which shares some
 similarity with <code class="docutils literal notranslate"><span class="pre">attrs</span></code>. However, it does require to use type hints which,
 <strong>in my opinion</strong>, reduces readability; note that many (most?) programmers find that
 type hints do increase readability.</p>
 <p>As a concrete example of using traditional Python notation and
 dataclasses, let’s consider the example given in
-<a class="reference external" href="https://www.python.org/dev/peps/pep-0557/">PEP 557</a> but reformatted with Black:</p>
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0557/" rel="noreferrer" target="_blank">PEP 557</a> but reformatted with Black:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
