@@ -88,8 +88,8 @@ Actual code
 
 Here's the content of our real simplest example.
 
-.. literalinclude:: ../../ideas/included/function_keyword.py
-   :linenos:
+.. include:: ../../src/ideas/included/function_keyword.py
+   :code: python
 
 .. sidebar:: Tokens?
 
@@ -226,19 +226,15 @@ Complete argument list for ``transform_source``
 ------------------------------------------------
 
 In the above example, we had some unspecified keywords arguments
-passed to ``transformed_source``.
+passed to ``transform_source``.
 
-At I am writing this, the complete list of **possible** arguments is as follows::
+The last time this documentation was updated, the list of possible 
+arguments could be found in the arguments of ``hook.transform_source``
+below.
 
-    def transform_source(source,
-        source,
-        filename=filename,
-        module=module,
-        callback_params=callback_params,
-        console_dict=console_dict,
-    )
+.. literalinclude:: ../../src/ideas/session.py
+    :pyobject: State.source_transforms
 
 ``filename`` can sometimes be the name of the |ideas| console.
-See :meth:`ideas.session.State.source_transforms` for the most current version.
 
 When using IPython or Jupyter, only the ``source`` is passed back to ``transform_source``.

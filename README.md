@@ -35,7 +35,7 @@ ideas -a my_cool_new_syntax my_program[.py]
 
 Admitedly this is a bit terse ... Let's go into a bit more details.
 
-### Usage broken down
+### Usage in more details
 
 As a specific example of a new syntax, suppose that you want to use
 `function` as a keyword in Python, to mean
@@ -62,7 +62,7 @@ from ideas import import_hook
 def transform(source, **kwargs):
     return source.replace("function", "lambda")
 
-import_hook.create_hook(transform_source=transform)
+import_hook.create_hook(transform_source=transform, name=__main__)
 ```
 
 Then, you'd need to use it. Since there is already an example import hook

@@ -33,18 +33,19 @@ especially including examining the source code.
 .. toctree::
     :maxdepth: 1
 
-    nobreak as a keyword <examples/nobreak>
-    repeat as a keyword <examples/repeat>
-    French Python <examples/french>
-    French repeat <examples/french_repeat>
-    Auto-self <examples/auto_self>
-    Decimal math <examples/decimal_math>
-    Fractional math (token) <examples/fractional_math_tok>
-    Switch statement <examples/switch>
-    Implicit multiplication <examples/implicit_multiplication>
-    Unnormalized unicode <examples/unnormalized_unicode>
-    PEP 843 implementation <examples/pep_843>
-    export as a soft keyword <examples/export_keyword>
+    nobreak as a keyword <included/nobreak>
+    repeat as a keyword <included/repeat>
+    French Python <included/french>
+    French repeat <included/french_repeat>
+    Auto-self <included/auto_self>
+    Decimal math <included/decimal_math>
+    Fractional math (token) <included/fractional_math_tok>
+    Switch statement <included/switch>
+    Implicit multiplication <included/implicit_multiplication>
+    Unnormalized unicode <included/unnormalized_unicode>
+    from-export: PEP 843 <included/from_export>
+    export-name: PEP 842 <included/export_name>
+    export as a soft keyword (PEPs 842 + 843) <included/export_keyword>
 
 AST transformations
 -------------------
@@ -52,7 +53,7 @@ AST transformations
 .. toctree::
    :maxdepth: 1
 
-    Fractional math (AST) <examples/fractional_math_ast>
+    Fractional math (AST) <included/fractional_math_ast>
 
 .. todo::
 
@@ -67,7 +68,7 @@ AST creation
 .. toctree::
     :maxdepth: 1
 
-    Polish expressions <examples/polish_expr>
+    Polish expressions <included/polish_expr>
 
 
 Bytecode transformations
@@ -76,7 +77,7 @@ Bytecode transformations
 .. toctree::
    :maxdepth: 1
 
-    Confused math (Bytecode) <examples/bytecode>
+    Confused math (Bytecode) <included/bytecode>
 
 .. todo::
 
@@ -91,7 +92,7 @@ More complex examples
 .. toctree::
    :maxdepth: 1
 
-    True constants <examples/constants>
+    True constants <included/constants>
 
 Tranforming a module after creation
 -----------------------------------
@@ -99,7 +100,7 @@ Tranforming a module after creation
 .. toctree::
    :maxdepth: 1
 
-    Patching a module <examples/patching>
+    Patching a module <included/patching>
 
 .. todo::
 
@@ -117,5 +118,5 @@ can also be done by custom encodings.
 .. toctree::
    :maxdepth: 1
 
-    Create your own codec <examples/lambda>
+    Create your own codec <included/lambda>
 

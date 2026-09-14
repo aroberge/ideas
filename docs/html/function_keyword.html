@@ -180,31 +180,31 @@ in the source. Thus, given something like:</p>
 <section id="actual-code">
 <h2>Actual code<a class="headerlink" href="#actual-code" title="Link to this heading"></a></h2>
 <p>Here’s the content of our real simplest example.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">"""This module enables someone to use ``function`` as a keyword</span>
-<span class="linenos"> 2</span><span class="sd">equivalent to ``lambda``.</span>
-<span class="linenos"> 3</span><span class="sd">"""</span>
-<span class="linenos"> 4</span>
-<span class="linenos"> 5</span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_hook</span>
-<span class="linenos"> 6</span><span class="kn">import</span><span class="w"> </span><span class="nn">token_utils</span>
-<span class="linenos"> 7</span>
-<span class="linenos"> 8</span>
-<span class="linenos"> 9</span><span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-<span class="linenos">10</span><span class="w">    </span><span class="sd">"""This performs a simple replacement of ``function`` by ``lambda``."""</span>
-<span class="linenos">11</span>    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="linenos">12</span>    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-<span class="linenos">13</span>        <span class="c1"># token_utils allows us to easily replace the string content</span>
-<span class="linenos">14</span>        <span class="c1"># of any token</span>
-<span class="linenos">15</span>        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">"function"</span><span class="p">:</span>
-<span class="linenos">16</span>            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">"lambda"</span>
-<span class="linenos">17</span>        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-<span class="linenos">18</span>
-<span class="linenos">19</span>    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
-<span class="linenos">20</span>
-<span class="linenos">21</span>
-<span class="linenos">22</span><span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-<span class="linenos">23</span><span class="w">    </span><span class="sd">"""Creates and automatically adds the import hook in sys.meta_path"""</span>
-<span class="linenos">24</span>    <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="linenos">25</span>    <span class="k">return</span> <span class="n">hook</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">"""This module enables someone to use ``function`` as a keyword</span>
+<span class="sd">equivalent to ``lambda``.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_hook</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">token_utils</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""This performs a simple replacement of ``function`` by ``lambda``."""</span>
+    <span class="n">new_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="c1"># token_utils allows us to easily replace the string content</span>
+        <span class="c1"># of any token</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s2">"function"</span><span class="p">:</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">"lambda"</span>
+        <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Creates and automatically adds the import hook in sys.meta_path"""</span>
+    <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hook</span>
 </pre></div>
 </div>
 <aside class="sidebar">
@@ -339,19 +339,40 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">lambd
 <section id="complete-argument-list-for-transform-source">
 <h2>Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code><a class="headerlink" href="#complete-argument-list-for-transform-source" title="Link to this heading"></a></h2>
 <p>In the above example, we had some unspecified keywords arguments
-passed to <code class="docutils literal notranslate"><span class="pre">transformed_source</span></code>.</p>
-<p>At I am writing this, the complete list of <strong>possible</strong> arguments is as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">transform_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span>
-    <span class="n">source</span><span class="p">,</span>
-    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
-    <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
-    <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
-    <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
-<span class="p">)</span>
+passed to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
+<p>The last time this documentation was updated, the list of possible
+arguments could be found in the arguments of <code class="docutils literal notranslate"><span class="pre">hook.transform_source</span></code>
+below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">source_transforms</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">callback_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">console_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">"FatalError: unkown argument in session.State.source_transform:"</span><span class="p">,</span> <span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"This argument cannot be handled correctly."</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Shutting down ..."</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hook</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">hook</span><span class="o">.</span><span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
+                    <span class="n">source</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
+                    <span class="n">callback_params</span><span class="o">=</span><span class="n">callback_params</span><span class="p">,</span>
+                    <span class="n">console_dict</span><span class="o">=</span><span class="n">console_dict</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">source</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">filename</span></code> can sometimes be the name of the <span class="text-small-caps text-bold">ideas</span> console.
-See <code class="xref py py-meth docutils literal notranslate"><span class="pre">ideas.session.State.source_transforms()</span></code> for the most current version.</p>
+<p><code class="docutils literal notranslate"><span class="pre">filename</span></code> can sometimes be the name of the <span class="text-small-caps text-bold">ideas</span> console.</p>
 <p>When using IPython or Jupyter, only the <code class="docutils literal notranslate"><span class="pre">source</span></code> is passed back to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 </section>
 </section>

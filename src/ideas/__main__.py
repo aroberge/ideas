@@ -152,8 +152,11 @@ def main() -> None:
     # The command used was something like:
     #     py [...] -m ideas [...] source
     # or
-    #     py [...] -m ideas [...] -m or --import_ source
+    #     py [...] -m ideas [...] -m or --import_ source[.py]
     # All that is left is figuring out how to run the source provided
+
+    if args.source and args.source.endswith(".py"):
+        args.source = args.source[:-3]
 
     current_state.source_argument = args.source
     current_state.run_as_main_argument = run_as_main

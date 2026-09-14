@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>French Python &mdash; ideas 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="French repeat" href="french_repeat.html" />
+    <link rel="prev" title="repeat as a keyword" href="repeat.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function_keyword.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../function.html"> Improving function as a keyword</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../possible.html"> A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">French Python</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#importing-pyfr-files">Importing .pyfr files</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_export.html">from-export: PEP 843</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export_name.html">export-name: PEP 842</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export_keyword.html">export as a soft keyword (PEPs 842 + 843)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../import_hook.html"> import_hook.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../console.html"> console.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">French Python</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/included/french.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="repeat.html" class="btn btn-neutral float-left" title="repeat as a keyword" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="french_repeat.html" class="btn btn-neutral float-right" title="French repeat" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<blockquote>
+<div><p>This is a source transformation that allows one
+to use French equivalent keywords to the existing ones.
+It also demonstrates how to make use of a different file extension (<code class="docutils literal notranslate"><span class="pre">.pyfr</span></code>),
+loading such files as if they were regular Python files.</p>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/ideas/included/french.py">Source code</a></p>
+</div>
+<section id="french-python">
+<span id="module-ideas.included.french"></span><h1>French Python<a class="headerlink" href="#french-python" title="Link to this heading"></a></h1>
+<p>Imagine you are a French beginner who has learned the basics
+of programming using a block-based environment such as Scratch
+or Blockly. All the text shown on these blocks was in French,
+the only language you know.  You now want to do a transition
+to actually writing code in an editor, instead of putting
+predefined blocks together. It would be so much easier if
+you could use a version of Python where the keywords were in French,
+with most of them being identical to what you were using in the
+block-based environment.
+This is what this import hook example allows one to do.</p>
+<p>Let’s see it in action:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    &gt; py -m ideas -a french --show
+Ideas Console version 0.2.0. [Python version: 3.11.9]
+ideas&gt; pourchaque lettre dans 'Bonjour':
+...     afficher(lettre)
+...
+===========Transformed============
+for lettre in 'Bonjour':
+    print(lettre)
+
+-----------------------------
+B
+o
+n
+j
+o
+u
+r
+ideas&gt;
+</pre></div>
+</div>
+<section id="importing-pyfr-files">
+<h2>Importing .pyfr files<a class="headerlink" href="#importing-pyfr-files" title="Link to this heading"></a></h2>
+<p>Suppose we have the following two files in the usage_demo folder:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># my_program.py</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Wrong one"</span><span class="p">)</span>
+<span class="k">raise</span> <span class="ne">ImportError</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># my_program.pyfr
+
+afficher("Bonjour !")
+</pre></div>
+</div>
+<p>Let’s see if we attempt to import <code class="docutils literal notranslate"><span class="pre">my_program</span></code> after
+setting up the <code class="docutils literal notranslate"><span class="pre">french</span></code> import hook and enabling the
+verbose finder:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
+&gt; py
+Python 3.11.9...
+&gt;&gt;&gt; from ideas import current_state
+&gt;&gt;&gt; current_state.verbose = True
+&gt;&gt;&gt; from ideas.included import french
+&gt;&gt;&gt; french.add_hook()
+Added hook ideas.included.french
+Looking for files with extensions:  ['.pyfr']
+The following paths will not be included in the search:
+    PYTHON: c:\users\andre\appdata\local\programs\python\python311\lib
+    SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.11\lib\site-packages
+    IDEAS: c:\users\andre\github\ideas\ideas
+&lt;Ideas import hook: ideas.included.french&gt;
+
+&gt;&gt;&gt; from usage_demo import my_program
+    Searching for ~\github\ideas\usage_demo.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Searching for usage_demo.pyfr.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Searching for ~\AppData\Local\Programs\Python\Python311\python311.zip\usage_demo.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Searching for ~\AppData\Local\Programs\Python\Python311\DLLs\usage_demo.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Skipping over: PYTHON:
+    Searching for ~\AppData\Local\Programs\Python\Python311\usage_demo.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Searching for ~\github\ideas\venv-ideas3.11\usage_demo.pyfr
+    IdeasMetaFinder did not find usage_demo.pyfr
+
+    Skipping over: SITE-PACKAGES:
+    Searching for ~\github\ideas\usage_demo\my_program.pyfr
+    Found: ~\github\ideas\usage_demo\my_program.pyfr
+
+Bonjour !
+&gt;&gt;&gt; import math
+&gt;&gt;&gt; math.pi
+3.141592653589793
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If you use two or more import hooks, only one of them will find your programs.
+If you have programs with different extensions, the order in which you add
+the import hooks may yield different results.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="repeat.html" class="btn btn-neutral float-left" title="repeat as a keyword" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="french_repeat.html" class="btn btn-neutral float-right" title="French repeat" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
