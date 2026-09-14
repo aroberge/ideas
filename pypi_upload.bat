@@ -8,6 +8,6 @@ If /I "%ANSWER%"=="n" goto no
 echo Incorrect input & goto Ask
 :yes
 del /Q dist\*.*
-python setup.py sdist bdist_wheel
+py -m build
 twine upload dist/*
 :no
