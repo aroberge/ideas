@@ -213,6 +213,10 @@ class State:
         console_dict=None,
         **kwargs,
     ):
+        """Applies a source transformation from the installed import hooks.
+
+        Returns a new source.
+        """
         if kwargs:
             print(
                 "FatalError: unkown argument in session.State.source_transform:", kwargs
