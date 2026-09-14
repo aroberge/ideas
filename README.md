@@ -7,7 +7,7 @@
 
 ## Documentation
 
-[Everything you need will eventually be found here](https://aroberge.github.io/ideas/docs/html/).
+[Everything you need can be found here](https://aroberge.github.io/ideas/docs/html/).
 
 ## Installation
 
@@ -24,12 +24,21 @@ Depending on your OS, you might need to write `python3` or `py` instead of `pyth
 ## Dependencies
 
  - [token-utils](https://github.com/aroberge/token-utils)
- - Python 3.7+  (Subject to change)
+ - Python 3.8+  (Subject to change; it might work with older versions)
 
 
 ## Usage
 
-Suppose that you want to use `function` as a keyword in Python, to mean
+```
+ideas -a my_cool_new_syntax my_program[.py]
+```
+
+Admitedly this is a bit terse ... Let's go into a bit more details.
+
+### Usage broken down
+
+As a specific example of a new syntax, suppose that you want to use
+`function` as a keyword in Python, to mean
 the same thing as `lambda`, enabling you to write
 
 ```python
@@ -89,9 +98,11 @@ The second way is to skip the creation of a loader, and run `my_program` directl
 using `ideas`:
 
 ```
-python -m ideas my_program -t function_keyword
+ideas -a function_keyword my_program
 ```
 This method will ensure that `my_program` is the `__main__` module.
+In this example, `ideas` is an entry point for the project equivalent
+to writing `py -m ideas`.
 
 Many more examples can be found in the [documentation](https://aroberge.github.io/ideas/docs/html/),
 including a better way to create such an import hook and information about
