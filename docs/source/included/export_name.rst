@@ -12,7 +12,6 @@ export name (PEP 842)
 
       export name ... = ...
 
-
    where these statements occur at the top level (i.e. not within a function or class definition).
    In some sense, it complements the :doc:`from ... export (PEP 843) <./from_export>` import hook.
    In the next section, we demonstrate how we can combine these two import hooks.

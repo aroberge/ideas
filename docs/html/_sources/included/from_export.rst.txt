@@ -9,7 +9,6 @@ from ... export ... : PEP 843
    In some sense, it complements the :doc:`export name (PEP 842) <./export_name>`  import hook.
    In a later section, we demonstrate how we can combine these two import hooks.
 
-
    `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/inclulded/from_export.py>`_
 
    
