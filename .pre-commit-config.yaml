@@ -1,12 +1,12 @@
 repos:
 -   repo: https://github.com/ambv/black
-    rev: 22.3.0
+    rev: 26.5.1
     hooks:
     - id: black
       language_version: python3
-      exclude: ^(tests/|usage_demo/)
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 4.0.1
+      exclude: ^(tests/|usage_demo/|docs_examples)
+-   repo: https://github.com/pycqa/flake8.git
+    rev: 7.3.0
     hooks:
     -   id: flake8
-        exclude: ^(tests/|usage_demo/)
+        exclude: ^(tests/|usage_demo/|docs_examples)
