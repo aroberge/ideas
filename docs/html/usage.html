@@ -6,20 +6,27 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; ideas 0.2.0 documentation</title>
+  <title>Usage &mdash; ideas 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/documentation_options.js?v=37f418d5"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +59,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-ideas-enabled-interactive-console">Using the ideas-enabled interactive console</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-with-ipython-or-jupyter-notebook-lab">Using with IPython or Jupyter notebook/lab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#starting-from-a-standard-cpython-interpreter">Starting from a standard CPython interpreter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-with-pypy">Using with Pypy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#multiple-import-hooks">Multiple import hooks</a></li>
@@ -129,8 +135,13 @@ the same thing as <code class="docutils literal notranslate"><span class="pre">l
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"And the square of 5 is </span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
+<aside class="sidebar">
+<p class="sidebar-title">shorter command.</p>
+<p>Invoking <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is essentially equivalent
+to writing <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">ideas</span></code>.</p>
+</aside>
 <p>Actually, with <span class="text-small-caps text-bold">ideas</span>, you can run this program in a terminal as follows:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; python -m ideas -a function_keyword my_program
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program
 16 is the square of 4.
 And the square of 5 is 25
 </pre></div>
@@ -139,36 +150,47 @@ And the square of 5 is 25
 a function named <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the <code class="docutils literal notranslate"><span class="pre">ideas.included</span></code>
-directory included with <span class="text-small-caps text-bold">ideas</span>.</p>
+directory included with <span class="text-small-caps text-bold">ideas</span>. Thus, for the example above,
+the name used by <span class="text-small-caps text-bold">ideas</span>
+is <code class="docutils literal notranslate"><span class="pre">ideas.included.function_keyword</span></code>.</p>
+<aside class="sidebar">
+<p class="sidebar-title">.py extension</p>
+<p><span class="text-small-caps text-bold">ideas</span> will just drop the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension if you add one,
+presumably because you are used to doing it.</p>
+</aside>
 <p>You may have noticed in the above that <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not
 include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension. This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
 Python <strong>import hooks</strong>, by definition, only work on modules that are
-imported. Yet, you may have also noticed that it is imported with
-the name <code class="docutils literal notranslate"><span class="pre">'__main__'</span></code>, so that it is nonetheless
-run as though it is the main script.</p>
+imported. Yet, you may have also noticed from what is printed
+that it is imported with the name <code class="docutils literal notranslate"><span class="pre">'__main__'</span></code>, so that it is nonetheless
+run as though it is the main script as one would expect.
+If you do not want the name to be <code class="docutils literal notranslate"><span class="pre">__main__</span></code> but rather <code class="docutils literal notranslate"><span class="pre">my_program</span></code>,
+just add the flag <code class="docutils literal notranslate"><span class="pre">--import_</span></code>.</p>
 </section>
 <section id="using-the-ideas-enabled-interactive-console">
 <h2>Using the ideas-enabled interactive console<a class="headerlink" href="#using-the-ideas-enabled-interactive-console" title="Link to this heading"></a></h2>
-<p>Ideas comes with its own interactive console.  Here’s a sample session:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="o">&lt;</span><span class="n">Ideas</span> <span class="kn">import</span><span class="w"> </span><span class="nn">hook</span><span class="p">:</span> <span class="n">ideas</span><span class="o">.</span><span class="n">included</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">sq</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="mi">9</span>
+<p>Ideas comes with its own interactive console.  Starting it on its
+own is as easy as this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.1</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Just like with the normal CPython console, using the -i flag,
-you can run a main script and continue with the interactive console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="o">-</span><span class="n">im</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">function_keyword</span> <span class="n">my_program</span>
+<p>You can also start it from within a standard Python interpreter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="go">Ideas Console version 0.2.1. [Python version: 3.11.9]</span>
+<span class="go">ideas&gt;</span>
+</pre></div>
+</div>
+<p>Just like with the normal CPython console, using the -i flag when
+executing a module from the command line,
+you get to continue with the interactive console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">function_keyword</span> <span class="n">my_program</span> <span class="o">-</span><span class="n">i</span>
 <span class="mi">16</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="mf">4.</span>
 <span class="n">And</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="mi">5</span> <span class="ow">is</span> <span class="mi">25</span>
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">square</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="mi">36</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.1</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -176,10 +198,10 @@ you can run a main script and continue with the interactive console:</p>
 <h2>Using with IPython or Jupyter notebook/lab<a class="headerlink" href="#using-with-ipython-or-jupyter-notebook-lab" title="Link to this heading"></a></h2>
 <p>You can also use it with IPython, either in a terminal or in a Jupyter environment.
 Here is an example using IPython in a terminal.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.function_keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
 
-<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">IdeasMetaFinder</span> <span class="nb">object</span> <span class="k">for</span> <span class="n">ideas</span><span class="o">.</span><span class="n">included</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">add_hook</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">Ideas</span> <span class="kn">import</span><span class="w"> </span><span class="nn">hook</span><span class="p">:</span> <span class="n">ideas</span><span class="o">.</span><span class="n">included</span><span class="o">.</span><span class="n">function_keyword</span><span class="o">&gt;</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span> <span class="mi">3</span>
 
@@ -188,36 +210,16 @@ Here is an example using IPython in a terminal.</p>
 </pre></div>
 </div>
 </section>
-<section id="starting-from-a-standard-cpython-interpreter">
-<h2>Starting from a standard CPython interpreter<a class="headerlink" href="#starting-from-a-standard-cpython-interpreter" title="Link to this heading"></a></h2>
-<p>Unlike the IPython interactive interpreter (aka ‘shell’), the CPython
-interpreter (aka REPL) does not support directly transformations done by ideas.
-It is however possible to start the ideas console from the CPython
-interactive interpreter.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-<span class="go">&lt;Ideas import hook: ideas.included.function_keyword&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">console</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="go">Ideas Console version 0.2.0. [Python version: 3.11.9]</span>
-<span class="go">ideas&gt; sq = function x: x*x</span>
-<span class="go">ideas&gt; sq(3)</span>
-<span class="go">9</span>
-</pre></div>
-</div>
-<p>While one cannot use the REPL to use non-standard syntax written <em>in interactive mode</em>
-transformed by <span class="text-small-caps text-bold">ideas</span>, it can be used to import files modified by <span class="text-small-caps text-bold">ideas</span>.</p>
-</section>
 <section id="using-with-pypy">
 <h2>Using with Pypy<a class="headerlink" href="#using-with-pypy" title="Link to this heading"></a></h2>
-<p>According to a few quick tests we did, <span class="text-small-caps text-bold">ideas</span> works with Pypy just
-as well as it does with CPython.</p>
+<p>According to a few quick tests we did a while ago,
+<span class="text-small-caps text-bold">ideas</span> works with Pypy just as well as it does with CPython.</p>
 </section>
 <section id="advanced-usage">
 <h2>Advanced usage<a class="headerlink" href="#advanced-usage" title="Link to this heading"></a></h2>
 <p>Information about more advanced usage can be found in this documentation.
 You can also do the following in a terminal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">h</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
 </div>
 </section>
@@ -225,7 +227,7 @@ You can also do the following in a terminal:</p>
 <h2>Multiple import hooks<a class="headerlink" href="#multiple-import-hooks" title="Link to this heading"></a></h2>
 <p>You can have multiple import hooks added; for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
-&gt; py -m ideas -a function_keyword -a nobreak
+&gt; ideas -a function_keyword -a nobreak
 Ideas Console version 0.2.0. [Python version: 3.11.9]
 ideas&gt; import sys
 ideas&gt; for finder in sys.meta_path:
@@ -327,7 +329,7 @@ add the following two lines:</p>
 <hr><aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id2" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">2</a><span class="fn-bracket">]</span></span>
-<p>After not working on <span class="text-small-caps text-bold">ideas</span> for more than 4 years, I wanted to work on
+<p>After <strong>not</strong> working on <span class="text-small-caps text-bold">ideas</span> for more than 4 years, I wanted to work on
 the code again and make sure that everything was working correctly and couldn’t figure
 out why the <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> idea did not work. I deleted parts of the documentation
 where I had mentioned it until I remembered that it wouldn’t work in a virtual

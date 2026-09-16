@@ -6,20 +6,27 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.2.0 documentation</title>
+  <title>Ideas: making it easier to extend Python’s syntax &mdash; ideas 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/documentation_options.js?v=37f418d5"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -142,7 +149,6 @@ anyone other than yourself.</p>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#basic-usage">Basic usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#using-the-ideas-enabled-interactive-console">Using the ideas-enabled interactive console</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#using-with-ipython-or-jupyter-notebook-lab">Using with IPython or Jupyter notebook/lab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#starting-from-a-standard-cpython-interpreter">Starting from a standard CPython interpreter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#using-with-pypy">Using with Pypy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#advanced-usage">Advanced usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#multiple-import-hooks">Multiple import hooks</a></li>
@@ -289,21 +295,6 @@ anyone other than yourself.</p>
 <h2>To do<a class="headerlink" href="#to-do" title="Link to this heading"></a></h2>
 <div class="admonition-todo admonition">
 <p class="admonition-title">Todo</p>
-<p>Try to create a different module object.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="included/constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\included\constants.rst, line 123.)</p>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
-<p>Write this up.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="included/patching.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\included\patching.rst, line 4.)</p>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
-<p>Write an example where we include different locations to search.</p>
-</div>
-<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\possible.rst, line 49.)</p>
-<div class="admonition-todo admonition">
-<p class="admonition-title">Todo</p>
 <p>Currently, only one AST example exists and only one
 AST transformation can be done. A second example should
 be created and find a way to ensure that both could be applied.</p>
@@ -324,6 +315,21 @@ It might be worthwhile exploring a case where we use <code class="docutils liter
 to specify that the patch should be applied to all modules.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="guide.html#id3"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\guide.rst, line 105.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Try to create a different module object.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="included/constants.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\included\constants.rst, line 123.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Write this up.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="included/patching.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\included\patching.rst, line 4.)</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<p>Write an example where we include different locations to search.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="possible.html#id1"><em>original entry</em></a> is located in C:\Users\Andre\github\ideas\docs\source\possible.rst, line 49.)</p>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id2" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>

@@ -27,56 +27,69 @@ the same thing as ``lambda``, enabling you to write::
     if __name__ == '__main__':
         print(f"And the square of 5 is {square(5)}")
 
+.. sidebar:: shorter command.
+
+   Invoking ``ideas`` is essentially equivalent 
+   to writing ``python -m ideas``.
 
 Actually, with :small-caps-bold:`ideas`, you can run this program in a terminal as follows:
 
 .. code-block:: none
 
-    > python -m ideas -a function_keyword my_program
+    > ideas -a function_keyword my_program
     16 is the square of 4.
     And the square of 5 is 25
-
 
 The argument following ``-a`` is the name of a module that contains
 a function named ``add_hook``.  A search for such a module is first
 done in the current directory. If the module is not found in the
 current directory, it is assumed to exists in the ``ideas.included``
-directory included with :small-caps-bold:`ideas`.
+directory included with |ideas|. Thus, for the example above,
+the name used by |ideas|
+is ``ideas.included.function_keyword``.
+
+.. sidebar:: .py extension
+
+    |ideas| will just drop the ``.py`` extension if you add one,
+    presumably because you are used to doing it.
 
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:
 Python **import hooks**, by definition, only work on modules that are
-imported. Yet, you may have also noticed that it is imported with
-the name ``'__main__'``, so that it is nonetheless 
-run as though it is the main script.
+imported. Yet, you may have also noticed from what is printed 
+that it is imported with the name ``'__main__'``, so that it is nonetheless 
+run as though it is the main script as one would expect.
+If you do not want the name to be ``__main__`` but rather ``my_program``,
+just add the flag ``--import_``.
 
 
 Using the ideas-enabled interactive console
 ---------------------------------------------
 
-Ideas comes with its own interactive console.  Here's a sample session::
+Ideas comes with its own interactive console.  Starting it on its 
+own is as easy as this::
 
+    > ideas
+    Ideas Console version 0.2.1. [Python version: 3.11.9]
+    ideas>
 
-    >> from ideas.included import function_keyword
-    >>> function_keyword.add_hook()
-    <Ideas import hook: ideas.included.function_keyword>
+You can also start it from within a standard Python interpreter::
+
     >>> from ideas import console
     >>> console.start()
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
-    ideas> sq = function x: x*x
-    ideas> sq(3)
-    9
+    Ideas Console version 0.2.1. [Python version: 3.11.9]
+    ideas> 
 
 
-Just like with the normal CPython console, using the -i flag,
-you can run a main script and continue with the interactive console::
+Just like with the normal CPython console, using the -i flag when
+executing a module from the command line,
+you get to continue with the interactive console::
 
-    > python -im ideas -a function_keyword my_program
+    > ideas -a function_keyword my_program -i
     16 is the square of 4.
     And the square of 5 is 25
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
-    ideas> square(6)
-    36
+    Ideas Console version 0.2.1. [Python version: 3.11.9]
+    ideas>
 
 
 Using with IPython or Jupyter notebook/lab
@@ -88,46 +101,25 @@ Here is an example using IPython in a terminal.
 
 .. code-block:: ipython
 
-    In [1]: from ideas.included import function_keyword
 
-    In [2]: function_keyword.add_hook()
-    Out[2]: <IdeasMetaFinder object for ideas.included.function_keyword>
+    In [1]: from ideas.included.function_keyword import add_hook
+
+    In [2]: add_hook()
+    Out[2]: <Ideas import hook: ideas.included.function_keyword>
 
     In [3]: cube = function x: x** 3
 
     In [4]: cube(3)
     Out[4]: 27
 
-Starting from a standard CPython interpreter
-----------------------------------------------
-
-Unlike the IPython interactive interpreter (aka 'shell'), the CPython
-interpreter (aka REPL) does not support directly transformations done by ideas.
-It is however possible to start the ideas console from the CPython
-interactive interpreter.
-
-.. code-block:: python
-
-    >>> from ideas.included import function_keyword
-    >>> function_keyword.add_hook()
-    <Ideas import hook: ideas.included.function_keyword>
-    >>> from ideas import console
-    >>> console.start()
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
-    ideas> sq = function x: x*x
-    ideas> sq(3)
-    9
-
-While one cannot use the REPL to use non-standard syntax written *in interactive mode*
-transformed by |ideas|, it can be used to import files modified by |ideas|.
 
 .. code
 
 Using with Pypy
 -----------------
 
-According to a few quick tests we did, |ideas| works with Pypy just
-as well as it does with CPython.
+According to a few quick tests we did a while ago,
+|ideas| works with Pypy just as well as it does with CPython.
 
 
 Advanced usage
@@ -136,7 +128,7 @@ Advanced usage
 Information about more advanced usage can be found in this documentation.
 You can also do the following in a terminal::
 
-    python -m ideas -h
+    ideas -h
 
 Multiple import hooks
 ---------------------
@@ -144,7 +136,7 @@ Multiple import hooks
 You can have multiple import hooks added; for example::
 
     (venv-ideas3.11) C:\Users\Andre\github\ideas
-    > py -m ideas -a function_keyword -a nobreak
+    > ideas -a function_keyword -a nobreak
     Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> import sys
     ideas> for finder in sys.meta_path:
@@ -256,7 +248,7 @@ You can now invoke your module doing the following::
 
     <hr>
 
-.. [2] After not working on :small-caps-bold:`ideas` for more than 4 years, I wanted to work on 
+.. [2] After **not** working on |ideas| for more than 4 years, I wanted to work on 
        the code again and make sure that everything was working correctly and couldn't figure 
        out why the ``usercustomize.py`` idea did not work. I deleted parts of the documentation
        where I had mentioned it until I remembered that it wouldn't work in a virtual

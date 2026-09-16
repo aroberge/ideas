@@ -117,7 +117,7 @@ This has at least four benefits:
 
 .. code-block:: none
 
-    python -m ideas --add_hook function_keyword
+    ideas --add_hook function_keyword
 
 which imports ``function_keyword`` and calls ``function_keyword.add_hook()``. 
 
@@ -165,32 +165,35 @@ a maximum of ten lines are shown.
 
 .. code-block:: none
 
-    > python -im ideas my_program -a function_keyword -s
+    > ideas -a function_keyword -s -i my_program
 
-    #========== Original ====
+    #========== Original source from [...] docs_examples/usage/my_program.py ====
+    # flake8: noqa
+    # my_program.py
+
     square = function x: x**2
     print(f"{square(4)} is the square of 4.")
 
     if __name__ == '__main__':
         print(f"And the square of 5 is {square(5)}")
+    #=== End of Original source from [...] docs_examples/usage/my_program.py ====
 
-    #=== End of Original ====
 
+    #========== Transformed source ====
+    # flake8: noqa
+    # my_program.py
 
-    #========== New ====
     square = lambda x: x**2
     print(f"{square(4)} is the square of 4.")
 
     if __name__ == '__main__':
         print(f"And the square of 5 is {square(5)}")
-
-    #=== End of New ====
+    #=== End of Transformed source ====
 
     16 is the square of 4.
     And the square of 5 is 25
-    Ideas Console version 0.0.34. [Python version: 3.10.2]
-
-    >>>
+    Ideas Console version 0.2.1. [Python version: 3.11.9]
+    ideas>
 
 
 For code entered at the console, only the changed source is shown.
@@ -198,21 +201,24 @@ For code entered at the console, only the changed source is shown.
 
 .. code-block::
 
-    >>> cube = function x: x**3
-    new: cube = lambda x: x**3
-    >>>
+    ideas> cube = function x: x**3
+    New: cube = lambda x: x**3
 
+.. sidebar:: ``current_state``
+
+    Because ``current_state`` often needs to be used to experiment
+    with code in the console, it is available by default
+    in the |ideas| console.
 
 Inside the ideas console, you can turn on or off this feature
 as follows::
 
-    >>> from ideas.session import config
-    >>> config.show_changes = False
-    >>> cube = function x: x**3
-    >>> config.show_changes = True
-    >>> cube = function x: x**3
-    new: cube = lambda x: x**3
-    >>>
+    ideas> current_state.show_changes = False
+    ideas> double = function x: 2*x
+    ideas> current_state.show_changes = True
+    ideas> triple = function x: 3*x
+    New: triple = lambda x: 3*x
+    ideas>
 
 
 API for ``function_keyword``
