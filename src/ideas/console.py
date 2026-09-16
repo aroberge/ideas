@@ -152,6 +152,11 @@ class IdeasConsole(InteractiveConsole):
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
         """
+        # Some transformations, such as the polish_expr example,
+        # would mess with 'exit()', so we intercept it.
+        if source == "exit()":
+            raise SystemExit
+
         try:
             if self.parse_source is not None:
                 tree = self.parse_source(source, filename, symbol)
@@ -206,7 +211,7 @@ class IdeasConsole(InteractiveConsole):
 
         try:
             self.runcode(code_obj)
-        except SystemExit:
+        except SystemExit:  # entered via ctrl-Z
             os._exit(0)
         return False
 
