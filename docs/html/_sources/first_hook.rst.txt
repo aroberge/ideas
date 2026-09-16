@@ -1,5 +1,3 @@
-.. |ideas| replace:: :small-caps-bold:`ideas`
-
 .. admonition:: Summary
 
    + We explain how to create a basic import hook.
@@ -153,7 +151,7 @@ Finally, **by convention**, we use the
 same name, ``transform_source`` that is used as a keyword
 argument for ``import_hook.create_hook``;
 unlike ``add_hook``, using the specific name ``transform_source``
-is not required by :small-caps-bold:`ideas`.
+is not required by |ideas|.
 
 Debugging help
 ~~~~~~~~~~~~~~
@@ -165,9 +163,9 @@ a maximum of ten lines are shown.
 
 .. code-block:: none
 
-    > ideas -a function_keyword -s -i my_program
+    > ideas -a function_keyword my_program -s -i
 
-    #========== Original source from [...] docs_examples/usage/my_program.py ====
+    #========== Original source from docs_examples/usage/my_program ====
     # flake8: noqa
     # my_program.py
 
@@ -176,7 +174,7 @@ a maximum of ten lines are shown.
 
     if __name__ == '__main__':
         print(f"And the square of 5 is {square(5)}")
-    #=== End of Original source from [...] docs_examples/usage/my_program.py ====
+    #=== End of Original source from docs_examples/usage/my_program ====
 
 
     #========== Transformed source ====

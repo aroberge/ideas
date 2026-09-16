@@ -12,11 +12,10 @@ import token_utils  # to find the path of site-packages
 import tokenize as py_tokenize
 from io import StringIO
 
-
 PYTHON = os.path.dirname(os.__file__).lower()
 SITE_PACKAGES = os.path.dirname(token_utils.__file__).lower()
 IDEAS = os.path.dirname(__file__).lower()
-TESTS = os.path.normpath(os.path.join(IDEAS, "..", "tests")).lower()
+TESTS = os.path.normpath(os.path.join(IDEAS, "../..", "tests")).lower()
 HOME = os.path.expanduser("~").lower()
 
 # The following is used in other files; to be used when
@@ -41,22 +40,24 @@ def shorten_path(path):
     # and the way Python displays filenames may vary.
     # To properly compare, we convert everything to lowercase
     # However, we ensure that the shortened path retains its cases
-    ext = os.path.splitext(path)[1]
+    # ext = os.path.splitext(path)[1]
 
     path_lower = path.lower()
-    path_lower = os.path.splitext(path_lower)[0]
+    # path_lower = os.path.splitext(path_lower)[0]
 
     if path_lower.startswith(PYTHON):
-        path = "PYTHON:" + path[len(PYTHON) : -len(ext)]
+        path = "PYTHON:" + path[len(PYTHON) :]
     elif path_lower.startswith(IDEAS):
-        path = "IDEAS:" + path[len(IDEAS) : -len(ext)]
+        path = "IDEAS:" + path[len(IDEAS) :]
     elif path_lower.startswith(TESTS):
-        path = "TESTS:" + path[len(TESTS) : -len(ext)]
+        path = "TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(SITE_PACKAGES):
-        path = "SITE-PACKAGES:" + path[len(SITE_PACKAGES) : -len(ext)]
+        path = "SITE-PACKAGES:" + path[len(SITE_PACKAGES) :]
     elif path_lower.startswith(HOME):
-        path = "~" + path[len(HOME) : -len(ext)]
-    return path
+        path = "~" + path[len(HOME) :]
+    # convert \\ to / to avoid problem when copy-pasting in docs
+    # remove my home directory if it's in my local copy of ideas repo
+    return path.replace("\\", "/").replace("~/github/ideas/", "")
 
 
 def print_paths():

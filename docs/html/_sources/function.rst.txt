@@ -1,8 +1,6 @@
 Improving function as a keyword
 ================================
 
-.. |ideas| replace:: :small-caps-bold:`ideas`
-
 .. admonition:: Summary
 
     This builds upon our previous example of allowing

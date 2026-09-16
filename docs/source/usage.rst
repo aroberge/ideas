@@ -1,8 +1,6 @@
 Usage
 =====
 
-.. |ideas| replace:: :small-caps-bold:`ideas`
-
 .. admonition:: Hello World!
 
     All the examples below, as well as a few other mentioned later,

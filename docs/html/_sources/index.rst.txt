@@ -1,8 +1,5 @@
-
 Ideas: making it easier to extend Python's syntax
 ==================================================
-
-.. |ideas| replace:: :small-caps-bold:`ideas`
 
 `Code on Github <https://github.com/aroberge/ideas>`_
 
@@ -50,7 +47,7 @@ Quick links to topics
     
     What is ideas? <what>
     Usage  <usage>
-    Create your own import hook <function_keyword>
+    Create your own import hook <first_hook>
     Improving function as a keyword <function>
     A deep dive <possible>
 

@@ -52,6 +52,10 @@ text_styles_styles = {
 
 text_styles_roles = {"small-caps-bold": ["text-small-caps", "text-bold"]}
 
+rst_prolog = """
+.. |ideas| replace:: :small-caps-bold:`ideas`
+"""
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

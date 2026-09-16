@@ -8,8 +8,6 @@
 export as a keyword (PEPs 842 + 843)
 =====================================
 
-.. |ideas| replace:: :small-caps-bold:`ideas`
-
 .. admonition:: Summary
 
     We look at the effects of combining two import hooks to

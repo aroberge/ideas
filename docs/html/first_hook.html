@@ -11,7 +11,6 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
-      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
@@ -20,13 +19,7 @@
       <script src="_static/documentation_options.js?v=37f418d5"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script>let toggleHintShow = 'Click to show';</script>
-      <script>let toggleHintHide = 'Click to hide';</script>
-      <script>let toggleOpenOnPrint = 'true';</script>
-      <script src="_static/togglebutton.js?v=b8b12719"></script>
-      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -99,7 +92,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Create your first import hook: the basics</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/function_keyword.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/first_hook.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
@@ -280,9 +273,9 @@ is not required by <span class="text-small-caps text-bold">ideas</span>.</p>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">-s</span></code> (or <code class="docutils literal notranslate"><span class="pre">--show_changes</span></code>) flag to find out
 what changes have been made by the source transformation to the original script;
 a maximum of ten lines are shown.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword -s -i my_program
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program -s -i
 
-#========== Original source from [...] docs_examples/usage/my_program.py ====
+#========== Original source from docs_examples/usage/my_program ====
 # flake8: noqa
 # my_program.py
 
@@ -291,7 +284,7 @@ print(f"{square(4)} is the square of 4.")
 
 if __name__ == '__main__':
     print(f"And the square of 5 is {square(5)}")
-#=== End of Original source from [...] docs_examples/usage/my_program.py ====
+#=== End of Original source from docs_examples/usage/my_program ====
 
 
 #========== Transformed source ====

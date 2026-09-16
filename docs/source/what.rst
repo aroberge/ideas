@@ -1,8 +1,6 @@
 What is ideas?
 ===============
 
-.. |ideas| replace:: :small-caps-bold:`ideas`
-
 |ideas| is a package that makes it easier to write *import hooks* 
 used to **experiment** with alternative to Python's syntax.
 
