@@ -390,8 +390,6 @@ def create_hook(
       If using the default argument, excluded paths include the location of the standard
       library, the site packages, as well as files from this project.
       If the argument is None, this becomes an empty list.
-    * ``first``: if ``True``, the custom hook will be used as the first
-      location in ``sys.meta_path``, to look for source files.
     * ``ipython_ast_node_transformer``: used to do AST transformations in an
       IPython/Jupyter environment. It should be a class derived from
       ``ast.NodeTransformer`` and return a ``node``.
@@ -437,10 +435,10 @@ def create_hook(
     current_state._add_hook(hook)
     hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)
 
-    if first:
-        sys.meta_path.insert(0, hook.meta_path_finder)
-    else:
-        sys.meta_path.append(hook.meta_path_finder)
+    # By default, we insert our hook before those included by Python
+    # so that it is used. If more than one hook is used,
+    # the order is first added, last used (only if others fail before)
+    sys.meta_path.insert(0, hook.meta_path_finder)
 
     if current_state.verbose and extensions is not None:
         print("Looking for files with extensions: ", extensions)

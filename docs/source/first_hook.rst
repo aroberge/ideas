@@ -165,7 +165,7 @@ a maximum of ten lines are shown.
 
     > ideas -a function_keyword my_program -s -i
 
-    #========== Original source from docs_examples/usage/my_program ====
+    #========== Original source from docs_examples/usage/my_program.py ====
     # flake8: noqa
     # my_program.py
 
@@ -174,7 +174,7 @@ a maximum of ten lines are shown.
 
     if __name__ == '__main__':
         print(f"And the square of 5 is {square(5)}")
-    #=== End of Original source from docs_examples/usage/my_program ====
+    #=== End of Original source from docs_examples/usage/my_program.py ====
 
 
     #========== Transformed source ====
