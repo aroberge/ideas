@@ -8,7 +8,6 @@ configuration choice during a single run/session."""
 # the interactive console in sync with changes introduced by
 # various transformers.
 
-import os
 import sys
 
 from ideas.ideas_hook import IdeasHook
@@ -21,7 +20,7 @@ class State:
         self.console_name = "*Ideas Console*"  # chosen to not be a valid filename
         self.show_original = False  # Print the source code prior to a transformation?
         self.active_console = False
-        self.original = ""  # code prior to transformation
+        self.original_source = ""  # code prior to transformation
         self.verbose = False  # diagnostic
         self.show_changes = False  # Do we print the transformed source code?
         self.hooks = []
@@ -33,6 +32,30 @@ class State:
         self.patches = {}
         self.console_source_inits = []
         self.max_nb_lines = 8
+
+    def help(self):
+        """Prints information about existing public methods and attributes of this object"""
+        public_methods = []
+        public_atributes = []
+        for name in dir(self):
+            if name.startswith("_"):
+                continue
+            if callable(getattr(self, name)):
+                public_methods.append(name)
+            else:
+                public_atributes.append(name)
+
+        public_atributes.sort()
+        public_atributes.sort()
+
+        print("\nPublic attributes and their current values\n")
+        for name in public_atributes:
+            print(f"current_state.{name} = {getattr(self, name)}")
+
+        print("\nPublic methods; use help(method) to find out more.\n")
+        for name in public_methods:
+            print(f"current_state.{name}()")
+        print()
 
     def get_hook_by_name(self, name):
         """Finds a previously imported hook based on its name.
@@ -154,13 +177,14 @@ class State:
         print(f"Could not find hook {name_or_hook}. Here are the known hooks:")
         self.list_hooks()
 
-    def print_transformed(self, source, header="New"):
+    def _print_transformed(self, source, header="New"):
         """Depending on the configuration, can print the transformed
         output if it differs from the original source.
+        Used in a console (ideas or iPython)
         """
         if not self.show_changes:
             return
-        if source == self.original:
+        if source == self.original_source:
             return
 
         self.print_source(source, header=header)
@@ -222,8 +246,8 @@ class State:
                 "FatalError: unkown argument in session.State.source_transform:", kwargs
             )
             print("This argument cannot be handled correctly.")
-            print("Shutting down ...")
-            os._exit(1)
+            print("Ideas's code needs to be adapted to make use of this argument.")
+            print("For now, it will be ignored.")
         for hook in self.hooks:
             if hook.enabled and hook.transform_source is not None:
                 source = hook.transform_source(

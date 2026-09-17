@@ -92,7 +92,7 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
-        current_state.original = source
+        current_state.original_source = source
 
         last_line = source.endswith("\n")  # signals the end of a block
         try:
@@ -165,14 +165,14 @@ class IdeasConsole(InteractiveConsole):
                 code_obj = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            current_state.print_transformed(source)
+            current_state._print_transformed(source)
             self.showsyntaxerror(filename)
             return False
 
         if code_obj is None:
             # Case 2
             return True
-        current_state.print_transformed(source)
+        current_state._print_transformed(source)
         # Case 3
 
         if self.transform_ast is not None:
@@ -182,7 +182,7 @@ class IdeasConsole(InteractiveConsole):
             if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
-                    current_state.print_transformed(source)
+                    current_state._print_transformed(source)
                     source += "\n"
                 except RecursionError:
                     if current_state.show_changes:

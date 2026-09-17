@@ -98,17 +98,13 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                     extension = "." + extension
                 filename = os.path.join(entry, module_name + extension)
 
-                finder_inform(
-                    f"    Searching for {utils.shorten_path(filename)}{extension}"
-                )
+                finder_inform(f"    Searching for {utils.shorten_path(filename)}")
                 if os.path.exists(filename):
-                    finder_inform(
-                        f"    Found: {utils.shorten_path(filename) + extension}\n"
-                    )
+                    finder_inform(f"    Found: {utils.shorten_path(filename)}\n")
                     break
                 finder_inform(
                     "    IdeasMetaPathFinder did not find "
-                    + f"{utils.shorten_path(fullname)}{extension}\n",
+                    + f"{utils.shorten_path(fullname)}\n",
                 )
             else:
                 continue

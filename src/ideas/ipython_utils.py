@@ -39,10 +39,10 @@ def make_ipython_source_transformer(transform_source):
     # can work properly.
     def ipython_source_transformer(lines):  # noqa
         # In IPython, the source transformation operates on a list of lines
-        original_source = "".join(lines)
-        source = transform_source(original_source)
-        if current_state.show_changes and source != original_source:
-            current_state.print_transformed(source, header="New: ")
+        current_state.original_source = "".join(lines)
+        source = transform_source(current_state.original_source)
+        if current_state.show_changes and source != current_state.original_source:
+            current_state._print_transformed(source, header="New: ")
         lines = source.splitlines(keepends=True)
         return lines
 
