@@ -296,7 +296,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             tree = parse_source(source, self.filename, "exec")
         except Exception:
-            print("An exception was raised while attempting to produce an AST.")
+            if current_state.verbose:
+                print("An exception was raised while attempting to produce an AST.")
             raise
 
         if self.transform_ast is not None:
@@ -305,14 +306,18 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             code_object = compile(tree, self.filename, "exec")
         except Exception:
-            print("An exception was raised while attempting to produce an AST.")
+            if current_state.verbose:
+                print("An exception was raised while attempting to produce an AST.")
             raise
 
         if self.transform_bytecode is not None:
             try:
                 code_object = self.transform_bytecode(code_object)
             except Exception:
-                print("An exception was raised while trying to modify the bytecode.")
+                if current_state.verbose:
+                    print(
+                        "An exception was raised while trying to modify the bytecode."
+                    )
                 raise
 
         if self.exec_ is not None:
@@ -327,9 +332,10 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             try:
                 exec(code_object, module.__dict__)  # pylint: disable=W0122
             except Exception:
-                print(
-                    "An exception was raised while attempting to execute the code object."
-                )
+                if current_state.verbose:
+                    print(
+                        "An exception was raised while attempting to execute the code object."
+                    )
                 raise
 
         if module.__name__ not in current_state.patches:

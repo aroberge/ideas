@@ -9,6 +9,7 @@ configuration choice during a single run/session."""
 # various transformers.
 
 import sys
+import traceback
 
 from ideas.ideas_hook import IdeasHook
 
@@ -32,6 +33,8 @@ class State:
         self.patches = {}
         self.console_source_inits = []
         self.max_nb_lines = 8
+        self.full_traceback = False
+        self.last_exception = None
 
     def help(self):
         """Prints information about existing public methods and attributes of this object"""
@@ -50,7 +53,7 @@ class State:
 
         print("\nPublic attributes and their current values\n")
         for name in public_atributes:
-            print(f"current_state.{name} = {getattr(self, name)}")
+            print(f"current_state.{name} = {repr(getattr(self, name))}")
 
         print("\nPublic methods; use help(method) to find out more.\n")
         for name in public_methods:
@@ -290,5 +293,23 @@ class State:
         """Mainly for cleaning up after test"""
         self.patches = {}
 
+    def exception_hook(self, exc_type, exc_value, tb):
+        """Custom exception hook. Set current_state.full_traceback=True
+        if you wish to use Python's standard exception hook.
+        """
+        self.last_exception = exc_value
+
+        if self.full_traceback:
+            sys.__excepthook__(exc_type, exc_value, tb)
+            return
+
+        limit = 0 if exc_type.__name__ == "SyntaxError" else -1
+
+        # If planning to change this, to perhaps traceback.print_exception
+        # try various cases with and without current_state.verbose = True
+        error_string = "".join(traceback.format_exception(exc_value, limit=limit))
+        print(error_string)
+
 
 current_state = State()
+sys.excepthook = current_state.exception_hook

@@ -239,7 +239,7 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None):
                 mod = sys.modules[hook.name]
                 if hasattr(mod, "update_before_console_start"):
                     mod.update_before_console_start(source_module)
-        else:
+        elif current_state.verbose:
             print("ERROR from console.start:")
             print("Cannot find the source module from the source argument.")
 

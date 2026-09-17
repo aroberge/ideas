@@ -59,6 +59,18 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--full_traceback",
+    action="store_true",
+    help="""Displays the full traceback; recommended only for debugging import hooks.
+    --verbose flag will also be automatically set, but --show_changes will not
+    be included by default.""",
+)
+
+parser.add_argument(
+    "-i", help="""Starts the console after executing a source""", action="store_true"
+)
+
+parser.add_argument(
     "--import_",
     action="store_true",
     help="""Imports a module instead of executing it as the __main__ script.
@@ -86,10 +98,6 @@ parser.add_argument(
     help="""Name of the main Python module (path.to.my_program) to be run as the main script.
     The extension (.py) must not be included.
     """,
-)
-
-parser.add_argument(
-    "-i", help="""Starts the console after executing a source""", action="store_true"
 )
 
 
@@ -128,6 +136,10 @@ def main() -> None:
         print(f"\nideas version {version}")
         return
 
+    if args.full_traceback:
+        current_state.full_traceback = True
+        current_state.verbose = True
+
     ideas_does_something = False
     run_as_main = not args.import_
 
@@ -161,39 +173,26 @@ def main() -> None:
     current_state.source_argument = args.source
     current_state.run_as_main_argument = run_as_main
 
-    if not ideas_does_something and (sys.flags.interactive or args.i):
-        if run_as_main:
-            source_dict = runpy.run_module(args.source, run_name="__main__")
-        else:
-            source_dict = runpy.run_module(args.source)
-        console.start(locals_=source_dict)
-        return
-
     if not ideas_does_something:
-        print("\n***    `ideas` has been invoked but isn't doing anything.")
-        print(f"***    Simply executing `{args.source}` as a main module.\n")
-        if run_as_main:
-            source_dict = runpy.run_module(args.source, run_name="__main__")
-        else:
-            source_dict = runpy.run_module(args.source)
+        sys.path.append("")
+        source_dict = None
+        try:
+            if run_as_main:
+                source_dict = runpy.run_module(args.source, run_name="__main__")
+            else:
+                source_dict = runpy.run_module(args.source)
+        except Exception as exc:
+            current_state.exception_hook(type(exc), exc, exc.__traceback__)
+        if sys.flags.interactive or args.i:
+            console.start(locals_=source_dict)
         return
 
     try:
         module = import_module(args.source)
-    except ModuleNotFoundError as exc:
-        print(f"{exc.__class__.__name__}: {exc.msg}")
-        if args.source.endswith(".py"):
-            print(
-                f"The source argument '{args.source}' must not include the '.py' extension."
-            )
-            return
-        if "." in args.source:
-            print(
-                f"The source argument '{args.source}' must be a module name without an extension."
-            )
-            return
-        raise
-
+    except Exception as exc:
+        current_state.exception_hook(type(exc), exc, exc.__traceback__)
+        if sys.flags.interactive or args.i:
+            console.start()
     if sys.flags.interactive or args.i:
         console.start(locals_=module.__dict__)
 
