@@ -52,11 +52,11 @@ class State:
 
         print("\nPublic attributes and their current values\n")
         for name in public_atributes:
-            print(f"current_state.{name} = {repr(getattr(self, name))}")
+            print(f"ideas_state.{name} = {repr(getattr(self, name))}")
 
         print("\nPublic methods; use help(method) to find out more.\n")
         for name in public_methods:
-            print(f"current_state.{name}()")
+            print(f"ideas_state.{name}()")
         print()
 
     def get_hook_by_name(self, name):
@@ -193,7 +193,7 @@ class State:
 
     def print_source(self, source, header="Original/New"):
         """Prints a maximum of N or N+1 lines of the source code
-        where N is ``current_state.max_nb_lines``.
+        where N is ``ideas_state.max_nb_lines``.
 
         If there is a single line, it is prefixed by ``header: `.
         Otherwise, it is surrounded by dividers.
@@ -205,7 +205,7 @@ class State:
             print(f"{header}: {source}")
             return
 
-        max_nb_lines = current_state.max_nb_lines
+        max_nb_lines = ideas_state.max_nb_lines
         nb_lines = len(lines)
         if nb_lines == max_nb_lines + 1:
             # We don't want to see an information line stating
@@ -293,7 +293,7 @@ class State:
         self._patches = {}
 
     def exception_hook(self, exc_type, exc_value, tb):
-        """Custom exception hook. Set current_state.full_traceback=True
+        """Custom exception hook. Set ideas_state.full_traceback=True
         if you wish to use Python's standard exception hook.
         """
         self.last_exception = exc_value
@@ -305,10 +305,10 @@ class State:
         limit = 0 if exc_type.__name__ == "SyntaxError" else -1
 
         # If planning to change this, to perhaps traceback.print_exception
-        # try various cases with and without current_state.verbose = True
+        # try various cases with and without ideas_state.verbose = True
         error_string = "".join(traceback.format_exception(exc_value, limit=limit))
         print(error_string)
 
 
-current_state = State()
-sys.excepthook = current_state.exception_hook
+ideas_state = State()
+sys.excepthook = ideas_state.exception_hook

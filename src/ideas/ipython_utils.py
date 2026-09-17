@@ -1,6 +1,6 @@
 """This module contains code specific to iPython/Jupyter notebooks."""
 
-from ideas import current_state
+from ideas import ideas_state
 
 
 def set_up_ipython_shell(
@@ -39,10 +39,10 @@ def make_ipython_source_transformer(transform_source):
     # can work properly.
     def ipython_source_transformer(lines):  # noqa
         # In IPython, the source transformation operates on a list of lines
-        current_state.original_source = "".join(lines)
-        source = transform_source(current_state.original_source)
-        if current_state.show_changes and source != current_state.original_source:
-            current_state._print_transformed(source, header="New: ")
+        ideas_state.original_source = "".join(lines)
+        source = transform_source(ideas_state.original_source)
+        if ideas_state.show_changes and source != ideas_state.original_source:
+            ideas_state._print_transformed(source, header="New: ")
         lines = source.splitlines(keepends=True)
         return lines
 
@@ -57,11 +57,11 @@ def make_ipython_ast_node_transformer(ipython_ast_node_transformer):
     """
 
     def wrapped_ipython_ast_node_transformer():
-        if current_state.show_changes:
+        if ideas_state.show_changes:
             print(
                 "Cannot show the changed source for AST transform in IPython/Jupyter."
             )
-            current_state.show_changes = False
+            ideas_state.show_changes = False
         return ipython_ast_node_transformer
 
     return wrapped_ipython_ast_node_transformer

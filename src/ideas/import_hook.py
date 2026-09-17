@@ -17,12 +17,12 @@ from ideas import console
 from ideas import utils
 from ideas.ideas_hook import IdeasHook
 
-from ideas import current_state
+from ideas import ideas_state
 
 
 def finder_inform(text):
     """Print some informative text when verbose finder is set"""
-    if current_state.verbose:
+    if ideas_state.verbose:
         print(text)
 
 
@@ -52,7 +52,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         """finds the appropriate properties (spec) of a module, and sets
         its loader."""
         if not self.ideas_hook.enabled:
-            if current_state.verbose:
+            if ideas_state.verbose:
                 print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
             return None
 
@@ -71,11 +71,10 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         # When patching, we may want to consider modules that are normally excluded
         # from import hooks
         if (
-            current_state._patches
+            ideas_state._patches
             and self.ideas_hook.excluded_paths
             and (
-                fullname in current_state._patches
-                or module_name in current_state._patches
+                fullname in ideas_state._patches or module_name in ideas_state._patches
             )
         ):
             temporary_inclusions = self.suspend_exclusions(fullname)
@@ -87,7 +86,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             for sub_path in self.ideas_hook.excluded_paths:
                 if entry.lower().startswith(sub_path.lower()):
                     skip = True
-                    if current_state.verbose:
+                    if ideas_state.verbose:
                         print("    Skipping over:", utils.shorten_path(entry))
                     break
             if skip:
@@ -131,7 +130,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         for pth in temporary_inclusions:
             self.ideas_hook.excluded_paths.append(pth)
 
-        if current_state.verbose:
+        if ideas_state.verbose:
             print(f"{self.__repr__()} cannot import {fullname}")
 
         return self.basic_find_spec(fullname=fullname, path=path, target=None)
@@ -198,7 +197,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
         # Ensure that our import hooks are disabled so that Python
         # can find the required modules
-        for hook in current_state._hooks:
+        for hook in ideas_state._hooks:
             enabled_status.append(hook.enabled)
             hook.enabled = False
 
@@ -213,7 +212,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                 _excluded_paths.append(excl_path)
 
         # Recover the original status for the hooks
-        for status, hook in zip(enabled_status, current_state._hooks):
+        for status, hook in zip(enabled_status, ideas_state._hooks):
             hook.enabled = status
 
         return _excluded_paths
@@ -262,8 +261,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         it is known to Python.
         """
         if (
-            module.__name__ == current_state.source_argument
-            and current_state.run_as_main_argument
+            module.__name__ == ideas_state.source_argument
+            and ideas_state.run_as_main_argument
         ):
             module.__name__ = "__main__"
 
@@ -275,19 +274,19 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         source = decode_source(encoded_source)
         original_source = source
 
-        source = current_state.source_transforms(
+        source = ideas_state.source_transforms(
             source,
             filename=self.filename,
             module=module,
             callback_params=self.callback_params,
         )
 
-        if current_state.show_changes and original_source != source:
-            current_state.print_source(
+        if ideas_state.show_changes and original_source != source:
+            ideas_state.print_source(
                 original_source,
                 header=f"Original source from {utils.shorten_path(self.filename)}",
             )
-            current_state.print_source(source, header="Transformed source")
+            ideas_state.print_source(source, header="Transformed source")
 
         if self.source_init is not None:
             source = self.source_init() + source
@@ -296,7 +295,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             tree = parse_source(source, self.filename, "exec")
         except Exception:
-            if current_state.verbose:
+            if ideas_state.verbose:
                 print("An exception was raised while attempting to produce an AST.")
             raise
 
@@ -306,7 +305,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         try:
             code_object = compile(tree, self.filename, "exec")
         except Exception:
-            if current_state.verbose:
+            if ideas_state.verbose:
                 print("An exception was raised while attempting to produce an AST.")
             raise
 
@@ -314,7 +313,7 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             try:
                 code_object = self.transform_bytecode(code_object)
             except Exception:
-                if current_state.verbose:
+                if ideas_state.verbose:
                     print(
                         "An exception was raised while trying to modify the bytecode."
                     )
@@ -332,21 +331,21 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             try:
                 exec(code_object, module.__dict__)  # pylint: disable=W0122
             except Exception:
-                if current_state.verbose:
+                if ideas_state.verbose:
                     print(
                         "An exception was raised while attempting to execute the code object."
                     )
                 raise
 
-        if module.__name__ not in current_state._patches:
+        if module.__name__ not in ideas_state._patches:
             return
 
-        for patch in current_state._patches[module.__name__]:
-            if current_state.verbose:
+        for patch in ideas_state._patches[module.__name__]:
+            if ideas_state.verbose:
                 print("patching ", module.__name__)
             module = patch(module)
         else:
-            current_state._patches.pop(module.__name__)
+            ideas_state._patches.pop(module.__name__)
 
 
 def create_hook(
@@ -434,7 +433,7 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
-    current_state._add_hook(hook)
+    ideas_state._add_hook(hook)
     hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)
 
     # By default, we insert our hook before those included by Python
@@ -442,7 +441,7 @@ def create_hook(
     # the order is first added, last used (only if others fail before)
     sys.meta_path.insert(0, hook.meta_path_finder)
 
-    if current_state.verbose and extensions is not None:
+    if ideas_state.verbose and extensions is not None:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
         for sub_path in hook.excluded_paths:
@@ -460,7 +459,7 @@ def create_hook(
 
     ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
     if source_init is not None:
-        current_state._console_source_inits.append(source_init)
+        ideas_state._console_source_inits.append(source_init)
     try:
         ipython_shell = get_ipython()  # type: ignore # noqa
     except NameError:

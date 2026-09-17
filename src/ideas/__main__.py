@@ -9,7 +9,7 @@ import runpy
 import sys
 
 from ideas import console
-from ideas import current_state
+from ideas import ideas_state
 
 
 class ParseKwargs(argparse.Action):
@@ -137,16 +137,16 @@ def main() -> None:
         return
 
     if args.full_traceback:
-        current_state.full_traceback = True
-        current_state.verbose = True
+        ideas_state.full_traceback = True
+        ideas_state.verbose = True
 
     ideas_does_something = False
     run_as_main = not args.import_
 
-    current_state.show_changes = args.show_changes
-    current_state.verbose = args.verbose
-    if current_state.verbose:
-        current_state.show_changes = True
+    ideas_state.show_changes = args.show_changes
+    ideas_state.verbose = args.verbose
+    if ideas_state.verbose:
+        ideas_state.show_changes = True
 
     callback_params = {}
     if args.callback_params:
@@ -170,8 +170,8 @@ def main() -> None:
     if args.source and args.source.endswith(".py"):
         args.source = args.source[:-3]
 
-    current_state.source_argument = args.source
-    current_state.run_as_main_argument = run_as_main
+    ideas_state.source_argument = args.source
+    ideas_state.run_as_main_argument = run_as_main
 
     if not ideas_does_something:
         sys.path.append("")
@@ -182,7 +182,7 @@ def main() -> None:
             else:
                 source_dict = runpy.run_module(args.source)
         except Exception as exc:
-            current_state.exception_hook(type(exc), exc, exc.__traceback__)
+            ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
             console.start(locals_=source_dict)
         return
@@ -190,7 +190,7 @@ def main() -> None:
     try:
         module = import_module(args.source)
     except Exception as exc:
-        current_state.exception_hook(type(exc), exc, exc.__traceback__)
+        ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
             console.start()
     if sys.flags.interactive or args.i:

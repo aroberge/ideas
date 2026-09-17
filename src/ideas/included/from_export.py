@@ -1,5 +1,5 @@
 """
-`PEP 843 <https://peps.python.org/pep-0843/>`_  
+`PEP 843 <https://peps.python.org/pep-0843/>`_
 suggests the addition of ``export`` as a soft keyword to be
 used in expressions of the basic form::
 
@@ -102,10 +102,10 @@ looks like:
     > ideas -a from_export
     Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> dir()
-    ['__builtins__', 'current_state']
+    ['__builtins__', 'ideas_state']
     ideas> from from_export_hub import *
     ideas> dir()
-    ['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'current_state', 'export', 'ham', 'spam']
+    ['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'ideas_state', 'export', 'ham', 'spam']
     ideas> export
     'A safe name'
 
@@ -139,7 +139,7 @@ should be equivalent to::
         __all__ = exported_names
     exported_names.append("<alias>")
 
-We implement something similar as a source transformation. 
+We implement something similar as a source transformation.
 However, we avoid introducing ``exported_names`` as an intermediary.
 
 PEP 843 also states that
@@ -203,7 +203,7 @@ Looking ahead we can also support the ``lazy`` keyword.
 export as an identifier
 ------------------------
 
-As we have seen in the example above ``export`` can still be used as an identifier: 
+As we have seen in the example above ``export`` can still be used as an identifier:
 it is only replaced by ``import``
 **on a top-level** ``from ... export ...`` statement.
 Using such a statement anywhere else will result in a ``SyntaxError`` when
@@ -234,7 +234,7 @@ As we can see, it has not changed. If we put this code in a file named
 
 
     You might want to use the command line flag --verbose or setting
-    session.current_state.verbose=True to get more details.
+    session.ideas_state.verbose=True to get more details.
     >>>
 
 """
@@ -242,7 +242,7 @@ As we can see, it has not changed. If we put this code in a file named
 import sys
 from ideas.utils import get_significant_tokens
 import token_utils
-from ideas import current_state
+from ideas import ideas_state
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information
@@ -478,7 +478,7 @@ def transform_source(source, filename=None, **kwargs):
         if token.start_row == current_info["next row"]:
             if new_tokens[-1] == "\n":
                 new_tokens.pop()
-            if filename != current_state.console_name:
+            if filename != ideas_state.console_name:
                 new_tokens = insert_all_info(new_tokens, current_info)
             if info:
                 current_info = info.pop(0)
@@ -486,7 +486,7 @@ def transform_source(source, filename=None, **kwargs):
                 current_info = None
         new_tokens.append(token)
 
-    if current_info is not None and filename != current_state.console_name:
+    if current_info is not None and filename != ideas_state.console_name:
         new_tokens = insert_all_info(new_tokens, current_info)
     new_source = token_utils.untokenize(new_tokens)
 

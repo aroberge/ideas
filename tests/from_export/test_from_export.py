@@ -1,5 +1,5 @@
 from ideas.included import from_export
-from ideas import remove_hook, current_state
+from ideas import remove_hook, ideas_state
 
 
 def test_flat_layout():
@@ -12,7 +12,7 @@ def test_flat_layout():
 
 def test_module_layout():
     hook = from_export.add_hook()
-    current_state.verbose = True
+    ideas_state.verbose = True
 
     from tests.from_export import hub
 

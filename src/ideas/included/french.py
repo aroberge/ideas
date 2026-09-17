@@ -68,8 +68,8 @@ verbose finder:
     (venv-ideas3.11) C:\\Users\\Andre\\github\\ideas
     > py
     Python 3.11.9...
-    >>> from ideas import current_state
-    >>> current_state.verbose = True
+    >>> from ideas import ideas_state
+    >>> ideas_state.verbose = True
     >>> from ideas.included import french
     >>> french.add_hook()
     Added hook ideas.included.french

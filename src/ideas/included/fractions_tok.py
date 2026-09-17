@@ -47,8 +47,8 @@ integer, which are followed by a ``/``, into a ``Fraction`` instance::
     4/5
     9/10
     1
-    ideas> from ideas import current_state
-    ideas> current_state.show_changes = True
+    ideas> from ideas import ideas_state
+    ideas> ideas_state.show_changes = True
     ideas> x = 1 / 10
     new: x = Fraction(1) / Fraction(10)
 

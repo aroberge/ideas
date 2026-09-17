@@ -15,14 +15,14 @@ import tokenize
 from code import InteractiveConsole
 
 from ideas.__about__ import version
-from ideas.session import current_state
+from ideas.session import ideas_state
 
 BANNER = (
     f"Ideas Console version {version}. "
     + f"[Python version: {platform.python_version()}]"
 )
 _CONFIG = {}
-CONSOLE_NAME = current_state.console_name
+CONSOLE_NAME = ideas_state.console_name
 
 
 def configure(**kwargs):
@@ -65,11 +65,11 @@ class IdeasConsole(InteractiveConsole):
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
-        if current_state._console_source_inits:
+        if ideas_state._console_source_inits:
             print(
                 "\nThe following initializing code has been executed in the Ideas console:\n"
             )
-        for s_init in current_state._console_source_inits:
+        for s_init in ideas_state._console_source_inits:
             try:
                 exec(s_init(), self.locals)  # pylint: disable=W0122
             except Exception:  # pylint: disable=W0703
@@ -92,14 +92,14 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
-        current_state.original_source = source
+        ideas_state.original_source = source
 
         last_line = source.endswith("\n")  # signals the end of a block
         try:
-            if current_state._custom_codecs_source_transform is not None:
-                source = current_state._custom_codecs_source_transform(source)
+            if ideas_state._custom_codecs_source_transform is not None:
+                source = ideas_state._custom_codecs_source_transform(source)
             else:
-                source = current_state.source_transforms(
+                source = ideas_state.source_transforms(
                     source,
                     filename=CONSOLE_NAME,
                     callback_params=self.callback_params,
@@ -165,14 +165,14 @@ class IdeasConsole(InteractiveConsole):
                 code_obj = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            current_state._print_transformed(source)
+            ideas_state._print_transformed(source)
             self.showsyntaxerror(filename)
             return False
 
         if code_obj is None:
             # Case 2
             return True
-        current_state._print_transformed(source)
+        ideas_state._print_transformed(source)
         # Case 3
 
         if self.transform_ast is not None:
@@ -182,10 +182,10 @@ class IdeasConsole(InteractiveConsole):
             if hasattr(ast, "unparse"):
                 try:
                     source = ast.unparse(tree)
-                    current_state._print_transformed(source)
+                    ideas_state._print_transformed(source)
                     source += "\n"
                 except RecursionError:
-                    if current_state.show_changes:
+                    if ideas_state.show_changes:
                         print(
                             "Warning: cannot unparse the code sample to show changes."
                         )
@@ -222,24 +222,24 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None):
         sys.ps2 = (len(prompt) - 4) * " " + "... "
     sys.ps1 = prompt
     if locals_ is None:
-        locals_ = {"current_state": current_state}
+        locals_ = {"ideas_state": ideas_state}
     elif "Ideas" in locals_:
         if "ideas_config" in locals_:
             print("Ideas' configuration object is not available.")
         else:
             print("Ideas' configuration object is available as ideas_config")
-            locals_["current_state"] = current_state
+            locals_["ideas_state"] = ideas_state
     else:
-        locals_["current_state"] = current_state
+        locals_["ideas_state"] = ideas_state
 
-    if current_state.source_argument is not None:
-        source_module = sys.modules.get(current_state.source_argument)
+    if ideas_state.source_argument is not None:
+        source_module = sys.modules.get(ideas_state.source_argument)
         if source_module is not None:
-            for hook in current_state._hooks:
+            for hook in ideas_state._hooks:
                 mod = sys.modules[hook.name]
                 if hasattr(mod, "update_before_console_start"):
                     mod.update_before_console_start(source_module)
-        elif current_state.verbose:
+        elif ideas_state.verbose:
             print("ERROR from console.start:")
             print("Cannot find the source module from the source argument.")
 

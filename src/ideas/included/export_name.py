@@ -67,7 +67,7 @@ it is not easy to see. However, they are still available.
 
     >>> export_name_1.secret
     "Ideas's code is a mess."
-    
+
 And, ``__all__`` only shows the names we want, so we could quickly determine
 if it is safe to use a star-import.
 
@@ -82,7 +82,7 @@ which names are "public". Presumably for this reason, PEP 842 suggests that usin
 in a module should also result in creating a ``__dir__`` function within this module so that
 Python's ``dir`` function can be restricted to only show the desired names.
 
-We have implemented a version of this idea, available as an option, demonstrated 
+We have implemented a version of this idea, available as an option, demonstrated
 below.
 
 .. code-block::
@@ -102,7 +102,7 @@ and then some ...
 
     >>> list(vars(export_name_1))
     ['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', '__all__', '__dir__', 'pi', 'PI', 'public', 'useful_fn', 'private', 'secret']
-        
+
 Instead of creating a ``__dir__`` function within the module, we prefer to use a simple function
 that we have written, which extracts the content of ``__all__`` if it exists, otherwise it
 gives us what ``dir`` would give us normally, but not always in the same order.
@@ -129,7 +129,7 @@ As we can see, with a simple utility function, like ``pdir``, we do not use to c
 Implementation
 ---------------
 
-Let's explore how this is implemented, like we did in the 
+Let's explore how this is implemented, like we did in the
 :doc:`from ... export (PEP 843) <./from_export>` import hook.
 
 .. code-block::
@@ -202,8 +202,8 @@ Here's a sample session.
     > py
     Python 3.11.9 ...
     >>> from ideas.included.export_name import add_hook
-    >>> from ideas import current_state
-    >>> current_state.show_changes = True
+    >>> from ideas import ideas_state
+    >>> ideas_state.show_changes = True
     >>> hook = add_hook(public_dir=True)
     >>> import export_name_2
 
@@ -238,7 +238,7 @@ has been introduced.
 
 from ideas.utils import get_significant_tokens
 import token_utils
-from ideas import current_state
+from ideas import ideas_state
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information
@@ -435,7 +435,7 @@ def transform_source(
     new_tokens = []
 
     if (
-        filename != current_state.console_name
+        filename != ideas_state.console_name
         and callback_params is not None
         and "public_dir" in callback_params
         and callback_params["public_dir"]
@@ -482,7 +482,7 @@ def transform_source(
                     new_tokens.append(tok)
                     break
 
-            if filename != current_state.console_name:
+            if filename != ideas_state.console_name:
                 new_tokens = insert_all_info(new_tokens, current_info)
             elif console_dict is not None:
                 if "__all__" not in console_dict:

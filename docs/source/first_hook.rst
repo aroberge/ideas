@@ -202,18 +202,18 @@ For code entered at the console, only the changed source is shown.
     ideas> cube = function x: x**3
     New: cube = lambda x: x**3
 
-.. sidebar:: ``current_state``
+.. sidebar:: ``ideas_state``
 
-    Because ``current_state`` often needs to be used to experiment
+    Because ``ideas_state`` often needs to be used to experiment
     with code in the console, it is available by default
     in the |ideas| console.
 
 Inside the ideas console, you can turn on or off this feature
 as follows::
 
-    ideas> current_state.show_changes = False
+    ideas> ideas_state.show_changes = False
     ideas> double = function x: 2*x
-    ideas> current_state.show_changes = True
+    ideas> ideas_state.show_changes = True
     ideas> triple = function x: 3*x
     New: triple = lambda x: 3*x
     ideas>

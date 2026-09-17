@@ -47,7 +47,7 @@ class IdeasHook:
         self.filename = None
         self.fullname = None
         self.loader = None  # Is this needed?
-        # This will normally be changed via a method from session.current_state in session.py
+        # This will normally be changed via a method from session.ideas_state in session.py
         self.enabled = True
 
         try:

@@ -40,8 +40,8 @@ Here's a second example using it.
 
     >>> from ideas.included import repeat
     >>> from ideas.console import start
-    >>> from ideas import current_state
-    >>> current_state.show_changes = True
+    >>> from ideas import ideas_state
+    >>> ideas_state.show_changes = True
     >>> repeat.add_hook(predictable_names=True)
     <Ideas import hook: ideas.included.repeat>
     >>> start()
