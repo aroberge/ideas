@@ -71,11 +71,11 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         # When patching, we may want to consider modules that are normally excluded
         # from import hooks
         if (
-            current_state.patches
+            current_state._patches
             and self.ideas_hook.excluded_paths
             and (
-                fullname in current_state.patches
-                or module_name in current_state.patches
+                fullname in current_state._patches
+                or module_name in current_state._patches
             )
         ):
             temporary_inclusions = self.suspend_exclusions(fullname)
@@ -198,7 +198,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
         # Ensure that our import hooks are disabled so that Python
         # can find the required modules
-        for hook in current_state.hooks:
+        for hook in current_state._hooks:
             enabled_status.append(hook.enabled)
             hook.enabled = False
 
@@ -213,7 +213,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                 _excluded_paths.append(excl_path)
 
         # Recover the original status for the hooks
-        for status, hook in zip(enabled_status, current_state.hooks):
+        for status, hook in zip(enabled_status, current_state._hooks):
             hook.enabled = status
 
         return _excluded_paths
@@ -338,15 +338,15 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                     )
                 raise
 
-        if module.__name__ not in current_state.patches:
+        if module.__name__ not in current_state._patches:
             return
 
-        for patch in current_state.patches[module.__name__]:
+        for patch in current_state._patches[module.__name__]:
             if current_state.verbose:
                 print("patching ", module.__name__)
             module = patch(module)
         else:
-            current_state.patches.pop(module.__name__)
+            current_state._patches.pop(module.__name__)
 
 
 def create_hook(
@@ -460,7 +460,7 @@ def create_hook(
 
     ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
     if source_init is not None:
-        current_state.console_source_inits.append(source_init)
+        current_state._console_source_inits.append(source_init)
     try:
         ipython_shell = get_ipython()  # type: ignore # noqa
     except NameError:

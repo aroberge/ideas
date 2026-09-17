@@ -65,11 +65,11 @@ class IdeasConsole(InteractiveConsole):
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
-        if current_state.console_source_inits:
+        if current_state._console_source_inits:
             print(
                 "\nThe following initializing code has been executed in the Ideas console:\n"
             )
-        for s_init in current_state.console_source_inits:
+        for s_init in current_state._console_source_inits:
             try:
                 exec(s_init(), self.locals)  # pylint: disable=W0122
             except Exception:  # pylint: disable=W0703
@@ -96,8 +96,8 @@ class IdeasConsole(InteractiveConsole):
 
         last_line = source.endswith("\n")  # signals the end of a block
         try:
-            if current_state.custom_codecs_source_transform is not None:
-                source = current_state.custom_codecs_source_transform(source)
+            if current_state._custom_codecs_source_transform is not None:
+                source = current_state._custom_codecs_source_transform(source)
             else:
                 source = current_state.source_transforms(
                     source,
@@ -153,8 +153,8 @@ class IdeasConsole(InteractiveConsole):
         line.
         """
         # Some transformations, such as the polish_expr example,
-        # would mess with 'exit()', so we intercept it.
-        if source == "exit()":
+        # might mess with 'exit()' or 'quit()', so we intercept it.
+        if source == "exit()" or source == "quit()":
             raise SystemExit
 
         try:
@@ -235,7 +235,7 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None):
     if current_state.source_argument is not None:
         source_module = sys.modules.get(current_state.source_argument)
         if source_module is not None:
-            for hook in current_state.hooks:
+            for hook in current_state._hooks:
                 mod = sys.modules[hook.name]
                 if hasattr(mod, "update_before_console_start"):
                     mod.update_before_console_start(source_module)

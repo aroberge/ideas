@@ -26,7 +26,7 @@ def test_patch():
 
     import socket
     assert socket.gethostname() == "fake_hostname", "Fake host name after patch"
-    assert not current_state.patches, "Patches should be removed"
+    assert not current_state._patches, "Patches should be removed"
 
     # Confirm the status after.
     assert not hook_f.enabled, "Hook remained disabled after test"

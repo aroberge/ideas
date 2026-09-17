@@ -18,23 +18,22 @@ class State:
     """Keeps track of various configuration choices during a single run/session."""
 
     def __init__(self):
-        self.console_name = "*Ideas Console*"  # chosen to not be a valid filename
-        self.show_original = False  # Print the source code prior to a transformation?
         self.active_console = False
-        self.original_source = ""  # code prior to transformation
-        self.verbose = False  # diagnostic
-        self.show_changes = False  # Do we print the transformed source code?
-        self.hooks = []
-        self.custom_codecs_source_transform = None
-        # The following is the source argument passed to __main__.py
-        self.source_argument = None  # py [...] -m ideas [...] source_argument
-        self.run_as_main_argument = False
-        #
-        self.patches = {}
-        self.console_source_inits = []
-        self.max_nb_lines = 8
+        self.console_name = "*Ideas Console*"  # chosen to not be a valid filename
         self.full_traceback = False
         self.last_exception = None
+        self.max_nb_lines = 8
+        self.original_source = ""  # code prior to transformation
+        self.show_changes = False  # Do we print the transformed source code?
+        self.show_original = False  # Print the source code prior to a transformation?
+        self.source_argument = None  # py [...] -m ideas [...] source_argument
+        self.run_as_main_argument = False
+        self.verbose = False  # diagnostic
+        #
+        self._console_source_inits = []
+        self._custom_codecs_source_transform = None
+        self._hooks = []
+        self._patches = {}
 
     def help(self):
         """Prints information about existing public methods and attributes of this object"""
@@ -65,13 +64,13 @@ class State:
 
         If it is one of the included examples, the name can be written
         as 'module_name' to be equivalent to 'ideas.included.module_name'."""
-        for hook in self.hooks:
+        for hook in self._hooks:
             if hook.name == name:
                 return hook
         # Perhaps we're trying to find a hook from the examples folder
         if "." not in name:
             name = "ideas.included." + name
-        for hook in self.hooks:
+        for hook in self._hooks:
             if hook.name == name:
                 return hook
         if self.verbose:
@@ -82,7 +81,7 @@ class State:
         # TODO: check to see if a hook by that name already exists. If so,
         # append the new one but disable it before, and print an error message.
         assert isinstance(hook, IdeasHook)
-        self.hooks.append(hook)
+        self._hooks.append(hook)
         if self.verbose:
             print(f"Added hook {hook.name}")
 
@@ -95,9 +94,9 @@ class State:
         one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
-            for hook in self.hooks:
+            for hook in self._hooks:
                 sys.meta_path.remove(hook.meta_path_finder)
-                self.hooks.remove(hook)
+                self._hooks.remove(hook)
             return
 
         if isinstance(name_or_hook, str):
@@ -115,16 +114,16 @@ class State:
             print(f"ERROR: {hook} not found in sys.meta_path")
             return
         sys.meta_path.remove(hook.meta_path_finder)
-        self.hooks.remove(hook)
+        self._hooks.remove(hook)
 
     def list_hooks(self):
         """Lists the import hooks that have been activated together
         with their status (currently enabled or not).
         """
-        if not self.hooks:
+        if not self._hooks:
             print("No imported hook.")
             return
-        for hook in self.hooks:
+        for hook in self._hooks:
             enabled = "enabled" if hook.enabled else "disabled"
             print(f"  {hook.name}: {enabled}")
 
@@ -136,12 +135,12 @@ class State:
         one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
-            for hook in self.hooks:
+            for hook in self._hooks:
                 hook.enabled = False
             return
 
         potential_hook = None
-        for hook in self.hooks:
+        for hook in self._hooks:
             if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = False
                 return
@@ -162,12 +161,12 @@ class State:
         one can use "module_name" as an abbreviation of "ideas.included.module_name".
         """
         if name_or_hook == "*":
-            for hook in self.hooks:
+            for hook in self._hooks:
                 hook.enabled = True
             return
 
         potential_hook = None
-        for hook in self.hooks:
+        for hook in self._hooks:
             if (hook.name == name_or_hook) or hook == name_or_hook:
                 hook.enabled = True
                 return
@@ -251,7 +250,7 @@ class State:
             print("This argument cannot be handled correctly.")
             print("Ideas's code needs to be adapted to make use of this argument.")
             print("For now, it will be ignored.")
-        for hook in self.hooks:
+        for hook in self._hooks:
             if hook.enabled and hook.transform_source is not None:
                 source = hook.transform_source(
                     source,
@@ -277,21 +276,21 @@ class State:
         If ``module_name`` has already been imported, it is deleted from
         ``sys.modules`` so that it can be properly patched."""
         # We need at least one active hook to make transformations
-        if not self.hooks:
+        if not self._hooks:
             from ideas.null_hook import add_hook
 
             add_hook()
 
-        if module_name not in self.patches:
-            self.patches[module_name] = []
+        if module_name not in self._patches:
+            self._patches[module_name] = []
 
-        self.patches[module_name].append(func)
+        self._patches[module_name].append(func)
         if module_name in sys.modules:
             del sys.modules[module_name]
 
     def remove_patches(self):
         """Mainly for cleaning up after test"""
-        self.patches = {}
+        self._patches = {}
 
     def exception_hook(self, exc_type, exc_value, tb):
         """Custom exception hook. Set current_state.full_traceback=True
