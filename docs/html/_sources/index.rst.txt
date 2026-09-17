@@ -1,7 +1,7 @@
 Ideas: making it easier to extend Python's syntax
 ==================================================
 
-`Code on Github <https://github.com/aroberge/ideas>`_
+|ideas| current working version: |version| `Code on Github <https://github.com/aroberge/ideas>`_
 
 .. image:: _static/ideas.png
    :scale: 40 %

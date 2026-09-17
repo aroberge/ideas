@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>export as a keyword (PEPs 842 + 843) &mdash; ideas 0.2.1 documentation</title>
+  <title>export as a keyword (PEPs 842 + 843) &mdash; ideas 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
@@ -16,7 +16,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=37f418d5"></script>
+      <script src="../_static/documentation_options.js?v=e259d695"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -279,10 +279,10 @@ proceed to examine its content.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="n">from_export</span> <span class="o">-</span><span class="n">a</span> <span class="n">export_name</span> <span class="n">export_hub</span>
 <span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="nb">dir</span><span class="p">()</span>
-<span class="p">[</span><span class="s1">'NewGadget'</span><span class="p">,</span> <span class="s1">'Widget'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__path__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'current_state'</span><span class="p">,</span> <span class="s1">'gadgets'</span><span class="p">,</span> <span class="s1">'sub_hub'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">,</span> <span class="s1">'utils'</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">'NewGadget'</span><span class="p">,</span> <span class="s1">'Widget'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__path__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'ideas_state'</span><span class="p">,</span> <span class="s1">'gadgets'</span><span class="p">,</span> <span class="s1">'sub_hub'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">,</span> <span class="s1">'utils'</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">current_state</span></code> is an object that is always present in
+<p>Note that <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code> is an object that is always present in
 the <span class="text-small-caps text-bold">ideas</span> console and allows one to change various parameters,
 something we will not need to do here.</p>
 <p>I notice the name <code class="docutils literal notranslate"><span class="pre">utils</span></code>, which suggests that it might be useful to look at it.</p>

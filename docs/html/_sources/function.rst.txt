@@ -1,5 +1,5 @@
-Improving function as a keyword
-================================
+Improving on function as a keyword
+====================================
 
 .. admonition:: Summary
 
@@ -11,18 +11,10 @@ Improving function as a keyword
 
     `Source code <https://github.com/aroberge/ideas/blob/master/src/ideas/included/function_keyword.py>`_
 
-Basic usage::
+Building a more complete example
+----------------------------------
 
-    from ideas.included import function_keyword
-    function_keyword.add_hook()
-
-    import my_program
-
-
-Building a complete example
-----------------------------
-
-In addition to making it easy to create import hooks, :small-caps-bold:`ideas` also
+In addition to making it easy to create import hooks, |ideas| also
 attempts to make it easy to include diagnostic "tools".
 The ``function_keyword`` example, whose API listed below includes
 links to the actual source, includes such "tools".
@@ -45,9 +37,8 @@ but without some diagnostic options included::
             new_tokens.append(token)
         return token_utils.untokenize(new_tokens)
 
-
     def add_hook(**_kwargs):
-        return import_hook.create_hook(transform_source=transform_source)
+        return import_hook.create_hook(transform_source=transform_source, name=__name__)
 
 
 Note the unused ``**_kwargs`` in the definition of ``transform_source``
@@ -72,20 +63,38 @@ an extra parameter to ``add_hook`` and
         )
 
 Here's a sample session from a different example, where the import hook
-is looking for files with a custom extension::
+is looking for files with a custom extension;
+we use the ``--verbose`` flag which could have been
+shortened to ``-v``. Note that, when used at the command line,
+``-v/--verbose`` also sets ``-s/--show_changes`` to ``True``.::
 
-    >>> from ideas.included import french
-    >>> hook = french.add_hook(verbose_finder=True)
+    > ideas -a french --verbose my_program
+    Added hook ideas.included.french
     Looking for files with extensions:  ['.pyfr']
     The following paths will not be included in the search:
-       PYTHON: == c:\users\andre\appdata\local\programs\python\python37-32\lib
-       IDEAS: == c:\users\andre\github\ideas\ideas
-    >>> import mon_programme
-        Searching for TESTS:\french\mon_programme.pyfr.
-    ->  Found:  TESTS:\french\mon_programme.pyfr
+    PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python311\\lib
+    SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.11\\lib\\site-packages
+    IDEAS: c:\\users\\andre\\github\\ideas\\src\\ideas
+        Searching for docs_examples/function/my_program.pyfr
+        Found: docs_examples/function/my_program.pyfr
 
-        Searching for TESTS:\french\unicodedata.pyfr.
-      IdeasMetaFinder did not find unicodedata.
+
+    #========== Original source from docs_examples/function/my_program.pyfr ====
+    # my_program.pyfr
+
+    afficher("Bonjour !")
+    #=== End of Original source from docs_examples/function/my_program.pyfr ====
+
+
+    #========== Transformed source ====
+    # my_program.pyfr
+
+    print("Bonjour !")
+    #=== End of Transformed source ====
+
+    Bonjour !
+
+
 
 The last file that was needed was ``unicodedata.py`` from the Python
 standard library; it was found by a "normal" finder used by Python.

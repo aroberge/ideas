@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Improving function as a keyword &mdash; ideas 0.2.1 documentation</title>
+  <title>Improving on function as a keyword &mdash; ideas 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=37f418d5"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="first_hook.html"> Create your own import hook</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Improving function as a keyword</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#building-a-complete-example">Building a complete example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-a-more-complete-example">Building a more complete example</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#verbose-finder">Verbose finder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#comparing-the-original-and-the-transformed-source">Comparing the original and the transformed source</a></li>
 </ul>
@@ -86,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Improving function as a keyword</li>
+      <li class="breadcrumb-item active">Improving on function as a keyword</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/function.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -99,8 +99,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="improving-function-as-a-keyword">
-<h1>Improving function as a keyword<a class="headerlink" href="#improving-function-as-a-keyword" title="Link to this heading"></a></h1>
+  <section id="improving-on-function-as-a-keyword">
+<h1>Improving on function as a keyword<a class="headerlink" href="#improving-on-function-as-a-keyword" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This builds upon our previous example of allowing
@@ -109,15 +109,8 @@
 to an import hook and some possible usage.</p>
 <p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/function_keyword.py" rel="noreferrer" target="_blank">Source code</a></p>
 </div>
-<p>Basic usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">function_keyword</span>
-<span class="n">function_keyword</span><span class="o">.</span><span class="n">add_hook</span><span class="p">()</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">my_program</span>
-</pre></div>
-</div>
-<section id="building-a-complete-example">
-<h2>Building a complete example<a class="headerlink" href="#building-a-complete-example" title="Link to this heading"></a></h2>
+<section id="building-a-more-complete-example">
+<h2>Building a more complete example<a class="headerlink" href="#building-a-more-complete-example" title="Link to this heading"></a></h2>
 <p>In addition to making it easy to create import hooks, <span class="text-small-caps text-bold">ideas</span> also
 attempts to make it easy to include diagnostic “tools”.
 The <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> example, whose API listed below includes
@@ -138,9 +131,8 @@ but without some diagnostic options included:</p>
         <span class="n">new_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">untokenize</span><span class="p">(</span><span class="n">new_tokens</span><span class="p">)</span>
 
-
 <span class="k">def</span><span class="w"> </span><span class="nf">add_hook</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Note the unused <code class="docutils literal notranslate"><span class="pre">**_kwargs</span></code> in the definition of <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>
@@ -162,19 +154,35 @@ an extra parameter to <code class="docutils literal notranslate"><span class="pr
 </pre></div>
 </div>
 <p>Here’s a sample session from a different example, where the import hook
-is looking for files with a custom extension:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included</span><span class="w"> </span><span class="kn">import</span> <span class="n">french</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hook</span> <span class="o">=</span> <span class="n">french</span><span class="o">.</span><span class="n">add_hook</span><span class="p">(</span><span class="n">verbose_finder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">Looking for files with extensions:  ['.pyfr']</span>
-<span class="go">The following paths will not be included in the search:</span>
-<span class="go">   PYTHON: == c:\users\andre\appdata\local\programs\python\python37-32\lib</span>
-<span class="go">   IDEAS: == c:\users\andre\github\ideas\ideas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mon_programme</span>
-<span class="go">    Searching for TESTS:\french\mon_programme.pyfr.</span>
-<span class="go">-&gt;  Found:  TESTS:\french\mon_programme.pyfr</span>
+is looking for files with a custom extension;
+we use the <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> flag which could have been
+shortened to <code class="docutils literal notranslate"><span class="pre">-v</span></code>. Note that, when used at the command line,
+<code class="docutils literal notranslate"><span class="pre">-v/--verbose</span></code> also sets <code class="docutils literal notranslate"><span class="pre">-s/--show_changes</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a french --verbose my_program
+Added hook ideas.included.french
+Looking for files with extensions:  ['.pyfr']
+The following paths will not be included in the search:
+PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python311\\lib
+SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.11\\lib\\site-packages
+IDEAS: c:\\users\\andre\\github\\ideas\\src\\ideas
+    Searching for docs_examples/function/my_program.pyfr
+    Found: docs_examples/function/my_program.pyfr
 
-<span class="go">    Searching for TESTS:\french\unicodedata.pyfr.</span>
-<span class="go">  IdeasMetaFinder did not find unicodedata.</span>
+
+#========== Original source from docs_examples/function/my_program.pyfr ====
+# my_program.pyfr
+
+afficher("Bonjour !")
+#=== End of Original source from docs_examples/function/my_program.pyfr ====
+
+
+#========== Transformed source ====
+# my_program.pyfr
+
+print("Bonjour !")
+#=== End of Transformed source ====
+
+Bonjour !
 </pre></div>
 </div>
 <p>The last file that was needed was <code class="docutils literal notranslate"><span class="pre">unicodedata.py</span></code> from the Python

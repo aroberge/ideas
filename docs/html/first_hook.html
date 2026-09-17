@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create your first import hook: the basics &mdash; ideas 0.2.1 documentation</title>
+  <title>Create your first import hook: the basics &mdash; ideas 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
@@ -16,14 +16,14 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=37f418d5"></script>
+      <script src="_static/documentation_options.js?v=e259d695"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Improving function as a keyword" href="function.html" />
+    <link rel="next" title="Improving on function as a keyword" href="function.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
@@ -96,7 +96,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving on function as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -275,7 +275,7 @@ what changes have been made by the source transformation to the original script;
 a maximum of ten lines are shown.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program -s -i
 
-#========== Original source from docs_examples/usage/my_program ====
+#========== Original source from docs_examples/usage/my_program.py ====
 # flake8: noqa
 # my_program.py
 
@@ -284,7 +284,7 @@ print(f"{square(4)} is the square of 4.")
 
 if __name__ == '__main__':
     print(f"And the square of 5 is {square(5)}")
-#=== End of Original source from docs_examples/usage/my_program ====
+#=== End of Original source from docs_examples/usage/my_program.py ====
 
 
 #========== Transformed source ====
@@ -310,16 +310,16 @@ ideas&gt;
 </pre></div>
 </div>
 <aside class="sidebar">
-<p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">current_state</span></code></p>
-<p>Because <code class="docutils literal notranslate"><span class="pre">current_state</span></code> often needs to be used to experiment
+<p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">ideas_state</span></code></p>
+<p>Because <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code> often needs to be used to experiment
 with code in the console, it is available by default
 in the <span class="text-small-caps text-bold">ideas</span> console.</p>
 </aside>
 <p>Inside the ideas console, you can turn on or off this feature
 as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">current_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">double</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
-<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">current_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">triple</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
 <span class="n">New</span><span class="p">:</span> <span class="n">triple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
 <span class="n">ideas</span><span class="o">&gt;</span>
@@ -369,9 +369,9 @@ below.</p>
                 <span class="s2">"FatalError: unkown argument in session.State.source_transform:"</span><span class="p">,</span> <span class="n">kwargs</span>
             <span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">"This argument cannot be handled correctly."</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">"Shutting down ..."</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Ideas's code needs to be adapted to make use of this argument."</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"For now, it will be ignored."</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">hook</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hooks</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">hook</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">hook</span><span class="o">.</span><span class="n">transform_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">source</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">transform_source</span><span class="p">(</span>
                     <span class="n">source</span><span class="p">,</span>
@@ -394,7 +394,7 @@ below.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Improving function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-right" title="Improving on function as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

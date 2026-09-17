@@ -171,9 +171,9 @@ proceed to examine its content.
     > ideas -i -a from_export -a export_name export_hub
     Ideas Console version 0.2.0. [Python version: 3.11.9]
     ideas> dir()
-    ['NewGadget', 'Widget', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', 'a', 'b', 'c', 'current_state', 'gadgets', 'sub_hub', 'useful', 'utils']
+    ['NewGadget', 'Widget', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', 'a', 'b', 'c', 'ideas_state', 'gadgets', 'sub_hub', 'useful', 'utils']
 
-Note that ``current_state`` is an object that is always present in 
+Note that ``ideas_state`` is an object that is always present in 
 the |ideas| console and allows one to change various parameters,
 something we will not need to do here.
 
