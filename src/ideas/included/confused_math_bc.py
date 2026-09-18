@@ -10,6 +10,13 @@ done prior to the creation of a code object and thus are
 not captured by this transformation.
 """
 
+# I need to document how all of this works.
+# Also, I believe that the inspect module gives us the information
+# required to build new code objects when they change in Python.
+# Finally, I think there is an old tutorial (perhaps describing a tool)
+# that goes into some details about modifying Python's bytecode.
+
+
 import dis
 import sys
 from types import CodeType

@@ -11,6 +11,8 @@ import sys
 from ideas import console
 from ideas import ideas_state
 
+sys.path.append("")
+
 
 class ParseKwargs(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
@@ -27,7 +29,7 @@ class ParseKwargs(argparse.Action):
 
 
 parser = argparse.ArgumentParser(
-    prog="[-i] -m ideas",
+    prog="ideas",
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description=__doc__,
 )
@@ -62,8 +64,7 @@ parser.add_argument(
     "--full_traceback",
     action="store_true",
     help="""Displays the full traceback; recommended only for debugging import hooks.
-    --verbose flag will also be automatically set, but --show_changes will not
-    be included by default.""",
+    --verbose flag will also be automatically set.""",
 )
 
 parser.add_argument(
@@ -88,15 +89,14 @@ parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
-    help="""Prints out information about what is being done. Useful for diagnostic.
-    Automatically includes --show_changes.""",
+    help="""Prints out information about what is being done. Useful for diagnostic.""",
 )
 
 parser.add_argument(
     "source",
     nargs="?",
     help="""Name of the main Python module (path.to.my_program) to be run as the main script.
-    The extension (.py) must not be included.
+    If present, the extension (.py) will be ignored.
     """,
 )
 
@@ -145,8 +145,6 @@ def main() -> None:
 
     ideas_state.show_changes = args.show_changes
     ideas_state.verbose = args.verbose
-    if ideas_state.verbose:
-        ideas_state.show_changes = True
 
     callback_params = {}
     if args.callback_params:
@@ -174,7 +172,6 @@ def main() -> None:
     ideas_state.run_as_main_argument = run_as_main
 
     if not ideas_does_something:
-        sys.path.append("")
         source_dict = None
         try:
             if run_as_main:

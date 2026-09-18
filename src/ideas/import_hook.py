@@ -20,8 +20,8 @@ from ideas.ideas_hook import IdeasHook
 from ideas import ideas_state
 
 
-def finder_inform(text):
-    """Print some informative text when verbose finder is set"""
+def verbose_finder(text):
+    """Print some informative text when verbose is set"""
     if ideas_state.verbose:
         print(text)
 
@@ -40,10 +40,11 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
     and has become nearly unreadable. It definitely needs a serious rewrite.
     """
 
-    def __init__(self, ideas_hook=None):  # pylint: disable=R0913
+    def __init__(self, ideas_hook=None):
         self.ideas_hook = ideas_hook
         if self.ideas_hook is None:
             raise RuntimeError("IdeasHook instance missing in IdeasMetaPathFinder().")
+        self.inform_about_all_possible_paths = True
 
     def __repr__(self):
         return f"<IdeasMetaPathFinder for {self.ideas_hook.name}>"
@@ -52,16 +53,33 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         """finds the appropriate properties (spec) of a module, and sets
         its loader."""
         if not self.ideas_hook.enabled:
-            if ideas_state.verbose:
-                print(f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder.")
+            verbose_finder(
+                f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder."
+            )
             return None
 
         # avoid lots of spurious print statements when running verbose tests
         if fullname == "pygments":
             return None
 
+        verbose_finder(f"\n{self.ideas_hook.name}: inside find_spec")
+
         if not path:
             path = [os.getcwd()] + sys.path
+
+        if self.inform_about_all_possible_paths:  # Do only once
+            verbose_finder(
+                "The following paths *might* be searched as they are in sys.path:"
+            )
+            for p in path:
+                verbose_finder(f"    {utils.shorten_path(p)}")
+            if self.ideas_hook.excluded_paths:
+                verbose_finder(
+                    "The following have been set as 'excluded' for this import hook."
+                )
+                for p in self.ideas_hook.excluded_paths:
+                    verbose_finder(f"    {utils.shorten_path(p)}")
+            self.inform_about_all_possible_paths = False
 
         if "." in fullname:
             module_name = fullname.split(".")[-1]
@@ -86,8 +104,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             for sub_path in self.ideas_hook.excluded_paths:
                 if entry.lower().startswith(sub_path.lower()):
                     skip = True
-                    if ideas_state.verbose:
-                        print("    Skipping over:", utils.shorten_path(entry))
+                    verbose_finder(f"Skipping over: {utils.shorten_path(entry)}")
                     break
             if skip:
                 continue
@@ -97,11 +114,11 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                     extension = "." + extension
                 filename = os.path.join(entry, module_name + extension)
 
-                finder_inform(f"    Searching for {utils.shorten_path(filename)}")
+                verbose_finder(f"Searching for {utils.shorten_path(filename)}")
                 if os.path.exists(filename):
-                    finder_inform(f"    Found: {utils.shorten_path(filename)}\n")
+                    verbose_finder(f"Found: {utils.shorten_path(filename)}\n")
                     break
-                finder_inform(
+                verbose_finder(
                     "    IdeasMetaPathFinder did not find "
                     + f"{utils.shorten_path(fullname)}\n",
                 )
@@ -130,8 +147,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         for pth in temporary_inclusions:
             self.ideas_hook.excluded_paths.append(pth)
 
-        if ideas_state.verbose:
-            print(f"{self.__repr__()} cannot import {fullname}")
+        verbose_finder(f"{self.__repr__()} cannot import {fullname}\n")
 
         return self.basic_find_spec(fullname=fullname, path=path, target=None)
         # return None  # we don't know how to import this
@@ -207,7 +223,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
         _excluded_paths = []
         for excl_path in self.ideas_hook.excluded_paths:
-            if spec.origin.lower().startswith(excl_path):
+            if spec.origin.startswith(excl_path):
                 self.ideas_hook.excluded_paths.remove(excl_path)
                 _excluded_paths.append(excl_path)
 

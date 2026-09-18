@@ -12,11 +12,11 @@ import token_utils  # to find the path of site-packages
 import tokenize as py_tokenize
 from io import StringIO
 
-PYTHON = os.path.dirname(os.__file__).lower()
-SITE_PACKAGES = os.path.dirname(token_utils.__file__).lower()
-IDEAS = os.path.dirname(__file__).lower()
-TESTS = os.path.normpath(os.path.join(IDEAS, "../..", "tests")).lower()
-HOME = os.path.expanduser("~").lower()
+PYTHON = os.path.dirname(os.__file__)
+SITE_PACKAGES = os.path.dirname(token_utils.__file__)
+IDEAS = os.path.dirname(__file__)
+TESTS = os.path.normpath(os.path.join(IDEAS, "../..", "tests"))
+HOME = os.path.expanduser("~")
 
 # The following is used in other files; to be used when
 # None would not be a valid choice
@@ -45,15 +45,18 @@ def shorten_path(path):
     path_lower = path.lower()
     # path_lower = os.path.splitext(path_lower)[0]
 
-    if path_lower.startswith(PYTHON):
+    if path_lower.startswith(PYTHON.lower()) and path_lower != PYTHON.lower():
         path = "PYTHON:" + path[len(PYTHON) :]
-    elif path_lower.startswith(IDEAS):
+    elif path_lower.startswith(IDEAS.lower()) and path_lower != IDEAS.lower():
         path = "IDEAS:" + path[len(IDEAS) :]
-    elif path_lower.startswith(TESTS):
+    elif path_lower.startswith(TESTS.lower()) and path_lower != TESTS.lower():
         path = "TESTS:" + path[len(TESTS) :]
-    elif path_lower.startswith(SITE_PACKAGES):
+    elif (
+        path_lower.startswith(SITE_PACKAGES.lower())
+        and path_lower != SITE_PACKAGES.lower()
+    ):
         path = "SITE-PACKAGES:" + path[len(SITE_PACKAGES) :]
-    elif path_lower.startswith(HOME):
+    elif path_lower.startswith(HOME.lower()):
         path = "~" + path[len(HOME) :]
     # convert \\ to / to avoid problem when copy-pasting in docs
     # remove my home directory if it's in my local copy of ideas repo
