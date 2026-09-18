@@ -232,17 +232,6 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None):
     else:
         locals_["ideas_state"] = ideas_state
 
-    if ideas_state.source_argument is not None:
-        source_module = sys.modules.get(ideas_state.source_argument)
-        if source_module is not None:
-            for hook in ideas_state._hooks:
-                mod = sys.modules[hook.name]
-                if hasattr(mod, "update_before_console_start"):
-                    mod.update_before_console_start(source_module)
-        elif ideas_state.verbose:
-            print("ERROR from console.start:")
-            print("Cannot find the source module from the source argument.")
-
     console = IdeasConsole(**_CONFIG, locals_=locals_)
 
     if console.transform_ast is not None and not hasattr(ast, "unparse"):

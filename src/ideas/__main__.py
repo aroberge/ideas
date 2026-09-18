@@ -11,7 +11,7 @@ import sys
 from ideas import console
 from ideas import ideas_state
 
-sys.path.append("")
+sys.path.insert(0, "")
 
 
 class ParseKwargs(argparse.Action):
@@ -212,12 +212,24 @@ def main() -> None:
             console.start(locals_=source_dict)
         return
 
+    if run_as_main:
+        try:
+            module = import_module(f"{args.source}.__main__")
+        except Exception:
+            pass
+        else:
+            if sys.flags.interactive or args.i:
+                console.start(locals_=module.__dict__)
+            return
+
     try:
         module = import_module(args.source)
     except Exception as exc:
         ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
-            console.start()
+            console.start(locals_=module.__dict__)
+        return
+
     if sys.flags.interactive or args.i:
         console.start(locals_=module.__dict__)
 
