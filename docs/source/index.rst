@@ -47,9 +47,9 @@ Quick links to topics
     
     What is ideas? <what>
     Usage  <usage>
-    Create your own import hook <first_hook>
-    Improving function as a keyword <function>
-    A deep dive <possible>
+    Create your own import hook <first_import_hook>
+    Customizing your first import hook <function>
+    Import hooks: A deep dive <possible>
 
 .. toctree::
    :caption: Many examples

@@ -27,7 +27,7 @@ the same thing as ``lambda``, enabling you to write::
 
 .. sidebar:: shorter command.
 
-   Invoking ``ideas`` is essentially equivalent 
+   Invoking ``ideas`` is essentially equivalent
    to writing ``python -m ideas``.
 
 Actually, with :small-caps-bold:`ideas`, you can run this program in a terminal as follows:
@@ -54,8 +54,8 @@ is ``ideas.included.function_keyword``.
 You may have noticed in the above that ``my_program`` does not
 include a ``.py`` extension. This is because ``my_program`` is imported:
 Python **import hooks**, by definition, only work on modules that are
-imported. Yet, you may have also noticed from what is printed 
-that it is imported with the name ``'__main__'``, so that it is nonetheless 
+imported. Yet, you may have also noticed from what is printed
+that it is imported with the name ``'__main__'``, so that it is nonetheless
 run as though it is the main script as one would expect.
 If you do not want the name to be ``__main__`` but rather ``my_program``,
 just add the flag ``--import_``.
@@ -64,7 +64,7 @@ just add the flag ``--import_``.
 Using the ideas-enabled interactive console
 ---------------------------------------------
 
-Ideas comes with its own interactive console.  Starting it on its 
+Ideas comes with its own interactive console.  Starting it on its
 own is as easy as this::
 
     > ideas
@@ -76,7 +76,7 @@ You can also start it from within a standard Python interpreter::
     >>> from ideas import console
     >>> console.start()
     Ideas Console version 0.2.1. [Python version: 3.11.9]
-    ideas> 
+    ideas>
 
 
 Just like with the normal CPython console, using the -i flag when
@@ -128,6 +128,31 @@ You can also do the following in a terminal::
 
     ideas -h
 
+
+Program in a different directory
+---------------------------------
+
+Use ``.`` instead of ``/`` or ``\`` to separate path elements when launching
+a script. For instance, in the example below, I used ``usage.my_program``
+instead of ``usage\my_program``, even though ``usage`` is a normal
+directory and not a Python package.
+
+.. code-block:: none
+
+    > dir usage
+
+    Directory of C:\Users\Andre\github\ideas\docs_examples\usage
+
+    ...
+    09/16/2026  02:46 PM               183 my_program.py
+               1 File(s)            183 bytes
+
+    (venv-ideas) C:\Users\Andre\github\ideas\docs_examples
+    > ideas -a function_keyword usage.my_program
+    16 is the square of 4.
+    And the square of 5 is 25
+
+
 Multiple import hooks
 ---------------------
 
@@ -146,7 +171,7 @@ You can have multiple import hooks added; for example::
     <class '_frozen_importlib.FrozenImporter'>
     <class '_frozen_importlib_external.PathFinder'>
 
-Note that once a meta_path finder finds the desired file to 
+Note that once a meta_path finder finds the desired file to
 import, no other finder will be invoked. However, internally
 |ideas| will do its best to combine all the required
 transformations from all the ``IdeasHooks`` that will have
@@ -161,7 +186,7 @@ Always running by default
     I do not recommend to install import hooks or codecs in you Python
     default installation.
 
-If you **really** like to have your custom hook or custom encoding 
+If you **really** like to have your custom hook or custom encoding
 enabled by default, it is possible to do so, provided you
 are not using a virtual environment. [2]_
 
@@ -246,9 +271,9 @@ You can now invoke your module doing the following::
 
     <hr>
 
-.. [2] After **not** working on |ideas| for more than 4 years, I wanted to work on 
-       the code again and make sure that everything was working correctly and couldn't figure 
+.. [2] After **not** working on |ideas| for more than 4 years, I wanted to work on
+       the code again and make sure that everything was working correctly and couldn't figure
        out why the ``usercustomize.py`` idea did not work. I deleted parts of the documentation
        where I had mentioned it until I remembered that it wouldn't work in a virtual
-       environment.  Note that I didn't check that it **would** work in my main python 
+       environment.  Note that I didn't check that it **would** work in my main python
        setup ... If it no longer works, please file an issue.

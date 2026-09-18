@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Improving on function as a keyword &mdash; ideas 0.3.0 documentation</title>
+  <title>Customizing your first import hook &mdash; ideas 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
@@ -16,15 +16,15 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="A deep dive" href="possible.html" />
-    <link rel="prev" title="Create your first import hook: the basics" href="first_hook.html" /> 
+    <link rel="next" title="Import hooks: A deep dive" href="possible.html" />
+    <link rel="prev" title="Create your first import hook: the basics" href="first_import_hook.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,8 +49,8 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="first_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Improving function as a keyword</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="first_import_hook.html"> Create your own import hook</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Customizing your first import hook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#building-a-more-complete-example">Building a more complete example</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#verbose-finder">Verbose finder</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#comparing-the-original-and-the-transformed-source">Comparing the original and the transformed source</a></li>
@@ -58,7 +58,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -86,21 +86,21 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Improving on function as a keyword</li>
+      <li class="breadcrumb-item active">Customizing your first import hook</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/function.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="first_hook.html" class="btn btn-neutral float-left" title="Create your first import hook: the basics" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_import_hook.html" class="btn btn-neutral float-left" title="Create your first import hook: the basics" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="Import hooks: A deep dive" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="improving-on-function-as-a-keyword">
-<h1>Improving on function as a keyword<a class="headerlink" href="#improving-on-function-as-a-keyword" title="Link to this heading"></a></h1>
+  <section id="customizing-your-first-import-hook">
+<h1>Customizing your first import hook<a class="headerlink" href="#customizing-your-first-import-hook" title="Link to this heading"></a></h1>
 <div class="admonition-summary admonition">
 <p class="admonition-title">Summary</p>
 <p>This builds upon our previous example of allowing
@@ -261,8 +261,8 @@ source:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="first_hook.html" class="btn btn-neutral float-left" title="Create your first import hook: the basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="possible.html" class="btn btn-neutral float-right" title="A deep dive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_import_hook.html" class="btn btn-neutral float-left" title="Create your first import hook: the basics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="possible.html" class="btn btn-neutral float-right" title="Import hooks: A deep dive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

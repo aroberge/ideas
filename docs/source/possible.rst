@@ -1,5 +1,5 @@
-A deep dive
-============
+Import hooks: A deep dive
+==========================
 
 In Python, an import hook has two main components:
 

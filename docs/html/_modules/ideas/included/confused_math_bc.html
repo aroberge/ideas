@@ -8,7 +8,7 @@
   <title>ideas.included.confused_math_bc &mdash; ideas 0.3.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=4fe1afaf" />
 
@@ -46,9 +46,9 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../what.html"> What is ideas?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../first_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../first_import_hook.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../function.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../possible.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -98,6 +98,13 @@
 <span class="sd">done prior to the creation of a code object and thus are</span>
 <span class="sd">not captured by this transformation.</span>
 <span class="sd">"""</span>
+
+<span class="c1"># I need to document how all of this works.</span>
+<span class="c1"># Also, I believe that the inspect module gives us the information</span>
+<span class="c1"># required to build new code objects when they change in Python.</span>
+<span class="c1"># Finally, I think there is an old tutorial (perhaps describing a tool)</span>
+<span class="c1"># that goes into some details about modifying Python's bytecode.</span>
+
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">dis</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>

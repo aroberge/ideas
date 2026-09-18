@@ -1,4 +1,4 @@
-Improving on function as a keyword
+Customizing your first import hook
 ====================================
 
 .. admonition:: Summary

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; ideas 0.3.0 documentation</title>
+  <title>Usage &mdash; ideas 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
@@ -16,14 +16,14 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=e259d695"></script>
+      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Create your first import hook: the basics" href="first_hook.html" />
+    <link rel="next" title="Create your first import hook: the basics" href="first_import_hook.html" />
     <link rel="prev" title="What is ideas?" href="what.html" /> 
 </head>
 
@@ -54,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-with-ipython-or-jupyter-notebook-lab">Using with IPython or Jupyter notebook/lab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-with-pypy">Using with Pypy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#program-in-a-different-directory">Program in a different directory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#multiple-import-hooks">Multiple import hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#always-running-by-default">Always running by default</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#import-hook">Import hook</a></li>
@@ -62,9 +63,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="first_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Improving function as a keyword</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_import_hook.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="function.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="possible.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -98,7 +99,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="what.html" class="btn btn-neutral float-left" title="What is ideas?" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="first_hook.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_import_hook.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -213,6 +214,27 @@ Here is an example using IPython in a terminal.</p>
 <p>Information about more advanced usage can be found in this documentation.
 You can also do the following in a terminal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+</section>
+<section id="program-in-a-different-directory">
+<h2>Program in a different directory<a class="headerlink" href="#program-in-a-different-directory" title="Link to this heading"></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">.</span></code> instead of <code class="docutils literal notranslate"><span class="pre">/</span></code> or <code class="docutils literal notranslate"><span class="pre">\</span></code> to separate path elements when launching
+a script. For instance, in the example below, I used <code class="docutils literal notranslate"><span class="pre">usage.my_program</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">usage\my_program</span></code>, even though <code class="docutils literal notranslate"><span class="pre">usage</span></code> is a normal
+directory and not a Python package.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; dir usage
+
+Directory of C:\Users\Andre\github\ideas\docs_examples\usage
+
+...
+09/16/2026  02:46 PM               183 my_program.py
+           1 File(s)            183 bytes
+
+(venv-ideas) C:\Users\Andre\github\ideas\docs_examples
+&gt; ideas -a function_keyword usage.my_program
+16 is the square of 4.
+And the square of 5 is 25
 </pre></div>
 </div>
 </section>
@@ -339,7 +361,7 @@ setup … If it no longer works, please file an issue.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="what.html" class="btn btn-neutral float-left" title="What is ideas?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="first_hook.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_import_hook.html" class="btn btn-neutral float-right" title="Create your first import hook: the basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
