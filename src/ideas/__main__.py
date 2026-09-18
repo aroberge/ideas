@@ -64,7 +64,8 @@ parser.add_argument(
     "--full_traceback",
     action="store_true",
     help="""Displays the full traceback; recommended only for debugging import hooks.
-    --verbose flag will also be automatically set.""",
+    --verbose flag, but neither --verbose_finder nor --verbose_loader,
+    will also be automatically set.""",
 )
 
 parser.add_argument(
@@ -89,7 +90,23 @@ parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
-    help="""Prints out information about what is being done. Useful for diagnostic.""",
+    help="""Equivalent to both --verbose_finder and --verbose_loader.
+    Potentially adds more information about what is being done elsewhere,
+    for example in the console.""",
+)
+
+parser.add_argument(
+    "--verbose_finder",
+    action="store_true",
+    help="""Prints out information about searching for the right module to import.
+    Useful for diagnostic.""",
+)
+
+parser.add_argument(
+    "--verbose_loader",
+    action="store_true",
+    help="""Prints out information about processing source code and creating a module.
+    Useful for diagnostic.""",
 )
 
 parser.add_argument(
@@ -136,15 +153,21 @@ def main() -> None:
         print(f"\nideas version {version}")
         return
 
-    if args.full_traceback:
-        ideas_state.full_traceback = True
-        ideas_state.verbose = True
-
     ideas_does_something = False
     run_as_main = not args.import_
 
     ideas_state.show_changes = args.show_changes
+
+    ideas_state.verbose_finder = args.verbose_finder
+    ideas_state.verbose_loader = args.verbose_loader
     ideas_state.verbose = args.verbose
+    if ideas_state.verbose:
+        ideas_state.verbose_finder = True
+        ideas_state.verbose_loader = True
+
+    if args.full_traceback:
+        ideas_state.full_traceback = True
+        ideas_state.verbose = True
 
     callback_params = {}
     if args.callback_params:
@@ -167,6 +190,11 @@ def main() -> None:
 
     if args.source and args.source.endswith(".py"):
         args.source = args.source[:-3]
+
+    if args.source == "pygments":
+        print("'pygments' is the single module excluded from being processed by ideas.")
+        console.start()
+        return
 
     ideas_state.source_argument = args.source
     ideas_state.run_as_main_argument = run_as_main

@@ -29,6 +29,8 @@ class State:
         self.source_argument = None  # py [...] -m ideas [...] source_argument
         self.run_as_main_argument = False
         self.verbose = False  # diagnostic
+        self.verbose_finder = False
+        self.verbose_loader = False
         #
         self._console_source_inits = []
         self._custom_codecs_source_transform = None

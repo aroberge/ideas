@@ -1,0 +1,17 @@
+# mon_programme.pyfr
+
+définir carré(n):
+    retourner n * n
+
+si Vrai:
+    a = 1
+sinon:
+    a = 2
+
+si Faux:
+    b = 1
+sinon:
+    b = 2
+
+affirmer a == 1, "a == 1"
+affirmer b == 2, "b == 2"
