@@ -12,7 +12,7 @@ from ideas import utils
 
 def verbose_finder(text):
     """Print some informative text when verbose is set"""
-    if ideas_state.verbose:
+    if ideas_state.verbose_finder:
         print(text)
 
 
@@ -70,7 +70,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             else:
                 verbose_finder("No paths were set as excluded.")
 
-        # Remove
+        # Remove excluded paths
         if self.ideas_hook.excluded_paths:
             for entry in self.ideas_hook.excluded_paths:
                 if entry in path:
@@ -81,7 +81,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                 for p in path:
                     verbose_finder(f"    {utils.shorten_path(p)}")
 
-        self.inform_about_all_possible_paths = False
+        self.inform_about_all_possible_paths = False  # Will not do again
         return path
 
     def find_spec(self, fullname, path, target=None):  # pylint: disable=W0613
@@ -97,7 +97,7 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             )
             return None
 
-        verbose_finder(f"\n{self.ideas_hook.name}: inside 'find_spec'; {target=}.\n")
+        verbose_finder(f"\n{self.ideas_hook.name}.find_spec():")
 
         path = self._set_path(path)
 
@@ -147,5 +147,5 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                 submodule_search_locations=submodule_locations,
             )
 
-        verbose_finder(f"{self.__repr__()} cannot import '{fullname}'\n")
+        verbose_finder(f"{self.__repr__()} cannot find '{fullname}'")
         return None  # we don't know how to import this
