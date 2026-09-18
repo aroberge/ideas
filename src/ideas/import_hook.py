@@ -9,7 +9,7 @@ import os
 import sys
 
 from importlib.abc import Loader, MetaPathFinder
-from importlib.util import spec_from_file_location, decode_source, find_spec
+from importlib.util import spec_from_file_location, decode_source
 from types import CodeType, ModuleType
 from typing import Callable, Dict, Sequence, Optional, Any
 
@@ -86,19 +86,6 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         else:
             module_name = fullname
 
-        # When patching, we may want to consider modules that are normally excluded
-        # from import hooks
-        if (
-            ideas_state._patches
-            and self.ideas_hook.excluded_paths
-            and (
-                fullname in ideas_state._patches or module_name in ideas_state._patches
-            )
-        ):
-            temporary_inclusions = self.suspend_exclusions(fullname)
-        else:
-            temporary_inclusions = []
-
         for entry in path:
             skip = False
             for sub_path in self.ideas_hook.excluded_paths:
@@ -125,9 +112,6 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             else:
                 continue
 
-            # Re-exclude paths as they were prior to attempting a patch
-            for pth in temporary_inclusions:
-                self.ideas_hook.excluded_paths.append(pth)
             return spec_from_file_location(
                 fullname,
                 filename,
@@ -144,8 +128,6 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
                     parse_source=self.ideas_hook.parse_source,
                 ),
             )
-        for pth in temporary_inclusions:
-            self.ideas_hook.excluded_paths.append(pth)
 
         verbose_finder(f"{self.__repr__()} cannot import {fullname}\n")
 
@@ -193,45 +175,6 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             )
 
         return None  # we don't know how to import this
-
-    def suspend_exclusions(self, fullname):
-        """By default, import hooks do not process modules from the standard
-        library or site packages. Other folders could be excluded by a user
-        configuring an import hook.
-        However, we want to allow patching modules all modules. This is
-        the purpose of this function. It returns paths that were
-        temporarily allowed so that they can be re-excluded once the
-        required patches are applied."""
-
-        if "." in fullname:
-            module_name = fullname.split(".")[-1]
-            package_name = fullname.split(".")[:-1]
-        else:
-            module_name = fullname
-            package_name = None
-        enabled_status = []
-
-        # Ensure that our import hooks are disabled so that Python
-        # can find the required modules
-        for hook in ideas_state._hooks:
-            enabled_status.append(hook.enabled)
-            hook.enabled = False
-
-        spec = find_spec(module_name, package_name)
-        if spec is None:
-            return []
-
-        _excluded_paths = []
-        for excl_path in self.ideas_hook.excluded_paths:
-            if spec.origin.startswith(excl_path):
-                self.ideas_hook.excluded_paths.remove(excl_path)
-                _excluded_paths.append(excl_path)
-
-        # Recover the original status for the hooks
-        for status, hook in zip(enabled_status, ideas_state._hooks):
-            hook.enabled = status
-
-        return _excluded_paths
 
 
 class IdeasLoader(Loader):  # pylint: disable=R0902
@@ -352,16 +295,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                         "An exception was raised while attempting to execute the code object."
                     )
                 raise
-
-        if module.__name__ not in ideas_state._patches:
-            return
-
-        for patch in ideas_state._patches[module.__name__]:
-            if ideas_state.verbose:
-                print("patching ", module.__name__)
-            module = patch(module)
-        else:
-            ideas_state._patches.pop(module.__name__)
 
 
 def create_hook(
