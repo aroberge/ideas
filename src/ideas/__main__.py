@@ -10,6 +10,7 @@ import sys
 
 from ideas import console
 from ideas import ideas_state
+from ideas import transform
 
 sys.path.insert(0, "")
 
@@ -52,6 +53,12 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-c",
+    type=str,
+    help="""Similar to Python -c: executes the string (after transformation).""",
+)
+
+parser.add_argument(
     "--callback_params",
     nargs="*",
     action=ParseKwargs,
@@ -84,6 +91,10 @@ parser.add_argument(
     "--show_changes",
     action="store_true",
     help="""Shows the transformed code before it is executed.""",
+)
+
+parser.add_argument(
+    "-t", type=str, help="""Transforms the source and shows the result."""
 )
 
 parser.add_argument(
@@ -177,6 +188,14 @@ def main() -> None:
         for hook in args.add_hook:
             add_transform(hook, callback_params=callback_params)
         ideas_does_something = True
+
+    if args.t:
+        transform(args.t)
+        return
+
+    if args.c:
+        exec(ideas_state.source_transforms(args.c))
+        return
 
     if not args.source:
         console.start()
