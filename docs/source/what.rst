@@ -1,7 +1,7 @@
 What is ideas?
 ===============
 
-|ideas| is a package that makes it easier to write *import hooks* 
+|ideas| is a package that makes it easier to write *import hooks*
 used to **experiment** with alternative to Python's syntax.
 
 What is an import hook?
@@ -41,12 +41,6 @@ Still, writing import hooks can be rather difficult.
 
         **Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones**
 
-.. sidebar:: A bit of a mess
-
-    The code I wrote for the general ``import_hook.py`` code has grown "organically",
-    adding or modifying features with almost every new examples. It works
-    but is in great need of refactoring. Readers beware...
-
 |ideas| is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.
@@ -54,7 +48,7 @@ examples that can be used as starting points for new ideas.
 Instead of figuring out how to write an import hook, using |ideas| you
 can focus exclusively on what what might be needed to convert your proposed new
 syntax into something that Python can understand: |ideas| will
-take care of the rest, including inserting it in ``sys.meta_path``.
+take care of the rest for you.
 
 
 Additional motivation for this project
@@ -113,7 +107,7 @@ As an amateur, I like to explore various ideas, learning along the way.
 As I found myself doing a lot of copy-paste-modify on the various import
 hooks experiments, including on some published projects such as the now
 **deprecated/obsolete/abandoned**
-`AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_ 
+`AvantPy <https://aroberge.github.io/avantpy/docs/html/>`_
 as well as `various experiments I wrote about <https://duckduckgo.com/?q=experimental+site%3Aaroberge.blogspot.com>`_,
 I thought it would make sense to create a versatile projects which I could
 use as the basis of other projects.  An obvious benefit is that I now
@@ -125,7 +119,7 @@ Additional motivation
 ---------------------
 
 Often, on the old Python-ideas mailing list,
-and possibly on the `Python discuss ideas <https://discuss.python.org/c/ideas/6>`_` , 
+and possibly on the `Python discuss ideas <https://discuss.python.org/c/ideas/6>`_` ,
 a suggestion is made to someone that proposes something
 new to try it by modifying Python using an import hook. For example:
 

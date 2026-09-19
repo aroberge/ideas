@@ -1,8 +1,8 @@
 .. admonition:: Summary
 
    + We explain how to create a basic import hook.
-   + We show how to do some simple source modification using ``token_utils``
-   + We show how to use the ``-s`` or ``--show`` command line flag to get some
+   + We show how to do some simple source modification using ``token_utils``.
+   + We show how to use the ``-s`` or ``--show_changes`` command line flag to get some
      debugging information.
 
 
@@ -15,7 +15,7 @@ create your first one.  We will use our ``"Hello world"`` example,
 which uses ``function`` as equivalent to ``lambda``.
 
 
-How to do this
+How use do this
 ---------------
 
 Suppose you had access to the source of a program using
@@ -46,10 +46,17 @@ That's it! Let's try it out.
 
 .. code-block::
 
-    > py
-    Python 3.11.9 ...
+    >>> import greet_script  # of course, this won't work
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "C:\Users\Andre\github\ideas\docs_examples\first_import_hook\greet_script.py", line 6
+        greet = function name: print(f"Hello {name}!")
+                        ^^^^
+    SyntaxError: invalid syntax
+    >>> import simple_replacement  # sets up the import hook
     >>> import greet_script
     Hello World!
+
 
 It works! ... almost ... Let's find out more::
 
@@ -71,9 +78,9 @@ It works! ... almost ... Let's find out more::
 
 Something is not ideal with the DESCRIPTION: it says that it replaces
 ``lambda`` by ``lambda``, which is not very helpful.
-Still, as a first step, it shows how easy it is to write an 
+Still, as a first step, it shows how easy it is to write an
 import hook that modifies the source code using |ideas|.
-Instead of importing everything within a standard Python 
+Instead of importing everything within a standard Python
 interpreter, let's execute the code using |ideas| on the command line.
 
 .. code-block:: none
@@ -82,13 +89,13 @@ interpreter, let's execute the code using |ideas| on the command line.
     Module <module 'simple_replacement' from 'C:\\Users\\Andre\\github\\ideas\\docs_examples\\first_import_hook\\simple_replacement.py'> does not contain a function named add_hook
     Hello World!
 
-Something is not quite right: using the ``-a`` flag told |ideas| to import 
+Something is not quite right: using the ``-a`` flag told |ideas| to import
 the module (which it did), then find the ``add_hook`` function and execute it.
-However, our example did not have such a function defined, as it directly 
-created an import hook which was then used to replace ``function`` by 
+However, our example did not have such a function defined, as it directly
+created an import hook which was then used to replace ``function`` by
 ``lambda`` when the file ``greet_script.py`` was executed.
 So, in spite of the error message from |ideas|,
-everything worked the way we wanted.
+everything worked the way we wanted when it came to replace ``function`` by ``lambda``.
 
 Actual code
 ------------
@@ -109,7 +116,7 @@ This has at least four benefits:
 
     1.  We can control when the hook is created.
     2.  We can use the return value to change some of its parameters,
-        for example to temporarily disable it, or to remove it 
+        for example to temporarily disable it, or to remove it
         altogether. This can be particularly useful for testing.
     3.  We can optionally add arguments to ``add_hook``; we will do so
         in more complex examples
@@ -121,7 +128,7 @@ This has at least four benefits:
 
             ideas --add_hook function_keyword
 
-        which imports ``function_keyword`` and calls ``function_keyword.add_hook()``. 
+        which imports ``function_keyword`` and calls ``function_keyword.add_hook()``.
 
 .. sidebar:: Tokens?
 
@@ -135,7 +142,7 @@ Using ``token_utils``
 To replace ``function`` by ``lambda`` only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
 and only replace ``function`` by ``lambda`` when it occurs as
-an individual token. Rather than using directly the tokenizer
+an individual token. Rather than using directly the module ``tokenize``
 from Python's standard library, we use our own version which has some useful
 added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
@@ -172,10 +179,9 @@ what changes have been made by the source transformation to the original script.
 
 .. code-block:: none
 
-    > ideas -a function_keyword my_program -s -i
+    > ideas -a function_keyword my_program -s
 
     #========== Original source from docs_examples/usage/my_program.py ====
-    # flake8: noqa
     # my_program.py
 
     square = function x: x**2
@@ -187,7 +193,6 @@ what changes have been made by the source transformation to the original script.
 
 
     #========== Transformed source ====
-    # flake8: noqa
     # my_program.py
 
     square = lambda x: x**2
@@ -199,8 +204,7 @@ what changes have been made by the source transformation to the original script.
 
     16 is the square of 4.
     And the square of 5 is 25
-    Ideas Console version 0.2.1. [Python version: 3.11.9]
-    ideas>
+
 
 When using import hooks with a standard Python interpreter,
 only modules that are imported are affected *as they are imported*.
@@ -229,7 +233,6 @@ as follows::
     ideas> ideas_state.show_changes = True
     ideas> triple = function x: 3*x
     New: triple = lambda x: 3*x
-    ideas>
 
 .. tip::
 
@@ -243,9 +246,9 @@ Complete argument list for ``transform_source``
 In the above example, we had some unspecified keywords arguments
 passed to ``transform_source``.
 
-The last time this documentation was updated, the list of possible 
+The last time this documentation was updated, the list of possible
 arguments could be found in the arguments of ``hook.transform_source``
-below.
+which is inside the method ``source_transforms``.
 
 .. literalinclude:: ../../src/ideas/session.py
     :pyobject: State.source_transforms

@@ -15,15 +15,10 @@ Basic usage
 -----------
 
 Suppose that you want to use ``function`` as a keyword in Python, to mean
-the same thing as ``lambda``, enabling you to write::
+the same thing as ``lambda``, enabling you to write:
 
-    # my_program.py
-
-    square = function x: x**2
-    print(f"{square(4)} is the square of 4.")
-
-    if __name__ == '__main__':
-        print(f"And the square of 5 is {square(5)}")
+.. include:: ../../docs_examples/usage/my_program.py
+   :code: python
 
 .. sidebar:: shorter command.
 
@@ -51,8 +46,9 @@ is ``ideas.included.function_keyword``.
     |ideas| will just drop the ``.py`` extension if you add one,
     presumably because you are used to doing it.
 
-You may have noticed in the above that ``my_program`` does not
-include a ``.py`` extension. This is because ``my_program`` is imported:
+In ``ideas -a function_keyword my_program``, you may have noticed that
+``my_program`` does not include a ``.py`` extension.
+This is because ``my_program`` is imported:
 Python **import hooks**, by definition, only work on modules that are
 imported. Yet, you may have also noticed from what is printed
 that it is imported with the name ``'__main__'``, so that it is nonetheless
@@ -118,6 +114,7 @@ Using with Pypy
 
 According to a few quick tests we did a while ago,
 |ideas| works with Pypy just as well as it does with CPython.
+If you dind that it doesn't, please let us know by filing an issue.
 
 
 Advanced usage
@@ -276,4 +273,5 @@ You can now invoke your module doing the following::
        out why the ``usercustomize.py`` idea did not work. I deleted parts of the documentation
        where I had mentioned it until I remembered that it wouldn't work in a virtual
        environment.  Note that I didn't check that it **would** work in my main python
-       setup ... If it no longer works, please file an issue.
+       setup ... If it no longer works, please file an issue, especially if you know
+       how to fix it! 😉

@@ -1,8 +1,8 @@
 .. admonition:: Summary
 
    + We explain how to create a basic import hook.
-   + We show how to do some simple source modification using ``token_utils``
-   + We show how to use the ``-s`` or ``--show`` command line flag to get some
+   + We show how to do some simple source modification using ``token_utils``.
+   + We show how to use the ``-s`` or ``--show_changes`` command line flag to get some
      debugging information.
 
 
@@ -15,7 +15,7 @@ create your first one.  We will use our ``"Hello world"`` example,
 which uses ``function`` as equivalent to ``lambda``.
 
 
-How to do this
+How use do this
 ---------------
 
 Suppose you had access to the source of a program using
@@ -142,7 +142,7 @@ Using ``token_utils``
 To replace ``function`` by ``lambda`` only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
 and only replace ``function`` by ``lambda`` when it occurs as
-an individual token. Rather than using directly the tokenizer
+an individual token. Rather than using directly the module ``tokenize``
 from Python's standard library, we use our own version which has some useful
 added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
@@ -179,10 +179,9 @@ what changes have been made by the source transformation to the original script.
 
 .. code-block:: none
 
-    > ideas -a function_keyword my_program -s -i
+    > ideas -a function_keyword my_program -s
 
     #========== Original source from docs_examples/usage/my_program.py ====
-    # flake8: noqa
     # my_program.py
 
     square = function x: x**2
@@ -194,7 +193,6 @@ what changes have been made by the source transformation to the original script.
 
 
     #========== Transformed source ====
-    # flake8: noqa
     # my_program.py
 
     square = lambda x: x**2
@@ -206,8 +204,7 @@ what changes have been made by the source transformation to the original script.
 
     16 is the square of 4.
     And the square of 5 is 25
-    Ideas Console version 0.2.1. [Python version: 3.11.9]
-    ideas>
+
 
 When using import hooks with a standard Python interpreter,
 only modules that are imported are affected *as they are imported*.
@@ -236,7 +233,6 @@ as follows::
     ideas> ideas_state.show_changes = True
     ideas> triple = function x: 3*x
     New: triple = lambda x: 3*x
-    ideas>
 
 .. tip::
 
@@ -252,7 +248,7 @@ passed to ``transform_source``.
 
 The last time this documentation was updated, the list of possible
 arguments could be found in the arguments of ``hook.transform_source``
-below.
+which is inside the method ``source_transforms``.
 
 .. literalinclude:: ../../src/ideas/session.py
     :pyobject: State.source_transforms

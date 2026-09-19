@@ -1,4 +1,3 @@
-# flake8: noqa
 # my_program.py
 
 square = function x: x**2

@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What is ideas? &mdash; ideas 0.3.2 documentation</title>
+  <title>What is ideas? &mdash; ideas 0.3.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="_static/documentation_options.js?v=d5a15cff"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -57,8 +57,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="first_import_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Customizing your first import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Import hooks: A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_hook_customized.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deep_dive.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -68,8 +68,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
         </div>
@@ -143,19 +141,13 @@ documentation for</em> importlib <em>under your pillow may be advisable.</em></d
 <div><p><strong>Python Cookbook, 3rd edition, by David Beazley and Brian K. Jones</strong></p>
 </div></blockquote>
 </div></blockquote>
-<aside class="sidebar">
-<p class="sidebar-title">A bit of a mess</p>
-<p>The code I wrote for the general <code class="docutils literal notranslate"><span class="pre">import_hook.py</span></code> code has grown “organically”,
-adding or modifying features with almost every new examples. It works
-but is in great need of refactoring. Readers beware…</p>
-</aside>
 <p><span class="text-small-caps text-bold">ideas</span> is designed to facilitate
 the creation of such import hooks, and be a repository for
 examples that can be used as starting points for new ideas.</p>
 <p>Instead of figuring out how to write an import hook, using <span class="text-small-caps text-bold">ideas</span> you
 can focus exclusively on what what might be needed to convert your proposed new
 syntax into something that Python can understand: <span class="text-small-caps text-bold">ideas</span> will
-take care of the rest, including inserting it in <code class="docutils literal notranslate"><span class="pre">sys.meta_path</span></code>.</p>
+take care of the rest for you.</p>
 </section>
 <section id="additional-motivation-for-this-project">
 <h2>Additional motivation for this project<a class="headerlink" href="#additional-motivation-for-this-project" title="Link to this heading"></a></h2>

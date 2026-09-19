@@ -19,11 +19,11 @@ French repeat
 To produce the above image, you can use the following (files found
 in usage_demo directory):
 
-.. literalinclude:: ../../../usage_demo/tortue_demo.py
+.. literalinclude:: ../../../docs_examples/french_repeat/tortue_demo.py
 
 and
 
-.. literalinclude:: ../../../usage_demo/tortue.pyfr
+.. literalinclude:: ../../../docs_examples/french_repeat/tortue.pyfr
 
 This is how I executed them:
 

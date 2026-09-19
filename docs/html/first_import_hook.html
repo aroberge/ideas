@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create your first import hook: the basics &mdash; ideas 0.3.2 documentation</title>
+  <title>Create your first import hook: the basics &mdash; ideas 0.3.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
@@ -16,14 +16,14 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="_static/documentation_options.js?v=d5a15cff"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Customizing your first import hook" href="function.html" />
+    <link rel="next" title="Customizing your first import hook" href="first_hook_customized.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
 </head>
 
@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own import hook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-do-this">How to do this</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-use-do-this">How use do this</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#actual-code">Actual code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#add-hook"><code class="docutils literal notranslate"><span class="pre">add_hook</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#using-token-utils">Using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code></a></li>
@@ -60,8 +60,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#complete-argument-list-for-transform-source">Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Customizing your first import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Import hooks: A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_hook_customized.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deep_dive.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -71,8 +71,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
         </div>
@@ -95,7 +93,7 @@
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_hook_customized.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -106,8 +104,8 @@
 <p class="admonition-title">Summary</p>
 <ul class="simple">
 <li><p>We explain how to create a basic import hook.</p></li>
-<li><p>We show how to do some simple source modification using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code></p></li>
-<li><p>We show how to use the <code class="docutils literal notranslate"><span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">--show</span></code> command line flag to get some
+<li><p>We show how to do some simple source modification using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code>.</p></li>
+<li><p>We show how to use the <code class="docutils literal notranslate"><span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">--show_changes</span></code> command line flag to get some
 debugging information.</p></li>
 </ul>
 </div>
@@ -116,8 +114,8 @@ debugging information.</p></li>
 <p>You’ve seen how to use <span class="text-small-caps text-bold">ideas</span> import hooks; now it is time to
 create your first one.  We will use our <code class="docutils literal notranslate"><span class="pre">&quot;Hello</span> <span class="pre">world&quot;</span></code> example,
 which uses <code class="docutils literal notranslate"><span class="pre">function</span></code> as equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
-<section id="how-to-do-this">
-<h2>How to do this<a class="headerlink" href="#how-to-do-this" title="Link to this heading"></a></h2>
+<section id="how-use-do-this">
+<h2>How use do this<a class="headerlink" href="#how-use-do-this" title="Link to this heading"></a></h2>
 <p>Suppose you had access to the source of a program using
 <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword instead of lambda.
 Perhaps something like the following:</p>
@@ -145,20 +143,25 @@ Perhaps something like the following:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple_replacement.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_hook</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">some_arbitrary_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"function"</span><span class="p">,</span> <span class="s2">"lambda"</span><span class="p">)</span>
 
-<span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span>
-    <span class="n">transform_source</span><span class="o">=</span><span class="n">some_arbitrary_name</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span>  <span class="c1"># required</span>
-<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">some_arbitrary_name</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"function"</span><span class="p">,</span> <span class="s2">"lambda"</span><span class="p">)</span>
+
+
+<span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_arbitrary_name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>That’s it! Let’s try it out.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; py
-Python 3.11.9 ...
-&gt;&gt;&gt; import greet_script
-Hello World!
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>  <span class="c1"># of course, this won't work</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="x">File "&lt;stdin&gt;", line 1, in &lt;module&gt;</span>
+<span class="x">File "C:\Users\Andre\github\ideas\docs_examples\first_import_hook\greet_script.py", line 6</span>
+<span class="x">    greet = function name: print(f"Hello {name}!")</span>
+<span class="x">                    ^^^^</span>
+<span class="x">SyntaxError: invalid syntax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">simple_replacement</span>  <span class="c1"># sets up the import hook</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>
+<span class="go">Hello World!</span>
 </pre></div>
 </div>
 <p>It works! … almost … Let’s find out more:</p>
@@ -196,7 +199,7 @@ However, our example did not have such a function defined, as it directly
 created an import hook which was then used to replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by
 <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when the file <code class="docutils literal notranslate"><span class="pre">greet_script.py</span></code> was executed.
 So, in spite of the error message from <span class="text-small-caps text-bold">ideas</span>,
-everything worked the way we wanted.</p>
+everything worked the way we wanted when it came to replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
 </section>
 <section id="actual-code">
 <h2>Actual code<a class="headerlink" href="#actual-code" title="Link to this heading"></a></h2>
@@ -265,7 +268,7 @@ Each of these is an individual <strong>token</strong>.</p>
 <p>To replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
 and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
-an individual token. Rather than using directly the tokenizer
+an individual token. Rather than using directly the module <code class="docutils literal notranslate"><span class="pre">tokenize</span></code>
 from Python’s standard library, we use our own version which has some useful
 added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
@@ -294,10 +297,9 @@ is not required by <span class="text-small-caps text-bold">ideas</span>.</p>
 <h3>Debugging help<a class="headerlink" href="#debugging-help" title="Link to this heading"></a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">-s</span></code> (or <code class="docutils literal notranslate"><span class="pre">--show_changes</span></code>) flag to find out
 what changes have been made by the source transformation to the original script.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program -s -i
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program -s
 
 #========== Original source from docs_examples/usage/my_program.py ====
-# flake8: noqa
 # my_program.py
 
 square = function x: x**2
@@ -309,7 +311,6 @@ if __name__ == '__main__':
 
 
 #========== Transformed source ====
-# flake8: noqa
 # my_program.py
 
 square = lambda x: x**2
@@ -321,8 +322,6 @@ if __name__ == '__main__':
 
 16 is the square of 4.
 And the square of 5 is 25
-Ideas Console version 0.2.1. [Python version: 3.11.9]
-ideas&gt;
 </pre></div>
 </div>
 <p>When using import hooks with a standard Python interpreter,
@@ -348,7 +347,6 @@ as follows:</p>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">triple</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
 <span class="n">New</span><span class="p">:</span> <span class="n">triple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
-<span class="n">ideas</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -364,7 +362,7 @@ information might be available or modified via <code class="docutils literal not
 passed to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 <p>The last time this documentation was updated, the list of possible
 arguments could be found in the arguments of <code class="docutils literal notranslate"><span class="pre">hook.transform_source</span></code>
-below.</p>
+which is inside the method <code class="docutils literal notranslate"><span class="pre">source_transforms</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">source_transforms</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">source</span><span class="p">,</span>
@@ -408,7 +406,7 @@ below.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="function.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="first_hook_customized.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

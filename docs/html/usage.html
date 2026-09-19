@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; ideas 0.3.2 documentation</title>
+  <title>Usage &mdash; ideas 0.3.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
@@ -16,7 +16,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="_static/documentation_options.js?v=d5a15cff"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -64,8 +64,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="first_import_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="function.html"> Customizing your first import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="possible.html"> Import hooks: A deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_hook_customized.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deep_dive.html"> Import hooks: A deep dive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
 <ul>
@@ -75,8 +75,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="import_hook.html"> import_hook.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="console.html"> console.py</a></li>
 </ul>
 
         </div>
@@ -120,7 +118,7 @@ to the Python keyword <code class="docutils literal notranslate"><span class="pr
 <h2>Basic usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
 <p>Suppose that you want to use <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword in Python, to mean
 the same thing as <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, enabling you to write:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># my_program.py</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># my_program.py</span>
 
 <span class="n">square</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2"> is the square of 4."</span><span class="p">)</span>
@@ -152,8 +150,9 @@ is <code class="docutils literal notranslate"><span class="pre">ideas.included.f
 <p><span class="text-small-caps text-bold">ideas</span> will just drop the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension if you add one,
 presumably because you are used to doing it.</p>
 </aside>
-<p>You may have noticed in the above that <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not
-include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension. This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
+<p>In <code class="docutils literal notranslate"><span class="pre">ideas</span> <span class="pre">-a</span> <span class="pre">function_keyword</span> <span class="pre">my_program</span></code>, you may have noticed that
+<code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension.
+This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
 Python <strong>import hooks</strong>, by definition, only work on modules that are
 imported. Yet, you may have also noticed from what is printed
 that it is imported with the name <code class="docutils literal notranslate"><span class="pre">'__main__'</span></code>, so that it is nonetheless
@@ -207,7 +206,8 @@ Here is an example using IPython in a terminal.</p>
 <section id="using-with-pypy">
 <h2>Using with Pypy<a class="headerlink" href="#using-with-pypy" title="Link to this heading"></a></h2>
 <p>According to a few quick tests we did a while ago,
-<span class="text-small-caps text-bold">ideas</span> works with Pypy just as well as it does with CPython.</p>
+<span class="text-small-caps text-bold">ideas</span> works with Pypy just as well as it does with CPython.
+If you dind that it doesn’t, please let us know by filing an issue.</p>
 </section>
 <section id="advanced-usage">
 <h2>Advanced usage<a class="headerlink" href="#advanced-usage" title="Link to this heading"></a></h2>
@@ -349,7 +349,8 @@ the code again and make sure that everything was working correctly and couldn’
 out why the <code class="docutils literal notranslate"><span class="pre">usercustomize.py</span></code> idea did not work. I deleted parts of the documentation
 where I had mentioned it until I remembered that it wouldn’t work in a virtual
 environment.  Note that I didn’t check that it <strong>would</strong> work in my main python
-setup … If it no longer works, please file an issue.</p>
+setup … If it no longer works, please file an issue, especially if you know
+how to fix it! 😉</p>
 </aside>
 </aside>
 </section>

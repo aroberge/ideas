@@ -28,7 +28,7 @@ but it will still remain a major task. Furthermore, it would not be easy
 to share your work with others so that they can try it out.
 
 However, **there is a simpler way:** it is possible to run code with a
-modified syntax using import hooks. [1]_ 
+modified syntax using import hooks. [1]_
 
 .. important::
 
@@ -44,12 +44,12 @@ Quick links to topics
 
 .. toctree::
    :maxdepth: 2
-    
+
     What is ideas? <what>
     Usage  <usage>
     Create your own import hook <first_import_hook>
-    Customizing your first import hook <function>
-    Import hooks: A deep dive <possible>
+    Customizing your first import hook <first_hook_customized>
+    Import hooks: A deep dive <deep_dive>
 
 .. toctree::
    :caption: Many examples
@@ -62,9 +62,8 @@ Quick links to topics
 
     About tokens <tokenize>
     Capture of token_utils interactive demo <tokenize_notebook.ipynb>
-    import_hook.py <import_hook>
-    console.py <console>
 
+.. [1] Or, in some cases as shown later, using a custom codec.
 
 To do
 -----
@@ -74,4 +73,3 @@ To do
 
 .. |tm| unicode:: U+000AE .. REGISTERED SIGN
 
-.. [1] Or, in some cases as shown later, using a custom codec.
