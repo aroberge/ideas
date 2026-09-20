@@ -258,7 +258,7 @@ class State:
                     source,
                     filename=filename,
                     module=module,
-                    callback_params=callback_params,
+                    callback_params=hook.callback_params,
                     console_dict=console_dict,
                 )
 
