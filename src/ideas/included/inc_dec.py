@@ -9,14 +9,14 @@ familiar with them:
 
   - Pre-increment (``++x``) and pre-decrement (``--x``) operators modify their operand (``x``)
     by 1 and return the value **after** having done so. One question one might have is
-    *what exactly is meant by **after**?*.  For example, in some implementation of C,
+    *what exactly is meant by 'after'?*.  For example, in some implementation of C,
     the expression ``y = x- --x`` is considered to be indefined: do we decrement ``x`` after
     doing the assignment or before? Also note that, in Python, we have
     that ``++x == x == --x`` is syntactically valid.
 
   - Post-increment (``x++``) and post-decrement (``x--``) operators also modify their
     operand by 1 but return the value before doing so. Note that, in Python, these
-    expressions, ``x++`` and ``x--`` anre NOt syntactically valid.
+    expressions, ``x++`` and ``x--`` anre **not** syntactically valid.
 
 
 The idea to implement these operators via an import hook was

@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unary increment and decrement operators &mdash; ideas 0.3.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=1e28cc32"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Switch statement" href="switch.html" />
+    <link rel="prev" title="Fractional math (token based)" href="fractional_math_tok.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ideas
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what.html"> What is ideas?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html"> Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_import_hook.html"> Create your own import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_hook_customized.html"> Customizing your first import hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deep_dive.html"> Import hooks: A deep dive</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french.html">French Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="french_repeat.html">French repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_self.html">Auto-self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal_math.html">Decimal math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractional_math_tok.html">Fractional math (token)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Unitary increment and decrement operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch.html">Switch statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implicit_multiplication.html">Implicit multiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unnormalized_unicode.html">Unnormalized unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_export.html">from-export: PEP 843</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export_name.html">export-name: PEP 842</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export_keyword.html">export as a (soft) keyword (PEPs 842 + 843)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-transformations">AST transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#ast-creation">AST creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#bytecode-transformations">Bytecode transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#more-complex-examples">More complex examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#tranforming-a-module-after-creation">Tranforming a module after creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#custom-encoding">Custom encoding</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ideas</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../guide.html">Guide to the examples</a></li>
+      <li class="breadcrumb-item active">Unary increment and decrement operators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/included/inc_dec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Switch statement" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<blockquote>
+<div><p>This is a source transformation that modify Python’s syntax to
+allow the use of increment (<code class="docutils literal notranslate"><span class="pre">x++</span></code>, <code class="docutils literal notranslate"><span class="pre">++x</span></code>) and decrement (<code class="docutils literal notranslate"><span class="pre">x--</span></code>, <code class="docutils literal notranslate"><span class="pre">--x</span></code>) operators.</p>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/inc_dec.py" rel="noreferrer" target="_blank">Source code</a></p>
+</div>
+<section id="unary-increment-and-decrement-operators">
+<span id="module-ideas.included.inc_dec"></span><h1>Unary increment and decrement operators<a class="headerlink" href="#unary-increment-and-decrement-operators" title="Link to this heading"></a></h1>
+<p>This implements unary pre/post increments and decrements operators,
+(<code class="docutils literal notranslate"><span class="pre">++x</span></code>, <code class="docutils literal notranslate"><span class="pre">--x</span></code>, <code class="docutils literal notranslate"><span class="pre">x++</span></code>, <code class="docutils literal notranslate"><span class="pre">x--</span></code>). These operators are well-liked
+by some, but can be a huge source of confusion. In case you are not
+familiar with them:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Pre-increment (<code class="docutils literal notranslate"><span class="pre">++x</span></code>) and pre-decrement (<code class="docutils literal notranslate"><span class="pre">--x</span></code>) operators modify their operand (<code class="docutils literal notranslate"><span class="pre">x</span></code>)
+by 1 and return the value <strong>after</strong> having done so. One question one might have is
+<em>what exactly is meant by ‘after’?</em>.  For example, in some implementation of C,
+the expression <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">x-</span> <span class="pre">--x</span></code> is considered to be indefined: do we decrement <code class="docutils literal notranslate"><span class="pre">x</span></code> after
+doing the assignment or before? Also note that, in Python, we have
+that <code class="docutils literal notranslate"><span class="pre">++x</span> <span class="pre">==</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">--x</span></code> is syntactically valid.</p></li>
+<li><p>Post-increment (<code class="docutils literal notranslate"><span class="pre">x++</span></code>) and post-decrement (<code class="docutils literal notranslate"><span class="pre">x--</span></code>) operators also modify their
+operand by 1 but return the value before doing so. Note that, in Python, these
+expressions, <code class="docutils literal notranslate"><span class="pre">x++</span></code> and <code class="docutils literal notranslate"><span class="pre">x--</span></code> anre <strong>not</strong> syntactically valid.</p></li>
+</ul>
+</div></blockquote>
+<p>The idea to implement these operators via an import hook was
+inspired by <a class="reference external" href="https://pydong.org/posts/PythonsPreprocessor/" rel="noreferrer" target="_blank">this implementation</a>
+from Matthias Wippich which uses codecs and token-based transformations.
+Both Wippich’s implementation, and that of
+<a class="reference external" href="https://github.com/dankeyy/incdec.py/" rel="noreferrer" target="_blank">Github user dankeyy</a>
+(using regular expression and codecs-based)
+make cleverly use of the walrus operator in the following way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">++</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="o">--</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="o">++</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="o">--</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that the following are valid Python expressions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">++</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="o">+-</span><span class="n">y</span><span class="p">,</span> <span class="o">+</span><span class="n">x</span><span class="o">+++</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span> <span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>While greatly inspired by the existing implementations, we have found that
+they fail to give the expected result in some situations.
+Our implementation takes care to ensure that these valid expressions
+remain so with their current meaning; this is done by only making changes
+when a human reader would be able to unambiguously identify if an
+increment or decrement operator is used.</p>
+<p>So, taking <code class="docutils literal notranslate"><span class="pre">x++</span></code> as an example, we will impose the restriction that, in
+<code class="docutils literal notranslate"><span class="pre">*x++*</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code> cannot be another unary sign, <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">or</span> <span class="pre">-</span></code> nor can it be
+a valid Python identifier. In <code class="docutils literal notranslate"><span class="pre">*x++*</span></code> and similar, if <code class="docutils literal notranslate"><span class="pre">*</span></code> represent
+an identifier, then spaces between
+<code class="docutils literal notranslate"><span class="pre">*</span></code> and the increment/decrement are not significant. Since we can’t have
+two consecutive identifiers in Python, no change will take place.
+However, in <code class="docutils literal notranslate"><span class="pre">x++</span></code>, there can be no space between any of these symbols.</p>
+<p>Here’s a sample session illustrating the transformations that do or do
+not occur:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">inc_dec</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.3.3</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">transform</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x++"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x--"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"--x"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"++x"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x+++"</span><span class="p">)</span>
+<span class="n">x</span><span class="o">+++</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"---x"</span><span class="p">)</span>
+<span class="o">---</span><span class="n">x</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x++y"</span><span class="p">)</span>
+<span class="n">x</span><span class="o">++</span><span class="n">y</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x++ y"</span><span class="p">)</span> <span class="c1"># think of 'x++' as a new value 'X', and thus 'X y'</span>
+<span class="n">x</span><span class="o">++</span> <span class="n">y</span>                     <span class="c1"># which would be invalid; so we keep the valid syntax</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"x++ +y"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span><span class="n">y</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"'x++'"</span><span class="p">)</span>  <span class="c1"># inside string</span>
+<span class="s1">'x++'</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"y-   ++x"</span><span class="p">)</span>
+<span class="n">y</span><span class="o">-</span>   <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ideas</span><span class="o">&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"y-++x"</span><span class="p">)</span>  <span class="c1"># valid Python syntax</span>
+<span class="n">y</span><span class="o">-++</span><span class="n">x</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="fractional_math_tok.html" class="btn btn-neutral float-left" title="Fractional math (token based)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="switch.html" class="btn btn-neutral float-right" title="Switch statement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright André Roberge.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

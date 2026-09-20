@@ -9,7 +9,7 @@ encoding cannot.
 .. sidebar:: Contribute!
 
     Feel free to contribute your own examples. However, note that,
-    for safety reasons, I will not accept examples that result in 
+    for safety reasons, I will not accept examples that result in
     importing arbitrary code/modules from the Internet, as demonstrated
     in one of David Beazley's talks.
 
@@ -17,8 +17,8 @@ encoding cannot.
 Source transformations
 ----------------------
 
-Source transformations represent one of the easiest way to 
-introduce new experimental syntax in Python. 
+Source transformations represent one of the easiest way to
+introduce new experimental syntax in Python.
 If you want to write your own import hook, it might be worth your while
 reading a few of the following examples, if not all of them,
 especially including examining the source code.
@@ -40,6 +40,7 @@ especially including examining the source code.
     Auto-self <included/auto_self>
     Decimal math <included/decimal_math>
     Fractional math (token) <included/fractional_math_tok>
+    Unitary increment and decrement operators <included/inc_dec>
     Switch statement <included/switch>
     Implicit multiplication <included/implicit_multiplication>
     Unnormalized unicode <included/unnormalized_unicode>
@@ -57,8 +58,8 @@ AST transformations
 
 .. todo::
 
-    Currently, only one AST example exists and only one 
-    AST transformation can be done. A second example should 
+    Currently, only one AST example exists and only one
+    AST transformation can be done. A second example should
     be created and find a way to ensure that both could be applied.
 
 
@@ -81,8 +82,8 @@ Bytecode transformations
 
 .. todo::
 
-    Currently, only one Bytecode example exists and only one 
-    Bytecode transformation can be done. A second example should 
+    Currently, only one Bytecode example exists and only one
+    Bytecode transformation can be done. A second example should
     be created and find a way to ensure that both could be applied.
 
 
