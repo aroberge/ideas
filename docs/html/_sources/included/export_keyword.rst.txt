@@ -104,41 +104,17 @@ The package structure is as follows:
              __init__.py
              abc_s.py
 
-.. code-block::
+.. literalinclude:: ../../../docs_examples/included/export_keyword/export_hub/__init__.py
 
-    # export_hub/__init__.py
+.. literalinclude:: ../../../docs_examples/included/export_keyword/export_hub/gadgets.py
 
-    from export_hub.gadgets export Widget, Gadget as NewGadget
+.. literalinclude:: ../../../docs_examples/included/export_keyword/export_hub/utils.py
 
-    from export_hub.utils export useful
+Note that ``utils.py`` contains both types of transformation (``from ... export...`` and
+``export def ...``); so both import hooks have to transform the contents of this file
+in succession. [3]_
 
-    from export_hub.sub_hub.abc_s export a, b, c
-
-.. code-block::
-
-    # export_hub/gadgets.py
-
-    class Widget: pass
-
-    class Gadget: pass
-
-    class NotWidget: pass
-
-    class NotGadget: pass
-
-.. code-block::
-
-    # export_hub/utils.py
-
-    export def useful(): print("I'm useful.")
-
-    def internal(): pass
-
-.. code-block::
-
-    # export_hub/sub_hub/abc_s.py
-
-    a = b = c = d = e = f = ...
+.. literalinclude:: ../../../docs_examples/included/export_keyword/export_hub/sub_hub/abc_s.py
 
 
 Let's proceed with the |ideas| console, adding two
@@ -149,9 +125,10 @@ proceed to examine its content.
 .. code-block::
 
     > ideas -i -a from_export -a export_name export_hub
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
+    Ideas Console version 0.3.6. [Python version: 3.11.9]
     ideas> dir()
-    ['NewGadget', 'Widget', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', 'a', 'b', 'c', 'ideas_state', 'gadgets', 'sub_hub', 'useful', 'utils']
+    ['NewGadget', 'Widget', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', 'a', 'b', 'c', 'gadgets', 'ideas_state', 'sub_hub', 'useful', 'utils']
+
 
 Note that ``ideas_state`` is an object that is always present in
 the |ideas| console and allows one to change various parameters,
@@ -162,9 +139,10 @@ I notice the name ``utils``, which suggests that it might be useful to look at i
 .. code-block::
 
     ideas> utils
-    <module 'export_hub.utils' from 'C:\\Users\\Andre\\github\\ideas\\docs_examples\\export_hub\\utils.py'>
+    <module 'export_hub.utils' from 'C:\\Users\\Andre\\github\\ideas\\docs_examples\\included\\export_keyword\\export_hub\\utils.py'>
     ideas> dir(utils)
-    ['__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'inspect', 'internal', 'pdir', 'useful']
+    ['__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'internal', 'pdir', 'useful']
+
 
 .. sidebar:: Reminder
 
@@ -183,14 +161,18 @@ I notice the name ``utils``, which suggests that it might be useful to look at i
     ['pdir', 'useful']
 
 Imagine that we found many more seemingly useful public functions, like ``pdir``,
-not having been imported when first imported the main package. We could import them
-now and try to make use of them.
+not having been imported when first imported the main package.
+In a real life situation, perhaps a programmer created a single module
+containing many useful functions **for internal use only**, and made it easy
+to have them available on demand in any module by doing a star import.
+
+We could import these useful functions now and perhaps try to make use of them.
 
 .. code-block::
 
     ideas> from export_hub.utils import *  # excessive here
     ideas> help(pdir)
-    Help on function pdir in module export_hub.utils:
+    Help on function pdir in module ideas.included.export_name:
 
     pdir(obj=None)
         Returns the contents of ``__all__`` if available,
@@ -232,3 +214,6 @@ these two examples contain the required information.
        identifier such as a variable name, function name, etc.
 
 .. [2] I did mention that this was a subjective opinion.
+
+.. [3] Initially, I had not created such a file requiring both types of
+       source transformation. Doing so highlighted a subtle bug...

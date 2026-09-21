@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>export as a keyword (PEPs 842 + 843) &mdash; ideas 0.3.4 documentation</title>
+  <title>export as a keyword (PEPs 842 + 843) &mdash; ideas 0.3.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
@@ -16,7 +16,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=1e28cc32"></script>
+      <script src="../_static/documentation_options.js?v=8da8c241"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -91,6 +91,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../TODO.html">TODO</a></li>
+</ul>
 
         </div>
       </div>
@@ -148,7 +152,7 @@ in <a class="reference internal" href="export_name.html"><span class="doc">expor
 <p><a class="reference external" href="https://peps.python.org/pep-0842/" rel="noreferrer" target="_blank">PEP 842 (withdrawn)</a> and
 <a class="reference external" href="https://peps.python.org/pep-0843/" rel="noreferrer" target="_blank">PEP 843</a>
 are two “competing” PEPs which propose the addition of
-<code class="docutils literal notranslate"><span class="pre">export</span></code> as a <em>soft</em> keyword. <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<code class="docutils literal notranslate"><span class="pre">export</span></code> as a <em>soft</em> keyword. <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <p>Before showing how to combine both import hooks included in <span class="text-small-caps text-bold">ideas</span>
 to demonstrate this use of <code class="docutils literal notranslate"><span class="pre">export</span></code> as a soft keyword,
 we offer this <em>subjective</em> summary of the advantages of
@@ -185,7 +189,7 @@ changes.</p></li>
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">export</span></code> in all the cases mentioned above rather than
 using a <strong>combination</strong> of <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> and the
 <code class="docutils literal notranslate"><span class="pre">&#64;public</span></code> package (see <a class="reference external" href="https://peps.python.org/pep-0844/" rel="noreferrer" target="_blank">PEP 844</a>)
-would be more aesthetically pleasing. <a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></li>
+would be more aesthetically pleasing. <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></li>
 </ul>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
@@ -228,7 +232,8 @@ essentially demonstrating the use of all cases of <code class="docutils literal 
 <span class="kn">from</span><span class="w"> </span><span class="nn">export_hub.sub_hub.abc_s</span> <span class="n">export</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export_hub/gadgets.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># flake8: noqa</span>
+<span class="c1"># export_hub/gadgets.py</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">:</span> <span class="k">pass</span>
 
@@ -241,11 +246,16 @@ essentially demonstrating the use of all cases of <code class="docutils literal 
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export_hub/utils.py</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_name</span> <span class="n">export</span> <span class="n">pdir</span>
+
 <span class="n">export</span> <span class="k">def</span><span class="w"> </span><span class="nf">useful</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm useful."</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">internal</span><span class="p">():</span> <span class="k">pass</span>
 </pre></div>
 </div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> contains both types of transformation (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export...</span></code> and
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">def</span> <span class="pre">...</span></code>); so both import hooks have to transform the contents of this file
+in succession. <a class="footnote-reference brackets" href="#id7" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export_hub/sub_hub/abc_s.py</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span> <span class="o">=</span> <span class="n">e</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="o">...</span>
@@ -256,9 +266,9 @@ source transformations (using the <code class="docutils literal notranslate"><sp
 in interactive mode (<code class="docutils literal notranslate"><span class="pre">-i</span></code>) to import a module and
 proceed to examine its content.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="n">from_export</span> <span class="o">-</span><span class="n">a</span> <span class="n">export_name</span> <span class="n">export_hub</span>
-<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.2.0</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
+<span class="n">Ideas</span> <span class="n">Console</span> <span class="n">version</span> <span class="mf">0.3.6</span><span class="o">.</span> <span class="p">[</span><span class="n">Python</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.11.9</span><span class="p">]</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="nb">dir</span><span class="p">()</span>
-<span class="p">[</span><span class="s1">'NewGadget'</span><span class="p">,</span> <span class="s1">'Widget'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__path__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'ideas_state'</span><span class="p">,</span> <span class="s1">'gadgets'</span><span class="p">,</span> <span class="s1">'sub_hub'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">,</span> <span class="s1">'utils'</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">'NewGadget'</span><span class="p">,</span> <span class="s1">'Widget'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__path__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'gadgets'</span><span class="p">,</span> <span class="s1">'ideas_state'</span><span class="p">,</span> <span class="s1">'sub_hub'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">,</span> <span class="s1">'utils'</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code> is an object that is always present in
@@ -266,9 +276,9 @@ the <span class="text-small-caps text-bold">ideas</span> console and allows one 
 something we will not need to do here.</p>
 <p>I notice the name <code class="docutils literal notranslate"><span class="pre">utils</span></code>, which suggests that it might be useful to look at it.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">utils</span>
-<span class="o">&lt;</span><span class="n">module</span> <span class="s1">'export_hub.utils'</span> <span class="kn">from</span><span class="w"> </span><span class="s1">'C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">Andre</span><span class="se">\\</span><span class="s1">github</span><span class="se">\\</span><span class="s1">ideas</span><span class="se">\\</span><span class="s1">docs_examples</span><span class="se">\\</span><span class="s1">export_hub</span><span class="se">\\</span><span class="s1">utils.py'</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">module</span> <span class="s1">'export_hub.utils'</span> <span class="kn">from</span><span class="w"> </span><span class="s1">'C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">Andre</span><span class="se">\\</span><span class="s1">github</span><span class="se">\\</span><span class="s1">ideas</span><span class="se">\\</span><span class="s1">docs_examples</span><span class="se">\\</span><span class="s1">included</span><span class="se">\\</span><span class="s1">export_keyword</span><span class="se">\\</span><span class="s1">export_hub</span><span class="se">\\</span><span class="s1">utils.py'</span><span class="o">&gt;</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">utils</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'inspect'</span><span class="p">,</span> <span class="s1">'internal'</span><span class="p">,</span> <span class="s1">'pdir'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'internal'</span><span class="p">,</span> <span class="s1">'pdir'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">]</span>
 </pre></div>
 </div>
 <aside class="sidebar">
@@ -285,11 +295,14 @@ in various places, and looking at the effect.</p>
 </pre></div>
 </div>
 <p>Imagine that we found many more seemingly useful public functions, like <code class="docutils literal notranslate"><span class="pre">pdir</span></code>,
-not having been imported when first imported the main package. We could import them
-now and try to make use of them.</p>
+not having been imported when first imported the main package.
+In a real life situation, perhaps a programmer created a single module
+containing many useful functions <strong>for internal use only</strong>, and made it easy
+to have them available on demand in any module by doing a star import.</p>
+<p>We could import these useful functions now and perhaps try to make use of them.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ideas&gt; from export_hub.utils import *  # excessive here
 ideas&gt; help(pdir)
-Help on function pdir in module export_hub.utils:
+Help on function pdir in module ideas.included.export_name:
 
 pdir(obj=None)
     Returns the contents of ``__all__`` if available,
@@ -324,15 +337,20 @@ multiple line ones, as they add information about updating <code class="docutils
 If your import hook does similar source code transformations,
 these two examples contain the required information.</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>A soft keyword is a name which is recognized as a Python keyword
 only in specific situations, but can otherwise be used as an
 identifier such as a variable name, function name, etc.</p>
 </aside>
-<aside class="footnote brackets" id="id5" role="doc-footnote">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>I did mention that this was a subjective opinion.</p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>Initially, I had not created such a file requiring both types of
+source transformation. Doing so highlighted a subtle bug…</p>
 </aside>
 </aside>
 </section>

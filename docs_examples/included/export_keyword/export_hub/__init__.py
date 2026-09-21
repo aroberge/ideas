@@ -1,4 +1,3 @@
-# flake8: noqa
 # export_hub/__init__.py
 
 from export_hub.gadgets export Widget, Gadget as NewGadget
