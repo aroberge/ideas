@@ -71,7 +71,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">from-export: PEP 843</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#proposed-implementation">Proposed implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#actual-implementation">Actual implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actual-implementation-of-this-import-hook">Actual implementation of this import hook</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#export-as-an-identifier">export as an identifier</a></li>
 </ul>
 </li>
@@ -92,6 +92,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../TODO.html">TODO</a></li>
 </ul>
 
         </div>
@@ -161,30 +165,30 @@ to mimic the proposed changes described in PEP 843.</p>
 <p>The code in this section is from an example that we currently
 did with this import hook.</p>
 <p>Suppose that we have the following file structure:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from_export_hub/
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>hub/
    __init__.py
    mod_a.py
    mod_b.py
-   sub_hub/
+   _internal/
        __init__.py
        mod_c.py
 </pre></div>
 </div>
 <p>with the following file contents:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># from_export_hub/__init__.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># hub/__init__.py</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">from_export_hub.mod_a</span> <span class="n">export</span> <span class="n">Widget</span><span class="p">,</span> <span class="n">Gadget</span> <span class="k">as</span> <span class="n">NewGadget</span><span class="p">,</span> <span class="n">export</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hub.mod_a</span> <span class="n">export</span> <span class="n">Widget</span><span class="p">,</span> <span class="n">Gadget</span> <span class="k">as</span> <span class="n">NewGadget</span><span class="p">,</span> <span class="n">export</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">from_export_hub.mod_b</span> <span class="n">export</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hub.mod_b</span> <span class="n">export</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span>
     <span class="n">b</span><span class="p">,</span>
     <span class="n">c</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># mod_c defines __all__ as a tuple</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">from_export_hub.sub_hub.mod_c</span> <span class="n">export</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hub._internal.mod_c</span> <span class="n">export</span> <span class="o">*</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># from_export_hub/mod_a.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># hub/mod_a.py</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Widget</span><span class="p">:</span> <span class="k">pass</span>
 
@@ -197,12 +201,12 @@ did with this import hook.</p>
 <span class="n">export</span> <span class="o">=</span> <span class="s2">"A safe name"</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># from_export_hub/mod_b.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># hub/mod_b.py</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span> <span class="o">=</span> <span class="n">e</span> <span class="o">=</span> <span class="n">f</span> <span class="o">=</span> <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># from_export_hub/sub_hub/mod_c.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># hub/_internal/mod_c.py</span>
 
 <span class="n">spam</span> <span class="o">=</span> <span class="s2">"spam"</span>
 <span class="n">ham</span> <span class="o">=</span> <span class="s2">"ham"</span>
@@ -216,24 +220,22 @@ did with this import hook.</p>
 <p>Here is what an interactive session with the Ideas console
 looks like:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a from_export
-Ideas Console version 0.2.0. [Python version: 3.11.9]
+Ideas Console version 0.3.4. [Python version: 3.11.9]
 ideas&gt; dir()
 ['__builtins__', 'ideas_state']
-ideas&gt; from from_export_hub import *
+ideas&gt; from hub import *
 ideas&gt; dir()
-['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'ideas_state', 'export', 'ham', 'spam']
-ideas&gt; export
+['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'export', 'ham', 'ideas_state', 'spam']
+ideas&gt; export  # variable name unaffected
 'A safe name'
 </pre></div>
 </div>
-<p>As we can verify, only the names that were “exported” have been imported.</p>
-<p>And here’s a similar experiment done within the normal Python repl:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; py
-Python 3.11.9 ...
-&gt;&gt;&gt; from ideas.included.from_export import add_hook
+<p>As we can verify, only the names that were meant to be “exported” have been imported.</p>
+<p>And here’s a similar experiment done using the normal Python repl:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; from ideas.included.from_export import add_hook
 &gt;&gt;&gt; hook = add_hook()
-&gt;&gt;&gt; import from_export_hub
-&gt;&gt;&gt; from_export_hub.__all__
+&gt;&gt;&gt; import hub
+&gt;&gt;&gt; hub.__all__
 ['Widget', 'NewGadget', 'export', 'a', 'b', 'c', 'spam', 'ham']
 </pre></div>
 </div>
@@ -261,17 +263,15 @@ it’s a <code class="docutils literal notranslate"><span class="pre">SyntaxErro
 <p>As such, we do <strong>not</strong> transform <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">..</span></code> if it occurs within
 a class or function body. Such code <strong>will</strong> result in a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>.</p>
 </section>
-<section id="actual-implementation">
-<h2>Actual implementation<a class="headerlink" href="#actual-implementation" title="Link to this heading"></a></h2>
-<p>To see the actual implementation, we can use the function <code class="docutils literal notranslate"><span class="pre">transform</span></code>
-which is available for that purpose.</p>
-<p>First, we consider an “export” statement with names fully specified.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">py</span>
-<span class="n">Python</span> <span class="mf">3.11.9</span> <span class="o">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.from_export</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">transform</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">transform</span><span class="p">(</span><span class="s2">"    from a.b export A, B as C"</span><span class="p">)</span>
+<section id="actual-implementation-of-this-import-hook">
+<h2>Actual implementation of this import hook<a class="headerlink" href="#actual-implementation-of-this-import-hook" title="Link to this heading"></a></h2>
+<p>To see the actual implementation, we can use the recently
+added command line option <code class="docutils literal notranslate"><span class="pre">--t</span></code> of the <span class="text-small-caps text-bold">ideas</span> entry point
+to quickly see the result.</p>
+<p>First, we consider an “export” statement with names fully specified,
+and arbitrarily indented to illustrate that the indentation
+is preserved.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">from_export</span> <span class="o">-</span><span class="n">t</span> <span class="s2">"       from a.b export A, B as C"</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">a.b</span><span class="w"> </span><span class="kn">import</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="k">as</span> <span class="n">C</span>
     <span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
     <span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
@@ -279,28 +279,26 @@ which is available for that purpose.</p>
 </pre></div>
 </div>
 <p>Next, we look at the star version:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="s2">"from module export *"</span><span class="p">)</span>
-<span class="go">from module import *</span>
-<span class="go">__all__ = globals().setdefault("__all__", [])</span>
-<span class="go">__all__ = list(__all__)</span>
-<span class="go">from . import module</span>
-<span class="go">if hasattr(module, "__all__"):</span>
-<span class="go">    __all__.extend(list(module.__all__))</span>
-<span class="go">else:</span>
-<span class="go">    for _ in dir(module):</span>
-<span class="go">        if not _.startswith("_"):</span>
-<span class="go">            __all__.append(_)</span>
-<span class="go">    del _</span>
-
-<span class="gp">&gt;&gt;&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">from_export</span> <span class="o">-</span><span class="n">t</span> <span class="s2">"from module export *"</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">module</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">"__all__"</span><span class="p">):</span>
+    <span class="n">__all__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">__all__</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_"</span><span class="p">):</span>
+            <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">_</span>
 </pre></div>
 </div>
 <p>Looking ahead we can also support the <code class="docutils literal notranslate"><span class="pre">lazy</span></code> keyword.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="s2">"lazy from math export pi"</span><span class="p">)</span>
-<span class="go">lazy from math import pi</span>
-<span class="go">__all__ = globals().setdefault("__all__", [])</span>
-<span class="go">__all__ = list(__all__)</span>
-<span class="go">__all__.extend(['pi'])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">from_export</span> <span class="o">-</span><span class="n">t</span> <span class="s2">"lazy from math export pi"</span>
+<span class="kn">lazy</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"__all__"</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">__all__</span><span class="p">)</span>
+<span class="n">__all__</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">'pi'</span><span class="p">])</span>
 </pre></div>
 </div>
 </section>
@@ -310,31 +308,34 @@ which is available for that purpose.</p>
 it is only replaced by <code class="docutils literal notranslate"><span class="pre">import</span></code>
 <strong>on a top-level</strong> <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">export</span> <span class="pre">...</span></code> statement.
 Using such a statement anywhere else will result in a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> when
-the code is executed by Python.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source</span> <span class="o">=</span> <span class="s1">'''</span>
-<span class="gp">... </span><span class="s1">def test():</span>
-<span class="gp">... </span><span class="s1">    from math export pi</span>
-<span class="gp">... </span><span class="s1">'''</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+the code is executed by Python.
+In the following example, we demonstrate this.
+Since we need to use a multiline example with indentation, we cannot
+do it with the <code class="docutils literal notranslate"><span class="pre">-t</span></code> option on the command line.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ideas&gt; from ideas import transform
+ideas&gt; with open("from_export_1.py", "r") as f:
+...     source = f.read()
+...
+ideas&gt; print(source)
+# from_export_1.py
 
-<span class="go">def test():</span>
-<span class="go">    from math export pi</span>
+def test():
+    from math export pi
+
+ideas&gt; transform(source)
+# from_export_1.py
+
+def test():
+    from math export pi
 </pre></div>
 </div>
-<p>As we can see, it has not changed. If we put this code in a file named
-<code class="docutils literal notranslate"><span class="pre">from_export_1.py</span></code> and try to import it, here is the result.</p>
-<p>… code-block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">from_export_1</span>
-<span class="go">An exception was raised while attempting to produce an AST.</span>
-<span class="go">File "C:/Users/Andre/github/ideas/docs_examples/from_export_1.py", line 5</span>
-<span class="go">    from math export pi</span>
-<span class="go">              ^^^^^^</span>
-<span class="go">SyntaxError: invalid syntax</span>
-
-
-<span class="go">You might want to use the command line flag --verbose or setting</span>
-<span class="go">session.ideas_state.verbose=True to get more details.</span>
-<span class="gp">&gt;&gt;&gt;</span>
+<p>We can see that no source transformation took place.
+Now, let’s try to import this file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ideas&gt; import from_export_1
+File "C:\Users\Andre\github\ideas\docs_examples\included\from_export\from_export_1.py", line 4
+    from math export pi
+              ^^^^^^
+SyntaxError: invalid syntax
 </pre></div>
 </div>
 </section>

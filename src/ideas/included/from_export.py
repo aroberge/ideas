@@ -40,31 +40,32 @@ Suppose that we have the following file structure:
 
 .. code-block:: none
 
-    from_export_hub/
+    hub/
        __init__.py
        mod_a.py
        mod_b.py
-       sub_hub/
+       _internal/
            __init__.py
            mod_c.py
 
 with the following file contents::
 
-    # from_export_hub/__init__.py
+    # hub/__init__.py
 
-    from from_export_hub.mod_a export Widget, Gadget as NewGadget, export
+    from hub.mod_a export Widget, Gadget as NewGadget, export
 
-    from from_export_hub.mod_b export (a,
+    from hub.mod_b export (a,
         b,
         c,
     )
 
     # mod_c defines __all__ as a tuple
-    from from_export_hub.sub_hub.mod_c export *
+    from hub._internal.mod_c export *
+
 
 .. code-block::
 
-    # from_export_hub/mod_a.py
+    # hub/mod_a.py
 
     class Widget: pass
 
@@ -78,13 +79,13 @@ with the following file contents::
 
 .. code-block::
 
-    # from_export_hub/mod_b.py
+    # hub/mod_b.py
 
     a = b = c = d = e = f = g = 1
 
 .. code-block::
 
-    # from_export_hub/sub_hub/mod_c.py
+    # hub/_internal/mod_c.py
 
     spam = "spam"
     ham = "ham"
@@ -100,27 +101,25 @@ looks like:
 .. code-block:: none
 
     > ideas -a from_export
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
+    Ideas Console version 0.3.4. [Python version: 3.11.9]
     ideas> dir()
     ['__builtins__', 'ideas_state']
-    ideas> from from_export_hub import *
+    ideas> from hub import *
     ideas> dir()
-    ['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'ideas_state', 'export', 'ham', 'spam']
-    ideas> export
+    ['NewGadget', 'Widget', '__builtins__', 'a', 'b', 'c', 'export', 'ham', 'ideas_state', 'spam']
+    ideas> export  # variable name unaffected
     'A safe name'
 
-As we can verify, only the names that were "exported" have been imported.
+As we can verify, only the names that were meant to be "exported" have been imported.
 
-And here's a similar experiment done within the normal Python repl:
+And here's a similar experiment done using the normal Python repl:
 
 .. code-block:: none
 
-    > py
-    Python 3.11.9 ...
     >>> from ideas.included.from_export import add_hook
     >>> hook = add_hook()
-    >>> import from_export_hub
-    >>> from_export_hub.__all__
+    >>> import hub
+    >>> hub.__all__
     ['Widget', 'NewGadget', 'export', 'a', 'b', 'c', 'spam', 'ham']
 
 Proposed implementation
@@ -149,22 +148,20 @@ it’s a ``SyntaxError`` inside a ``def`` or ``class`` body."
 As such, we do **not** transform ``from ... export ..`` if it occurs within
 a class or function body. Such code **will** result in a ``SyntaxError``.
 
-Actual implementation
----------------------
+Actual implementation of this import hook
+------------------------------------------
 
-To see the actual implementation, we can use the function ``transform``
-which is available for that purpose.
+To see the actual implementation, we can use the recently
+added command line option ``--t`` of the |ideas| entry point
+to quickly see the result.
 
-First, we consider an "export" statement with names fully specified.
+First, we consider an "export" statement with names fully specified,
+and arbitrarily indented to illustrate that the indentation
+is preserved.
 
 .. code-block::
 
-    > py
-    Python 3.11.9 ...
-    >>> from ideas.included.from_export import add_hook
-    >>> hook = add_hook()
-    >>> from ideas import transform
-    >>> transform("    from a.b export A, B as C")
+    > ideas -a from_export -t "       from a.b export A, B as C"
         from a.b import A, B as C
         __all__ = globals().setdefault("__all__", [])
         __all__ = list(__all__)
@@ -174,7 +171,7 @@ Next, we look at the star version:
 
 .. code-block::
 
-    >>> transform("from module export *")
+    > ideas -a from_export -t "from module export *"
     from module import *
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
@@ -187,13 +184,11 @@ Next, we look at the star version:
                 __all__.append(_)
         del _
 
-    >>>
-
 Looking ahead we can also support the ``lazy`` keyword.
 
 .. code-block::
 
-    >>> transform("lazy from math export pi")
+    > ideas -a from_export -t "lazy from math export pi"
     lazy from math import pi
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
@@ -208,35 +203,39 @@ it is only replaced by ``import``
 **on a top-level** ``from ... export ...`` statement.
 Using such a statement anywhere else will result in a ``SyntaxError`` when
 the code is executed by Python.
+In the following example, we demonstrate this.
+Since we need to use a multiline example with indentation, we cannot
+do it with the ``-t`` option on the command line.
 
-.. code-block::
+.. code-block:: none
 
-    >>> source = '''
-    ... def test():
-    ...     from math export pi
-    ... '''
-    >>> transform(source)
+    ideas> from ideas import transform
+    ideas> with open("from_export_1.py", "r") as f:
+    ...     source = f.read()
+    ...
+    ideas> print(source)
+    # from_export_1.py
 
     def test():
         from math export pi
 
-As we can see, it has not changed. If we put this code in a file named
-``from_export_1.py`` and try to import it, here is the result.
+    ideas> transform(source)
+    # from_export_1.py
 
-... code-block::
+    def test():
+        from math export pi
 
-    >>> import from_export_1
-    An exception was raised while attempting to produce an AST.
-    File "C:/Users/Andre/github/ideas/docs_examples/from_export_1.py", line 5
+
+We can see that no source transformation took place.
+Now, let's try to import this file:
+
+.. code-block:: none
+
+    ideas> import from_export_1
+    File "C:\\Users\\Andre\\github\\ideas\\docs_examples\\included\\from_export\\from_export_1.py", line 4
         from math export pi
                   ^^^^^^
     SyntaxError: invalid syntax
-
-
-    You might want to use the command line flag --verbose or setting
-    session.ideas_state.verbose=True to get more details.
-    >>>
-
 """
 
 import sys

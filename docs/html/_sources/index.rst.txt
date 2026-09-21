@@ -63,12 +63,12 @@ Quick links to topics
     About tokens <tokenize>
     Capture of token_utils interactive demo <tokenize_notebook.ipynb>
 
+.. toctree::
+    :caption: Appendix
+
+    TODO <TODO>
+
 .. [1] Or, in some cases as shown later, using a custom codec.
-
-To do
------
-
-.. todolist::
 
 
 .. |tm| unicode:: U+000AE .. REGISTERED SIGN

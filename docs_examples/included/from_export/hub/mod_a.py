@@ -1,5 +1,4 @@
-# flake8: noqa
-# from_export_hub/mod_a.py
+# hub/mod_a.py
 
 class Widget: pass
 

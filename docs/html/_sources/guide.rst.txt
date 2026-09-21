@@ -23,6 +23,14 @@ If you want to write your own import hook, it might be worth your while
 reading a few of the following examples, if not all of them,
 especially including examining the source code.
 
+For most, if not all the source transformation examples we created,
+we used the module ``token_utils`` whose first version was
+created as part of |ideas|. Following a suggestion by a would-be user,
+we made it into a separate package available via Pypi.
+If you installed |ideas|, it should have also been installed
+automatically. You can get it on its own using
+``python -m pip install token_utils``.
+
 .. important::
 
     This entire project is meant as enabling **easy experiments** with
