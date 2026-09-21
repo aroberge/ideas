@@ -385,7 +385,7 @@ class ExportInfo:
             if not self.open_parens:  # this should be the case
                 self.from_stmt_info["next row"] = self.current_row + 1
         elif self.token == "*":
-            self.from_stmt_info["public names"] = "*"
+            self.from_stmt_info["public names"] = ["*"]
 
 
 def _display_location(info):
@@ -423,7 +423,7 @@ def insert_all_info(new_tokens, current_info):
 {indent}    del _
 """
 
-    if current_info["public names"] == "*":
+    if current_info["public names"] == ["*"]:
         module = current_info["module name"]
         nb_dots = module.count(".")
         if nb_dots < 2:
