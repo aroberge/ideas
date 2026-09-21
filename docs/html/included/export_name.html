@@ -9,7 +9,7 @@
   <title>export name (PEP 842) &mdash; ideas 0.3.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
@@ -194,8 +194,8 @@ standard Python interpreter.</p>
 <span class="p">[</span><span class="s1">'PI'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'pi'</span><span class="p">,</span> <span class="s1">'private'</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">,</span> <span class="s1">'secret'</span><span class="p">,</span> <span class="s1">'useful_fn'</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Looking closely at the output, we can see that <code class="docutils literal notranslate"><span class="pre">private</span></code>, <code class="docutils literal notranslate"><span class="pre">pi</span></code>, and <code class="docutils literal notranslate"><span class="pre">secret</span></code> are not exposed, but
-it is not easy to see. However, they are still available.</p>
+<p>Looking closely at the output, we can see that <code class="docutils literal notranslate"><span class="pre">private</span></code>, <code class="docutils literal notranslate"><span class="pre">pi</span></code>, and <code class="docutils literal notranslate"><span class="pre">secret</span></code>
+which were not meant to be exposed are still visible and are available.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">export_name_1</span><span class="o">.</span><span class="n">secret</span>
 <span class="go">"Ideas's code is a mess."</span>
 </pre></div>
@@ -208,7 +208,8 @@ if it is safe to use a star-import.</p>
 </div>
 <section id="a-restricted-dir">
 <h2>A restricted <code class="docutils literal notranslate"><span class="pre">dir</span></code><a class="headerlink" href="#a-restricted-dir" title="Link to this heading"></a></h2>
-<p>As we can see from the example above, when simply using <code class="docutils literal notranslate"><span class="pre">dir</span></code> it might be difficult to identify
+<p>As we can see from the example above, when simply using <code class="docutils literal notranslate"><span class="pre">dir</span></code>, which is what a Python
+programmer normally does to see the avaiable names, it might be difficult to identify
 which names are “public”. Presumably for this reason, PEP 842 suggests that using <code class="docutils literal notranslate"><span class="pre">export</span></code>
 in a module should also result in creating a <code class="docutils literal notranslate"><span class="pre">__dir__</span></code> function within this module so that
 Python’s <code class="docutils literal notranslate"><span class="pre">dir</span></code> function can be restricted to only show the desired names.</p>
@@ -223,8 +224,9 @@ below.</p>
 <span class="p">[</span><span class="s1">'PI'</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">,</span> <span class="s1">'useful_fn'</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>We can nonetheless still see all the available names that <code class="docutils literal notranslate"><span class="pre">dir</span></code> would have shown us before,
-and then some …</p>
+<p>This is indeed the desired result.
+We can nonetheless still see all the available names that <code class="docutils literal notranslate"><span class="pre">dir</span></code> would have shown us before
+using <code class="docutils literal notranslate"><span class="pre">vars</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">export_name_1</span><span class="p">))</span>
 <span class="go">['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__file__', '__cached__', '__builtins__', '__all__', '__dir__', 'pi', 'PI', 'public', 'useful_fn', 'private', 'secret']</span>
 </pre></div>
@@ -234,7 +236,7 @@ that we have written, which extracts the content of <code class="docutils litera
 gives us what <code class="docutils literal notranslate"><span class="pre">dir</span></code> would give us normally, but not always in the same order.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">py</span>
 <span class="n">Python</span> <span class="mf">3.11.9</span> <span class="o">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdir</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_name</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdir</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">pdir</span><span class="p">()</span>
 <span class="p">[</span><span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'__annotations__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'pdir'</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">pdir</span><span class="p">()</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="o">==</span> <span class="nb">dir</span><span class="p">()</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
@@ -242,6 +244,9 @@ gives us what <code class="docutils literal notranslate"><span class="pre">dir</
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_name</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">export_name_1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">export_name_1</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">'PI'</span><span class="p">,</span> <span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'pi'</span><span class="p">,</span> <span class="s1">'private'</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">,</span> <span class="s1">'secret'</span><span class="p">,</span> <span class="s1">'useful_fn'</span><span class="p">]</span>
+
 <span class="o">&gt;&gt;&gt;</span> <span class="n">pdir</span><span class="p">(</span><span class="n">export_name_1</span><span class="p">)</span>
 <span class="p">[</span><span class="s1">'PI'</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">,</span> <span class="s1">'useful_fn'</span><span class="p">]</span>
 </pre></div>
@@ -303,24 +308,20 @@ option. However, we can’t simply use the <code class="docutils literal notrans
 it only takes a source as an argument and we need to tell
 our import hook other arguments to take into account.
 However, we can import a file, defined as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export_name_2.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># flake8: noqa</span>
+<span class="c1"># export_name_2.py</span>
 <span class="n">export</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'Bob'</span>
 </pre></div>
 </div>
-<p>Here’s a sample session.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">py</span>
-<span class="n">Python</span> <span class="mf">3.11.9</span> <span class="o">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas.included.export_name</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_hook</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">ideas_state</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">hook</span> <span class="o">=</span> <span class="n">add_hook</span><span class="p">(</span><span class="n">public_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">export_name_2</span>
+<p>We’ll use the <span class="text-small-caps text-bold">ideas</span> command line so as to reduce the amount
+of typing required.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">ideas</span> <span class="o">-</span><span class="n">a</span> <span class="n">export_name</span> <span class="o">-</span><span class="n">s</span> <span class="n">export_name_2</span> <span class="o">--</span><span class="n">callback_params</span> <span class="n">public_dir</span><span class="o">=</span><span class="kc">True</span>
 
-<span class="c1">#========== Original source from C:\Users\Andre\github\ideas\docs_examples\export_name_2.py ====</span>
+<span class="c1">#========== Original source from docs_examples/export_name/export_name_2.py ====</span>
 <span class="c1"># flake8: noqa</span>
 <span class="c1"># export_name_2.py</span>
 <span class="n">export</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'Bob'</span>
-<span class="c1">#=== End of Original source from C:\Users\Andre\github\ideas\docs_examples\export_name_2.py ====</span>
+<span class="c1">#=== End of Original source from docs_examples/export_name/export_name_2.py ====</span>
 
 
 <span class="c1">#========== Transformed source ====</span>

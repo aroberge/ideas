@@ -1,0 +1,11 @@
+{
+    "telemetry.feedback.enabled": false,
+    "telemetry.editStats.enabled": false,
+    "python.analysis.aiCodeActions": {
+
+        "implementAbstractClasses": true,
+        "generateSymbol": true,
+        "convertFormatString": true
+    },
+    "python.analysis.ignore": ["**/docs_examples", "**/tests"]
+}

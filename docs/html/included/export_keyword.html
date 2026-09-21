@@ -9,7 +9,7 @@
   <title>export as a keyword (PEPs 842 + 843) &mdash; ideas 0.3.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
 
@@ -240,26 +240,6 @@ essentially demonstrating the use of all cases of <code class="docutils literal 
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export_hub/utils.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
-
-
-<span class="n">export</span> <span class="k">def</span><span class="w"> </span><span class="nf">pdir</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># currently meant for internal use by the Team.</span>
-<span class="w">    </span><span class="sd">"""Returns the contents of ``__all__`` if available,</span>
-<span class="sd">    if not returns what ``dir`` would."""</span>
-
-
-    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">"__all__"</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">__all__</span>
-        <span class="k">return</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-
-    <span class="n">caller_frame</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_back</span>
-    <span class="n">caller_locals</span> <span class="o">=</span> <span class="n">caller_frame</span><span class="o">.</span><span class="n">f_locals</span> <span class="k">if</span> <span class="n">caller_frame</span> <span class="k">else</span> <span class="p">{}</span>
-    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">"__all__"</span> <span class="ow">in</span> <span class="n">caller_locals</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">caller_locals</span><span class="p">[</span><span class="s2">"__all__"</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">caller_locals</span><span class="p">)</span>  <span class="c1"># only the keys</span>
 
 <span class="n">export</span> <span class="k">def</span><span class="w"> </span><span class="nf">useful</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm useful."</span><span class="p">)</span>
 

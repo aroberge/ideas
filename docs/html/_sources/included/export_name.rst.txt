@@ -20,6 +20,5 @@ export name (PEP 842)
 
 .. automodule:: ideas.included.export_name
 
-
 We will see how to combine our limited implementation of both PEP 842 and PEP 843
 in the next section, :doc:`export as a keyword <./export_keyword>`.

@@ -60,8 +60,8 @@ standard Python interpreter.
     >>> dir(export_name_1)
     ['PI', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'pi', 'private', 'public', 'secret', 'useful_fn']
 
-Looking closely at the output, we can see that ``private``, ``pi``, and ``secret`` are not exposed, but
-it is not easy to see. However, they are still available.
+Looking closely at the output, we can see that ``private``, ``pi``, and ``secret``
+which were not meant to be exposed are still visible and are available.
 
 .. code-block::
 
@@ -77,7 +77,8 @@ if it is safe to use a star-import.
 A restricted ``dir``
 --------------------
 
-As we can see from the example above, when simply using ``dir`` it might be difficult to identify
+As we can see from the example above, when simply using ``dir``, which is what a Python
+programmer normally does to see the avaiable names, it might be difficult to identify
 which names are "public". Presumably for this reason, PEP 842 suggests that using ``export``
 in a module should also result in creating a ``__dir__`` function within this module so that
 Python's ``dir`` function can be restricted to only show the desired names.
@@ -95,8 +96,9 @@ below.
     >>> dir(export_name_1)
     ['PI', 'public', 'useful_fn']
 
-We can nonetheless still see all the available names that ``dir`` would have shown us before,
-and then some ...
+This is indeed the desired result.
+We can nonetheless still see all the available names that ``dir`` would have shown us before
+using ``vars``.
 
 .. code-block::
 
@@ -111,7 +113,7 @@ gives us what ``dir`` would give us normally, but not always in the same order.
 
     > py
     Python 3.11.9 ...
-    >>> from ideas.utils import pdir
+    >>> from ideas.included.export_name import pdir
     >>> pdir()
     ['__name__', '__doc__', '__package__', '__loader__', '__spec__', '__annotations__', '__builtins__', 'pdir']
     >>> pdir().sort() == dir().sort()
@@ -119,6 +121,9 @@ gives us what ``dir`` would give us normally, but not always in the same order.
     >>> from ideas.included.export_name import add_hook
     >>> hook = add_hook()
     >>> import export_name_1
+    >>> dir(export_name_1)
+    ['PI', '__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'pi', 'private', 'public', 'secret', 'useful_fn']
+
     >>> pdir(export_name_1)
     ['PI', 'public', 'useful_fn']
 
@@ -192,26 +197,22 @@ However, we can import a file, defined as follows:
 
 .. code-block::
 
-    # export_name_2.py
-    export name = 'Bob'
-
-Here's a sample session.
-
-.. code-block::
-
-    > py
-    Python 3.11.9 ...
-    >>> from ideas.included.export_name import add_hook
-    >>> from ideas import ideas_state
-    >>> ideas_state.show_changes = True
-    >>> hook = add_hook(public_dir=True)
-    >>> import export_name_2
-
-    #========== Original source from C:\\Users\\Andre\\github\\ideas\\docs_examples\\export_name_2.py ====
     # flake8: noqa
     # export_name_2.py
     export name = 'Bob'
-    #=== End of Original source from C:\\Users\\Andre\\github\\ideas\\docs_examples\\export_name_2.py ====
+
+We'll use the |ideas| command line so as to reduce the amount
+of typing required.
+
+.. code-block::
+
+    > ideas -a export_name -s export_name_2 --callback_params public_dir=True
+
+    #========== Original source from docs_examples/export_name/export_name_2.py ====
+    # flake8: noqa
+    # export_name_2.py
+    export name = 'Bob'
+    #=== End of Original source from docs_examples/export_name/export_name_2.py ====
 
 
     #========== Transformed source ====
@@ -229,16 +230,31 @@ Here's a sample session.
 As we can see, at the top of the transformed source, a new ``__dir__`` function
 has been introduced.
 
-
-
-
-
-
 """
 
 from ideas.utils import get_significant_tokens
 import token_utils
 from ideas import ideas_state
+
+
+def pdir(obj=None):
+    """Returns the contents of ``__all__`` if available,
+    if not returns what ``dir`` would."""
+    import inspect
+
+    if obj is not None:
+        if hasattr(obj, "__all__"):
+            return obj.__all__
+        return dir(obj)
+
+    caller_frame = inspect.currentframe().f_back
+    caller_locals = caller_frame.f_locals if caller_frame else {}
+    if obj is None:
+        if "__all__" in caller_locals:
+            return caller_locals["__all__"]
+        else:
+            return list(caller_locals)  # only the keys
+
 
 # A better programmer would likely have written a recursive descent parser,
 # or something similar, to process the source, extract the relevant information

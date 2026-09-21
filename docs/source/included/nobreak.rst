@@ -1,3 +1,9 @@
+.. todo::
+
+   This was one of the first examples created and only works with the simplest possible examples.
+   It needs to be made more robust.
+
+
 .. admonition:: Summary
 
    This import hook enables someone to use ``nobreak`` as a keyword
