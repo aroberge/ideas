@@ -354,6 +354,7 @@ class ExportInfo:
         if self.begin_from:
             self.from_statements_info.append(self.from_stmt_info)
             self.from_stmt_info = {}
+            self.begin_from = False
         self.current_row = self.token.start_row
 
     def process_until_export_statement(self):
