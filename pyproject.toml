@@ -29,7 +29,7 @@ classifiers = [
 dependencies = ["token-utils"]
 
 [project.urls]
-Documentation = "https://github.com/aroberge/ideas#readme"
+Documentation = "https://aroberge.github.io/ideas/docs/html/"
 Issues = "https://github.com/aroberge/ideas/issues"
 Source = "https://github.com/aroberge/ideas"
 
