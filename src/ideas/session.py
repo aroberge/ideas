@@ -308,7 +308,9 @@ class State:
 
         # If planning to change this, to perhaps traceback.print_exception
         # try various cases with and without ideas_state.verbose = True
-        error_string = "".join(traceback.format_exception(exc_value, limit=limit))
+        error_string = "".join(
+            traceback.format_exception(exc_type, exc_value, tb, limit=limit)
+        )
         print(error_string)
 
 

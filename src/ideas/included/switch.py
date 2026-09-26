@@ -58,7 +58,10 @@ def transform_source(source, callback_params=None, **_kwargs):
 
         if len(line) > 1:
             _index = token_utils.get_first_index(line)
-            second_token = line[_index + 1]
+            try:
+                second_token = line[_index + 1]
+            except IndexError:
+                second_token = None
         else:
             second_token = None
 

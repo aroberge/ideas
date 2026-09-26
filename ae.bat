@@ -8,6 +8,7 @@ if "%1"=="3.11" goto py_311
 if "%1"=="3.12" goto py_312
 if "%1"=="3.13" goto py_313
 if "%1"=="3.14" goto py_314
+if "%1"=="3.15" goto py_315
 if "%1"=="units" goto units
 if "%1"=="ipython" goto ipython
 
@@ -41,10 +42,14 @@ goto end
 venv-ideas3.14\scripts\activate
 goto end
 
+:py_315
+venv-ideas3.15\scripts\activate
+goto end
 
 REM Separate since it requires pint and astropy
 :units
 venv-units\scripts\activate
+goto end
 
 :ipython
 venv-ipython\scripts\activate
