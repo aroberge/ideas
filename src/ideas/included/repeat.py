@@ -138,19 +138,23 @@ def transform_source(source, callback_params=None, **_kwargs):
     else:
         variable_name = utils.generate_variable_names()
 
-    for tokens in token_utils.get_lines(source):
-        # a line of tokens can start with INDENT or DEDENT tokens ...
-        first_token = token_utils.get_first(tokens)
+    for tokens in token_utils.get_stripped_lines(source):
+        # removed indentation; last token is "\n"
+        first_token = tokens[0]
         if first_token == "repeat":
-            last_token = token_utils.get_last(tokens)
+            if ":" not in first_token.line:
+                raise RepeatSyntaxError(
+                    "Missing colon for repeat statement on line "
+                    + f"{first_token.start_row}\n    {first_token.line}"
+                )
+            nb = token_utils.get_number_significant_tokens(tokens)
+            last_token = tokens[nb - 1]
             if last_token != ":":
                 raise RepeatSyntaxError(
                     "Missing colon for repeat statement on line "
                     + f"{first_token.start_row}\n    {first_token.line}"
                 )
-
-            repeat_index = token_utils.get_first_index(tokens)
-            second_token = tokens[repeat_index + 1]
+            second_token = tokens[1]
             if second_token == "forever":
                 first_token.string = "while"
                 second_token.string = "True"

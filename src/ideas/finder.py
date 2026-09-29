@@ -108,7 +108,10 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
 
         found = False
         for entry in path:
-            if os.path.isdir(os.path.join(entry, module_name)):
+            if (
+                os.path.isdir(os.path.join(entry, module_name))
+                and ".py" in self.ideas_hook.extensions
+            ):
                 # this module has child modules
                 filename = os.path.join(entry, module_name, "__init__.py")
                 submodule_locations = [os.path.join(entry, module_name)]

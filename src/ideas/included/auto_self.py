@@ -178,19 +178,16 @@ def transform_source(source, **_kwargs):
     self_name = ""
     indentation = 0
 
-    get_nb = token_utils.get_number
-    get_first = token_utils.get_first
-    get_first_index = token_utils.get_first_index
-
-    for tokens in token_utils.get_lines(source):
+    for tokens in token_utils.get_stripped_lines(source):
+        meaningful_tokens_nb = token_utils.get_number_significant_tokens(tokens)
         if auto_self_block:
-            variable = get_first(tokens)
-            if variable is not None:  # None would mean an empty line
+            if meaningful_tokens_nb >= 1:
+                variable = tokens[0]
                 var_name = variable.string
                 block_indent = variable.start_col
                 if block_indent > indentation:
                     dedent = block_indent - indentation
-                    if get_nb(tokens) == 1:
+                    if meaningful_tokens_nb == 1:
                         variable.string = f"{self_name}.{var_name} = {var_name}"
                         tokens = token_utils.dedent(tokens, dedent)
                     else:
@@ -201,17 +198,16 @@ def transform_source(source, **_kwargs):
                         tokens = token_utils.dedent(tokens, dedent)
                 else:
                     auto_self_block = False
-        elif get_nb(tokens) == 4:
-            index = get_first_index(tokens)
+        elif meaningful_tokens_nb == 4:
             if (
-                tokens[index].is_identifier()
-                and tokens[index + 1] == "."
-                and tokens[index + 2] == "="
-                and tokens[index + 1].end_col == tokens[index + 2].start_col
-                and tokens[index + 3] == ":"
+                tokens[0].is_identifier()
+                and tokens[1] == "."
+                and tokens[2] == "="
+                and tokens[1].is_immediately_before(tokens[2])
+                and tokens[3] == ":"
             ):
-                self_name = tokens[index].string
-                indentation = tokens[index].start_col
+                self_name = tokens[0].string
+                indentation = tokens[0].start_col
                 auto_self_block = True
                 continue
         new_tokens.extend(tokens)

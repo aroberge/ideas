@@ -47,12 +47,7 @@ from ast import (
     literal_eval,
 )
 
-try:
-    from token_utils import py_token as token
-except ImportError:
-    print("py_token not available;")
-    print("you may need to update your version of token_utils")
-    import token
+import token
 import token_utils
 from typing import Iterable
 

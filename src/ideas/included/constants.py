@@ -183,16 +183,14 @@ def transform_source(source, filename=None, **_kwargs):
     if filename not in DECLARED_FINAL:
         DECLARED_FINAL[filename] = set([])
 
-    for tokens in token_utils.get_lines(source):
-        # a line of tokens can start with DEDENT tokens ...
-        if token_utils.get_number(tokens) > 3:
-            index = token_utils.get_first_index(tokens)
-            first_token = tokens[index]
+    for tokens in token_utils.get_stripped_lines(source):
+        nb_tokens = token_utils.get_number_significant_tokens(tokens)
+        if nb_tokens > 3:
+            first_token = tokens[0]
             if (
-                first_token.start_col == 0
-                and first_token.is_identifier()
-                and tokens[index + 1] == ":"
-                and tokens[index + 2] == "Final"
+                first_token.is_identifier()
+                and tokens[1] == ":"
+                and tokens[2] == "Final"
             ):
 
                 DECLARED_FINAL[filename].add(first_token.string)

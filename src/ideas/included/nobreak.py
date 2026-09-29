@@ -78,12 +78,12 @@ def transform_source(source, **_kwargs):
     that of a ``for`` or ``while`` block.
     """
     indentations = {}
-    lines = token_utils.get_lines(source)
+    lines = token_utils.get_stripped_lines(source)
     new_tokens = []
     # The following is not a proper parser, but it should work
     # well enough in most cases, for well-formatted code.
     for line in lines:
-        first = token_utils.get_first(line)
+        first = line[0]
         if first is None:
             new_tokens.extend(line)
             continue

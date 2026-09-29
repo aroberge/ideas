@@ -50,18 +50,14 @@ def transform_source(source, callback_params=None, **_kwargs):
     else:
         variable_name = utils.generate_variable_names()
 
-    for line in token_utils.get_lines(source):
-        first_token = token_utils.get_first(line)
+    for line in token_utils.get_stripped_lines(source):
+        first_token = line[0] if line else None
         if first_token is None:
             new_tokens.extend(line)
             continue
 
         if len(line) > 1:
-            _index = token_utils.get_first_index(line)
-            try:
-                second_token = line[_index + 1]
-            except IndexError:
-                second_token = None
+            second_token = line[1]
         else:
             second_token = None
 
@@ -72,8 +68,14 @@ def transform_source(source, callback_params=None, **_kwargs):
                 first_token.string = f"{var_name} ="
                 switch_block = True
                 first_case = True
-                colon = token_utils.get_last(line)
-                colon.string = ""
+                if line[-1] == ":":  # no end of line comment
+                    colon = line[-1]
+                    colon.string = ""
+                elif line[-2] == ":":
+                    colon = line[-2]
+                    colon.string = ""
+                else:
+                    raise Exception("colon not found!")
         else:
             if first_token.start_col == switch_indent:
                 switch_block = False

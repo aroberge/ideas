@@ -427,7 +427,12 @@ def extract_html(tokens: Iterable[Token], indent: str = "") -> HTML:
     Convert a list of tokens into HTML.  The tokens should not include the HTML
     delimiters.
     """
-    idx = token_utils.get_first_index(tokens)
+    idx = 0
+    for token in tokens:
+        if token.is_space():
+            idx += 1
+            continue
+        break
     # Opening tag
     idx, (typ, name, attrs) = extract_tag(tokens, idx)
 
