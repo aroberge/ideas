@@ -137,4 +137,4 @@ dmypy.json
 *log
 
 # the following are often used as quick tests
-ignore*
+temp*

@@ -26,6 +26,7 @@ from ideas.finder import IdeasMetaPathFinder
 def create_hook(
     name: str = "",
     callback_params: Optional[Dict[str, Any]] = None,
+    console_only: Optional[bool] = False,
     create_module: Optional[Callable[..., ModuleType]] = None,
     console_dict: Optional[Dict[str, Any]] = None,
     does_not_play_well_with_others: Optional[bool] = False,
@@ -55,6 +56,8 @@ def create_hook(
       to be passed back to the ``transform_source`` function.
     * ``create_module``: a custom function to create a module object
       instead of using Python's default.
+    * ``console_only``: indicates that this will only be active in
+    the console for code transformation.
     * ``console_dict``: a dict object used as 'locals' with the Ideas console,
       instead of its usual default.
     * ``does_not_play_well_with_others``: if ``True``, indicates that no
@@ -98,6 +101,7 @@ def create_hook(
 
     hook = IdeasHook(
         callback_params=callback_params,
+        console_only=console_only,
         create_module=create_module,
         does_not_play_well_with_others=does_not_play_well_with_others,
         excluded_paths=excluded_paths,

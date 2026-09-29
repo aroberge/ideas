@@ -90,7 +90,8 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
         # Avoid lots of spurious print statements when running verbose tests
         if fullname == "pygments":  # We don't care about modifying "pygments"
             return None
-
+        if self.ideas_hook.console_only:
+            return None
         if not self.ideas_hook.enabled:
             verbose_finder(
                 f"Hook {self.ideas_hook.name} disabled in IdeasMetaPathFinder."

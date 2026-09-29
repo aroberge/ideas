@@ -12,6 +12,7 @@ class IdeasHook:
     def __init__(
         self,
         callback_params: Optional[Dict[str, Any]] = None,
+        console_only: Optional[bool] = False,
         create_module: Optional[Callable[..., ModuleType]] = None,
         does_not_play_well_with_others: Optional[bool] = False,
         exec_: Optional[Callable[..., None]] = None,
@@ -26,6 +27,7 @@ class IdeasHook:
         transform_source: Optional[Callable[[str], str]] = None,
     ):
         self.callback_params = callback_params
+        self.console_only = console_only
         self.create_module = create_module
         if excluded_paths is utils.DEFAULT:
             self.excluded_paths = [utils.PYTHON, utils.SITE_PACKAGES, utils.IDEAS]
