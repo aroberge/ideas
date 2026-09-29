@@ -87,6 +87,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--prompt",
+    type=str,
+    help="""Specifies the prompt to use in the console. Python's would be ">>> ".""",
+)
+
+
+parser.add_argument(
     "-s",
     "--show_changes",
     action="store_true",
@@ -169,6 +176,11 @@ def main() -> None:
 
     ideas_state.show_changes = args.show_changes
 
+    if args.prompt:
+        prompt = args.prompt
+    else:
+        prompt = "ideas> "
+
     ideas_state.verbose_finder = args.verbose_finder
     ideas_state.verbose_loader = args.verbose_loader
     ideas_state.verbose = args.verbose
@@ -198,7 +210,7 @@ def main() -> None:
         return
 
     if not args.source:
-        console.start()
+        console.start(prompt=prompt)
         return
 
     # The command used was something like:
@@ -212,7 +224,7 @@ def main() -> None:
 
     if args.source == "pygments":
         print("'pygments' is the single module excluded from being processed by ideas.")
-        console.start()
+        console.start(prompt=prompt)
         return
 
     ideas_state.source_argument = args.source
@@ -228,7 +240,7 @@ def main() -> None:
         except Exception as exc:
             ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
-            console.start(locals_=source_dict)
+            console.start(locals_=source_dict, prompt=prompt)
         return
 
     if run_as_main:
@@ -238,7 +250,7 @@ def main() -> None:
             pass
         else:
             if sys.flags.interactive or args.i:
-                console.start(locals_=module.__dict__)
+                console.start(locals_=module.__dict__, prompt=prompt)
             return
 
     try:
@@ -246,11 +258,11 @@ def main() -> None:
     except Exception as exc:
         ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
-            console.start(locals_=module.__dict__)
+            console.start(locals_=module.__dict__, prompt=prompt)
         return
 
     if sys.flags.interactive or args.i:
-        console.start(locals_=module.__dict__)
+        console.start(locals_=module.__dict__, prompt=prompt)
 
 
 if __name__ == "__main__":
