@@ -144,6 +144,17 @@ def add_transform(transform, callback_params={}):
         module = import_module(transform)
     except (ImportError, ModuleNotFoundError):
         pass
+    except SyntaxError:
+        print(f"A SyntaxError occurred while trying to load {transform}.")
+        for hook in ideas_state._hooks:
+            if hook.does_not_play_well_with_others:
+                print(
+                    f"\n{hook.name} is already installed and cannot be combined with other hooks."
+                )
+                print(f"{transform} will not be installed.\n")
+                return
+        else:
+            raise
     else:
         try:
             add_hook = getattr(module, "add_hook")
@@ -158,6 +169,17 @@ def add_transform(transform, callback_params={}):
         module = import_module(path)
     except ImportError:
         print(f"{path} is not a known transformer.")
+    except SyntaxError:
+        print(f"A SyntaxError occurred while trying to load {path}.")
+        for hook in ideas_state._hooks:
+            if hook.does_not_play_well_with_others:
+                print(
+                    f"\n{hook.name} is already installed and cannot be combined with other hooks."
+                )
+                print(f"{path} will not be installed.\n")
+                return
+        else:
+            raise
     else:
         getattr(module, "add_hook")(**callback_params)
         return module

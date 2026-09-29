@@ -13,10 +13,11 @@ class IdeasHook:
         self,
         callback_params: Optional[Dict[str, Any]] = None,
         create_module: Optional[Callable[..., ModuleType]] = None,
+        does_not_play_well_with_others: Optional[bool] = False,
         exec_: Optional[Callable[..., None]] = None,
         extensions: Optional[Sequence[str]] = None,
         excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
-        name: Optional[str] = None,
+        name: str = "",
         module_class: Optional[type] = None,
         parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
         source_init: Optional[Callable[[], str]] = None,
@@ -32,8 +33,13 @@ class IdeasHook:
             self.excluded_paths = []
         else:
             self.excluded_paths = excluded_paths
+        self.does_not_play_well_with_others = does_not_play_well_with_others
         self.exec_ = exec_
         self.extensions = extensions if extensions is not None else [".py"]
+        if not name:
+            raise ValueError(
+                "IdeasHook name is required and must be the name of its source module."
+            )
         self.name = name
         self.module_class = module_class
         self.parse_source = parse_source

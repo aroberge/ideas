@@ -203,7 +203,6 @@ def parse_source(src, filename, mode, **_kwargs):
 def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = create_hook(
-        name=__name__,
-        parse_source=parse_source,
+        name=__name__, parse_source=parse_source, does_not_play_well_with_others=True
     )
     return hook

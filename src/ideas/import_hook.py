@@ -28,6 +28,7 @@ def create_hook(
     callback_params: Optional[Dict[str, Any]] = None,
     create_module: Optional[Callable[..., ModuleType]] = None,
     console_dict: Optional[Dict[str, Any]] = None,
+    does_not_play_well_with_others: Optional[bool] = False,
     exec_: Optional[Callable[..., None]] = None,
     extensions: Optional[Sequence[str]] = None,
     excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
@@ -56,6 +57,8 @@ def create_hook(
       instead of using Python's default.
     * ``console_dict``: a dict object used as 'locals' with the Ideas console,
       instead of its usual default.
+    * ``does_not_play_well_with_others``: if ``True``, indicates that no
+    other hook must be installed.
     * ``exec_``: a custom method used to execute the source code inside
       a module's dict.
     * ``extensions``: a list of file extensions, other than the usual `.py`, etc.,
@@ -96,6 +99,7 @@ def create_hook(
     hook = IdeasHook(
         callback_params=callback_params,
         create_module=create_module,
+        does_not_play_well_with_others=does_not_play_well_with_others,
         excluded_paths=excluded_paths,
         exec_=exec_,
         extensions=extensions,
@@ -107,6 +111,26 @@ def create_hook(
         transform_source=transform_source,
         parse_source=parse_source,
     )
+
+    for hook in ideas_state._hooks:
+        if hook.does_not_play_well_with_others:
+            print(
+                f"\n{hook.name} is already installed and cannot be combined with other hooks."
+            )
+            print(f"{name} will not be installed.\n")
+            return
+    if does_not_play_well_with_others:
+        if ideas_state._hooks:
+            print(
+                f"\n{name} can only be installed by itself and other hooks are already installed."
+            )
+            print(f"{name} will not be installed.\n")
+            return
+    for hook in ideas_state._hooks:
+        if hook.name == name:
+            print(f"\n{name} is already installed.\n")
+            return
+
     ideas_state._add_hook(hook)
     hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)
 
