@@ -92,6 +92,17 @@ class IdeasConsole(InteractiveConsole):
         """
         self.buffer.append(line)
         source = "\n".join(self.buffer)
+
+        # Some transformations, such as the polish_expr example,
+        # might mess with 'exit()' or 'quit()', etc, so we intercept it.
+        if (
+            source == "exit()"
+            or source == "quit()"
+            or source == "exit"
+            or source == "quit"
+        ):
+            raise SystemExit
+
         ideas_state.original_source = source
 
         last_line = source.endswith("\n")  # signals the end of a block

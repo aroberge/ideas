@@ -4,6 +4,10 @@ Friendlier floats
 
 Documentation to be written.
 
+Add https://github.com/aroberge/experimental/blob/master/experimental/transformers/approx.py
+
+Include math.isclose and cmath.isclose
+
 ≈
 ~
 
@@ -36,8 +40,10 @@ def display_hook(value):
         if str_.endswith(".0"):
             str_ = str_[:-2]
         print(f"~{str_}\n")
-    else:
+    elif isinstance(value, Fraction):
         print(value, "\n")
+    else:
+        print(value)
 
 
 def transform_source(source, **_kwargs):
