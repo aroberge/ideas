@@ -19,4 +19,13 @@ call venv-ideas3.13\scripts\activate & python -m pip install token-utils --upgra
 echo Python 3.14:
 call venv-ideas3.14\scripts\activate & python -m pip install token-utils --upgrade
 
-call venv-ideas3.11\scripts\activate
+echo Python 3.15:
+call venv-ideas3.15\scripts\activate & python -m pip install token-utils --upgrade
+
+echo ipython:
+call venv-ipython\scripts\activate & python -m pip install token-utils --upgrade
+
+echo units:
+call venv-units\scripts\activate & python -m pip install token-utils --upgrade
+
+call venv-ideas3.10\scripts\activate

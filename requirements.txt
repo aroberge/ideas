@@ -1,1 +1,1 @@
-token-utils>=0.2.4
+token-utils>=0.3.0
