@@ -50,7 +50,7 @@ def transform_source(source, callback_params=None, **_kwargs):
     else:
         variable_name = utils.generate_variable_names()
 
-    for line in token_utils.get_stripped_lines(source):
+    for line in token_utils.get_physical_lines(source):
         first_token = line[0] if line else None
         if first_token is None:
             new_tokens.extend(line)

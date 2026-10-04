@@ -50,7 +50,7 @@ def transform_source(source, **_kwargs):
     decimal_block = False
 
     indentation = 0
-    for line in token_utils.get_lines(source):
+    for line in token_utils.get_physical_lines(source):
         first = token_utils.get_first(line)
         if first is None:
             new_tokens.extend(line)

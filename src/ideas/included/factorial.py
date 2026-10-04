@@ -1,6 +1,6 @@
 """Enable 3! to be recognized as a factorial"""
 
-from token_utils import tokenize, untokenize, BracketStack, pairwise
+from token_utils import tokenize, untokenize, BracketStack, pairwise, split_at_token
 from ideas import create_hook
 
 
@@ -8,16 +8,6 @@ def source_init():
     """Adds required import so that ``Fraction`` is a known object."""
     import_factorial = "from math import factorial\n"
     return import_factorial
-
-
-def split_list_at_token(seq, token):
-    before = []
-    for index, tok in enumerate(seq):
-        if tok.is_identical(token):
-            break
-        before.append(tok)
-    after = seq[index + 1 :]
-    return before, after
 
 
 def transform_source(source, **_kwargs):
@@ -42,7 +32,7 @@ def transform_source(source, **_kwargs):
             remove_exclamation = True
         elif next_ == "!" and token.is_immediately_before(next_) and token == ")":
             matching_bracket = stack.add(token)
-            new_tokens, remainder = split_list_at_token(new_tokens, matching_bracket)
+            new_tokens, remainder = split_at_token(new_tokens, matching_bracket)
             matching_bracket.string = "factorial("
             new_tokens.append(matching_bracket)
             new_tokens.extend(remainder)

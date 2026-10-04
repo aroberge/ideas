@@ -138,7 +138,7 @@ def transform_source(source, callback_params=None, **_kwargs):
     else:
         variable_name = utils.generate_variable_names()
 
-    for tokens in token_utils.get_stripped_lines(source):
+    for tokens in token_utils.get_physical_lines(source):
         # removed indentation; last token is "\n"
         first_token = tokens[0]
         if first_token == "repeat":

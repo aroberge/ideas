@@ -178,7 +178,7 @@ def transform_source(source, **_kwargs):
     self_name = ""
     indentation = 0
 
-    for tokens in token_utils.get_stripped_lines(source):
+    for tokens in token_utils.get_physical_lines(source):
         meaningful_tokens_nb = token_utils.get_number_significant_tokens(tokens)
         if auto_self_block:
             if meaningful_tokens_nb >= 1:
