@@ -33,6 +33,13 @@ The delimiters can be changed by changing the `HTML_START` and `HTML_END`
 constants below.
 """
 
+######## IMPORTANT NOTE
+#
+# This was designed with the "old" version of token-utils.
+# It possibly could be simplified by using the new version together
+# with get_logical_lines() or get_physical_lines() instead of
+
+
 import logging
 import tokenize
 from typing import Optional, Union, Iterator, Iterable
@@ -502,8 +509,27 @@ def transform_source(source: str, **_kwargs) -> str:
     Each such group must contain exactly one top-level HTML tag.
     """
 
-    lines_iter = token_utils.get_lines(source)
+    def old_get_lines(source):
+        """Transforms a source (string) into a list of Tokens, with each
+        (inner) list containing all the tokens found on a given line of code.
+        """
+        # Compared with the new version get_physical_lines() in token-utils, this keeps
+        # this keeps INDENT and DEDENT.
+        lines = []
+        current_row = -1
+        new_line = []
+        for token in token_utils.generate_tokens(source):
+            if token.start_row != current_row:
+                current_row = token.start_row
+                if new_line:
+                    lines.append(new_line)
+                new_line = []
+            new_line.append(token)
+        if new_line:
+            lines.append(new_line)
+        return lines
 
+    lines_iter = old_get_lines(source)
     new_tokens = []
 
     for indent, line in group_split_statements(lines_iter):
