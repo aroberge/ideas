@@ -1,11 +1,11 @@
 from ideas.included import nobreak
 
+
 def test_for():
-    source_for = """
-    for i in range(10):
-        pass
-    %s:
-        pass"""
+    source_for = """for i in range(10):
+    pass
+%s:
+    pass"""
 
     source = source_for % "nobreak"
     result = nobreak.transform_source(source)
@@ -15,11 +15,10 @@ def test_for():
 
 
 def test_while():
-    source_while = """
-    while True:
-        pass
-    %s:
-        pass"""
+    source_while = """while True:
+    pass
+%s:
+    pass"""
 
     source = source_while % "nobreak"
     result = nobreak.transform_source(source)

@@ -69,7 +69,7 @@ it makes little sense in this case to use a different keyword such as
 """
 
 from ideas import create_hook
-import token_utils
+from token_utils import get_logical_lines, untokenize, IndentStack
 
 
 def transform_source(source, **_kwargs):
@@ -77,25 +77,22 @@ def transform_source(source, **_kwargs):
     non-space token on a line and if its indentation matches
     that of a ``for`` or ``while`` block.
     """
-    indentations = {}
-    lines = token_utils.get_physical_lines(source)
-    new_tokens = []
-    # The following is not a proper parser, but it should work
-    # well enough in most cases, for well-formatted code.
-    for line in lines:
-        first = line[0]
-        if first is None:
-            new_tokens.extend(line)
-            continue
-        if first == "nobreak":
-            if first.start_col in indentations:
-                if indentations[first.start_col] in ["for", "while"]:
-                    first.string = "else"
-                    del indentations[first.start_col]
-        indentations[first.start_col] = first.string
-        new_tokens.extend(line)
+    new_lines = []
+    stack = IndentStack()
+    stack.add_same_indent_keyword("nobreak")
 
-    return token_utils.untokenize(new_tokens)
+    for line in get_logical_lines(source):
+        top = stack.update(line)
+        if top is None:
+            new_lines.append(line)
+            continue
+
+        if line[0] == "nobreak" and top.is_in(["for", "while"]):
+            line[0].string = "else"  # modify in place
+
+        new_lines.append(line)
+
+    return untokenize(new_lines)
 
 
 def add_hook(**_kwargs):
