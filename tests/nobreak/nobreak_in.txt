@@ -1,0 +1,31 @@
+# fake example
+
+while True:
+    pass
+nobreak:  # <-- else
+    pass
+
+if True:
+   pass
+elif something:
+   pass
+nobreak:  # keep nobreak
+   error
+
+try:
+  ...
+except:
+  ...
+nobreak:  # keep nobreak
+  ...
+
+for i in range(3):
+   ...
+nobreak:  # <-- else
+   ...
+
+if something:
+    while True:
+        pass
+    nobreak:  # <-- else
+        done

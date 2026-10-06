@@ -6,19 +6,20 @@ Let's begin with an example.
 
 .. code-block::
 
-    > python -m ideas -a repeat --show
-    Ideas Console version 0.2.0. [Python version: 3.11.9]
+    > ideas -a repeat --show
+    Ideas Console version 0.3.12. [Python version: 3.11.9]
     ideas> repeat 3:
-    ...     print("Hello")
+    ...     print("hello")
     ...
-    ===========Transformed============
-    for _f6e2a07472364c32866ce473ee705576 in range( 3):
-        print("Hello")
 
-    -----------------------------
-    Hello
-    Hello
-    Hello
+    #========== New ====
+    for _8e1dc11f30cd456b946d0e952456cc89 in range( 3):
+        print("hello")
+    #=== End of New ====
+
+    hello
+    hello
+    hello
 
 As you can see, ``repeat n``, where ``n`` is an integer,
 is converted into a for loop, with a randomly named
@@ -132,44 +133,45 @@ def transform_source(source, callback_params=None, **_kwargs):
         predictable_names = False
     else:
         predictable_names = callback_params["predictable_names"]
-    new_tokens = []
     if predictable_names:
         variable_name = utils.generate_predictable_names()
     else:
         variable_name = utils.generate_variable_names()
 
-    for tokens in token_utils.get_physical_lines(source):
-        # removed indentation; last token is "\n"
-        first_token = tokens[0]
-        if first_token == "repeat":
-            if ":" not in first_token.line:
-                raise RepeatSyntaxError(
-                    "Missing colon for repeat statement on line "
-                    + f"{first_token.start_row}\n    {first_token.line}"
-                )
-            last_token = tokens[-2]
-            if last_token != ":":
-                raise RepeatSyntaxError(
-                    "Missing colon for repeat statement on line "
-                    + f"{first_token.start_row}\n    {first_token.line}"
-                )
-            second_token = tokens[1]
-            if second_token == "forever":
-                first_token.string = "while"
-                second_token.string = "True"
-            elif second_token == "while":
-                first_token.string = "while"
-                second_token.string = ""
-            elif second_token == "until":
-                first_token.string = "while"
-                second_token.string = "not"
-            else:
-                first_token.string = "for %s in range(" % next(variable_name)
-                last_token.string = "):"
+    new_lines = []
 
-        new_tokens.extend(tokens)
+    for line in token_utils.get_physical_lines(source):
+        # removed indentation and comments;
+        # last token is "\n"; second last should be ":"
+        first_token = line[0]
+        if not first_token == "repeat":
+            new_lines.extend(line)
+            continue
 
-    return token_utils.untokenize(new_tokens)
+        last_token = line[-2]
+        if last_token != ":":
+            raise RepeatSyntaxError(
+                "Missing colon for repeat statement on line "
+                + f"{first_token.start_row}\n    {first_token.line}"
+            )
+
+        second_token = line[1]
+        if second_token == "forever":
+            first_token.string = "while"
+            second_token.string = "True"
+        elif second_token == "while":
+            first_token.string = "while"
+            second_token.string = ""
+        elif second_token == "until":
+            first_token.string = "while"
+            second_token.string = "not"
+        else:
+            first_token.string = "for %s in range(" % next(variable_name)
+            last_token.string = "):"
+
+        new_lines.extend(line)
+
+    return token_utils.untokenize(new_lines)
 
 
 def add_hook(predictable_names=False, **_kwargs):

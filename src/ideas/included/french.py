@@ -65,49 +65,62 @@ verbose finder:
 
 .. code-block:: none
 
-    (venv-ideas3.11) C:\\Users\\Andre\\github\\ideas
-    > py
-    Python 3.11.9...
+    Python 3.11.9 <...>
     >>> from ideas import ideas_state
+    >>> ideas_state.verbose_finder = True
     >>> ideas_state.verbose = True
     >>> from ideas.included import french
     >>> french.add_hook()
     Added hook ideas.included.french
     Looking for files with extensions:  ['.pyfr']
     The following paths will not be included in the search:
-        PYTHON: c:\\users\\andre\\appdata\\local\\programs\\python\\python311\\lib
-        SITE-PACKAGES: c:\\users\\andre\\github\\ideas\\venv-ideas3.11\\lib\\site-packages
-        IDEAS: c:\\users\\andre\\github\\ideas\\ideas
+    ~/AppData/Local/Programs/Python/Python311/Lib C:\Users\Andre\AppData\Local\Programs\Python\Python311\Lib
+    ~/github/token-utils/src/token_utils C:\Users\Andre\github\token-utils\src\token_utils
+    src/ideas C:\Users\Andre\github\ideas\src\ideas
     <Ideas import hook: ideas.included.french>
+    >>> import mon_programme
 
-    >>> from usage_demo import my_program
-        Searching for ~\\github\\ideas\\usage_demo.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+    ideas.included.french.find_spec():
+    No search paths were specified.
+    Will use the current directory as well as paths included in sys.path
+    These are the potential search paths
+        docs_examples/french
 
-        Searching for usage_demo.pyfr.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+        ~/AppData/Local/Programs/Python/Python311/python311.zip
+        ~/AppData/Local/Programs/Python/Python311/DLLs
+        ~/AppData/Local/Programs/Python/Python311/Lib
+        ~/AppData/Local/Programs/Python/Python311
+        ~/github/common_venv
+        ~/github/common_venv/Lib/site-packages
+        src
+        ~/github/token-utils/src
 
-        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip\\usage_demo.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+    The following have been set as 'excluded' for this import hook.
+        ~/AppData/Local/Programs/Python/Python311/Lib
+        ~/github/token-utils/src/token_utils
+        src/ideas
 
-        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\DLLs\\usage_demo.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+    These are the remaining search paths:
+        docs_examples/french
 
-        Skipping over: PYTHON:
-        Searching for ~\\AppData\\Local\\Programs\\Python\\Python311\\usage_demo.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+        ~/AppData/Local/Programs/Python/Python311/python311.zip
+        ~/AppData/Local/Programs/Python/Python311/DLLs
+        ~/AppData/Local/Programs/Python/Python311
+        ~/github/common_venv
+        ~/github/common_venv/Lib/site-packages
+        src
+        ~/github/token-utils/src
+    FOUND 'C:\Users\Andre\github\ideas\docs_examples\french\mon_programme.pyfr'
 
-        Searching for ~\\github\\ideas\\venv-ideas3.11\\usage_demo.pyfr
-        IdeasMetaFinder did not find usage_demo.pyfr
+    ideas.included.french.find_spec():
+    <IdeasMetaPathFinder for ideas.included.french> cannot find 'unicodedata'
+    >>> carré(4)
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    NameError: name 'carré' is not defined
 
-        Skipping over: SITE-PACKAGES:
-        Searching for ~\\github\\ideas\\usage_demo\\my_program.pyfr
-        Found: ~\\github\\ideas\\usage_demo\\my_program.pyfr
-
-    Bonjour !
-    >>> import math
-    >>> math.pi
-    3.141592653589793
+    >>> mon_programme.carré(4)
+    16
 
 .. caution::
 

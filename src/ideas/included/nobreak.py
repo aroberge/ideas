@@ -16,6 +16,7 @@ whose meaning is not immediately obvious::
 When I first understood this, I thought *wouldn't it be nice if, instead
 of using* ``else:``, *one could write something like* ``if not break:`` which
 uses only existing Python keywords.
+
 For this example, I decided instead that a suggestion made by Raymond Hettinger
 to have ``nobreak`` as a keyword made the most sense, even though I could just
 as easily have used ``if no break`` instead.
@@ -30,7 +31,7 @@ So, with this import hook, ``nobreak`` can be used instead of ``else`` in the ab
         # will be executed only if no
         # break statement occurred above
 
-This will be also the case for a ``for`` loop.
+This will be also the case for the optional ``else`` in a ``for`` loop.
 
 
 ``nobreak`` instead of ``else`` in ``if/else``
