@@ -147,8 +147,7 @@ def transform_source(source, callback_params=None, **_kwargs):
                     "Missing colon for repeat statement on line "
                     + f"{first_token.start_row}\n    {first_token.line}"
                 )
-            nb = token_utils.get_number_significant_tokens(tokens)
-            last_token = tokens[nb - 1]
+            last_token = tokens[-2]
             if last_token != ":":
                 raise RepeatSyntaxError(
                     "Missing colon for repeat statement on line "

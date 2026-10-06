@@ -184,7 +184,7 @@ def transform_source(source, filename=None, **_kwargs):
         DECLARED_FINAL[filename] = set([])
 
     for tokens in token_utils.get_physical_lines(source):
-        nb_tokens = token_utils.get_number_significant_tokens(tokens)
+        nb_tokens = len(tokens) - 1
         if nb_tokens > 3:
             first_token = tokens[0]
             if (
