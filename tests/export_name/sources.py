@@ -8,21 +8,21 @@ expected_1 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('ClassName')
-class        ClassName:"""
+class  ClassName:"""
 
 source_2 = "export def function():"
 expected_2 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('function')
-def        function():"""
+def  function():"""
 
 source_3 = "export variable = 3"
 expected_3 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('variable')
-variable        = 3"""
+variable  = 3"""
 
 # 'export' as a valid identifier
 
@@ -31,21 +31,21 @@ expected_4 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('export')
-class        export:"""
+class  export:"""
 
 source_5 = "export def export():"
 expected_5 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('export')
-def        export():"""
+def  export():"""
 
 source_6 = "export export = 3"
 expected_6 = """
 __all__ = globals().setdefault("__all__", [])
 __all__ = list(__all__)
 __all__.append('export')
-export        = 3"""
+export  = 3"""
 
 # Same as 1, 2, and 3 but indented
 
@@ -54,21 +54,21 @@ expected_7 = """
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('ClassName')
-    class        ClassName:"""
+    class  ClassName:"""
 
 source_8 = "    export def function():"
 expected_8 = """
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('function')
-    def        function():"""
+    def  function():"""
 
 source_9 = "    export variable = 3"
 expected_9 = """
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('variable')
-    variable        = 3"""
+    variable  = 3"""
 
 source_10 = """
 # In the following, all of the occurrences of 'export' should be left untouched
@@ -87,7 +87,7 @@ def test():
 
     export def inner_test():
         pass
-        
+
 class One:
     export variable = True
     export def function():
@@ -96,12 +96,30 @@ class One:
 class Two:
 
     export class Three():
-    
+
         export def function():
            pass
 """
 
-expected_10 = source_10
+expected_10 = """
+from math export pi
+export = True
+export variable
+def export():
+    export variable = 4
+    return True
+def test():
+    export def inner_test():
+        pass
+class One:
+    export variable = True
+    export def function():
+        pass
+class Two:
+    export class Three():
+        export def function():
+           pass
+"""
 
 source_11 = """
 if True:
@@ -114,7 +132,7 @@ if True:
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('variable1')
-    variable1        = 1
+    variable1  = 1
 """
 
 source_12 = """
@@ -136,14 +154,14 @@ if True:
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('test2')
-    def        test2():
+    def  test2():
         export name = 5
 else:
 
     __all__ = globals().setdefault("__all__", [])
     __all__ = list(__all__)
     __all__.append('Name')
-    class        Name:
+    class  Name:
         pass
 """
 
@@ -154,4 +172,8 @@ if True:
 ):           # ends left of "def"
         export name = 3
 """
-expected_13 = source_13
+expected_13 = """
+if True:
+    def test():
+        export name = 3
+"""
