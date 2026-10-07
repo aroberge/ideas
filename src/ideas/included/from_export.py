@@ -238,172 +238,11 @@ Now, let's try to import this file:
     SyntaxError: invalid syntax
 """
 
-import sys
-from ideas.utils import get_significant_tokens
-import token_utils
 from ideas import ideas_state
-
-# A better programmer would likely have written a recursive descent parser,
-# or something similar, to process the source, extract the relevant information
-# to make the appropriate change.
-#
-# what I did instead is to proceed in two parts, going through the entire source once
-# and extracting the relevant information, before going through the entire source
-# a second time to make the appropriate changes.
-#
-# When I have more time, I plan to add comments below to explain
-# the reasoning behind this code.
+import token_utils as tu
 
 
-class ExportInfo:
-    def __init__(self, source):
-        self.source = source
-        self.from_statements_info = []
-        self.from_stmt_info = {}
-        self.indentation = 0
-        self.current_row = -1
-        self.begin_from = False
-        self.inside_class_or_def = []
-        self.open_brackets = []  # Any ([{ open but not closed
-        self.class_or_def_indent = -1
-        self.prev_token = None
-        self.open_parens = []  # inside from ... import (...)
-
-    def get_info(self):
-        for self.token in get_significant_tokens(self.source):
-
-            if not self.begin_from:
-                if self.skip_over_irrelevant_token():
-                    self.prev_token = self.token
-                    continue
-
-            if self.token == "from":
-                self.init_from_statement()
-                self.prev_token = self.token
-                continue
-
-            if self.token.start_row > self.current_row and not self.open_parens:
-                self.begin_new_statement()
-                self.prev_token = self.token
-                continue
-
-            if not self.begin_from:
-                self.prev_token = self.token
-                continue
-
-            if not self.export_found:
-                self.process_until_export_statement()
-                self.prev_token = self.token
-                continue
-
-            self.process_end_of_from_statement()
-            self.prev_token = self.token
-
-        # if from statement was last statement of source, we need to add it.
-        if self.from_stmt_info:
-            self.from_statements_info.append(self.from_stmt_info)
-        return self.from_statements_info
-
-    def skip_over_irrelevant_token(self):
-        if self.token.string in "([{":
-            self.open_brackets.append(self.token.string)
-            return True
-        elif self.token.string in ")]}":
-            self.open_brackets.pop()
-            return True
-        elif self.open_brackets:
-            return True
-
-        if self.token.string in ["class", "def"]:
-            self.inside_class_or_def.append(self.token)
-            self.class_or_def_indent = self.token.start_col
-            return True
-
-        if self.inside_class_or_def:
-            if self.token.start_col > self.class_or_def_indent:
-                return True
-            while self.inside_class_or_def:
-                prev_class_or_def = self.inside_class_or_def.pop()
-                self.class_or_def_indent = prev_class_or_def.start_col
-                if self.token.start_col > self.class_or_def_indent:
-                    return True
-
-        return False
-
-    def init_from_statement(self):
-        """Initialize relevant variables when a new from statement is found."""
-        if self.begin_from:
-            if self.from_stmt_info:
-                self.from_statements_info.append(self.from_stmt_info)
-        self.begin_from = True
-        self.current_row = self.token.start_row
-        self.indentation = self.token.start_col
-        if self.prev_token == "lazy":
-            self.indentation = self.prev_token.start_col
-        self.from_stmt_info = {
-            "indentation": self.indentation * " ",
-            "row": self.current_row,
-            "next row": self.current_row + 1,
-            "public names": [],
-            "module name": "",
-            "export token": None,
-        }
-        self.export_found = False
-
-    def begin_new_statement(self):
-        if self.begin_from:
-            self.from_statements_info.append(self.from_stmt_info)
-            self.from_stmt_info = {}
-            self.begin_from = False
-        self.current_row = self.token.start_row
-
-    def process_until_export_statement(self):
-        """Identify module name and if export/import is used"""
-        if self.token == "import":  # drop everything for this line
-            self.begin_from = False
-            self.from_stmt_info = {}
-            return
-
-        elif self.token == "export":
-            self.export_found = True
-            self.from_stmt_info["export token"] = self.token
-            return
-
-        self.from_stmt_info["module name"] += self.token.string
-        return
-
-    def process_end_of_from_statement(self):
-        """Identify public names after export keyword"""
-        self.current_row = self.token.start_row
-        if self.token.is_identifier():
-            if self.prev_token == "as":
-                self.from_stmt_info["public names"].pop()
-            self.from_stmt_info["public names"].append(self.token.string)
-        elif self.token == "(":
-            self.open_parens.append(self.token)
-        elif self.token == ")":
-            self.open_parens.pop()
-            if not self.open_parens:  # this should be the case
-                self.from_stmt_info["next row"] = self.current_row + 1
-        elif self.token == "*":
-            self.from_stmt_info["public names"] = ["*"]
-
-
-def _display_location(info):
-    """used for doing quick test at the terminal or debugging tests"""
-
-    for entry in info:
-        for item in entry:
-            if item == "indentation":
-                print(item, f"|{entry[item]}|")
-            elif item == "export token":
-                print(item, repr(entry[item]))
-            else:
-                print(item, entry[item])
-        print()
-
-
-def insert_all_info(new_tokens, current_info):
+def insert_all_info(new_tokens, export_info):
 
     new_all = """
 {indent}__all__ = globals().setdefault("__all__", [])
@@ -424,8 +263,8 @@ def insert_all_info(new_tokens, current_info):
 {indent}    del _
 """
 
-    if current_info["public names"] == ["*"]:
-        module = current_info["module name"]
+    if export_info["public names"] == ["*"]:
+        module = export_info["module name"]
         nb_dots = module.count(".")
         if nb_dots < 2:
             relative = "."
@@ -437,7 +276,7 @@ def insert_all_info(new_tokens, current_info):
 
         new_tokens.append(
             new_all_star.format(
-                indent=current_info["indentation"],
+                indent=export_info["indentation"],
                 module=module,
                 relative=relative,
             )
@@ -445,62 +284,83 @@ def insert_all_info(new_tokens, current_info):
     else:
         new_tokens.append(
             new_all.format(
-                indent=current_info["indentation"],
-                names=current_info["public names"],
+                indent=export_info["indentation"],
+                names=export_info["public names"],
             )
         )
 
     return new_tokens
 
 
-def transform_source(source, filename=None, **kwargs):
-    new_tokens = []
+def transform_source(source, filename=None, **_kwargs):
+    new_lines = []
+    stack = tu.IndentStack()
 
-    info_locator = ExportInfo(source)
-    info = info_locator.get_info()
-    # _display_location(info)
-
-    current_info = None
-
-    if info:
-        current_info = info.pop(0)
-
-    for token in token_utils.tokenize(source):
-        if current_info is None or current_info["row"] > token.start_row:
-            new_tokens.append(token)
+    for line in tu.get_logical_lines(source):
+        stack.update(line)
+        first_token = line[0]
+        # Lines that are NOT of the form "from ... export"
+        # or which are inside a class or def block
+        # are left unchanged
+        if first_token != "from" and not (first_token == "lazy" and line[1] == "from"):
+            new_lines.append(line)
+            continue
+        elif stack.is_token_in_named_block(first_token, "class"):
+            new_lines.append(line)
+            continue
+        elif stack.is_token_in_named_block(first_token, "def"):
+            new_lines.append(line)
             continue
 
-        if token.is_identical(current_info["export token"]):
-            token.string = "import"
-            new_tokens.append(token)
+        found_export = False
+        for token in line:
+            if token == "import":
+                break
+            elif token == "export":
+                found_export = True
+                break
+        if not found_export:
+            new_lines.append(line)
             continue
 
-        if token.start_row == current_info["next row"]:
-            if new_tokens[-1] == "\n":
-                new_tokens.pop()
-            if filename != ideas_state.console_name:
-                new_tokens = insert_all_info(new_tokens, current_info)
-            if info:
-                current_info = info.pop(0)
-            else:
-                current_info = None
-        new_tokens.append(token)
+        # Focus on line from ... export
+        found_export = False
+        found_from = False
+        export_info = {"indentation": "", "public names": [], "module name": ""}
+        for tok1, tok2, tok3 in tu.sliding_window(line, 3):
 
-    if current_info is not None and filename != ideas_state.console_name:
-        new_tokens = insert_all_info(new_tokens, current_info)
-    new_source = token_utils.untokenize(new_tokens)
+            if not found_from and (tok1 == "from" or tok1 == "lazy"):
+                export_info["indentation"] = " " * tok1.indentation()
+                found_from = True
+                continue
 
-    if "pytest" in sys.modules:
-        if source != new_source:
-            print("\n====== Original source for from_export ============")
-            print(source)
-            print("-----------------")
-            print("\n====== New source ============")
-            print(new_source)
-            print("-----------------")
+            if tok1 == "export":
+                tok1.string = "import"
+                if tok3 != "as" and tok2.is_identifier() or tok2 == "*":  # could be (
+                    export_info["public names"].append(tok2.string)
+                found_export = True
+                continue
+
+            if not found_export:
+                export_info["module name"] += tok1.string
+                continue
+
+            if tok1.is_in([",", "("]) and tok2.is_identifier() and tok3 != "as":
+                export_info["public names"].append(tok2.string)
+            elif tok2 == "as":
+                export_info["public names"].append(tok3.string)
+
+        # To have a more predictable output, we remove a new line
+        line[-1].string = ""
+        new_lines.append(line)
+        new_line = insert_all_info([], export_info=export_info)
+
+        # can't process multiple lines in the console
+        if filename != ideas_state.console_name:
+            new_lines.append(new_line)
         else:
-            print("No change in source")
-    return new_source
+            print(tu.stringify(new_line))
+    return tu.stringify(new_lines)
 
 
 def add_hook(**_kwargs):
