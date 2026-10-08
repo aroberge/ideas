@@ -167,8 +167,11 @@ def add_transform(transform, callback_params={}):
     path = f"ideas.included.{transform}"
     try:
         module = import_module(path)
-    except ImportError:
-        print(f"{path} is not a known transformer.")
+    except ImportError as exc:
+        print(
+            f"{path} is not a known transformer or raises an exception when imported."
+        )
+        print(exc)
     except SyntaxError:
         print(f"A SyntaxError occurred while trying to load {path}.")
         for hook in ideas_state._hooks:
