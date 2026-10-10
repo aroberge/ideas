@@ -56,12 +56,6 @@ Quick links to topics
 
     Guide to the many examples included <guide>
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Other modules
-
-    About tokens <tokenize>
-    Capture of token_utils interactive demo <tokenize_notebook.ipynb>
 
 .. toctree::
     :caption: Appendix

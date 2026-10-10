@@ -70,7 +70,6 @@ it makes little sense in this case to use a different keyword such as
 """
 
 from ideas import create_hook
-from token_utils import get_logical_lines, untokenize, IndentStack
 
 
 def transform_source(source, **_kwargs):
@@ -78,6 +77,8 @@ def transform_source(source, **_kwargs):
     non-space token on a line and if its indentation matches
     that of a ``for`` or ``while`` block.
     """
+    from token_utils import get_logical_lines, untokenize, IndentStack
+
     new_lines = []
     stack = IndentStack()
     stack.add_same_indent_keyword("nobreak")

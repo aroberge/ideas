@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ideas.included.switch &mdash; ideas 0.3.4 documentation</title>
+  <title>ideas.included.switch &mdash; ideas 0.3.14 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/text_styles.css?v=84b268dc" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=4fe1afaf" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=1e28cc32"></script>
+      <script src="../../../_static/documentation_options.js?v=6307bca3"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -58,6 +58,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tokenize.html"> About tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../TODO.html">TODO</a></li>
 </ul>
 
         </div>
@@ -139,15 +143,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">variable_name</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">generate_variable_names</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-        <span class="n">first_token</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_physical_lines</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">line</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">first_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">new_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">continue</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">_index</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_first_index</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="n">second_token</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">second_token</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">second_token</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -158,8 +161,14 @@
                 <span class="n">first_token</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2"> ="</span>
                 <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">first_case</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">colon</span> <span class="o">=</span> <span class="n">token_utils</span><span class="o">.</span><span class="n">get_last</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">""</span>
+                <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">":"</span><span class="p">:</span>  <span class="c1"># no end of line comment</span>
+                    <span class="n">colon</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">""</span>
+                <span class="k">elif</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">":"</span><span class="p">:</span>
+                    <span class="n">colon</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">colon</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">""</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"colon not found!"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">first_token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">==</span> <span class="n">switch_indent</span><span class="p">:</span>
                 <span class="n">switch_block</span> <span class="o">=</span> <span class="kc">False</span>

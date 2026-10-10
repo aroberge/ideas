@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>French Python &mdash; ideas 0.3.6 documentation</title>
+  <title>French Python &mdash; ideas 0.3.14 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
@@ -16,7 +16,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=8da8c241"></script>
+      <script src="../_static/documentation_options.js?v=6307bca3"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -57,7 +57,6 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../guide.html"> Guide to the many examples included</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../guide.html#source-transformations">Source transformations</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="nobreak.html">nobreak as a keyword</a></li>
 <li class="toctree-l3"><a class="reference internal" href="repeat.html">repeat as a keyword</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">French Python</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#importing-pyfr-files">Importing .pyfr files</a></li>
@@ -184,49 +183,62 @@ afficher("Bonjour !")
 <p>Let’s see if we attempt to import <code class="docutils literal notranslate"><span class="pre">my_program</span></code> after
 setting up the <code class="docutils literal notranslate"><span class="pre">french</span></code> import hook and enabling the
 verbose finder:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(venv-ideas3.11) C:\Users\Andre\github\ideas
-&gt; py
-Python 3.11.9...
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python 3.11.9 &lt;...&gt;
 &gt;&gt;&gt; from ideas import ideas_state
+&gt;&gt;&gt; ideas_state.verbose_finder = True
 &gt;&gt;&gt; ideas_state.verbose = True
 &gt;&gt;&gt; from ideas.included import french
 &gt;&gt;&gt; french.add_hook()
 Added hook ideas.included.french
 Looking for files with extensions:  ['.pyfr']
 The following paths will not be included in the search:
-    PYTHON: c:\users\andre\appdata\local\programs\python\python311\lib
-    SITE-PACKAGES: c:\users\andre\github\ideas\venv-ideas3.11\lib\site-packages
-    IDEAS: c:\users\andre\github\ideas\ideas
+~/AppData/Local/Programs/Python/Python311/Lib C:\Users\Andre\AppData\Local\Programs\Python\Python311\Lib
+~/github/token-utils/src/token_utils C:\Users\Andre\github\token-utils\src\token_utils
+src/ideas C:\Users\Andre\github\ideas\src\ideas
 &lt;Ideas import hook: ideas.included.french&gt;
+&gt;&gt;&gt; import mon_programme
 
-&gt;&gt;&gt; from usage_demo import my_program
-    Searching for ~\github\ideas\usage_demo.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+ideas.included.french.find_spec():
+No search paths were specified.
+Will use the current directory as well as paths included in sys.path
+These are the potential search paths
+    docs_examples/french
 
-    Searching for usage_demo.pyfr.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+    ~/AppData/Local/Programs/Python/Python311/python311.zip
+    ~/AppData/Local/Programs/Python/Python311/DLLs
+    ~/AppData/Local/Programs/Python/Python311/Lib
+    ~/AppData/Local/Programs/Python/Python311
+    ~/github/common_venv
+    ~/github/common_venv/Lib/site-packages
+    src
+    ~/github/token-utils/src
 
-    Searching for ~\AppData\Local\Programs\Python\Python311\python311.zip\usage_demo.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+The following have been set as 'excluded' for this import hook.
+    ~/AppData/Local/Programs/Python/Python311/Lib
+    ~/github/token-utils/src/token_utils
+    src/ideas
 
-    Searching for ~\AppData\Local\Programs\Python\Python311\DLLs\usage_demo.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+These are the remaining search paths:
+    docs_examples/french
 
-    Skipping over: PYTHON:
-    Searching for ~\AppData\Local\Programs\Python\Python311\usage_demo.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+    ~/AppData/Local/Programs/Python/Python311/python311.zip
+    ~/AppData/Local/Programs/Python/Python311/DLLs
+    ~/AppData/Local/Programs/Python/Python311
+    ~/github/common_venv
+    ~/github/common_venv/Lib/site-packages
+    src
+    ~/github/token-utils/src
+FOUND 'C:\Users\Andre\github\ideas\docs_examples\french\mon_programme.pyfr'
 
-    Searching for ~\github\ideas\venv-ideas3.11\usage_demo.pyfr
-    IdeasMetaFinder did not find usage_demo.pyfr
+ideas.included.french.find_spec():
+&lt;IdeasMetaPathFinder for ideas.included.french&gt; cannot find 'unicodedata'
+&gt;&gt;&gt; carré(4)
+Traceback (most recent call last):
+File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+NameError: name 'carré' is not defined
 
-    Skipping over: SITE-PACKAGES:
-    Searching for ~\github\ideas\usage_demo\my_program.pyfr
-    Found: ~\github\ideas\usage_demo\my_program.pyfr
-
-Bonjour !
-&gt;&gt;&gt; import math
-&gt;&gt;&gt; math.pi
-3.141592653589793
+&gt;&gt;&gt; mon_programme.carré(4)
+16
 </pre></div>
 </div>
 <div class="admonition caution">

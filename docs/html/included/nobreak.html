@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>nobreak as a keyword &mdash; ideas 0.3.6 documentation</title>
+  <title>nobreak as a keyword &mdash; ideas 0.3.14 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
@@ -16,7 +16,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=8da8c241"></script>
+      <script src="../_static/documentation_options.js?v=6307bca3"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -86,11 +86,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
-</ul>
 <p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../TODO.html">TODO</a></li>
@@ -154,8 +149,8 @@ whose meaning is not immediately obvious:</p>
 </div>
 <p>When I first understood this, I thought <em>wouldn’t it be nice if, instead
 of using</em> <code class="docutils literal notranslate"><span class="pre">else:</span></code>, <em>one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">break:</span></code> which
-uses only existing Python keywords.
-For this example, I decided instead that a suggestion made by Raymond Hettinger
+uses only existing Python keywords.</p>
+<p>For this example, I decided instead that a suggestion made by Raymond Hettinger
 to have <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as a keyword made the most sense, even though I could just
 as easily have used <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">no</span> <span class="pre">break</span></code> instead.</p>
 <p>So, with this import hook, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
@@ -168,7 +163,7 @@ as easily have used <code class="docutils literal notranslate"><span class="pre"
     <span class="c1"># break statement occurred above</span>
 </pre></div>
 </div>
-<p>This will be also the case for a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
+<p>This will be also the case for the optional <code class="docutils literal notranslate"><span class="pre">else</span></code> in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
 <section id="nobreak-instead-of-else-in-if-else">
 <h2><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code><a class="headerlink" href="#nobreak-instead-of-else-in-if-else" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">else</span></code> keyword has a very different meaning when used as part
