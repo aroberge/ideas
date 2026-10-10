@@ -84,7 +84,7 @@ def transform_source(source, **_kwargs):
 
     for line in get_logical_lines(source):
         top = stack.update(line)
-        if top is None:
+        if not top:
             new_lines.append(line)
             continue
 
