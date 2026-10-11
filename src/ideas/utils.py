@@ -135,20 +135,6 @@ def freeze_globally(module_name):
     return frozen_module
 
 
-# token_utils.Tokens determine equality by comparing with a string
-# or an other Token's string. Using its custom repr is a quick
-# way to confirm that we are looking at the same token which
-# could have been obtained at different times.
-# This is a method which I should have added to token_utils.Token
-
-
-def is_identical(self, other):
-    return repr(self) == repr(other)
-
-
-token_utils.Token.is_identical = is_identical
-
-
 def get_significant_tokens(source):  # adapted from friendly-traceback
     """Gets a list of tokens from a source (str), ignoring comments
     as well as any token whose string value is either null or
