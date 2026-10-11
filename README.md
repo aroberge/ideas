@@ -4,7 +4,7 @@
 
 The purpose of **ideas** is to allow you to easily implement changes in Python's syntax
 and be able to see their result either when importing files using your new syntax or
-in a specialized REPL, without having to change the Python code itself.
+in a specialized REPL, without having to change the Python interpreter itself.
 
 
 ## Installation
