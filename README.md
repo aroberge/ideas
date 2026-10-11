@@ -68,7 +68,7 @@ Much more can be found in the [documentation](https://aroberge.github.io/ideas/d
 ## Dependencies
 
  - [token-utils](https://github.com/aroberge/token-utils)
- - Python 3.8+  (Subject to change; it might work with older versions)
+ - Python 3.8+  (it might even work with older versions, but is no longer tested.)
 
 ## Tools
 
