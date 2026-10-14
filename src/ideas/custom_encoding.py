@@ -59,4 +59,4 @@ def register_encoding(encoding_name=None, transform_source=None, name=None):
     codecs.register(search_function)
     print(f"{encoding_name} has been registered.")
     ideas_state._custom_codecs_source_transform = transform_source
-    ideas_state._codecs_search_functions.append(search_function)
+    ideas_state._codecs_search_functions[encoding_name] = search_function

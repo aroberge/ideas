@@ -14,5 +14,5 @@ def test_import_with_encoding():
     decimal_math.register()
     from . import use_encoding  # noqa
 
-    for fn in ideas_state._codecs_search_functions:
-        codecs.unregister(fn)
+    codecs.unregister(ideas_state._codecs_search_functions["decimal_math"])
+    del ideas_state._codecs_search_functions["decimal_math"]

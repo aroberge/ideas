@@ -36,7 +36,7 @@ class State:
         self._custom_codecs_source_transform = None
         self._hooks = []
         self._patches = {}
-        self._codecs_search_functions = []
+        self._codecs_search_functions = {}
 
     def _clear(self):
         """Empties all containers to start tests fresh"""

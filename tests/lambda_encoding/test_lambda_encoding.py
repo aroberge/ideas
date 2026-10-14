@@ -9,8 +9,8 @@ def test_import():
     from ideas.included import lambda_codec  # noqa
     from . import short_program  # noqa
 
-    for fn in ideas_state._codecs_search_functions:
-        codecs.unregister(fn)
+    codecs.unregister(ideas_state._codecs_search_functions["lambda_encoding"])
+    del ideas_state._codecs_search_functions["lambda_encoding"]
 
 
 if __name__ == "__main__":
