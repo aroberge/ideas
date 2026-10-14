@@ -1,8 +1,9 @@
 import pytest
-from ideas import remove_hook
+from ideas import ideas_state
+
 
 @pytest.fixture(autouse=True, scope="function")
 def some_function_name():
-    remove_hook("*")
+    ideas_state._clear()
     yield
-    remove_hook("*")
+    ideas_state._clear()

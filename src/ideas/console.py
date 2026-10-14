@@ -65,11 +65,11 @@ class IdeasConsole(InteractiveConsole):
         super().__init__(locals=console_dict)
         self.filename = CONSOLE_NAME
 
-        if ideas_state._console_source_inits:
+        if ideas_state.source_inits:
             print(
                 "\nThe following initializing code has been executed in the Ideas console:\n"
             )
-        for s_init in ideas_state._console_source_inits:
+        for s_init in ideas_state.source_inits:
             try:
                 exec(s_init(), self.locals)  # pylint: disable=W0122
             except Exception:  # pylint: disable=W0703
@@ -128,7 +128,7 @@ class IdeasConsole(InteractiveConsole):
             print("Error when executing transform_source:")
             print("   ", traceback.format_exception_only(type(exc), exc)[0].strip())
             self.resetbuffer()
-            return
+            return False
         # Some transformations may add some extra "\n" (usually at most one)
         if not last_line:
             source = source.rstrip("\n")

@@ -32,8 +32,14 @@ class State:
         self.verbose_finder = False
         self.verbose_loader = False
         #
-        self._console_source_inits = []
+        self.source_inits = []
         self._custom_codecs_source_transform = None
+        self._hooks = []
+        self._patches = {}
+
+    def _clear(self):
+        """Empties all containers to start tests fresh"""
+        self.source_inits = []
         self._hooks = []
         self._patches = {}
 

@@ -161,7 +161,7 @@ def create_hook(
 
     ## ----- Conditionally setting up IPython shell including Jupyter Notebooks
     if source_init is not None:
-        ideas_state._console_source_inits.append(source_init)
+        ideas_state.source_inits.append(source_init)
     try:
         ipython_shell = get_ipython()  # type: ignore # noqa
     except NameError:

@@ -47,10 +47,8 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             return self.custom_create_module(spec, callback_params=self.callback_params)
         return None  # use default module creation semantics
 
-    def exec_module(self, module):
-        """Import the source code, transform it before executing it so that
-        it is known to Python.
-        """
+    def ideas_init_module(self, module):
+        """Sets the name and possibly change the module class"""
         if (
             module.__name__ == ideas_state.source_argument
             and ideas_state.run_as_main_argument
@@ -59,12 +57,17 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
         if self.module_class is not None:
             module.__class__ = self.module_class  # pylint: disable=E0243
+        return module
 
+    def ideas_get_source(self):
+        """Reads and decodes the source"""
         with open(self.filename, mode="rb") as file:
             encoded_source = file.read()
-        source = decode_source(encoded_source)
-        original_source = source
+        return decode_source(encoded_source)
 
+    def ideas_transform_source(self, source, module):
+        """Applies source transformation(s)"""
+        original_source = source
         source = ideas_state.source_transforms(
             source,
             filename=self.filename,
@@ -79,9 +82,14 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
             )
             ideas_state.print_source(source, header="Transformed source")
 
-        if self.source_init is not None:
-            source = self.source_init() + source
+        inits = [s_init() for s_init in ideas_state.source_inits]
+        inits.append("")
+        source = "\n".join(inits) + source
 
+        return source
+
+    def ideas_parse_source(self, source):
+        """Parse the source and possibly applies AST transformations"""
         parse_source = self.parse_source or ast.parse
         try:
             tree = parse_source(source, self.filename, "exec")
@@ -93,6 +101,10 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         if self.transform_ast is not None:
             tree = self.transform_ast(tree)
 
+        return tree
+
+    def ideas_get_bytecode(self, tree):
+        """Generate a code object and potentially applies bytecode transformations"""
         try:
             code_object = compile(tree, self.filename, "exec")
         except Exception:
@@ -109,7 +121,10 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                         "An exception was raised while trying to modify the bytecode."
                     )
                 raise
+        return code_object
 
+    def ideas_exec(self, code_object, module):
+        """Executes the code object in the module"""
         if self.exec_ is not None:
             self.exec_(
                 code_object,
@@ -127,3 +142,15 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
                         "An exception was raised while attempting to execute the code object."
                     )
                 raise
+
+    def exec_module(self, module):
+        """Import the source code, transform it before executing it so that
+        it is known to Python.
+        """
+        module = self.ideas_init_module(module)
+
+        source = self.ideas_get_source()
+        source = self.ideas_transform_source(source, module)
+        tree = self.ideas_parse_source(source)
+        code_object = self.ideas_get_bytecode(tree)
+        self.ideas_exec(code_object, module)
