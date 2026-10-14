@@ -39,6 +39,12 @@ path = "src/ideas/__about__.py"
 [project.scripts]
 ideas = "ideas.__main__:main"
 
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+]
+project-excludes = ["src/ideas/included/", "tests/", "docs_examples/"]
+
 [project.optional-dependencies]
 dev = [
     "black",

@@ -28,4 +28,4 @@ call venv-ipython\scripts\activate & python -m pip install token-utils --upgrade
 echo units:
 call venv-units\scripts\activate & python -m pip install token-utils --upgrade
 
-call venv-ideas3.10\scripts\activate
+call venv-ideas3.12\scripts\activate

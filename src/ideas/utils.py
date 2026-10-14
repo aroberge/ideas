@@ -4,6 +4,7 @@
 A few utility functions for this project.
 """
 
+from typing import final
 import os
 import sys
 import uuid
@@ -18,9 +19,12 @@ IDEAS = os.path.dirname(__file__)
 TESTS = os.path.normpath(os.path.join(IDEAS, "../..", "tests"))
 HOME = os.path.expanduser("~")
 
+
 # The following is used in other files; to be used when
 # None would not be a valid choice
-DEFAULT = object()  # noqa
+@final
+class DEFAULT:
+    pass
 
 
 def shorten_path(path):
@@ -131,7 +135,7 @@ def freeze_globally(module_name):
     """
     module = __import__(module_name)
     frozen_module = ReadOnly(module)
-    sys.modules[module_name] = frozen_module
+    sys.modules[module_name] = frozen_module  # type: ignore
     return frozen_module
 
 

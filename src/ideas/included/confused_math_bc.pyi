@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+import dis
+import sys
+from types import CodeType
+from ideas import create_hook
+
+def swap_add_mul(bytecode: Incomplete) -> Incomplete: ...
+def create_new_co(code_object: Incomplete) -> Incomplete: ...
+def transform_bytecode(
+    code_object: Incomplete, **_kwargs: Incomplete
+) -> Incomplete: ...
+def add_hook(**_kwargs: Incomplete) -> Incomplete: ...

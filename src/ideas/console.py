@@ -25,9 +25,21 @@ _CONFIG = {}
 CONSOLE_NAME = ideas_state.console_name
 
 
-def configure(**kwargs):
+def configure(
+    callback_params=None,
+    console_dict=None,
+    transform_ast=None,
+    transform_bytecode=None,
+    parse_source=None,
+):
     """Configures various defaults to be used by the console"""
-    _CONFIG.update(kwargs)
+    _CONFIG.update(
+        callback_params=callback_params,
+        console_dict=console_dict,
+        transform_ast=transform_ast,
+        transform_bytecode=transform_bytecode,
+        parse_source=parse_source,
+    )
 
 
 class IdeasConsole(InteractiveConsole):
@@ -39,7 +51,6 @@ class IdeasConsole(InteractiveConsole):
 
     def __init__(  # pylint: disable=R0913
         self,
-        source_init=None,
         transform_ast=None,
         transform_bytecode=None,
         callback_params=None,

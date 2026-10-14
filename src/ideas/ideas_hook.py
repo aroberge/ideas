@@ -1,8 +1,4 @@
-import ast
 import sys
-from types import CodeType, ModuleType
-from typing import Callable, Dict, Sequence, Optional, Any
-
 from ideas import utils
 
 
@@ -11,20 +7,20 @@ class IdeasHook:
 
     def __init__(
         self,
-        callback_params: Optional[Dict[str, Any]] = None,
-        console_only: Optional[bool] = False,
-        create_module: Optional[Callable[..., ModuleType]] = None,
-        does_not_play_well_with_others: Optional[bool] = False,
-        exec_: Optional[Callable[..., None]] = None,
-        extensions: Optional[Sequence[str]] = None,
-        excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
-        name: str = "",
-        module_class: Optional[type] = None,
-        parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
-        source_init: Optional[Callable[[], str]] = None,
-        transform_ast: Optional[Callable[[ast.AST], ast.AST]] = None,
-        transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
-        transform_source: Optional[Callable[[str], str]] = None,
+        callback_params=None,
+        console_only=False,
+        create_module=None,
+        does_not_play_well_with_others=False,
+        exec_=None,
+        extensions=None,
+        excluded_paths=utils.DEFAULT,
+        name="",
+        module_class=None,
+        parse_source=None,
+        source_init=None,
+        transform_ast=None,
+        transform_bytecode=None,
+        transform_source=None,
     ):
         self.callback_params = callback_params
         self.console_only = console_only
