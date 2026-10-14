@@ -7,5 +7,6 @@
         "generateSymbol": true,
         "convertFormatString": true
     },
-    "python.analysis.ignore": ["**/docs_examples", "**/tests"]
+    "python.analysis.ignore": ["**/docs_examples", "**/tests"],
+    "python.analysis.extraPaths": ["C:\\Users\\Andre\\github\\ideas\\venv-ideas3.12\\Lib\\site-packages"]
 }
