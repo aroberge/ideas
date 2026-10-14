@@ -38,3 +38,11 @@ path = "src/ideas/__about__.py"
 
 [project.scripts]
 ideas = "ideas.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pre-commit",
+    "flake8",
+    "pytest"
+]

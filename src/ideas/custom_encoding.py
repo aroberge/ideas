@@ -14,6 +14,7 @@ import encodings
 from ideas import ideas_state
 
 utf8 = encodings.search_function("utf8")
+assert utf8 is not None
 
 
 def register_encoding(encoding_name=None, transform_source=None, name=None):
@@ -26,6 +27,7 @@ def register_encoding(encoding_name=None, transform_source=None, name=None):
         """Decodes the source as utf8 and use ``transform_source`` to
         perform the required source transformation.
         """
+        assert utf8 is not None
         text, length = utf8.decode(input, errors)
         text = transform_source(text)
         return text, length
@@ -37,7 +39,7 @@ def register_encoding(encoding_name=None, transform_source=None, name=None):
                 buff = self.buffer
                 self.buffer = b""
                 text, _ = ideas_decode(buff)
-                buff = text.encode("utf-8")
+                buff = text.encode("utf-8")  # type: ignore
                 return super().decode(buff, final=True)
             else:
                 return ""
@@ -45,18 +47,19 @@ def register_encoding(encoding_name=None, transform_source=None, name=None):
     def search_function(encoding):
         if encoding != encoding_name:
             return None
+        assert utf8 is not None
 
         return codecs.CodecInfo(
             name=encoding_name,
             encode=utf8.encode,
-            decode=ideas_decode,
+            decode=ideas_decode,  # type: ignore
             incrementalencoder=utf8.incrementalencoder,
-            incrementaldecoder=CustomIncrementalDecoder,
+            incrementaldecoder=CustomIncrementalDecoder,  # type: ignore
             streamreader=encodings.utf_8.StreamReader,
             streamwriter=utf8.streamwriter,
         )
 
     codecs.register(search_function)
     print(f"{encoding_name} has been registered.")
-    ideas_state._custom_codecs_source_transform = transform_source
+    ideas_state._custom_codecs_source_transform = transform_source  # type: ignore
     ideas_state._codecs_search_functions[encoding_name] = search_function

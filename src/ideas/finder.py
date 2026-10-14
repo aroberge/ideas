@@ -25,10 +25,8 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
     and has become nearly unreadable. It definitely needs a serious rewrite.
     """
 
-    def __init__(self, ideas_hook=None):
+    def __init__(self, ideas_hook):
         self.ideas_hook = ideas_hook
-        if self.ideas_hook is None:
-            raise RuntimeError("IdeasHook instance missing in IdeasMetaPathFinder().")
         self.inform_about_all_possible_paths = True
 
     def __repr__(self):
@@ -108,6 +106,8 @@ class IdeasMetaPathFinder(MetaPathFinder):  # pylint: disable=R0902
             module_name = fullname
 
         found = False
+        filename = ""  # To silence Pylance
+        submodule_locations = None  # To silence Pylance
         for entry in path:
             if (
                 os.path.isdir(os.path.join(entry, module_name))

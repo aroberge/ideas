@@ -40,7 +40,7 @@ def create_hook(
     transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
     transform_source: Optional[Callable[[str], str]] = None,
     parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
-) -> IdeasHook:  # pylint: disable=R0913,R0914
+) -> Optional[IdeasHook]:  # pylint: disable=R0913,R0914
     """Function to facilitate the creation of an import hook.
 
     ``name``: required parameter which must be the ``__name__`` of
@@ -136,7 +136,7 @@ def create_hook(
             return
 
     ideas_state._add_hook(hook)
-    hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)
+    hook.meta_path_finder = IdeasMetaPathFinder(ideas_hook=hook)  # type: ignore
 
     # By default, we insert our hook before those included by Python
     # so that it is used. If more than one hook is used,
