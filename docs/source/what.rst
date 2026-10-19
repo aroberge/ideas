@@ -7,9 +7,11 @@ used to **experiment** with alternative to Python's syntax.
 What is an import hook?
 -----------------------
 
-.. sidebar:: Skipping over details.
+.. note:: 
+    :title: Skipping over details.
+    :collapsible:
 
-    This is a simplified description. A more detailed explanation will
+    What follows is a simplified description. A more detailed explanation will
     be given later.
 
 When you write something like::

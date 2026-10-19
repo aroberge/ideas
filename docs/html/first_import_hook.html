@@ -41,7 +41,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
-        <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
         <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
         <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -797,12 +797,13 @@ we can invoke ideas from the command line with the
 </li>
 </ol>
 </div></blockquote>
-<aside class="sidebar">
-<p class="sidebar-title">Tokens?</p>
-<p>Your Python code is a sequence of various operators
+<details class="note admonition">
+<summary class="admonition-title">Tokens?</summary><blockquote>
+<div><p>Your Python code is a sequence of various operators
 (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, etc.), keywords, strings, etc.
 Each of these is an individual <strong>token</strong>.</p>
-</aside>
+</div></blockquote>
+</details>
 <h3 id="using-token-utils">Using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code><a class="headerlink" href="#using-token-utils" title="Link to this heading">¶</a></h3>
 <p>To replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
@@ -871,12 +872,11 @@ In the <span class="text-small-caps text-bold">ideas</span> console, since we se
 <span class="n">New</span><span class="p">:</span> <span class="n">cube</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
 </code></pre></div>
 </div>
-<aside class="sidebar">
-<p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">ideas_state</span></code></p>
-<p>Because <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code> often needs to be used to experiment
+<details class="note admonition">
+<summary class="admonition-title">Explore with ideas_state</summary><p>Because <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code> often needs to be used to experiment
 with code in the console, it is available by default
 in the <span class="text-small-caps text-bold">ideas</span> console.</p>
-</aside>
+</details>
 <p>Inside the ideas console, you can turn on or off this feature
 as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>

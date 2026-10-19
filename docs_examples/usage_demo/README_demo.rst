@@ -32,7 +32,9 @@ Python **import hooks**, by definition, only work on modules that are
 imported. Yet, you may have also noticed that it is imported with
 the name ``'__main__'``, so that it is run as though it is the main script.
 
-.. sidebar:: .py extension?
+.. note:: 
+    :title: .py extension?
+    :collapsible:
 
     Ideas is quite forgiving. If you invoke it adding a ``.py`` extension
     to the main script, as in:

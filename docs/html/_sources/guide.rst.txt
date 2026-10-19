@@ -6,7 +6,9 @@ Source transformations and AST transformations can be used interactively
 in IPython/Jupyter environments;  bytecode transformations and custom
 encoding cannot.
 
-.. sidebar:: Contribute!
+.. note:: 
+    :title: Contribute!
+    :collapsible:
 
     Feel free to contribute your own examples. However, note that,
     for safety reasons, I will not accept examples that result in

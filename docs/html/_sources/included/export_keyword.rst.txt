@@ -144,7 +144,9 @@ I notice the name ``utils``, which suggests that it might be useful to look at i
     ['__all__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'internal', 'pdir', 'useful']
 
 
-.. sidebar:: Reminder
+.. note:: 
+    :title: Reminder
+    :collapsible:
 
     This is a very contrived example done for illustration and
     inspiration if you wished to set up your own examples,

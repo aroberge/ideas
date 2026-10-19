@@ -130,7 +130,9 @@ This has at least four benefits:
 
         which imports ``function_keyword`` and calls ``function_keyword.add_hook()``.
 
-.. sidebar:: Tokens?
+.. note::
+   :title: Tokens?
+   :collapsible:
 
     Your Python code is a sequence of various operators
     (``+``, ``-``, ``:``, etc.), keywords, strings, etc.
@@ -219,11 +221,13 @@ In the |ideas| console, since we see the original source
     ideas> cube = function x: x**3
     New: cube = lambda x: x**3
 
-.. sidebar:: ``ideas_state``
+.. note:: 
+   :title: Explore with ideas_state
+   :collapsible:
 
-    Because ``ideas_state`` often needs to be used to experiment
-    with code in the console, it is available by default
-    in the |ideas| console.
+   Because ``ideas_state`` often needs to be used to experiment
+   with code in the console, it is available by default
+   in the |ideas| console.
 
 Inside the ideas console, you can turn on or off this feature
 as follows::

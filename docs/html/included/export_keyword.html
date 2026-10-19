@@ -41,7 +41,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
-        <link rel="stylesheet" type="text/css" href="../_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="../_static/text_styles.css?v=84b268dc" />
         <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
         <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4fe1afaf" />
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -1275,13 +1275,12 @@ something we will not need to do here.</p>
 <span class="p">[</span><span class="s1">'__all__'</span><span class="p">,</span> <span class="s1">'__builtins__'</span><span class="p">,</span> <span class="s1">'__cached__'</span><span class="p">,</span> <span class="s1">'__doc__'</span><span class="p">,</span> <span class="s1">'__file__'</span><span class="p">,</span> <span class="s1">'__loader__'</span><span class="p">,</span> <span class="s1">'__name__'</span><span class="p">,</span> <span class="s1">'__package__'</span><span class="p">,</span> <span class="s1">'__spec__'</span><span class="p">,</span> <span class="s1">'internal'</span><span class="p">,</span> <span class="s1">'pdir'</span><span class="p">,</span> <span class="s1">'useful'</span><span class="p">]</span>
 </code></pre></div>
 </div>
-<aside class="sidebar">
-<p class="sidebar-title">Reminder</p>
-<p>This is a very contrived example done for illustration and
+<details class="note admonition">
+<summary class="admonition-title">Reminder</summary><p>This is a very contrived example done for illustration and
 inspiration if you wished to set up your own examples,
 perhaps by copying an existing package, inserting <code class="docutils literal notranslate"><span class="pre">export</span></code>
 in various places, and looking at the effect.</p>
-</aside>
+</details>
 <p><code class="docutils literal notranslate"><span class="pre">utils</span></code> seems to define a public interface as it contains <code class="docutils literal notranslate"><span class="pre">__all__</span></code>. Let’s import it.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideas</span><span class="o">&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">export_hub</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">utils</span><span class="o">.</span><span class="n">__all__</span>

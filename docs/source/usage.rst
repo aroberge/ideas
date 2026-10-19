@@ -20,7 +20,9 @@ the same thing as ``lambda``, enabling you to write:
 .. include:: ../../docs_examples/usage/my_program.py
    :code: python
 
-.. sidebar:: shorter command.
+.. note:: 
+   :title: Shorter command
+   :collapsible:
 
    Invoking ``ideas`` is essentially equivalent
    to writing ``python -m ideas``.
@@ -41,7 +43,9 @@ directory included with |ideas|. Thus, for the example above,
 the name used by |ideas|
 is ``ideas.included.function_keyword``.
 
-.. sidebar:: .py extension
+.. note:: 
+    :title: .py extension
+    :collapsible:
 
     |ideas| will just drop the ``.py`` extension if you add one,
     presumably because you are used to doing it.
@@ -188,7 +192,9 @@ enabled by default, it is possible to do so, provided you
 are not using a virtual environment. [2]_
 
 
-.. sidebar::
+.. caution::
+    :title: Not virtual ...
+    :collapsible: 
 
     In the description below, setting ``PYTHONPATH`` in a terminal
     will only work as described

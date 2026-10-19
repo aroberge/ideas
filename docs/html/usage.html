@@ -41,7 +41,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
-        <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
         <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
         <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -747,11 +747,10 @@ the same thing as <code class="docutils literal notranslate"><span class="pre">l
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"And the square of 5 is </span><span class="si">{</span><span class="n">square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<aside class="sidebar">
-<p class="sidebar-title">shorter command.</p>
-<p>Invoking <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is essentially equivalent
+<details class="note admonition">
+<summary class="admonition-title">Shorter command</summary><p>Invoking <code class="docutils literal notranslate"><span class="pre">ideas</span></code> is essentially equivalent
 to writing <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">ideas</span></code>.</p>
-</aside>
+</details>
 <p>Actually, with <span class="text-small-caps text-bold">ideas</span>, you can run this program in a terminal as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code>&gt; ideas -a function_keyword my_program
 16 is the square of 4.
@@ -765,11 +764,10 @@ current directory, it is assumed to exists in the <code class="docutils literal 
 directory included with <span class="text-small-caps text-bold">ideas</span>. Thus, for the example above,
 the name used by <span class="text-small-caps text-bold">ideas</span>
 is <code class="docutils literal notranslate"><span class="pre">ideas.included.function_keyword</span></code>.</p>
-<aside class="sidebar">
-<p class="sidebar-title">.py extension</p>
-<p><span class="text-small-caps text-bold">ideas</span> will just drop the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension if you add one,
+<details class="note admonition">
+<summary class="admonition-title">.py extension</summary><p><span class="text-small-caps text-bold">ideas</span> will just drop the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension if you add one,
 presumably because you are used to doing it.</p>
-</aside>
+</details>
 <p>In <code class="docutils literal notranslate"><span class="pre">ideas</span> <span class="pre">-a</span> <span class="pre">function_keyword</span> <span class="pre">my_program</span></code>, you may have noticed that
 <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension.
 This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
@@ -877,11 +875,11 @@ default installation.</p>
 <p>If you <strong>really</strong> like to have your custom hook or custom encoding
 enabled by default, it is possible to do so, provided you
 are not using a virtual environment. <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
-<aside class="sidebar">
-<p>In the description below, setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> in a terminal
+<details class="caution warning admonition">
+<summary class="admonition-title">Not virtual …</summary><p>In the description below, setting <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> in a terminal
 will only work as described
 if you install <span class="text-small-caps text-bold">ideas</span> in a normal (not virtual) environment.</p>
-</aside>
+</details>
 <p>In what follows, I will use the <code class="docutils literal notranslate"><span class="pre">decimal_math</span></code> example which
 can be used either as an import hook or as a custom encoding.
 <a class="reference external" href="https://github.com/aroberge/ideas/blob/master/src/ideas/included/decimal_math.py" rel="noreferrer" target="_blank">Source code</a></p>
