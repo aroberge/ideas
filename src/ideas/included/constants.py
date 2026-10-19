@@ -219,7 +219,7 @@ def exec_(code_object, filename=None, module=None, callback_params=None, **kwarg
     module.__dict__.update(locals_)
 
 
-def on_change_print(filename=None, key=None, value=None, kind=None, in_final=False):
+def on_change_print(filename="", key=None, value=None, kind=None, in_final=False):
     """Function called by default when an attempt is made to change the
     value of a constant.
     """

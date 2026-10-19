@@ -1,11 +1,7 @@
 from typing import Callable
 from _typeshed import Incomplete
 
-import types
-from ideas import create_hook
 from ideas.console import CONSOLE_NAME
-from ideas import utils
-import token_utils
 
 shorten_path: Callable[[Incomplete], Incomplete]
 CONSTANTS: Incomplete
@@ -14,13 +10,13 @@ DECLARED_FINAL: Incomplete
 def update_before_console_start(module: Incomplete) -> Incomplete: ...
 def make_class(on_prevent_change_feedback: Incomplete = True) -> Incomplete: ...
 
-class FinalDict(dict):
+class FinalDict(dict):  # type: ignore
     __file__: Incomplete
     on_prevent_change_feedback: Incomplete
 
     def __init__(
         self, module_filename: Incomplete, on_prevent_change_feedback: Incomplete = True
-    ) -> Incomplete: ...
+    ) -> None: ...
     def __setitem__(self, key: Incomplete, value: Incomplete) -> Incomplete: ...
     def __delitem__(self, key: Incomplete) -> Incomplete: ...
     def setdefault(self, key: Incomplete, default: Incomplete = None) -> Incomplete: ...
@@ -36,7 +32,7 @@ def exec_(
     **kwargs: Incomplete,
 ) -> Incomplete: ...
 def on_change_print(
-    filename: Incomplete = None,
+    filename: str = "",
     key: Incomplete = None,
     value: Incomplete = None,
     kind: Incomplete = None,

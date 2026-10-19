@@ -1,110 +1,652 @@
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create your first import hook: the basics &mdash; ideas 0.3.14 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="usage.html">
+      
+      
+        <link rel="next" href="first_hook_customized.html">
+      
+      
+      <link rel="icon" href="">
+    
+    
+      
+        <title>Create your first import hook: the basics - ideas 0.3.14 documentation</title>
+      
+    
+    
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
+        <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+        <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-use-do-this" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
 
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6307bca3"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Customizing your first import hook" href="first_hook_customized.html" />
-    <link rel="prev" title="Usage" href="usage.html" /> 
-</head>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            ideas
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Create your own import hook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#how-use-do-this">How use do this</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#actual-code">Actual code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#add-hook"><code class="docutils literal notranslate"><span class="pre">add_hook</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-token-utils">Using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#debugging-help">Debugging help</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#complete-argument-list-for-transform-source">Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="first_hook_customized.html"> Customizing your first import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deep_dive.html"> Import hooks: A deep dive</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="guide.html"> Guide to the many examples included</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Other modules</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tokenize.html"> About tokens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tokenize_notebook.html"> Capture of token_utils interactive demo</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
-</ul>
-
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="ideas 0.3.14 documentation" class="md-header__button md-logo" aria-label="ideas 0.3.14 documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ideas 0.3.14 documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Create your first import hook: the basics
+            
+          </span>
         </div>
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ideas</a>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
       </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content style-external-links">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Create your first import hook: the basics</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/first_import_hook.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="first_hook_customized.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="admonition-summary admonition">
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="ideas 0.3.14 documentation" class="md-nav__button md-logo" aria-label="ideas 0.3.14 documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    ideas 0.3.14 documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/what.rst (reference label)"><span> What is ideas?</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/usage.rst (reference label)"><span> Usage</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/first_import_hook.rst (reference label)"><span> Create your own import hook</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/first_import_hook.rst (reference label)"><span> Create your own import hook</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-use-do-this" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#how-use-do-this (reference label)"><span>How use do this</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actual-code" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#actual-code (reference label)"><span>Actual code</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Actual code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-hook" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#add-hook (reference label)"><span>add_<wbr>hook</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-token-utils" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#using-token-utils (reference label)"><span>Using token_<wbr>utils</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-help" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#debugging-help (reference label)"><span>Debugging help</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-argument-list-for-transform-source" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#complete-argument-list-for-transform-source (reference label)"><span>Complete argument list for transform_<wbr>source</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_hook_customized.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/first_hook_customized.rst (reference label)"><span> Customizing your first import hook</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deep_dive.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/deep_dive.rst (reference label)"><span> Import hooks:<wbr> A deep dive</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    <span>Many examples</span>
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            <span>Many examples</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst (reference label)"><span> Guide to the many examples included</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    <span>Appendix</span>
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            <span>Appendix</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TODO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/todo.rst (reference label)"><span>TODO</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-use-do-this" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#how-use-do-this (reference label)"><span>How use do this</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actual-code" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#actual-code (reference label)"><span>Actual code</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Actual code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-hook" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#add-hook (reference label)"><span>add_<wbr>hook</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-token-utils" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#using-token-utils (reference label)"><span>Using token_<wbr>utils</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-help" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#debugging-help (reference label)"><span>Debugging help</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-argument-list-for-transform-source" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/first_import_hook.rst#complete-argument-list-for-transform-source (reference label)"><span>Complete argument list for transform_<wbr>source</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<div class="admonition">
 <p class="admonition-title">Summary</p>
 <ul class="simple">
 <li><p>We explain how to create a basic import hook.</p></li>
@@ -113,17 +655,15 @@
 debugging information.</p></li>
 </ul>
 </div>
-<section id="create-your-first-import-hook-the-basics">
-<h1>Create your first import hook: the basics<a class="headerlink" href="#create-your-first-import-hook-the-basics" title="Link to this heading"></a></h1>
+<h1 id="create-your-first-import-hook-the-basics">Create your first import hook: the basics<a class="headerlink" href="#create-your-first-import-hook-the-basics" title="Link to this heading">¶</a></h1>
 <p>You’ve seen how to use <span class="text-small-caps text-bold">ideas</span> import hooks; now it is time to
 create your first one.  We will use our <code class="docutils literal notranslate"><span class="pre">&quot;Hello</span> <span class="pre">world&quot;</span></code> example,
 which uses <code class="docutils literal notranslate"><span class="pre">function</span></code> as equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
-<section id="how-use-do-this">
-<h2>How use do this<a class="headerlink" href="#how-use-do-this" title="Link to this heading"></a></h2>
+<h2 id="how-use-do-this">How use do this<a class="headerlink" href="#how-use-do-this" title="Link to this heading">¶</a></h2>
 <p>Suppose you had access to the source of a program using
 <code class="docutils literal notranslate"><span class="pre">function</span></code> as a keyword instead of lambda.
 Perhaps something like the following:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">"""greet_script.py</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="sd">"""greet_script.py</span>
 
 <span class="sd">This is a test demonstrating the use of our hook to replace</span>
 <span class="sd">function by lambda."""</span>
@@ -131,20 +671,20 @@ Perhaps something like the following:</p>
 <span class="n">greet</span> <span class="o">=</span> <span class="n">function</span> <span class="n">name</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hello </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!"</span><span class="p">)</span>
 
 <span class="n">greet</span><span class="p">(</span><span class="s2">"World"</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>So that you could write:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>
 <span class="go">Hello World!</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>If you had access to that source, all you would need to do is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modified_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"function"</span><span class="p">,</span> <span class="s2">"lambda"</span><span class="p">)</span>
-</pre></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">modified_source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"function"</span><span class="p">,</span> <span class="s2">"lambda"</span><span class="p">)</span>
+</code></pre></div>
 </div>
 <p>and have Python execute <code class="docutils literal notranslate"><span class="pre">modified_source</span></code> instead of the original <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
 <p>Here’s how we can do it using <span class="text-small-caps text-bold">ideas</span>:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple_replacement.py</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># simple_replacement.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ideas</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_hook</span>
 
 
@@ -153,10 +693,10 @@ Perhaps something like the following:</p>
 
 
 <span class="n">import_hook</span><span class="o">.</span><span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">some_arbitrary_name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>That’s it! Let’s try it out.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>  <span class="c1"># of course, this won't work</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>  <span class="c1"># of course, this won't work</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="x">File "&lt;stdin&gt;", line 1, in &lt;module&gt;</span>
 <span class="x">File "C:\Users\Andre\github\ideas\docs_examples\first_import_hook\greet_script.py", line 6</span>
@@ -166,10 +706,10 @@ Perhaps something like the following:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">simple_replacement</span>  <span class="c1"># sets up the import hook</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">greet_script</span>
 <span class="go">Hello World!</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>It works! … almost … Let’s find out more:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">greet_script</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">greet_script</span><span class="p">)</span>
 <span class="go">Help on module greet_script:</span>
 
 <span class="go">NAME</span>
@@ -184,7 +724,7 @@ Perhaps something like the following:</p>
 
 <span class="go">FILE</span>
 <span class="go">    c:\\users\\andre\\github\\ideas\\docs_examples\\first_import_hook\\greet_script.py</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>Something is not ideal with the DESCRIPTION: it says that it replaces
 <code class="docutils literal notranslate"><span class="pre">lambda</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, which is not very helpful.
@@ -192,10 +732,10 @@ Still, as a first step, it shows how easy it is to write an
 import hook that modifies the source code using <span class="text-small-caps text-bold">ideas</span>.
 Instead of importing everything within a standard Python
 interpreter, let’s execute the code using <span class="text-small-caps text-bold">ideas</span> on the command line.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a simple_replacement greet_script
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code>&gt; ideas -a simple_replacement greet_script
 Module &lt;module 'simple_replacement' from 'C:\\Users\\Andre\\github\\ideas\\docs_examples\\first_import_hook\\simple_replacement.py'&gt; does not contain a function named add_hook
 Hello World!
-</pre></div>
+</code></pre></div>
 </div>
 <p>Something is not quite right: using the <code class="docutils literal notranslate"><span class="pre">-a</span></code> flag told <span class="text-small-caps text-bold">ideas</span> to import
 the module (which it did), then find the <code class="docutils literal notranslate"><span class="pre">add_hook</span></code> function and execute it.
@@ -204,12 +744,10 @@ created an import hook which was then used to replace <code class="docutils lite
 <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when the file <code class="docutils literal notranslate"><span class="pre">greet_script.py</span></code> was executed.
 So, in spite of the error message from <span class="text-small-caps text-bold">ideas</span>,
 everything worked the way we wanted when it came to replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
-</section>
-<section id="actual-code">
-<h2>Actual code<a class="headerlink" href="#actual-code" title="Link to this heading"></a></h2>
+<h2 id="actual-code">Actual code<a class="headerlink" href="#actual-code" title="Link to this heading">¶</a></h2>
 <p>Here’s the content of the similar import hook included in
 <span class="text-small-caps text-bold">ideas</span> when you install it on your computer.</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">"""This module enables someone to use ``function`` as a keyword</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="sd">"""This module enables someone to use ``function`` as a keyword</span>
 <span class="sd">equivalent to ``lambda``.</span>
 <span class="sd">"""</span>
 
@@ -234,10 +772,9 @@ everything worked the way we wanted when it came to replace <code class="docutil
 <span class="w">    </span><span class="sd">"""Creates and automatically adds the import hook in sys.meta_path"""</span>
     <span class="n">hook</span> <span class="o">=</span> <span class="n">create_hook</span><span class="p">(</span><span class="n">transform_source</span><span class="o">=</span><span class="n">transform_source</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hook</span>
-</pre></div>
+</code></pre></div>
 </div>
-<section id="add-hook">
-<h3><code class="docutils literal notranslate"><span class="pre">add_hook</span></code><a class="headerlink" href="#add-hook" title="Link to this heading"></a></h3>
+<h3 id="add-hook"><code class="docutils literal notranslate"><span class="pre">add_hook</span></code><a class="headerlink" href="#add-hook" title="Link to this heading">¶</a></h3>
 <p>Rather than inserting our import hook immediately upon execution
 of this module, we put the code to do so in the function
 <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, and return the hook that was created.
@@ -253,8 +790,8 @@ in more complex examples</p></li>
 <li><p>Perhaps the most import benefit is that, as we have seen before,
 we can invoke ideas from the command line with the
 <code class="docutils literal notranslate"><span class="pre">-a</span></code> or <code class="docutils literal notranslate"><span class="pre">--add_hook</span></code> flag,</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ideas --add_hook function_keyword
-</pre></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code>ideas --add_hook function_keyword
+</code></pre></div>
 </div>
 <p>which imports <code class="docutils literal notranslate"><span class="pre">function_keyword</span></code> and calls <code class="docutils literal notranslate"><span class="pre">function_keyword.add_hook()</span></code>.</p>
 </li>
@@ -266,9 +803,7 @@ we can invoke ideas from the command line with the
 (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, etc.), keywords, strings, etc.
 Each of these is an individual <strong>token</strong>.</p>
 </aside>
-</section>
-<section id="using-token-utils">
-<h3>Using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code><a class="headerlink" href="#using-token-utils" title="Link to this heading"></a></h3>
+<h3 id="using-token-utils">Using <code class="docutils literal notranslate"><span class="pre">token_utils</span></code><a class="headerlink" href="#using-token-utils" title="Link to this heading">¶</a></h3>
 <p>To replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> only when it is meant to be
 used as a keyword, we break up the code in a series of tokens
 and only replace <code class="docutils literal notranslate"><span class="pre">function</span></code> by <code class="docutils literal notranslate"><span class="pre">lambda</span></code> when it occurs as
@@ -278,14 +813,14 @@ added features. For example, in almost all cases, the relevant
 characteristic of a token is its string representation.
 We can compare a token directly to a string like we did in the code above on line 16.</p>
 <p>Note that, just like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lambda</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lambda</span><span class="p">():</span>
     <span class="k">pass</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>would raise a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>, the same would occur with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">function</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">function</span><span class="p">():</span>
     <span class="k">pass</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p>using our import hook.</p>
 <p>Once we’re done with replacing all <code class="docutils literal notranslate"><span class="pre">function</span></code> tokens by <code class="docutils literal notranslate"><span class="pre">lambda</span></code>,
@@ -296,12 +831,10 @@ same name, <code class="docutils literal notranslate"><span class="pre">transfor
 argument for <code class="docutils literal notranslate"><span class="pre">import_hook.create_hook</span></code>;
 unlike <code class="docutils literal notranslate"><span class="pre">add_hook</span></code>, using the specific name <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>
 is not required by <span class="text-small-caps text-bold">ideas</span>.</p>
-</section>
-<section id="debugging-help">
-<h3>Debugging help<a class="headerlink" href="#debugging-help" title="Link to this heading"></a></h3>
+<h3 id="debugging-help">Debugging help<a class="headerlink" href="#debugging-help" title="Link to this heading">¶</a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">-s</span></code> (or <code class="docutils literal notranslate"><span class="pre">--show_changes</span></code>) flag to find out
 what changes have been made by the source transformation to the original script.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; ideas -a function_keyword my_program -s
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code>&gt; ideas -a function_keyword my_program -s
 
 #========== Original source from docs_examples/usage/my_program.py ====
 # my_program.py
@@ -326,7 +859,7 @@ if __name__ == '__main__':
 
 16 is the square of 4.
 And the square of 5 is 25
-</pre></div>
+</code></pre></div>
 </div>
 <p>When using import hooks with a standard Python interpreter,
 only modules that are imported are affected <em>as they are imported</em>.
@@ -334,9 +867,9 @@ Code that is entered later in the interpreter is left unchanged.
 However, this is not the case for the <span class="text-small-caps text-bold">ideas</span> console.
 In the <span class="text-small-caps text-bold">ideas</span> console, since we see the original source
 (the code we wrote), only the changed source is shown.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">cube</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
 <span class="n">New</span><span class="p">:</span> <span class="n">cube</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
-</pre></div>
+</code></pre></div>
 </div>
 <aside class="sidebar">
 <p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">ideas_state</span></code></p>
@@ -346,28 +879,25 @@ in the <span class="text-small-caps text-bold">ideas</span> console.</p>
 </aside>
 <p>Inside the ideas console, you can turn on or off this feature
 as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">double</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">ideas_state</span><span class="o">.</span><span class="n">show_changes</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">ideas</span><span class="o">&gt;</span> <span class="n">triple</span> <span class="o">=</span> <span class="n">function</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
 <span class="n">New</span><span class="p">:</span> <span class="n">triple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span>
-</pre></div>
+</code></pre></div>
 </div>
-<div class="admonition tip">
+<div class="tip admonition">
 <p class="admonition-title">Tip</p>
 <p>Try out <code class="docutils literal notranslate"><span class="pre">ideas_state.help()</span></code> to get an idea of what
 information might be available or modified via <code class="docutils literal notranslate"><span class="pre">ideas_state</span></code>.</p>
 </div>
-</section>
-</section>
-<section id="complete-argument-list-for-transform-source">
-<h2>Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code><a class="headerlink" href="#complete-argument-list-for-transform-source" title="Link to this heading"></a></h2>
+<h2 id="complete-argument-list-for-transform-source">Complete argument list for <code class="docutils literal notranslate"><span class="pre">transform_source</span></code><a class="headerlink" href="#complete-argument-list-for-transform-source" title="Link to this heading">¶</a></h2>
 <p>In the above example, we had some unspecified keywords arguments
 passed to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
 <p>The last time this documentation was updated, the list of possible
 arguments could be found in the arguments of <code class="docutils literal notranslate"><span class="pre">hook.transform_source</span></code>
 which is inside the method <code class="docutils literal notranslate"><span class="pre">source_transforms</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">source_transforms</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">source_transforms</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">source</span><span class="p">,</span>
         <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -398,42 +928,72 @@ which is inside the method <code class="docutils literal notranslate"><span clas
                 <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">source</span>
-</pre></div>
+</code></pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">filename</span></code> can sometimes be the name of the <span class="text-small-caps text-bold">ideas</span> console.</p>
 <p>When using IPython or Jupyter, only the <code class="docutils literal notranslate"><span class="pre">source</span></code> is passed back to <code class="docutils literal notranslate"><span class="pre">transform_source</span></code>.</p>
-</section>
-</section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="first_hook_customized.html" class="btn btn-neutral float-right" title="Customizing your first import hook" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
 
-  <hr/>
 
-  <div role="contentinfo">
-    <p>&#169; Copyright André Roberge.</p>
-  </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
 
-</footer>
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
-      </div>
-    </section>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright André Roberge.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
 </html>

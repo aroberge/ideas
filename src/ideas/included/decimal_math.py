@@ -25,7 +25,7 @@ def transform_source(source, **_kwargs):
         if token.is_number() and "." in token.string:
             token.string = f"Decimal('{token.string}')"
 
-    return token_utils.untokenize(tokens)
+    return token_utils.untokenize(tokens)  # type: ignore
 
 
 def register():

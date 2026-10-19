@@ -246,7 +246,7 @@ def pdir(obj=None):
             return obj.__all__
         return dir(obj)
 
-    caller_frame = inspect.currentframe().f_back
+    caller_frame = inspect.currentframe().f_back  # type: ignore
     caller_locals = caller_frame.f_locals if caller_frame else {}
     if obj is None:
         if "__all__" in caller_locals:
@@ -288,11 +288,11 @@ def transform_source(
     for line in tu.get_logical_lines(source):
         first_token = line[0]
         if not first_token == "export":
-            stack.update(line)
+            stack.update(line)  # type: ignore
             new_lines.append(line)
             continue
 
-        stack.update(line[1:])  # must not include "export"
+        stack.update(line[1:])  # type: ignore # must not include "export"
 
         if stack.is_token_in_named_block(first_token, "class"):
             new_lines.append(line)

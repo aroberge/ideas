@@ -1,139 +1,1943 @@
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide to the examples &mdash; ideas 0.3.14 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="deep_dive.html">
+      
+      
+        <link rel="next" href="included/nobreak.html">
+      
+      
+      <link rel="icon" href="">
+    
+    
+      
+        <title>Guide to the examples - ideas 0.3.14 documentation</title>
+      
+    
+    
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
+        <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+        <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4fe1afaf" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#source-transformations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
 
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6307bca3"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="nobreak as a keyword" href="included/nobreak.html" />
-    <link rel="prev" title="Import hooks: A deep dive" href="deep_dive.html" /> 
-</head>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            ideas
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="what.html"> What is ideas?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html"> Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="first_import_hook.html"> Create your own import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="first_hook_customized.html"> Customizing your first import hook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deep_dive.html"> Import hooks: A deep dive</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Many examples</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Guide to the many examples included</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#source-transformations">Source transformations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/nobreak.html">nobreak as a keyword</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/repeat.html">repeat as a keyword</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/french.html">French Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/french_repeat.html">French repeat</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/auto_self.html">Auto-self</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/decimal_math.html">Decimal math</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/fractional_math_tok.html">Fractional math (token)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/inc_dec.html">Unitary increment and decrement operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/switch.html">Switch statement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/implicit_multiplication.html">Implicit multiplication</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/unnormalized_unicode.html">Unnormalized unicode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/from_export.html">from-export: PEP 843</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/export_name.html">export-name: PEP 842</a></li>
-<li class="toctree-l3"><a class="reference internal" href="included/export_keyword.html">export as a (soft) keyword (PEPs 842 + 843)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#ast-transformations">AST transformations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/fractional_math_ast.html"> Fractional math (AST)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#ast-creation">AST creation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/polish_expr.html">Polish expressions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#bytecode-transformations">Bytecode transformations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/bytecode.html"> Confused math (Bytecode)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#more-complex-examples">More complex examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/constants.html"> True constants</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#tranforming-a-module-after-creation">Tranforming a module after creation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/patching.html"> Patching a module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-encoding">Custom encoding</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="included/lambda.html"> Create your own codec</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
-</ul>
-
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="ideas 0.3.14 documentation" class="md-header__button md-logo" aria-label="ideas 0.3.14 documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ideas 0.3.14 documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Guide to the examples
+            
+          </span>
         </div>
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ideas</a>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
       </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content style-external-links">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Guide to the examples</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="deep_dive.html" class="btn btn-neutral float-left" title="Import hooks: A deep dive" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="included/nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="guide-to-the-examples">
-<h1>Guide to the examples<a class="headerlink" href="#guide-to-the-examples" title="Link to this heading"></a></h1>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="ideas 0.3.14 documentation" class="md-nav__button md-logo" aria-label="ideas 0.3.14 documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+    </a>
+    ideas 0.3.14 documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/what.rst (reference label)"><span> What is ideas?</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/usage.rst (reference label)"><span> Usage</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_import_hook.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/first_import_hook.rst (reference label)"><span> Create your own import hook</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_hook_customized.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/first_hook_customized.rst (reference label)"><span> Customizing your first import hook</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="deep_dive.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/deep_dive.rst (reference label)"><span> Import hooks:<wbr> A deep dive</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    <span>Many examples</span>
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            <span>Many examples</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__current-nested md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst (reference label)"><span> Guide to the many examples included</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst (reference label)"><span> Guide to the many examples included</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#source-transformations" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#source-transformations (reference label)"><span>Source transformations</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_1" id="__nav_6_1_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#source-transformations (reference label)"><span>Source transformations</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/nobreak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/nobreak.rst (reference label)"><span>nobreak as a keyword</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/repeat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/repeat.rst (reference label)"><span>repeat as a keyword</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/french.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/french.rst (reference label)"><span>French Python</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/french_repeat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/french_repeat.rst (reference label)"><span>French repeat</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/auto_self.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/auto_self.rst (reference label)"><span>Auto-<wbr>self</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/decimal_math.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/decimal_math.rst (reference label)"><span>Decimal math</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_tok.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/fractional_math_tok.rst (reference label)"><span>Fractional math <wbr>(token)</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/inc_dec.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/inc_dec.rst (reference label)"><span>Unitary increment and decrement operators</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/switch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/switch.rst (reference label)"><span>Switch statement</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/implicit_multiplication.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/implicit_multiplication.rst (reference label)"><span>Implicit multiplication</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/unnormalized_unicode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/unnormalized_unicode.rst (reference label)"><span>Unnormalized unicode</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/from_export.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/from_export.rst (reference label)"><span>from-<wbr>export:<wbr> PEP 843</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/export_name.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/export_name.rst (reference label)"><span>export-<wbr>name:<wbr> PEP 842</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/export_keyword.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/export_keyword.rst (reference label)"><span>export as a <wbr>(soft) keyword <wbr>(PEPs 842 + 843)</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#ast-transformations" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#ast-transformations (reference label)"><span>AST transformations</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_2" id="__nav_6_1_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#ast-transformations (reference label)"><span>AST transformations</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_ast.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/fractional_math_ast.rst (reference label)"><span>Fractional math <wbr>(AST)</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.FractionWrapper" class="md-nav__link">
+        
+  
+  
+    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+  
+  <span class="md-ellipsis">
+    <span title="ideas.included.fractions_ast.FractionWrapper (Python class) — Wrap all int divisions in a call to Fractions."><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>Fraction<wbr>Wrapper</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.add_hook" class="md-nav__link">
+        
+  
+  
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+  
+  <span class="md-ellipsis">
+    <span title="ideas.included.fractions_ast.add_hook (Python function) — Creates and automatically adds the import hook in sys.meta_path"><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>add_<wbr>hook</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.source_init" class="md-nav__link">
+        
+  
+  
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+  
+  <span class="md-ellipsis">
+    <span title="ideas.included.fractions_ast.source_init (Python function) — Adds required import so that Fraction is a known object."><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>source_<wbr>init</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.transform_ast" class="md-nav__link">
+        
+  
+  
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+  
+  <span class="md-ellipsis">
+    <span title="ideas.included.fractions_ast.transform_ast (Python function) — Transforms the Abstract Syntax Tree or a single node"><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>transform_<wbr>ast</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#ast-creation" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#ast-creation (reference label)"><span>AST creation</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_3" id="__nav_6_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#ast-creation (reference label)"><span>AST creation</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/polish_expr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/polish_expr.rst (reference label)"><span>Polish expressions</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#bytecode-transformations" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#bytecode-transformations (reference label)"><span>Bytecode transformations</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_4" id="__nav_6_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#bytecode-transformations (reference label)"><span>Bytecode transformations</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/bytecode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/bytecode.rst (reference label)"><span> Confused math <wbr>(Bytecode)</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#more-complex-examples" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#more-complex-examples (reference label)"><span>More complex examples</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5" id="__nav_6_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#more-complex-examples (reference label)"><span>More complex examples</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/constants.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/constants.rst (reference label)"><span> True constants</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#tranforming-a-module-after-creation" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#tranforming-a-module-after-creation (reference label)"><span>Tranforming a module after creation</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6" id="__nav_6_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#tranforming-a-module-after-creation (reference label)"><span>Tranforming a module after creation</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/patching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/patching.rst (reference label)"><span> Patching a module</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="#custom-encoding" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst#custom-encoding (reference label)"><span>Custom encoding</span></span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7" id="__nav_6_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            <span title="/guide.rst#custom-encoding (reference label)"><span>Custom encoding</span></span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="included/lambda.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/included/lambda.rst (reference label)"><span> Create your own codec</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+      
+    <li class="md-nav__item md-nav__item--active md-nav__current-toc">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst (reference label)"><span> Guide to the many examples included</span></span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/guide.rst (reference label)"><span> Guide to the many examples included</span></span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#source-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#source-transformations (reference label)"><span>Source transformations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Source transformations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/nobreak.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/nobreak.rst (reference label)"><span>nobreak as a keyword</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/repeat.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/repeat.rst (reference label)"><span>repeat as a keyword</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/french.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/french.rst (reference label)"><span>French Python</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/french_repeat.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/french_repeat.rst (reference label)"><span>French repeat</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/auto_self.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/auto_self.rst (reference label)"><span>Auto-<wbr>self</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/decimal_math.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/decimal_math.rst (reference label)"><span>Decimal math</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_tok.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/fractional_math_tok.rst (reference label)"><span>Fractional math <wbr>(token)</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/inc_dec.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/inc_dec.rst (reference label)"><span>Unitary increment and decrement operators</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/switch.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/switch.rst (reference label)"><span>Switch statement</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/implicit_multiplication.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/implicit_multiplication.rst (reference label)"><span>Implicit multiplication</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/unnormalized_unicode.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/unnormalized_unicode.rst (reference label)"><span>Unnormalized unicode</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/from_export.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/from_export.rst (reference label)"><span>from-<wbr>export:<wbr> PEP 843</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/export_name.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/export_name.rst (reference label)"><span>export-<wbr>name:<wbr> PEP 842</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/export_keyword.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/export_keyword.rst (reference label)"><span>export as a <wbr>(soft) keyword <wbr>(PEPs 842 + 843)</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ast-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#ast-transformations (reference label)"><span>AST transformations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AST transformations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_ast.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/fractional_math_ast.rst (reference label)"><span>Fractional math <wbr>(AST)</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.FractionWrapper" class="md-nav__link">
+    
+      <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span>
+    
+    <span class="md-ellipsis">
+      <span title="ideas.included.fractions_ast.FractionWrapper (Python class) — Wrap all int divisions in a call to Fractions."><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>Fraction<wbr>Wrapper</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.add_hook" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="ideas.included.fractions_ast.add_hook (Python function) — Creates and automatically adds the import hook in sys.meta_path"><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>add_<wbr>hook</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.source_init" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="ideas.included.fractions_ast.source_init (Python function) — Adds required import so that Fraction is a known object."><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>source_<wbr>init</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="included/fractional_math_ast.html#ideas.included.fractions_ast.transform_ast" class="md-nav__link">
+    
+      <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+    
+    <span class="md-ellipsis">
+      <span title="ideas.included.fractions_ast.transform_ast (Python function) — Transforms the Abstract Syntax Tree or a single node"><span>ideas.<wbr>included.<wbr>fractions_<wbr>ast.<wbr>transform_<wbr>ast</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ast-creation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#ast-creation (reference label)"><span>AST creation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AST creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/polish_expr.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/polish_expr.rst (reference label)"><span>Polish expressions</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bytecode-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#bytecode-transformations (reference label)"><span>Bytecode transformations</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bytecode transformations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/bytecode.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/bytecode.rst (reference label)"><span> Confused math <wbr>(Bytecode)</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-complex-examples" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#more-complex-examples (reference label)"><span>More complex examples</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="More complex examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/constants.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/constants.rst (reference label)"><span> True constants</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tranforming-a-module-after-creation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#tranforming-a-module-after-creation (reference label)"><span>Tranforming a module after creation</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tranforming a module after creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/patching.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/patching.rst (reference label)"><span> Patching a module</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-encoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#custom-encoding (reference label)"><span>Custom encoding</span></span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="included/lambda.html" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/included/lambda.rst (reference label)"><span> Create your own codec</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    <span>Appendix</span>
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            <span>Appendix</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TODO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span title="/todo.rst (reference label)"><span>TODO</span></span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#source-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#source-transformations (reference label)"><span>Source transformations</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ast-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#ast-transformations (reference label)"><span>AST transformations</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ast-creation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#ast-creation (reference label)"><span>AST creation</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bytecode-transformations" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#bytecode-transformations (reference label)"><span>Bytecode transformations</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-complex-examples" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#more-complex-examples (reference label)"><span>More complex examples</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tranforming-a-module-after-creation" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#tranforming-a-module-after-creation (reference label)"><span>Tranforming a module after creation</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-encoding" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="/guide.rst#custom-encoding (reference label)"><span>Custom encoding</span></span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="guide-to-the-examples">Guide to the examples<a class="headerlink" href="#guide-to-the-examples" title="Link to this heading">¶</a></h1>
 <p>The examples included are listed roughly in increasing level of complexity.
 Source transformations and AST transformations can be used interactively
 in IPython/Jupyter environments;  bytecode transformations and custom
@@ -145,8 +1949,7 @@ for safety reasons, I will not accept examples that result in
 importing arbitrary code/modules from the Internet, as demonstrated
 in one of David Beazley’s talks.</p>
 </aside>
-<section id="source-transformations">
-<h2>Source transformations<a class="headerlink" href="#source-transformations" title="Link to this heading"></a></h2>
+<h2 id="source-transformations">Source transformations<a class="headerlink" href="#source-transformations" title="Link to this heading">¶</a></h2>
 <p>Source transformations represent one of the easiest way to
 introduce new experimental syntax in Python.
 If you want to write your own import hook, it might be worth your while
@@ -159,7 +1962,7 @@ we made it into a separate package available via Pypi.
 If you installed <span class="text-small-caps text-bold">ideas</span>, it should have also been installed
 automatically. You can get it on its own using
 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">token_utils</span></code>.</p>
-<div class="admonition important">
+<div class="important tip admonition">
 <p class="admonition-title">Important</p>
 <p>This entire project is meant as enabling <strong>easy experiments</strong> with
 changes to Python’s normal syntax. Some (most?) of the examples
@@ -184,68 +1987,60 @@ anyone other than yourself.</p>
 <li class="toctree-l1"><a class="reference internal" href="included/export_keyword.html">export as a (soft) keyword (PEPs 842 + 843)</a></li>
 </ul>
 </div>
-</section>
-<section id="ast-transformations">
-<h2>AST transformations<a class="headerlink" href="#ast-transformations" title="Link to this heading"></a></h2>
+<h2 id="ast-transformations">AST transformations<a class="headerlink" href="#ast-transformations" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html"> Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html">Fractional math (AST)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html#ideas.included.fractions_ast.FractionWrapper">ideas.included.fractions_ast.FractionWrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html#ideas.included.fractions_ast.add_hook">ideas.included.fractions_ast.add_hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html#ideas.included.fractions_ast.source_init">ideas.included.fractions_ast.source_init</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included/fractional_math_ast.html#ideas.included.fractions_ast.transform_ast">ideas.included.fractions_ast.transform_ast</a></li>
 </ul>
 </div>
-<div class="admonition-todo admonition" id="id1">
+<div class="todo info admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Currently, only one AST example exists and only one
 AST transformation can be done. A second example should
 be created and find a way to ensure that both could be applied.</p>
 </div>
-</section>
-<section id="ast-creation">
-<h2>AST creation<a class="headerlink" href="#ast-creation" title="Link to this heading"></a></h2>
+<h2 id="ast-creation">AST creation<a class="headerlink" href="#ast-creation" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="included/polish_expr.html">Polish expressions</a></li>
 </ul>
 </div>
-</section>
-<section id="bytecode-transformations">
-<h2>Bytecode transformations<a class="headerlink" href="#bytecode-transformations" title="Link to this heading"></a></h2>
+<h2 id="bytecode-transformations">Bytecode transformations<a class="headerlink" href="#bytecode-transformations" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="included/bytecode.html"> Confused math (Bytecode)</a></li>
 </ul>
 </div>
-<div class="admonition-todo admonition" id="id2">
+<div class="todo info admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Currently, only one Bytecode example exists and only one
 Bytecode transformation can be done. A second example should
 be created and find a way to ensure that both could be applied.</p>
 </div>
-</section>
-<section id="more-complex-examples">
-<h2>More complex examples<a class="headerlink" href="#more-complex-examples" title="Link to this heading"></a></h2>
+<h2 id="more-complex-examples">More complex examples<a class="headerlink" href="#more-complex-examples" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="included/constants.html"> True constants</a></li>
 </ul>
 </div>
-</section>
-<section id="tranforming-a-module-after-creation">
-<h2>Tranforming a module after creation<a class="headerlink" href="#tranforming-a-module-after-creation" title="Link to this heading"></a></h2>
+<h2 id="tranforming-a-module-after-creation">Tranforming a module after creation<a class="headerlink" href="#tranforming-a-module-after-creation" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="included/patching.html"> Patching a module</a></li>
 </ul>
 </div>
-<div class="admonition-todo admonition" id="id3">
+<div class="todo info admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>Currently, a patch requires to specify a module name for it to be applied
 to that module.
 It might be worthwhile exploring a case where we use <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>
 to specify that the patch should be applied to all modules.</p>
 </div>
-</section>
-<section id="custom-encoding">
-<h2>Custom encoding<a class="headerlink" href="#custom-encoding" title="Link to this heading"></a></h2>
+<h2 id="custom-encoding">Custom encoding<a class="headerlink" href="#custom-encoding" title="Link to this heading">¶</a></h2>
 <p>Import hooks are not the only way one can transform a source; this
 can also be done by custom encodings.</p>
 <div class="toctree-wrapper compound">
@@ -253,38 +2048,68 @@ can also be done by custom encodings.</p>
 <li class="toctree-l1"><a class="reference internal" href="included/lambda.html"> Create your own codec</a></li>
 </ul>
 </div>
-</section>
-</section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="deep_dive.html" class="btn btn-neutral float-left" title="Import hooks: A deep dive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="included/nobreak.html" class="btn btn-neutral float-right" title="nobreak as a keyword" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
 
-  <hr/>
 
-  <div role="contentinfo">
-    <p>&#169; Copyright André Roberge.</p>
-  </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
 
-</footer>
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
         </div>
-      </div>
-    </section>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright André Roberge.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    8.1.3.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+  </body>
 </html>

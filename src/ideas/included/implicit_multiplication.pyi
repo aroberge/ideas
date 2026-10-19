@@ -1,7 +1,7 @@
-from _typeshed import Incomplete
+from typing import Any, Callable
+from ideas.ideas_hook import IdeasHook
 
-from ideas import create_hook
-import token_utils
-
-def transform_source(source: Incomplete, **_kwargs: Incomplete) -> Incomplete: ...
-def add_hook(**_kwargs: Incomplete) -> Incomplete: ...
+def transform_source(source: str, **_kwargs: dict[str, Any]) -> str: ...
+def add_hook(
+    transform_source: Callable[[str], str], **_kwargs: dict[str, Any]
+) -> IdeasHook: ...

@@ -1,8 +1,8 @@
 from typing import Callable
-from _typeshed import Incomplete
 
 from ideas.session import ideas_state
 from ideas.import_hook import create_hook
+from ideas.ideas_hook import IdeasHook
 
 __all__ = [
     "add_patch",
@@ -14,10 +14,10 @@ __all__ = [
     "remove_hook",
     "transform",
 ]
-add_patch: Callable[[Incomplete, Incomplete], Incomplete]
-disable_hook: Callable[[Incomplete], Incomplete]
-enable_hook: Callable[[Incomplete], Incomplete]
-list_hooks: Callable[[], Incomplete]
-remove_hook: Callable[[Incomplete], Incomplete]
+add_patch: Callable[[str, Callable[..., None]], None]
+disable_hook: Callable[[str | IdeasHook], None]
+enable_hook: Callable[[str | IdeasHook], None]
+list_hooks: Callable[[], None]
+remove_hook: Callable[[str | IdeasHook], None]
 
 def transform(source: str) -> None: ...

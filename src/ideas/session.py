@@ -40,6 +40,7 @@ class State:
 
     def _clear(self):
         """Empties all containers to start tests fresh"""
+        self.remove_hook("*")
         self.source_inits = []
         self._hooks = []
         self._patches = {}
@@ -288,7 +289,7 @@ class State:
         if not self._hooks:
             from ideas.null_hook import add_hook
 
-            add_hook()
+            add_hook(__name__)
 
         if module_name not in self._patches:
             self._patches[module_name] = []

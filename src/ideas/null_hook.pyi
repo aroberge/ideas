@@ -1,5 +1,4 @@
-from _typeshed import Incomplete
+from ideas.ideas_hook import IdeasHook
+from typing import Any
 
-from ideas import create_hook
-
-def add_hook(**_kwargs: Incomplete) -> Incomplete: ...
+def add_hook(name: str) -> IdeasHook: ...

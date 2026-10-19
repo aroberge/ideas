@@ -2,8 +2,6 @@ from typing import Literal
 from _typeshed import Incomplete
 
 import ast
-import sys
-import emoji
 from ideas import create_hook
 
 DELIMITERS: tuple[Literal["__pythonji__"], Literal["__"]]

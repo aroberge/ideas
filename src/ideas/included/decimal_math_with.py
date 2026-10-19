@@ -50,15 +50,14 @@ def transform_source(source, **_kwargs):
     decimal_block = False
 
     indentation = 0
-    for line in token_utils.get_physical_lines(source):
-        first = token_utils.get_first(line)
+    for line in token_utils.get_logical_lines(source):
+        first = line[0]
         if first is None:
             new_tokens.extend(line)
             continue
         elif first == "with":
-            first_index = token_utils.get_first_index(line)
-            if len(line) > first_index + 1:
-                second = line[first_index + 1]
+            if len(line) > 1:
+                second = line[1]
                 if second == "float_as_Decimal":
                     first.string = "if"
                     second.string = "True"

@@ -23,7 +23,7 @@ def transform_source(source, **_kwargs):
             first.string = f"Decimal('{first.string}')"
             second.string = ""
 
-    return token_utils.untokenize(tokens)
+    return token_utils.untokenize(tokens)  # type: ignore
 
 
 def add_hook(**_kwargs):

@@ -63,22 +63,21 @@ import token_utils
 
 def transform_source(source, **_kwargs):
     """Replace integers (followed by /) by Fraction objects"""
-    tokens = token_utils.tokenize(source)
+    tokens = list(token_utils.tokenize(source))
     if len(tokens) < 3:
         return source
 
     new_tokens = []
-    second_is_int = False
-    for token, next_, second in zip(tokens, tokens[1:], tokens[2:]):
-        if token.is_integer() and second_is_int:
-            token.string = f"Fraction({token.string})"
-            second_is_int = False
-        elif token.is_integer() and next_ == "/":
-            token.string = f"Fraction({token.string})"
-            if second.is_integer():
-                second_is_int = True
-        new_tokens.append(token)
-    new_tokens.append(next_)  # noqa
+    third_is_int = False
+    for first, second, third in token_utils.sliding_window(tokens, 3):
+        if first.is_integer() and third_is_int:
+            first.string = f"Fraction({first.string})"
+            third_is_int = False
+        elif first.is_integer() and second == "/":
+            first.string = f"Fraction({first.string})"
+            if third.is_integer():
+                third_is_int = True
+        new_tokens.append(first)
 
     return token_utils.untokenize(new_tokens)
 

@@ -49,17 +49,17 @@ def transform_source(source, **_kwargs):
             )
             or (prev_token == ")" and (token.is_identifier() or token.is_number()))
         ):
-            new_tokens.append("*")
+            new_tokens.append("*")  # type: ignore
         new_tokens.append(token)
         prev_token = token
 
-    return token_utils.untokenize(new_tokens)
+    return token_utils.untokenize(new_tokens)  # type: ignore
 
 
 def add_hook(**_kwargs):
     """Creates and automatically adds the import hook in sys.meta_path"""
     hook = create_hook(
-        transform_source=transform_source,
+        transform_source=transform_source,  # type: ignore
         name=__name__,
     )
     return hook

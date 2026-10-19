@@ -18,7 +18,7 @@ sys.path.insert(0, "")
 class ParseKwargs(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, dict())
-        for value in values:
+        for value in values:  # type: ignore
             key, value = value.split("=")
             if value == "True":
                 value = True
@@ -278,12 +278,16 @@ def main() -> None:
                 console.start(locals_=module.__dict__, prompt=prompt)
             return
 
+    module = None
     try:
         module = import_module(args.source)
     except Exception as exc:
         ideas_state.exception_hook(type(exc), exc, exc.__traceback__)
         if sys.flags.interactive or args.i:
-            console.start(locals_=module.__dict__, prompt=prompt)
+            if module is not None and hasattr(module, "__dict__"):
+                console.start(locals_=module.__dict__, prompt=prompt)
+            else:
+                console.start(locals_={}, prompt=prompt)
         return
 
     if sys.flags.interactive or args.i:

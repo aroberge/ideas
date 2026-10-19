@@ -1,22 +1,22 @@
-from _typeshed import Incomplete
-
-import os
-import sys
+from types import ModuleType
+from typing import Sequence
 from importlib.abc import MetaPathFinder
+from importlib.machinery import ModuleSpec
 from importlib.util import spec_from_file_location
-from ideas import ideas_state
-from ideas.loader import IdeasLoader
-from ideas import utils
+from ideas.ideas_hook import IdeasHook
 
-def verbose_finder(text: Incomplete) -> Incomplete: ...
+def verbose_finder(text: str) -> None: ...
 
 class IdeasMetaPathFinder(MetaPathFinder):
-    ideas_hook: Incomplete
+    ideas_hook: IdeasHook
     inform_about_all_possible_paths: bool
 
-    def __init__(self, ideas_hook: Incomplete) -> Incomplete: ...
-    def __repr__(self) -> Incomplete: ...
-    def _set_path(self, path: Incomplete) -> Incomplete: ...
+    def __init__(self, ideas_hook: IdeasHook) -> None: ...
+    def __repr__(self) -> str: ...
+    def _set_path(self, path: list[str] | None) -> list[str]: ...
     def find_spec(
-        self, fullname: Incomplete, path: Incomplete, target: Incomplete = None
-    ) -> Incomplete: ...
+        self,
+        fullname: str,
+        path: Sequence[str] | None,
+        target: ModuleType | None = None,
+    ) -> ModuleSpec | None: ...

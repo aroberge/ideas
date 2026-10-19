@@ -1,12 +1,11 @@
 from _typeshed import Incomplete
 
 import logging
-import tokenize
 from typing import Optional, Union, Iterator, Iterable
 import token_utils
 from ideas import create_hook
 
-log: Logger
+log: logging.Logger
 PARENS: dict[str, str]
 HTML_START: list[str]
 HTML_END: list[str]

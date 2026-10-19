@@ -4,17 +4,10 @@
 This module contains the core functions required to create an import hook.
 """
 
-import ast
 import sys
 
-from types import CodeType, ModuleType
-from typing import Callable, Dict, Sequence, Optional, Any
-
-from ideas import console
-from ideas import utils
+from ideas import console, utils, ideas_state
 from ideas.ideas_hook import IdeasHook
-
-from ideas import ideas_state
 from ideas.finder import IdeasMetaPathFinder
 
 # TODO: see if ipython_ast_node_transformer is needed
@@ -25,22 +18,22 @@ from ideas.finder import IdeasMetaPathFinder
 
 def create_hook(
     name: str = "",
-    callback_params: Optional[Dict[str, Any]] = None,
-    console_only: Optional[bool] = False,
-    create_module: Optional[Callable[..., ModuleType]] = None,
-    console_dict: Optional[Dict[str, Any]] = None,
-    does_not_play_well_with_others: Optional[bool] = False,
-    exec_: Optional[Callable[..., None]] = None,
-    extensions: Optional[Sequence[str]] = None,
-    excluded_paths: Optional[Sequence[str]] = utils.DEFAULT,
-    ipython_ast_node_transformer: Optional[ast.NodeTransformer] = None,
-    module_class: Optional[type] = None,
-    source_init: Optional[Callable[[], str]] = None,
-    transform_ast: Optional[Callable[[ast.AST], ast.AST]] = None,
-    transform_bytecode: Optional[Callable[[CodeType], CodeType]] = None,
-    transform_source: Optional[Callable[[str], str]] = None,
-    parse_source: Optional[Callable[[str, str, str], Optional[ast.AST]]] = None,
-) -> Optional[IdeasHook]:  # pylint: disable=R0913,R0914
+    callback_params=None,
+    console_only=False,
+    create_module=None,
+    console_dict=None,
+    does_not_play_well_with_others=False,
+    exec_=None,
+    extensions=None,
+    excluded_paths=utils.DEFAULT,
+    ipython_ast_node_transformer=None,
+    module_class=None,
+    source_init=None,
+    transform_ast=None,
+    transform_bytecode=None,
+    transform_source=None,
+    parse_source=None,
+):
     """Function to facilitate the creation of an import hook.
 
     ``name``: required parameter which must be the ``__name__`` of
@@ -146,7 +139,7 @@ def create_hook(
     if ideas_state.verbose and extensions is not None:
         print("Looking for files with extensions: ", extensions)
         print("The following paths will not be included in the search:")
-        for sub_path in hook.excluded_paths:
+        for sub_path in hook.excluded_paths:  # type: ignore
             print("  ", utils.shorten_path(sub_path), sub_path)
 
     ## ----- Setting up Ideas Interactive Console
