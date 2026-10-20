@@ -244,7 +244,7 @@ def start(banner=BANNER, prompt="ideas> ", locals_=None):
         sys.ps2 = (len(prompt) - 4) * " " + "... "
     sys.ps1 = prompt
     if locals_ is None:
-        locals_ = {"ideas_state": ideas_state}
+        locals_ = {"ideas_state": ideas_state, "__name__": ideas_state.console_name}
     elif "Ideas" in locals_:
         if "ideas_config" in locals_:
             print("Ideas' configuration object is not available.")
