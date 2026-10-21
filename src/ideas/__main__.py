@@ -5,6 +5,7 @@ If no source is given, ideas will start an interactive console.
 
 import argparse
 from importlib import import_module
+import os
 import runpy
 import sys
 
@@ -130,8 +131,9 @@ parser.add_argument(
 parser.add_argument(
     "source",
     nargs="?",
-    help="""Name of the main Python module (path.to.my_program) to be run as the main script.
-    If present, the extension (.py) will be ignored.
+    help="""Name of the main Python module (path/to/my_program[.py]) to be run as the main script.
+    If present, the extension (.py) will be ignored. If the import hook requires a different
+    extension than .py, you must include it.
     """,
 )
 
@@ -244,8 +246,14 @@ def main() -> None:
     #     py [...] -m ideas [...] -m or --import_ source[.py]
     # All that is left is figuring out how to run the source provided
 
-    if args.source and args.source.endswith(".py"):
+    if args.source.endswith(".py"):
         args.source = args.source[:-3]
+
+    # Adding the directory where the file is located, like Python does.
+    work_dir, args.source = os.path.split(args.source)
+    work_dir = os.path.realpath(work_dir)
+    if os.path.exists(work_dir):
+        sys.path.append(work_dir)
 
     if args.source == "pygments":
         print("'pygments' is the single module excluded from being processed by ideas.")
