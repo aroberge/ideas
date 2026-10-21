@@ -20,7 +20,7 @@ the same thing as ``lambda``, enabling you to write:
 .. include:: ../../docs_examples/usage/my_program.py
    :code: python
 
-.. note:: 
+.. note::
    :title: Shorter command
    :collapsible:
 
@@ -43,7 +43,7 @@ directory included with |ideas|. Thus, for the example above,
 the name used by |ideas|
 is ``ideas.included.function_keyword``.
 
-.. note:: 
+.. note::
     :title: .py extension
     :collapsible:
 
@@ -52,9 +52,11 @@ is ``ideas.included.function_keyword``.
 
 In ``ideas -a function_keyword my_program``, you may have noticed that
 ``my_program`` does not include a ``.py`` extension.
-This is because ``my_program`` is imported:
+This is a reminder that ``my_program`` is imported:
 Python **import hooks**, by definition, only work on modules that are
-imported. Yet, you may have also noticed from what is printed
+imported. (However, you can include the ``.py`` extension and |ideas| will
+remove it before importing your program.)
+Yet, even though the program is imported, you may have also noticed from what is printed
 that it is imported with the name ``'__main__'``, so that it is nonetheless
 run as though it is the main script as one would expect.
 If you do not want the name to be ``__main__`` but rather ``my_program``,
@@ -130,29 +132,6 @@ You can also do the following in a terminal::
     ideas -h
 
 
-Program in a different directory
----------------------------------
-
-Use ``.`` instead of ``/`` or ``\`` to separate path elements when launching
-a script. For instance, in the example below, I used ``usage.my_program``
-instead of ``usage\my_program``, even though ``usage`` is a normal
-directory and not a Python package.
-
-.. code-block:: none
-
-    > dir usage
-
-    Directory of C:\Users\Andre\github\ideas\docs_examples\usage
-
-    ...
-    09/16/2026  02:46 PM               183 my_program.py
-               1 File(s)            183 bytes
-
-    (venv-ideas) C:\Users\Andre\github\ideas\docs_examples
-    > ideas -a function_keyword usage.my_program
-    16 is the square of 4.
-    And the square of 5 is 25
-
 
 Multiple import hooks
 ---------------------
@@ -194,7 +173,7 @@ are not using a virtual environment. [2]_
 
 .. caution::
     :title: Not virtual ...
-    :collapsible: 
+    :collapsible:
 
     In the description below, setting ``PYTHONPATH`` in a terminal
     will only work as described

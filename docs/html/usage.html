@@ -41,7 +41,7 @@
       
     
         <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.52c4e8fabf605a32c.min.css?v=d165d98b" />
-        <link rel="stylesheet" type="text/css" href="_static/text_styles.css" />
+        <link rel="stylesheet" type="text/css" href="_static/text_styles.css?v=84b268dc" />
         <link rel="stylesheet" type="text/css" href="_static/sphinx-new-tab-link.css?v=d87cb1ac" />
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -306,16 +306,6 @@
     
     <span class="md-ellipsis">
       <span title="/usage.rst#advanced-usage (reference label)"><span>Advanced usage</span></span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#program-in-a-different-directory" class="md-nav__link">
-    
-    <span class="md-ellipsis">
-      <span title="/usage.rst#program-in-a-different-directory (reference label)"><span>Program in a different directory</span></span>
     </span>
   </a>
   
@@ -668,16 +658,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#program-in-a-different-directory" class="md-nav__link">
-    
-    <span class="md-ellipsis">
-      <span title="/usage.rst#program-in-a-different-directory (reference label)"><span>Program in a different directory</span></span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#multiple-import-hooks" class="md-nav__link">
     
     <span class="md-ellipsis">
@@ -783,9 +763,11 @@ presumably because you are used to doing it.</p>
 </details>
 <p>In <code class="docutils literal notranslate"><span class="pre">ideas</span> <span class="pre">-a</span> <span class="pre">function_keyword</span> <span class="pre">my_program</span></code>, you may have noticed that
 <code class="docutils literal notranslate"><span class="pre">my_program</span></code> does not include a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension.
-This is because <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
+This is a reminder that <code class="docutils literal notranslate"><span class="pre">my_program</span></code> is imported:
 Python <strong>import hooks</strong>, by definition, only work on modules that are
-imported. Yet, you may have also noticed from what is printed
+imported. (However, you can include the <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension and <span class="text-small-caps text-bold">ideas</span> will
+remove it before importing your program.)
+Yet, even though the program is imported, you may have also noticed from what is printed
 that it is imported with the name <code class="docutils literal notranslate"><span class="pre">'__main__'</span></code>, so that it is nonetheless
 run as though it is the main script as one would expect.
 If you do not want the name to be <code class="docutils literal notranslate"><span class="pre">__main__</span></code> but rather <code class="docutils literal notranslate"><span class="pre">my_program</span></code>,
@@ -837,25 +819,6 @@ If you dind that it doesn’t, please let us know by filing an issue.</p>
 <p>Information about more advanced usage can be found in this documentation.
 You can also do the following in a terminal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ideas</span> <span class="o">-</span><span class="n">h</span>
-</code></pre></div>
-</div>
-<h2 id="program-in-a-different-directory">Program in a different directory<a class="headerlink" href="#program-in-a-different-directory" title="Link to this heading">¶</a></h2>
-<p>Use <code class="docutils literal notranslate"><span class="pre">.</span></code> instead of <code class="docutils literal notranslate"><span class="pre">/</span></code> or <code class="docutils literal notranslate"><span class="pre">\</span></code> to separate path elements when launching
-a script. For instance, in the example below, I used <code class="docutils literal notranslate"><span class="pre">usage.my_program</span></code>
-instead of <code class="docutils literal notranslate"><span class="pre">usage\my_program</span></code>, even though <code class="docutils literal notranslate"><span class="pre">usage</span></code> is a normal
-directory and not a Python package.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code>&gt; dir usage
-
-Directory of C:\Users\Andre\github\ideas\docs_examples\usage
-
-...
-09/16/2026  02:46 PM               183 my_program.py
-           1 File(s)            183 bytes
-
-(venv-ideas) C:\Users\Andre\github\ideas\docs_examples
-&gt; ideas -a function_keyword usage.my_program
-16 is the square of 4.
-And the square of 5 is 25
 </code></pre></div>
 </div>
 <h2 id="multiple-import-hooks">Multiple import hooks<a class="headerlink" href="#multiple-import-hooks" title="Link to this heading">¶</a></h2>
