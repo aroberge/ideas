@@ -1,6 +1,7 @@
 from ideas import remove_hook, ideas_state
 from ideas.included import decimal_math
 import codecs
+import sys
 
 
 def test_import_with_hook():
@@ -14,5 +15,6 @@ def test_import_with_encoding():
     decimal_math.register()
     from . import use_encoding  # noqa
 
-    codecs.unregister(ideas_state._codecs_search_functions["decimal_math"])
+    if sys.version_info >= (3, 10):
+        codecs.unregister(ideas_state._codecs_search_functions["decimal_math"])
     del ideas_state._codecs_search_functions["decimal_math"]
