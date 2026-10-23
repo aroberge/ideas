@@ -1,5 +1,5 @@
 from ideas.session import ideas_state
-from ideas.import_hook import create_hook
+from ideas.create_hook import create_hook
 
 __all__ = [
     "add_patch",

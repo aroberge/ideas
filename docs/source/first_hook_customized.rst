@@ -25,7 +25,7 @@ equivalent the
 `function_keyword included with ideas <https://github.com/aroberge/ideas/blob/master/src/ideas/included/function_keyword.py>`_
 but without some diagnostic options included::
 
-    from ideas import import_hook, token_utils
+    from ideas import create_hook, token_utils
 
     def transform_source(source, **_kwargs):
         new_tokens = []
@@ -36,7 +36,7 @@ but without some diagnostic options included::
         return token_utils.untokenize(new_tokens)
 
     def add_hook(**_kwargs):
-        return import_hook.create_hook(transform_source=transform_source, name=__name__)
+        return create_hook(transform_source=transform_source, name=__name__)
 
 
 Note the unused ``**_kwargs`` in the definition of ``transform_source``

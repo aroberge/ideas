@@ -19,7 +19,7 @@ class State:
     show_changes: bool
     show_original: bool
     source_argument: str | None
-    source_inits: list[Callable[[str], Any]]
+    source_inits: list[Callable[[], Any]]
     verbose: bool
     verbose_finder: bool
     verbose_loader: bool

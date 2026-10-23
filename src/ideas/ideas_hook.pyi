@@ -25,7 +25,7 @@ class IdeasHook:
         | Callable[[ast.Module], ast.Module]
         | None
     )
-    source_init: Callable[[str], str] | None
+    source_init: Callable[[], str] | None
     source_module: ModuleType
     transform_ast: Callable[[ast.AST], ast.AST] | None
     transform_bytecode: Callable[[CodeType], CodeType] | None

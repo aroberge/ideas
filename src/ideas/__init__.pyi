@@ -1,7 +1,7 @@
 from typing import Callable
 
 from ideas.session import ideas_state
-from ideas.import_hook import create_hook
+from ideas.create_hook import create_hook
 from ideas.ideas_hook import IdeasHook
 
 __all__ = [

@@ -87,7 +87,7 @@ Here is an example using IPython in a terminal.
     In [1]: from ideas.included import function_keyword
 
     In [2]: function_keyword.add_hook()
-    Out[2]: <ideas.import_hook.IdeasMetaFinder at 0x1e562eebf40>
+    Out[2]: <ideas.finder.IdeasMetaFinder at 0x1e562eebf40>
 
     In [3]: cube = function x: x** 3
 
@@ -108,7 +108,7 @@ interactive interpreter.
 
     >>> from ideas.included import function_keyword
     >>> function_keyword.add_hook()
-    <ideas.import_hook.IdeasMetaFinder object at 0x000001CBFB4E5130>
+    <ideas.finder.IdeasMetaFinder object at 0x000001CBFB4E5130>
     >>> from ideas import console
     >>> console.start()
     Ideas Console version 0.0.31. [Python version: 3.8.10]

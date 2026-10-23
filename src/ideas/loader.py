@@ -85,7 +85,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
         inits = [s_init() for s_init in ideas_state.source_inits]
         inits.append("")
         source = "\n".join(inits) + source
-
         return source
 
     def ideas_parse_source(self, source):
@@ -100,7 +99,6 @@ class IdeasLoader(Loader):  # pylint: disable=R0902
 
         if self.transform_ast is not None:
             tree = self.transform_ast(tree)
-
         return tree
 
     def ideas_get_bytecode(self, tree):

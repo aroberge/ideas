@@ -11,9 +11,6 @@ from ideas.ideas_hook import IdeasHook
 from ideas.finder import IdeasMetaPathFinder
 
 # TODO: see if ipython_ast_node_transformer is needed
-# TODO: Add test for french_repeat
-# TODO: Ensure that all existing hooks are tested.
-# TODO: Refactor and clean-up the code
 
 
 def create_hook(

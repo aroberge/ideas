@@ -168,7 +168,7 @@ utility function ``untokenize`` on line 19.
 
 Finally, **by convention**, we use the
 same name, ``transform_source`` that is used as a keyword
-argument for ``import_hook.create_hook``;
+argument for ``create_hook``;
 unlike ``add_hook``, using the specific name ``transform_source``
 is not required by |ideas|.
 
